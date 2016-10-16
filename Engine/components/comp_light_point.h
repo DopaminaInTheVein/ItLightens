@@ -25,8 +25,10 @@ struct TCompLightPoint : public TCompBase {
 	void activate();
 
 	//Editor
-	TCompLightPoint* original;
+	TCompLightPoint* original = nullptr;
 	void start_editing();
+	void cancel_editing();
+	~TCompLightPoint();
 };
 
 #endif

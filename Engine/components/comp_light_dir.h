@@ -23,8 +23,10 @@ struct TCompLightDir : public TCompCamera {
 	void				update(float dt);
 
 	//Editor
-	TCompLightDir* original;
+	TCompLightDir* original = nullptr;
 	void start_editing();
+	void cancel_editing();
+	~TCompLightDir();
 };
 
 #endif

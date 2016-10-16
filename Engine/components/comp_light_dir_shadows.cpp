@@ -111,9 +111,8 @@ void TCompLightDirShadows::generateShadowMap() {
 
 	activateRS(RSCFG_DEFAULT);
 }
-
-void TCompLightDirShadows::destroy() {
-	//if(rt_shadows)rt_shadows->destroy();
+void TCompLightDirShadows::destroy()
+{
 }
 
 void TCompLightDirShadows::setNewFov(float fov_in_rads) {
@@ -122,7 +121,19 @@ void TCompLightDirShadows::setNewFov(float fov_in_rads) {
 }
 
 void TCompLightDirShadows::start_editing() {
+	if (original) delete original;
 	original = new TCompLightDirShadows;
 	*original = *this;
-	dbg("Test");
+	original->original = false;
+}
+void TCompLightDirShadows::cancel_editing() {
+	if (!original) return;
+	TCompLightDirShadows * light_to_delete = original;
+	*this = *original;
+	if (light_to_delete) delete light_to_delete;
+	if (original) delete original;
+}
+
+TCompLightDirShadows::~TCompLightDirShadows() {
+	if (original) delete original;
 }

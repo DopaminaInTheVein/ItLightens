@@ -24,16 +24,35 @@ public:
 		IDLE,
 		EDITING,
 	};
+
 	typedef std::vector<TypeLight> VTypeLights;
 
 	struct LightList {
 		bool rcheck[ROOMS_SIZE];
 	};
 
+	struct EditLight {
+		enum EditMode {
+			OFFSET = 0
+			, PROP
+			, REPLACE
+			, SIZE
+		};
+		float ar = 0;
+		bool mode_ar[3] = { true, false, false };
+		char mode_names[SIZE][20] = { "Offset(+)", "Proportional(*)", "Replace(=)" };
+		int rgb[SIZE] = { 0 };
+		bool mode_rgb[SIZE] = { true, false, false };
+		void renderInMenu();
+		template <typename TLight>
+		void updateLight(TLight* light);
+	};
+
 private:
 	bool m_activated_editor;
 	bool m_show_axis = false;
 	bool multi_editing = false;
+	EditLight multi_edit_light;
 	std::string m_base_path;
 	VHandles m_Lights;
 	VTypeLights m_Types;
@@ -84,6 +103,10 @@ public:
 
 	void RenderTemporalLight(CHandle& light, TypeLight& type, bool& enabled);
 	void StartEditLight(CHandle hlight);
+	void CancelEditLight(CHandle hlight);
+	void SetSelected(CHandle hlight, bool sel);
+	bool IsSelected(CHandle hlight);
+	void UpdateEditingLight(CHandle hlight);
 };
 
 #endif

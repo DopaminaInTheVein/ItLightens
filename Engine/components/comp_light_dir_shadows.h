@@ -24,8 +24,10 @@ struct TCompLightDirShadows : public TCompLightDir {
 	void setNewFov(float fov);
 
 	//Editor
-	TCompLightDirShadows* original;
+	TCompLightDirShadows* original = nullptr;
 	void start_editing();
+	void cancel_editing();
+	~TCompLightDirShadows();
 };
 
 #endif

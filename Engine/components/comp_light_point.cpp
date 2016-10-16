@@ -74,6 +74,19 @@ void TCompLightPoint::activate() {
 
 //Editor
 void TCompLightPoint::start_editing() {
+	if (original) delete original;
 	original = new TCompLightPoint;
 	*original = *this;
+	original->original = false;
+}
+void TCompLightPoint::cancel_editing() {
+	if (!original) return;
+	TCompLightPoint * light_to_delete = original;
+	*this = *original;
+	if (light_to_delete) delete light_to_delete;
+	if (original) delete original;
+}
+TCompLightPoint::~TCompLightPoint()
+{
+	if (original) delete original;
 }
