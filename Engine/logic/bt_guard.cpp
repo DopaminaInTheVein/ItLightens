@@ -528,12 +528,16 @@ int bt_guard::actionSearch() {
 	// player/box visible or search time ended
 	if (playerVisible() || boxMovingDetected() || looking_around_time < 0.f) {
 		looking_around_time = LOOK_AROUND_TIME;
+		path_found = false;
 		return KO;
 	}
 	else if (playerLost) {
 		float distance = simpleDistXZ(myPos, player_last_seen_point);
 		// go to player last seen point
 		getPath(myPos, player_last_seen_point);
+		if (!path_found) {
+			path_found = getPath(myPos, player_last_seen_point);
+		}
 		SET_ANIM_GUARD(AST_MOVE);
 		goTo(player_last_seen_point);
 		if (distance < DIST_REACH_PNT) {
@@ -544,6 +548,7 @@ int bt_guard::actionSearch() {
 			dir.Normalize();
 
 			search_player_point = playerPos + 1.0f * dir;
+			path_found = false;
 			return OK;
 		}
 		else {
@@ -552,6 +557,7 @@ int bt_guard::actionSearch() {
 	}
 	// If player was lost, we simply move and look around
 	else {
+		path_found = false;
 		return OK;
 	}
 }
@@ -563,6 +569,7 @@ int bt_guard::actionMoveAround() {
 	// player/box visible or search time ended
 	if (playerVisible() || boxMovingDetected() || looking_around_time <= 0.f) {
 		looking_around_time = LOOK_AROUND_TIME;
+		path_found = false;
 		return KO;
 	}
 
@@ -571,16 +578,20 @@ int bt_guard::actionMoveAround() {
 
 	// if the player is too far, we just look around
 	if (distance_to_point > MAX_SEARCH_DISTANCE) {
+		path_found = false;
 		return OK;
 	}
 
 	if (distance_to_point > DIST_REACH_PNT) {
-		getPath(myPos, search_player_point);
+		if (!path_found) {
+			path_found = getPath(myPos, search_player_point);
+		}
 		SET_ANIM_GUARD(AST_MOVE);
 		goTo(search_player_point);
 		return STAY;
 	}
 
+	path_found = false;
 	return OK;
 }
 
@@ -623,6 +634,7 @@ int bt_guard::actionSeekWpt() {
 	//Player Visible?
 	if (playerVisible() || boxMovingDetected()) {
 		patrolling = false;
+		path_found = false;
 		return KO;
 	}
 	//Go to waypoint
@@ -630,10 +642,13 @@ int bt_guard::actionSeekWpt() {
 		//reach waypoint?
 		if (simpleDistXZ(myPos, dest) < DIST_REACH_PNT) {
 			curkpt = (curkpt + 1) % keyPoints.size();
+			path_found = false;
 			return OK;
 		}
 		else {
-			getPath(myPos, dest);
+			if (!path_found) {
+				path_found = getPath(myPos, dest);
+			}
 			SET_ANIM_GUARD(AST_MOVE);
 			goTo(dest);
 			return STAY;
@@ -644,12 +659,16 @@ int bt_guard::actionSeekWpt() {
 		//Look to waypoint
 		if (turnTo(dest)) {
 			curkpt = (curkpt + 1) % keyPoints.size();
+			path_found = false;
 			return OK;
 		}
 		else {
+			stuck_time = 0.f;
 			return STAY;
 		}
 	}
+
+	path_found = false;
 	return OK;
 }
 
@@ -667,7 +686,8 @@ int bt_guard::actionNextWpt() {
 		return KO;
 	}
 	//If we are already there, we continue
-	if (simpleDistXZ(myPos, dest) < DIST_REACH_PNT)
+	float dist = simpleDistXZ(myPos, dest);
+	if (dist < DIST_REACH_PNT)
 		return OK;
 	//Look to waypoint
 	if (turnTo(dest)) {
@@ -679,7 +699,7 @@ int bt_guard::actionNextWpt() {
 }
 
 int bt_guard::actionWaitWpt() {
-	//PROFILE_FUNCTION("guard: actionwaitwpt");
+	PROFILE_FUNCTION("guard: actionwaitwpt");
 	if (!myParent.isValid()) return false;
 	SET_ANIM_GUARD(AST_IDLE);
 	stuck = false;
@@ -713,11 +733,15 @@ int bt_guard::actionGoToFormation() {
 
 	// if we didn't reach the point
 	if (distance_to_point > DIST_REACH_PNT) {
-		getPath(myPos, formation_point);
+		if (!path_found) {
+			path_found = getPath(myPos, formation_point);
+		}
 		SET_ANIM_GUARD(AST_MOVE);
 		goTo(formation_point);
 		return STAY;
 	}
+
+	path_found = false;
 	return OK;
 }
 

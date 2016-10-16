@@ -469,7 +469,10 @@
    reload="yes">
 <tags
    tags="AI AI_mole AI_poss"/>
-<bt_mole/>
+<bt_mole
+   wpts_size="1"
+   wpt0_pos="-122.107 -1.28589 -10.3324"
+   wpt0_wait="2"/>
 <player_mole/>
 <skc_mole/>
 <name

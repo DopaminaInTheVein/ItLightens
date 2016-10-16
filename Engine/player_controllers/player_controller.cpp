@@ -567,10 +567,10 @@ void player_controller::UpdateMoves()
 
 //Test CLH naveshes
 //---------
-//VEC3 startPoint;
-//VEC3 endPoint;
-//#include "logic/bt_guard.h"
-//#include "app_modules/io/io.h"
+VEC3 startPoint;
+VEC3 endPoint;
+#include "logic/bt_guard.h"
+#include "app_modules/io/io.h"
 //---------
 void player_controller::UpdateInputActions()
 {
@@ -578,24 +578,24 @@ void player_controller::UpdateInputActions()
 
 	//Test CLH navmeshes
 	//----------------------
-	//if (io->keys['8'].becomesPressed()) {
-	//	CHandle player = tags_manager.getFirstHavingTag("raijin");
-	//	GET_COMP(tPlayer, player, TCompTransform);
-	//	startPoint = tPlayer->getPosition();
-	//	dbg("Set StartPoint\n");
-	//}
-	//if (io->keys['9'].becomesPressed()) {
-	//	CHandle player = tags_manager.getFirstHavingTag("raijin");
-	//	GET_COMP(tPlayer, player, TCompTransform);
-	//	endPoint = tPlayer->getPosition();
-	//	dbg("Set EndPoint\n");
-	//}
-	//if (io->keys['0'].becomesPressed()) {
-	//	bt_guard bttest;
-	//	int res = bttest.getPathDebug(startPoint, endPoint);
-	//	dbg("get path result: %d", res);
-	//	dbg("\n", res);
-	//}
+	if (io->keys['8'].becomesPressed()) {
+		CHandle player = tags_manager.getFirstHavingTag("raijin");
+		GET_COMP(tPlayer, player, TCompTransform);
+		startPoint = tPlayer->getPosition();
+		dbg("Set StartPoint\n");
+	}
+	if (io->keys['9'].becomesPressed()) {
+		CHandle player = tags_manager.getFirstHavingTag("raijin");
+		GET_COMP(tPlayer, player, TCompTransform);
+		endPoint = tPlayer->getPosition();
+		dbg("Set EndPoint\n");
+	}
+	if (io->keys['0'].becomesPressed()) {
+		bt_guard bttest;
+		int res = bttest.getPathDebug(startPoint, endPoint);
+		dbg("get path result: %d", res);
+		dbg("\n", res);
+	}
 	//---------------------
 
 	//if (isDamaged()) {

@@ -7,7 +7,7 @@
 	"bt_scientist" : {
 		"SPEED_WALK" : 1.5,
 		"SPEED_ROT" : 100,
-		"DIST_REACH_PNT" : 0.2,
+		"DIST_REACH_PNT" : 0.5,
 		"max_wb_distance" : 1000.0,
 		"max_beacon_distance" : 1000.0,
 		"square_range_action" : 1.0,
@@ -21,14 +21,15 @@
 		"ws_wait_time" : 10.0,
 		"ws_wait_time_offset" : 2.0,
 		"MAX_STUCK_TIME" : 2.0,
-		"UNSTUCK_DISTANCE" : 5.0
+		"UNSTUCK_DISTANCE" : 5.0,
+		"PREV_UNSTUCK_DISTANCE" : 0.5
 	},
 	"bt_guard" : {
 		"SPEED_WALK" : 3.0,
 		"DIST_RAYSHOT" : 80,
 		"DAMAGE_LASER" : 5,
 		"MIN_SQ_DIST_TO_PLAYER" : 9,
-		"DIST_REACH_PNT" : 0.2,
+		"DIST_REACH_PNT" : 0.5,
 		"PLAYER_DETECTION_RADIUS" : 2.0,
 		"DIST_SQ_SHOT_AREA_ENTER" : 30,
 		"DIST_SQ_SHOT_AREA_LEAVE" : 80,
@@ -46,16 +47,19 @@
 		"t_reduceStats_max" : 15,
 		"t_reduceStats" : 0.0,
 		"MAX_STUCK_TIME" : 2.0,
-		"UNSTUCK_DISTANCE" : 2.0
+		"UNSTUCK_DISTANCE" : 2.0,
+		"PREV_UNSTUCK_DISTANCE" : 0.5
 	},	
 	"bt_mole" : {
-		"DIST_REACH_PNT" : 0.2,
+		"DIST_REACH_PNT" : 0.5,
 		"SPEED_WALK" : 2.0,
 		"SPEED_ROT" : 200,
 		"distMaxToBox" : 10.0,
 		"rechTime" : 1.0,
 		"MAX_STUCK_TIME" : 2.0,
-		"UNSTUCK_DISTANCE" : 5.0
+		"UNSTUCK_DISTANCE" : 5.0,
+		"PREV_UNSTUCK_DISTANCE" : 0.5,
+		"TIME_WAIT_MOLE" : 3.0
 	},	
 	"bt_speedy" : { 
 		"speed" : 4.0,

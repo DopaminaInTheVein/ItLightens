@@ -23,6 +23,7 @@ class CGameController : public IAppModule {
 	bool	free_camera = false;
 	bool	cinematic = false;
 	bool	manual_control = false;
+	bool	ai_update = false;
 
 	bool	cheat_godmode = false;
 
@@ -47,6 +48,9 @@ public:
 	void SetDifficulty(int);
 	void UpdateDifficulty();
 
+	std::string GetLanguage() const;
+	void SetLanguage(std::string);
+
 	int GetGameState() const;
 	void SetGameState(int state);
 
@@ -67,7 +71,6 @@ public:
 	void SetManualCameraState(bool state) { manual_control = state; }
 
 	void UpdateGeneralInputs();
-
 	bool forcedUpdate() { return true; }
 	void update(float dt);
 
@@ -95,6 +98,10 @@ public:
 
 	bool isSenseVisionEnabled();
 	void OnLoadedLevel(bool new_level, bool load_game);
+
+	bool getAiUpdate() { return ai_update; }
+	void setAiUpdate(bool update) { ai_update = update; }
+
 	CHandle getHandleGameController() const;
 
 	TCompSenseVision * getSenseVisionComp();

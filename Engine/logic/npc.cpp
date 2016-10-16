@@ -5,6 +5,8 @@
 #include "recast/navmesh_query.h"
 #include "recast/DebugUtils/Include/DebugDraw.h"
 
+bool sortGreaterThan(int i, int j) { return (i>j); }
+
 void npc::readNpcIni(std::map<std::string, float>& fields)
 {
 	assignValueToVar(DIST_REACH_PNT, fields);
@@ -13,6 +15,7 @@ void npc::readNpcIni(std::map<std::string, float>& fields)
 	SPEED_ROT = deg2rad(SPEED_ROT);
 	assignValueToVar(MAX_STUCK_TIME, fields);
 	assignValueToVar(UNSTUCK_DISTANCE, fields);
+	assignValueToVar(PREV_UNSTUCK_DISTANCE, fields);
 }
 
 void npc::addNpcStates(std::string parent)
@@ -36,7 +39,7 @@ bool npc::getPath(const VEC3& startPoint, const VEC3& endPoint) {
 	}
 	query.updatePosIni(startPointValue);
 	query.updatePosEnd(endPointValue);
-	Debug->DrawLine(startPointValue, endPointValue);
+	//Debug->DrawLine(startPointValue, endPointValue, 3.f);
 	query.findPath(query.p1, query.p2);
 	const float * path = query.getVertexSmoothPath();
 	pathWpts.clear();
@@ -51,7 +54,7 @@ bool npc::getPath(const VEC3& startPoint, const VEC3& endPoint) {
 		return false;
 
 	for (int i = 0; i < (pathWpts.size() - 1); i++) {
-		Debug->DrawLine(pathWpts[i], pathWpts[i + 1], VEC3(1, 0, 1));
+		//Debug->DrawLine(pathWpts[i], pathWpts[i + 1], VEC3(1, 0, 1), 3.f);
 	}
 
 	currPathWpt = 0;
@@ -101,6 +104,7 @@ CEntity* npc::frontCollisionBOX(const TCompTransform * transform, CEntity *  mol
 }
 bool npc::avoidBoxByLeft(CEntity * candidateE, const TCompTransform * transform) {
 	VEC3 npcPos = transform->getPosition();
+	npcPos.y += PLAYER_CENTER_Y;
 	VEC3 dir = transform->getLeft();
 	dir.Normalize();
 	PxRaycastBuffer hit;
@@ -134,11 +138,14 @@ void npc::updateStuck()
 {
 	float distance = simpleDistXZ(last_position, getTransform()->getPosition());
 	if (distance <= 0.75f*getDeltaTime()*SPEED_WALK) {
-		stuck_time += getDeltaTime();
 		if (stuck_time > MAX_STUCK_TIME && !stuck) {
 			stuck = true;
+			path_found = false;
 			action_when_stuck = current;
 			setCurrent(NULL);
+		}
+		else {
+			stuck_time += getDeltaTime();
 		}
 	}
 	else {
@@ -157,34 +164,64 @@ bool npc::npcStuck() {
 int npc::actionUnstuckTurn() {
 	PROFILE_FUNCTION("npc: actionunstuckturn");
 	// turn to get unstuck
-	//SET_ANIM_GUARD(AST_IDLE);
 	changeCommonState(AST_IDLE);
 	if (!reoriented) {
+		VEC3 myPos = getTransform()->getPosition();
+		myPos.y += PLAYER_CENTER_Y;
 		VEC3 left = getTransform()->getLeft();
 		VEC3 front = getTransform()->getFront();
-		switch (direction) {
-		case 0: {
-			unstuck_target = left*UNSTUCK_DISTANCE + getTransform()->getPosition();
-			direction = 2;
-			break;
+		// Lanzamos 4 raycast (alante, atras, izquierda, derecha)
+		PxRaycastBuffer hit_front;
+		PxRaycastBuffer hit_back;
+		PxRaycastBuffer hit_left;
+		PxRaycastBuffer hit_right;
+
+		PxQueryFilterData filters = PxQueryFilterData(PxQueryFlag::eSTATIC | PxQueryFlag::eDYNAMIC | PxQueryFlag::eANY_HIT);
+
+		bool ret_front = g_PhysxManager->raycast(myPos, front, 100.f, hit_front, filters);
+		bool ret_back = g_PhysxManager->raycast(myPos, -front, 100.f, hit_back, filters);
+		bool ret_left = g_PhysxManager->raycast(myPos, left, 100.f, hit_left, filters);
+		bool ret_right = g_PhysxManager->raycast(myPos, -left, 100.f, hit_right, filters);
+		// Si todos han ido bien
+		if (ret_front && ret_back && ret_left && ret_right) {
+			// Calculamos las distancias de los 4 hits respecto al player
+			CHandle h_front = PhysxConversion::GetEntityHandle(*hit_front.getAnyHit(0).actor);
+			CHandle h_back = PhysxConversion::GetEntityHandle(*hit_back.getAnyHit(0).actor);
+			CHandle h_left = PhysxConversion::GetEntityHandle(*hit_left.getAnyHit(0).actor);
+			CHandle h_right = PhysxConversion::GetEntityHandle(*hit_right.getAnyHit(0).actor);
+
+			VEC3 pos_front = PhysxConversion::PxVec3ToVec3(hit_front.getAnyHit(0).position);
+			VEC3 pos_back = PhysxConversion::PxVec3ToVec3(hit_back.getAnyHit(0).position);
+			VEC3 pos_left = PhysxConversion::PxVec3ToVec3(hit_left.getAnyHit(0).position);
+			VEC3 pos_right = PhysxConversion::PxVec3ToVec3(hit_right.getAnyHit(0).position);
+
+			float dist_front = hit_front.getAnyHit(0).distance;
+			float dist_back = hit_back.getAnyHit(0).distance;
+			float dist_left = hit_left.getAnyHit(0).distance;
+			float dist_right = hit_right.getAnyHit(0).distance;
+
+			// Nos movemos en la direccion cuyo obstaculo sea mas lejano
+			std::vector<float> distances;
+			distances.push_back(dist_front);
+			distances.push_back(dist_back);
+			distances.push_back(dist_left);
+			distances.push_back(dist_right);
+
+			direction = max_element(distances.begin(), distances.end()) - distances.begin();
+
+			// we compute the point where we have to move with the direction given
+			computeUnstuckTarget();
+
+			// if we are stuck in the same place again, try the second direction
+			float dist = simpleDistXZ(unstuck_target, prev_unstuck_target);
+			if (dist < PREV_UNSTUCK_DISTANCE) {
+				distances[direction] = 0.f;
+				direction = max_element(distances.begin(), distances.end()) - distances.begin();
+				computeUnstuckTarget();
+			}
+
+			reoriented = true;
 		}
-		case 1: {
-			unstuck_target = -left*UNSTUCK_DISTANCE + getTransform()->getPosition();
-			direction = 1;
-			break;
-		}
-		case 2: {
-			unstuck_target = -front*UNSTUCK_DISTANCE + getTransform()->getPosition();
-			direction = 0;
-			break;
-		}
-		default: {
-			unstuck_target = left*UNSTUCK_DISTANCE + getTransform()->getPosition();
-			direction = 0;
-			break;
-		}
-		}
-		reoriented = true;
 	}
 	if (!turnTo(unstuck_target))
 		return STAY;
@@ -192,7 +229,39 @@ int npc::actionUnstuckTurn() {
 		reoriented = false;
 		stuck_time = 0.f;
 		stuck = false;
+		prev_unstuck_target = unstuck_target;
 		return OK;
+	}
+}
+
+void npc::computeUnstuckTarget() {
+	VEC3 left = getTransform()->getLeft();
+	VEC3 front = getTransform()->getFront();
+	switch (direction) {
+		// front
+		case 0: {
+			unstuck_target = front*UNSTUCK_DISTANCE + getTransform()->getPosition();
+			break;
+		}
+		// back
+		case 1: {
+			unstuck_target = -front*UNSTUCK_DISTANCE + getTransform()->getPosition();
+			break;
+		}
+		// left
+		case 2: {
+			unstuck_target = left*UNSTUCK_DISTANCE + getTransform()->getPosition();
+			break;
+		}
+		// right
+		case 3: {
+			unstuck_target = -left*UNSTUCK_DISTANCE + getTransform()->getPosition();
+			break;
+		}
+		default: {
+			unstuck_target = left*UNSTUCK_DISTANCE + getTransform()->getPosition();
+			break;
+		}
 	}
 }
 
@@ -202,9 +271,9 @@ bool npc::turnTo(VEC3 dest, bool wide) {
 	//dbg("Estoy girando! (%d)\n", (++test_giro) % 100);
 
 	PROFILE_FUNCTION("npc: turn to");
-	int angle = 5;
+	float angle = 5.f;
 	if (wide)
-		angle = 30;
+		angle = 30.f;
 	float angle_epsilon = deg2rad(angle);
 
 	VEC3 myPos = getTransform()->getPosition();
@@ -236,7 +305,8 @@ bool npc::turnYaw(float delta_yaw, float angle_epsilon)
 	getTransform()->setAngles(yaw, pitch);
 
 	//Ha acabado el giro?
-	bool done = abs(delta_yaw) < angle_epsilon;
+	bool done = abs(delta_yaw) < angle_epsilon + 0.05;
+	return done;
 }
 
 bool npc::turnToYaw(float target_yaw)
@@ -258,10 +328,10 @@ int npc::actionUnstuckMove() {
 	PROFILE_FUNCTION("npc: actionunstuckmove");
 	// move to get unstuck
 	VEC3 myPos = getTransform()->getPosition();
-	if (simpleDistXZ(myPos, unstuck_target) > DIST_REACH_PNT) {
+	float dist = simpleDistXZ(myPos, unstuck_target);
+	if (dist > DIST_REACH_PNT) {
 		getPath(myPos, unstuck_target);
 		changeCommonState(AST_MOVE);
-		//SET_ANIM_GUARD(AST_MOVE);
 		goTo(unstuck_target);
 		return STAY;
 	}
@@ -297,10 +367,11 @@ void npc::goTo(const VEC3& dest) {
 		target = pathWpts[currPathWpt];
 	}
 
+	target.y = npcPos.y;
 	if (needsSteering(npcPos, getTransform(), SPEED_WALK, getParent())) {
 		goForward(SPEED_WALK);
 	}
-	else if (!getTransform()->isHalfConeVision(target, deg2rad(5.0f))) {
+    else if (!getTransform()->isHalfConeVision(target, deg2rad(5.0f))) {
 		turnTo(target);
 	}
 	else {

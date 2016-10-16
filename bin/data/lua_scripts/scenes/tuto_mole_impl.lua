@@ -40,6 +40,7 @@ function OnStart_tuto_mole( )
 	portal_done = false
 	idWall_out = 100
 	idWall_in = 101
+	p:ai_start()
 	TXT_LOOK_WALL = "::look_wall"
 	TXT_HELP_POSS = "::help_possess"
 	TXT_HELP_UNPOSS = "::help_unpossess"

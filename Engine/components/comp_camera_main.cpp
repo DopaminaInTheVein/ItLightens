@@ -142,7 +142,9 @@ void TCompCameraMain::update(float dt) {
 				last_pos_camera = transform->getPosition();
 			}
 			else {
-				float factor = fminf(max_factor, ((collisionDistanceToCam.dist + cc->GetRadius() / 2) / distanceToTarget));
+				float radius = cc->GetRadius();
+				float other_factor = ((collisionDistanceToCam.dist + radius / 2));// distanceToTarget);
+				float factor = fminf(max_factor, other_factor);
 				VEC3 pos_cam = pos + (pos_target - pos)*factor;
 				//VEC3 pos_target = pos_cam + transform->getFront();
 
@@ -150,12 +152,13 @@ void TCompCameraMain::update(float dt) {
 					int n_iters = 0;
 					while (collisionDistanceToCam.dist != 0.0f && n_iters < 10) {
 						getPosIfColisionClipping(pos_cam, collisionDistanceToCam);
-						pos_cam -= collisionDistanceToCam.dir*collisionDistanceToCam.dist;
+						//pos_cam -= collisionDistanceToCam.dir*collisionDistanceToCam.dist;
+						other_factor += ((collisionDistanceToCam.dist + radius / 2));// distanceToTarget);
+						factor = fminf(max_factor, other_factor);
+						pos_cam = pos + (pos_target - pos)*factor;
+
 						n_iters++;
 					}
-					//char n_iters_c[10];
-					//sprintf(n_iters_c, "%d\n", n_iters);
-					//Debug->LogError(n_iters_c);
 					this->smoothLookAt(pos_cam, pos_target, getUpAux(), smoothCurrent);
 				}
 				else {

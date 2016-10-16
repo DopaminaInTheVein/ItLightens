@@ -14,6 +14,7 @@
 #include "logic/pila_container.h"
 
 #include "app_modules/render/module_render_postprocess.h"
+#include "app_modules/entities.h"
 #include "render/fx/fx_fade_screen.h"
 
 using namespace IdEntities;
@@ -964,6 +965,15 @@ void SLBPublicFunctions::toggleIntroState() {
 
 void SLBPublicFunctions::launchVictoryState() {
 	GameController->SetGameState(CGameController::VICTORY);
+}
+
+//AI control
+void SLBPublicFunctions::AIStart() {
+	GameController->setAiUpdate(true);
+}
+
+void SLBPublicFunctions::AIStop() {
+	GameController->setAiUpdate(false);
 }
 
 //void SLBPublicFunctions::showLoadingScreen() {

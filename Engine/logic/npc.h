@@ -3,6 +3,8 @@
 
 #include "bt.h"
 
+#define PLAYER_CENTER_Y					0.5f
+
 // Implementation of the behavior tree
 // uses the BTnode so both work as a system
 // tree implemented as a map of btnodes for easy traversal
@@ -28,8 +30,13 @@ protected:
 	float stuck_time = 0.f;
 	bool stuck = false;
 	bool reoriented = false;
+	bool path_found = false;
 	int direction = 0;
+
 	VEC3 unstuck_target;
+	VEC3 prev_unstuck_target;
+	float PREV_UNSTUCK_DISTANCE;
+
 	VEC3 last_position;
 	btnode* action_when_stuck = NULL;
 
@@ -52,6 +59,7 @@ protected:
 	bool turnYaw(float delta_yaw, float angle_epsilon = 5.f);
 	bool turnToYaw(float target_yaw);
 	bool turnTo(VEC3 dest, bool wide = false);
+	void computeUnstuckTarget();
 
 	virtual TCompTransform * getTransform() = 0;
 	virtual void changeCommonState(std::string) = 0;
