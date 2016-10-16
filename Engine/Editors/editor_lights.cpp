@@ -514,7 +514,19 @@ void CEditorLights::EditLight::LightParam::renderInMenu()
 {
 	ImGui::PushID(this);
 	ImGui::Text(name.c_str());
-	ImGui::DragFloat(name.c_str(), &v, vspeed, mode == PROP ? 0.f : -rmax, mode == PROP ? 5.f : rmax);
+	
+	ImGui::PushItemWidth(320);
+	ImGui::DragFloat("", &v, vspeed, mode == PROP ? 0.f : -rmax, mode == PROP ? 5.f : rmax);
+	ImGui::PopItemWidth();
+	
+	ImGui::SameLine();
+	ImGui::PushItemWidth(100);
+	if (ImGui::InputFloat("", &vspeed, 0.01f, 0.01f, 2) && !changed_by_user) {
+		changed_by_user = true;
+		if (vspeed < 0.01f) vspeed = 0.01f;
+	}
+	ImGui::PopItemWidth();
+	
 	for (int i = 0; i < EditMode::SIZE; i++) {
 		if (ImGui::Checkbox(mode_names[i], vmode + i) && !changed_by_user) {
 			changed_by_user = true;
@@ -540,6 +552,7 @@ void CEditorLights::EditLight::LightParam::renderInMenu()
 		}
 		if (i < EditMode::SIZE - 1) ImGui::SameLine();
 	}
+
 	ImGui::Separator();
 	changed_by_user = false;
 	ImGui::PopID();
