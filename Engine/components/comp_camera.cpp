@@ -97,13 +97,13 @@ void TCompCamera::renderInMenu() {
 	//}
 	if (!isOrtho()) {
 		float fov_in_deg = rad2deg(fov_in_rad);
-		if (ImGui::SliderFloat("Fov", &fov_in_deg, 30.f, 110.f)) {
+		if (ImGui::DragFloat("Fov", &fov_in_deg, 0.01f, 30.f, 110.f)) {
 			changed = true;
 			fov_in_rad = deg2rad(fov_in_deg);
 		}
 	}
-	changed |= ImGui::SliderFloat("ZNear", &znear, 0.01f, 2.f);
-	changed |= ImGui::SliderFloat("ZFar", &zfar, 10.f, 1000.f);
+	changed |= ImGui::DragFloat("ZNear", &znear, 0.01f, 0.01f);
+	changed |= ImGui::DragFloat("ZFar", &zfar, 0.01f, 1.f, 1000.f);
 	if (changed)
 		setProjection(fov_in_rad, znear, zfar);
 

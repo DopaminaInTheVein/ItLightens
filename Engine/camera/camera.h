@@ -62,6 +62,8 @@ public:
 	float getFov() const { return fov_vertical_rads; }
 
 	MAT44 getViewProjection() const { return view_projection; }
+	float* getZNearPointer() { return &znear; }
+	float* getZFarPointer() { return &zfar; }
 };
 
 #endif
