@@ -3,6 +3,8 @@
 
 #include <fstream>
 
+#include "utils/utils.h"
+
 #include "handle\handle_manager.h"
 #include "components\entity.h"
 #include "components\comp_name.h"
@@ -106,6 +108,7 @@ void CEditorLights::RenderMultiEdit()
 				multi_editing = IDLE;
 				multi_edit_light = EditLight();
 			}
+			ImGui::SameLine();
 			if (ImGui::Button("Cancel")) {
 				multi_editing = IDLE;
 				for (auto lhandle : m_Lights) CancelEditLight(lhandle);
@@ -493,47 +496,53 @@ bool CEditorLights::IsSelected(CHandle hlight)
 	if (ldir) return ldir->selected;
 	if (lshadow) return lshadow->selected;
 }
+
+// -------------------------------------------------- //
+// EDIT LIGHT
+// -------------------------------------------------- //
+char CEditorLights::EditLight::mode_names[EditMode::SIZE][20] = { "Offset(+)", "Proportional(*)", "Replace(=)" };
 void CEditorLights::EditLight::renderInMenu()
 {
-	ImGui::Text("INTENSITY");
-	ImGui::DragFloat("Intensity", &ar, 0.01f, -1.f, 5.f);
+	pIntensity.renderInMenu();
+	pRed.renderInMenu();
+	pGreen.renderInMenu();
+	pBlue.renderInMenu();
+	pNear.renderInMenu();
+	pFar.renderInMenu();
+}
+void CEditorLights::EditLight::LightParam::renderInMenu()
+{
+	ImGui::PushID(this);
+	ImGui::Text(name.c_str());
+	ImGui::DragFloat(name.c_str(), &v, vspeed, mode == PROP ? 0.f : -rmax, mode == PROP ? 5.f : rmax);
 	for (int i = 0; i < EditMode::SIZE; i++) {
-		if (ImGui::Checkbox(mode_names[i], mode_ar + i)) {
-			for (int j = 0; j < EditMode::SIZE; j++)
-				if (j != i) mode_ar[j] = !mode_ar[i];
-			switch (i) {
-			case OFFSET:
-				ar = 0;
-				break;
-			case PROP:
-				ar = 1;
-				break;
-			case REPLACE:
-				break;
+		if (ImGui::Checkbox(mode_names[i], vmode + i) && !changed_by_user) {
+			changed_by_user = true;
+			if (vmode[i]) {
+				for (int i2 = 0; i2 < EditMode::SIZE; i2++) {
+					if (i2 != i) vmode[i2] = false;
+				}
+				mode = (EditMode)i;
+				switch (mode) {
+				case OFFSET:
+					v = 0;
+					break;
+				case PROP:
+					v = 1;
+					break;
+				case REPLACE:
+					break;
+				}
+			}
+			else {
+				vmode[i] = true;
 			}
 		}
 		if (i < EditMode::SIZE - 1) ImGui::SameLine();
 	}
 	ImGui::Separator();
-	ImGui::Text("COLOR");
-	ImGui::DragInt3("Color RGB", rgb, 0.1f, -255, 255);
-	for (int i = 0; i < EditMode::SIZE; i++) {
-		if (ImGui::Checkbox(mode_names[i], mode_rgb + i)) {
-			for (int j = 0; j < EditMode::SIZE; j++)
-				if (j != i) mode_rgb[j] = !mode_rgb[i];
-			switch (i) {
-			case OFFSET:
-				rgb[0] = rgb[1] = rgb[2] = 0;
-				break;
-			case PROP:
-				rgb[0] = rgb[1] = rgb[2] = 255;
-				break;
-			case REPLACE:
-				break;
-			}
-		}
-		if (i < EditMode::SIZE - 1) ImGui::SameLine();
-	}
+	changed_by_user = false;
+	ImGui::PopID();
 }
 
 void CEditorLights::UpdateEditingLight(CHandle hlight)
@@ -553,40 +562,26 @@ template <typename TLight>
 void CEditorLights::EditLight::updateLight(TLight* light)
 {
 	if (!light || !light->selected || !light->original) return;
-	VEC4* color = &light->color;
-	VEC4* ocolor = &light->original->color;
-	int mode = 0;
-	while (mode < SIZE && !mode_ar[mode]) mode++;
+	pIntensity.update(&light->original->color.w, &light->color.w);
+	pRed.update(&light->original->color.x, &light->color.x);
+	pGreen.update(&light->original->color.y, &light->color.y);
+	pRed.update(&light->original->color.z, &light->color.z);
+	pNear.update(light->original->getNearPointer(), light->getNearPointer());
+	pFar.update(light->original->getFarPointer(), light->getFarPointer());
+}
+
+void CEditorLights::EditLight::LightParam::update(float * orig, float * dest)
+{
 	switch (mode) {
 	case OFFSET:
-		color->w = ocolor->w + ar;
+		*dest = *orig + v;
 		break;
 	case PROP:
-		color->w = ocolor->w * ar;
+		*dest = *orig * v;
 		break;
 	case REPLACE:
-		color->w = ar;
+		*dest = v;
 		break;
 	}
-	//-----------
-	mode = 0;
-	VEC3 color_normal = VEC3(rgb[0] / 255.f, rgb[1] / 255.f, rgb[2] / 255.f);
-	while (mode < SIZE && !mode_rgb[mode]) mode++;
-	switch (mode) {
-	case OFFSET:
-		color->x = ocolor->x + color_normal.x;
-		color->y = ocolor->y + color_normal.y;
-		color->z = ocolor->z + color_normal.z;
-		break;
-	case PROP:
-		color->x = ocolor->x * color_normal.x;
-		color->y = ocolor->y * color_normal.y;
-		color->z = ocolor->z * color_normal.z;
-		break;
-	case REPLACE:
-		color->x = color_normal.x;
-		color->y = color_normal.y;
-		color->z = color_normal.z;
-		break;
-	}
+	*dest = clamp(*dest, rmin, rmax);
 }

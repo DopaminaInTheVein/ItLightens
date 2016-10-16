@@ -38,11 +38,35 @@ public:
 			, REPLACE
 			, SIZE
 		};
-		float ar = 0;
-		bool mode_ar[3] = { true, false, false };
-		char mode_names[SIZE][20] = { "Offset(+)", "Proportional(*)", "Replace(=)" };
-		int rgb[SIZE] = { 0 };
-		bool mode_rgb[SIZE] = { true, false, false };
+		struct LightParam {
+			std::string name = "unnamed";
+			float v = 0;
+			EditMode mode = OFFSET;
+			bool vmode[SIZE] = { false };
+			bool changed_by_user = false;
+			//float vmin, vmax;
+			float rmin, rmax;
+			float vspeed;
+			void renderInMenu();
+			void update(float* orig, float* dest);
+			LightParam(const char* _name, float speed, /*float min_edit, float max_edit, */float res_min, float res_max)
+				: name(_name)
+				, vspeed(speed)
+				//, vmin(min_edit)
+				//, vmax(max_edit)
+				, rmin(res_min)
+				, rmax(res_max)
+			{
+				vmode[mode] = true;
+			}
+		};
+		static char mode_names[EditMode::SIZE][20];// = { "Offset(+)", "Proportional(*)", "Replace(=)" };
+		LightParam pIntensity = LightParam("Intensity", 0.01f, 0.f, 5.f);
+		LightParam pRed = LightParam("Red", 0.1f, 0.f, 1.f);
+		LightParam pGreen = LightParam("Green", 0.1f, 0.f, 1.f);
+		LightParam pBlue = LightParam("Blue", 0.1f, 0.f, 1.f);
+		LightParam pNear = LightParam("Near", 0.01f, 0.01f, 1000.f);
+		LightParam pFar = LightParam("Far", 0.01f, 1.f, 1000.f);
 		void renderInMenu();
 		template <typename TLight>
 		void updateLight(TLight* light);
