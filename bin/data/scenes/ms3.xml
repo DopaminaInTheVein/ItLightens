@@ -2947,7 +2947,7 @@
 <name
    name="suelo_003"/>
 <transform
-   pos="-83.0827 -1.31786 -9.24089"
+   pos="-83.0827 -1.418 -9.24089"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <abs_aabb/>
@@ -2955,7 +2955,11 @@
    name="static_meshes/ms3/suelo_003.static_mesh"
    static="yes"/>
 <rigidbody
-   type_collision="static"/>
+   type_collision="static"
+   type_shape="box"
+   size="85.0 0.2 70.0"
+   mass="5"/>
+<local_aabb/>
 
 </entity>
 <entity>
@@ -5642,6 +5646,22 @@
 <abs_aabb/>
 <render_static_mesh
    name="static_meshes/ms3/rejas_despacho_derecha.static_mesh"
+   static="yes"/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="columnas_fondo"/>
+<transform
+   pos="-83.1094 9.10116 -9.22597"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<abs_aabb/>
+<render_static_mesh
+   name="static_meshes/ms3/columnas_fondo.static_mesh"
    static="yes"/>
 <rigidbody
    type_collision="static"/>
