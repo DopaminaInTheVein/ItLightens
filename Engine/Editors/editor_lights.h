@@ -49,7 +49,7 @@ public:
 			float vspeed;
 			void renderInMenu();
 			void update(float* orig, float* dest);
-			LightParam(const char* _name, float speed, /*float min_edit, float max_edit, */float res_min, float res_max)
+			explicit LightParam(const char* _name, float speed, /*float min_edit, float max_edit, */float res_min, float res_max)
 				: name(_name)
 				, vspeed(speed)
 				//, vmin(min_edit)
@@ -59,14 +59,23 @@ public:
 			{
 				vmode[mode] = true;
 			}
+			virtual void ToDisplay(float*) {}
+			virtual void ToIntern(float*) {}
 		};
+		struct FovParam : LightParam {
+			using LightParam::LightParam;
+			void ToDisplay(float* f) override { *f = rad2deg(*f); }
+			void ToIntern(float* f) override { *f = deg2rad(*f); }
+		};
+
 		static char mode_names[EditMode::SIZE][20];// = { "Offset(+)", "Proportional(*)", "Replace(=)" };
 		LightParam pIntensity = LightParam("Intensity", 0.01f, 0.f, 5.f);
 		LightParam pRed = LightParam("Red", 0.1f, 0.f, 1.f);
 		LightParam pGreen = LightParam("Green", 0.1f, 0.f, 1.f);
 		LightParam pBlue = LightParam("Blue", 0.1f, 0.f, 1.f);
-		LightParam pNear = LightParam("Near", 0.01f, 0.01f, 1000.f);
-		LightParam pFar = LightParam("Far", 0.01f, 1.f, 1000.f);
+		LightParam pNear = LightParam("Near", 0.1f, 0.01f, 1000.f);
+		LightParam pFar = LightParam("Far", 0.1f, 1.f, 1000.f);
+		FovParam pFov = FovParam("Fov", 0.1f, 1.f, 120.f);
 		void renderInMenu();
 		template <typename TLight>
 		void updateLight(TLight* light);

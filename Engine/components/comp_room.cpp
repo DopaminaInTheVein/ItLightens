@@ -104,7 +104,7 @@ bool TCompRoom::SameRoom(CHandle h, int r_id) {
 	if (h.isValid()) {
 		GET_COMP(room, h, TCompRoom);
 		if (!room) room = GETH_COMP(h.getOwner(), TCompRoom);
-		return room->sameRoom(r_id);
+		if (room) return room->sameRoom(r_id);
 	}
 	return true;
 }

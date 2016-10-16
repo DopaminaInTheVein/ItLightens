@@ -28,8 +28,9 @@ struct TCompLightPoint : public TCompBase {
 	TCompLightPoint* original = nullptr;
 	void start_editing();
 	void cancel_editing();
-	float* getNearPointer() { return &in_radius; };
+	float* getNearPointer() { return &in_radius; }
 	float* getFarPointer() { return &out_radius; }
+	float* getFovPointer() { return nullptr; }
 	~TCompLightPoint();
 };
 

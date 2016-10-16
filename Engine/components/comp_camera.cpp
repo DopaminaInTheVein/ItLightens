@@ -97,9 +97,9 @@ void TCompCamera::renderInMenu() {
 	//}
 	if (!isOrtho()) {
 		float fov_in_deg = rad2deg(fov_in_rad);
-		if (ImGui::DragFloat("Fov", &fov_in_deg, 0.01f, 30.f, 110.f)) {
+		if (ImGui::DragFloat("Fov", &fov_in_deg, 0.1f, 1.f, 120.f)) {
 			changed = true;
-			fov_in_rad = deg2rad(fov_in_deg);
+			fov_in_rad = deg2rad(clamp(fov_in_deg, 1.f, 120.f));
 		}
 	}
 	changed |= ImGui::DragFloat("ZNear", &znear, 0.01f, 0.01f);

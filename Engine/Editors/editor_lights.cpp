@@ -509,24 +509,29 @@ void CEditorLights::EditLight::renderInMenu()
 	pBlue.renderInMenu();
 	pNear.renderInMenu();
 	pFar.renderInMenu();
+	pFov.renderInMenu();
 }
 void CEditorLights::EditLight::LightParam::renderInMenu()
 {
 	ImGui::PushID(this);
 	ImGui::Text(name.c_str());
-	
+
+	ImGui::PushID(&v);
 	ImGui::PushItemWidth(320);
 	ImGui::DragFloat("", &v, vspeed, mode == PROP ? 0.f : -rmax, mode == PROP ? 5.f : rmax);
 	ImGui::PopItemWidth();
-	
+	ImGui::PopID();
+
 	ImGui::SameLine();
+	ImGui::PushID(&vspeed);
 	ImGui::PushItemWidth(100);
 	if (ImGui::InputFloat("", &vspeed, 0.01f, 0.01f, 2) && !changed_by_user) {
 		changed_by_user = true;
 		if (vspeed < 0.01f) vspeed = 0.01f;
 	}
 	ImGui::PopItemWidth();
-	
+	ImGui::PopID();
+
 	for (int i = 0; i < EditMode::SIZE; i++) {
 		if (ImGui::Checkbox(mode_names[i], vmode + i) && !changed_by_user) {
 			changed_by_user = true;
@@ -537,10 +542,10 @@ void CEditorLights::EditLight::LightParam::renderInMenu()
 				mode = (EditMode)i;
 				switch (mode) {
 				case OFFSET:
-					v = 0;
+					v = 0.f;
 					break;
 				case PROP:
-					v = 1;
+					v = 1.f;
 					break;
 				case REPLACE:
 					break;
@@ -554,8 +559,8 @@ void CEditorLights::EditLight::LightParam::renderInMenu()
 	}
 
 	ImGui::Separator();
-	changed_by_user = false;
 	ImGui::PopID();
+	changed_by_user = false;
 }
 
 void CEditorLights::UpdateEditingLight(CHandle hlight)
@@ -581,10 +586,38 @@ void CEditorLights::EditLight::updateLight(TLight* light)
 	pRed.update(&light->original->color.z, &light->color.z);
 	pNear.update(light->original->getNearPointer(), light->getNearPointer());
 	pFar.update(light->original->getFarPointer(), light->getFarPointer());
+	pFov.update(light->original->getFovPointer(), light->getFovPointer());
+	//float* fov_orig = light->original->getFovPointer();
+	//if (fov_orig) {
+	//	float* fov_dest = light->getFovPointer();
+	//	if (fov_dest) {
+	//		*fov_orig = rad2deg(*fov_orig);
+	//		*fov_dest = rad2deg(*fov_dest);
+	//		*fov_orig = deg2rad(*fov_orig);
+	//		*fov_dest = deg2rad(*fov_dest);
+	//	}
+	//}
 }
 
-void CEditorLights::EditLight::LightParam::update(float * orig, float * dest)
+void CEditorLights::EditLight::LightParam::update(float *orig, float * dest)
 {
+	if (!orig || !dest) return;
+	ToDisplay(orig);
+	ToDisplay(dest);
+	/*
+	float* fov_orig = light->original->getFovPointer();
+	if (fov_orig) {
+	float* fov_dest = light->getFovPointer();
+	if (fov_dest) {
+	*fov_orig = rad2deg(*fov_orig);
+	*fov_dest = rad2deg(*fov_dest);
+	pFov.update(fov_orig, light->getFovPointer());
+	*fov_orig = deg2rad(*fov_orig);
+	*fov_dest = deg2rad(*fov_dest);
+	}
+	}
+	*/
+
 	switch (mode) {
 	case OFFSET:
 		*dest = *orig + v;
@@ -597,4 +630,6 @@ void CEditorLights::EditLight::LightParam::update(float * orig, float * dest)
 		break;
 	}
 	*dest = clamp(*dest, rmin, rmax);
+	ToIntern(orig);
+	ToIntern(dest);
 }
