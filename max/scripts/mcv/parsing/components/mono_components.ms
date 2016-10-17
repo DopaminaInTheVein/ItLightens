@@ -13,6 +13,13 @@ fn parseMonoComponent = (
 		parsed = true
 	)
 	
+	if ((getUserProp _parsingObject "collision") as string ) == "yes" then (
+		if (classof _parsingObject) == Box then (
+			parseRigidBody XML_PARSING _parsingObject
+		)
+	)
+	
+	
 	if ( (getUserProp _parsingObject "typeObject") as string) == "railCamera"  then
 	(
 		_parse_rail_camera()

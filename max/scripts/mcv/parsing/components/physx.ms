@@ -14,6 +14,7 @@ fn parseTypeShape xml collider isTrigger = (
 			 typeShape = "convex"
 		 ) else if (classof collider == Box) then (
 			local box_forced = ((getUserProp collider "box_forced") as string) == "yes"
+			box_forced = box_forced or ((getUserProp collider "typeHelper") == undefined)
 			if isTrigger or box_forced then(
 				typeShape = "box"
 				local ss = stringstream ""
@@ -67,14 +68,14 @@ fn parseRigidBodySpecial = (
 )
 
 fn parseRigidBody parent collider = (
-	local xml = XML_PARSING.addChild "rigidbody"
+	local xml = parent.addChild "rigidbody"
 	
 	-- Type Collision (static, dynamic, trigger)
 	local typeCollision = "static"
 	if collider != undefined then (
 		local dynamic = getUserProp collider "dynamic"
 		if dynamic == "yes" then typeCollision = "dynamic"
-		XML_PARSING.addChild "local_aabb"
+		parent.addChild "local_aabb"
 	)
 	xml.addAttr "type_collision" typeCollision
 	
