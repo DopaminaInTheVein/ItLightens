@@ -24,7 +24,6 @@ class elevator : public TCompBase {
 	eElevatorState prevState;
 
 	//Update info
-	CHandle myEntity;
 	CHandle player;
 	CHandle camera;
 	TCompTransform * transform;

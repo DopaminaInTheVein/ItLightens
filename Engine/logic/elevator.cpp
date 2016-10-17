@@ -129,19 +129,20 @@ void elevator::updateMove()
 void elevator::notifyNewState()
 {
 	if (prevState != state) {
-		string nameElevator = string(((CEntity*)myEntity)->getName());
+		string nameElevator = MY_NAME;
+		CHandle me = MY_OWNER;
 		switch (state) {
 		case UP:
-			logic_manager->throwEvent(CLogicManagerModule::EVENT::OnElevatorUp, nameElevator, myEntity);
+			logic_manager->throwEvent(CLogicManagerModule::EVENT::OnElevatorUp, nameElevator, me);
 			break;
 		case DOWN:
-			logic_manager->throwEvent(CLogicManagerModule::EVENT::OnElevatorDown, nameElevator, myEntity);
+			logic_manager->throwEvent(CLogicManagerModule::EVENT::OnElevatorDown, nameElevator, me);
 			break;
 		case GOING_UP:
-			logic_manager->throwEvent(CLogicManagerModule::EVENT::OnElevatorGoingUp, nameElevator, myEntity);
+			logic_manager->throwEvent(CLogicManagerModule::EVENT::OnElevatorGoingUp, nameElevator, me);
 			break;
 		case GOING_DOWN:
-			logic_manager->throwEvent(CLogicManagerModule::EVENT::OnElevatorGoingDown, nameElevator, myEntity);
+			logic_manager->throwEvent(CLogicManagerModule::EVENT::OnElevatorGoingDown, nameElevator, me);
 			break;
 		}
 	}
