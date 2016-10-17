@@ -385,4 +385,7 @@ struct TMsgControlsChanged {
 struct TMsgDifficultyChanged {
 	DECLARE_MSG_ID();
 };
+struct TMsgDestroyLight {
+	DECLARE_MSG_ID();
+};
 #endif

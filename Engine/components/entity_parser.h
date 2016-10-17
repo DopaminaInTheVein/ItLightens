@@ -57,6 +57,7 @@ class CEntityParser : public CXMLParser {
 	bool first_load;
 	bool reload = false;
 	bool loading_control = false;
+	bool only_lights = false;
 	CHandle root_entity;
 	VHandles handles;
 	static VHandles collisionables;
@@ -91,7 +92,9 @@ public:
 		return result;
 	}
 	bool hasToCreate();
+	bool hasToParse(std::string elem);
 	void setLoadingControl(bool value) { loading_control = value; }
+	void setOnlyLights(bool value) { only_lights = value; }
 };
 
 CHandle spawnPrefab(const std::string& prefab); // create Prefab and call onCreate

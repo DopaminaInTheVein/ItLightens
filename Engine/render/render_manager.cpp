@@ -788,7 +788,7 @@ void CRenderManager::renderShadowCasters(CHandle h_light, int room) {
 //render shadowcaster with skinning tech
 void CRenderManager::renderShadowCastersSkin(CHandle h_light, int room) {
 	PROFILE_FUNCTION("SHADOW CASTER SKIN");
-
+	if (all_shadow_skinning_keys[room].empty()) return;
 	CEntity* e_camera = h_light;
 
 	if (!in_order_shadows_skin) {

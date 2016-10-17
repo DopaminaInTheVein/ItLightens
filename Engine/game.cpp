@@ -198,6 +198,14 @@ void CApp::loadEntities(string file_name) {
 	entities->loadXML(info);
 }
 
+void CApp::loadLights(string file_name) {
+	CEntitiesModule::ParsingInfo info;
+	info.filename = file_name;
+	info.reload = false;
+	info.lights_only = false;
+	entities->loadXML(info);
+}
+
 //void CApp::restart() {
 //	HWND hTempWnd = getHWnd();
 //	char szFileName[MAX_PATH] = "";

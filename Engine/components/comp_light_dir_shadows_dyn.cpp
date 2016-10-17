@@ -21,7 +21,7 @@ void TCompLightDirShadowsDynamic::update(float dt) {
 	GET_COMP(t_player, player, TCompTransform);
 	if (t_player) {
 		VEC3 target = t_player->getPosition();
-		if(last_position_target != target)
+		if (last_position_target != target)
 			this->lookAt(getPosition(), target);
 	}
 	//updateFromEntityTransform(owner);
@@ -29,6 +29,7 @@ void TCompLightDirShadowsDynamic::update(float dt) {
 
 void TCompLightDirShadowsDynamic::activate() {
 	PROFILE_FUNCTION("shadows: activate");
+	if (!enabled) return;
 	CHandle owner = CHandle(this).getOwner();
 	activateWorldMatrix(getViewProjection().Invert());
 	rt_shadows->getZTexture()->activate(TEXTURE_SLOT_SHADOWMAP);
@@ -40,7 +41,6 @@ bool TCompLightDirShadowsDynamic::save(std::ofstream& os, MKeyValue& atts) {
 	atts.put("resolution", res);
 	return true;
 }
-
 
 void TCompLightDirShadowsDynamic::generateShadowMap() {
 	if (!enabled)
@@ -80,3 +80,20 @@ void TCompLightDirShadowsDynamic::setNewFov(float fov_in_rads) {
 	setProjection(fov_in_rads, getZNear(), getZFar());
 }
 
+void TCompLightDirShadowsDynamic::start_editing() {
+	if (original) delete original;
+	original = new TCompLightDirShadowsDynamic;
+	*original = *this;
+	original->original = false;
+}
+void TCompLightDirShadowsDynamic::cancel_editing() {
+	if (!original) return;
+	TCompLightDirShadowsDynamic * light_to_delete = original;
+	*this = *original;
+	if (light_to_delete) delete light_to_delete;
+	if (original) delete original;
+}
+
+TCompLightDirShadowsDynamic::~TCompLightDirShadowsDynamic() {
+	if (original) delete original;
+}

@@ -1,7 +1,7 @@
 #ifndef  INC_EDITOR_LIGHTS_H_
 #define  INC_EDITOR_LIGHTS_H_
 
-#define DEFAULT_LIGHTS "default_lights"
+#define DEFAULT_LIGHTS ""
 
 #include <vector>
 
@@ -11,6 +11,8 @@ class TCompLightPoint;
 class TCompLightDir;
 class TCompLightDirShadows;
 
+#define LightTemplate template <typename TLight>
+
 class CEditorLights {
 public:
 	//CEditorLights();
@@ -18,6 +20,7 @@ public:
 		POINT = 1,
 		DIR,
 		DIR_SHADOWS,
+		DIR_SHADOWS_DYN,
 	};
 
 	enum MultiEditState {
@@ -78,7 +81,7 @@ public:
 		FovParam pFov = FovParam("Fov", 0.1f, 1.f, 120.f);
 		void renderInMenu();
 		template <typename TLight>
-		void updateLight(TLight* light);
+		void updateLight(CHandle hlight);
 	};
 
 private:
@@ -109,16 +112,22 @@ public:
 	void update(float dt);
 
 	bool LoadLights();
+	LightTemplate void LoadLights(TypeLight tl);
+
 	bool SaveLights(std::string filename = DEFAULT_LIGHTS);
+	LightTemplate bool SaveLight(CHandle hlight, std::ofstream& ofs, MKeyValue& atts);
+
 	bool AddLightToSave(CHandle h, TypeLight type);
 	bool AddLightToEngine(TypeLight type, bool* rooms);
 	bool RemoveLight(CHandle h, std::vector<CHandle>& v_lights, std::vector<TypeLight>& v_types);
+
 	bool HideLight(CHandle h);
+	LightTemplate bool HideLight(CEntity* e);
 
 	void SetRenderDebug(bool value, std::vector<CHandle> v_lights, std::vector<TypeLight> v_types);
+	LightTemplate void SetRenderDebug(CHandle light, bool value);
 
-	template <typename TLight>
-	void renderLightComp(TLight * pl);
+	LightTemplate void renderLightComp(TLight * pl);
 
 	bool GetShowAxis() const { return m_show_axis; }
 
@@ -127,18 +136,26 @@ public:
 	void RenderNewLight();
 	void RenderAllLights();
 	void RenderMultiEdit();
+	void DestroySelected();
 
 	void RenderLightList(VHandles& lights, VTypeLights& types, bool temporal, LightList& list);
 
 	void RenderLight(CHandle& hlight, TypeLight& type, bool temporal);
-	template <typename TLight>
-	void RenderLight(CHandle& hlight, TypeLight& type, bool temporal);
+	LightTemplate void RenderLight(CHandle& hlight, TypeLight& type, bool temporal);
 
 	void RenderTemporalLight(CHandle& light, TypeLight& type, bool& enabled);
 	void StartEditLight(CHandle hlight);
+	LightTemplate void StartEditLight(CHandle hlight);
+
 	void CancelEditLight(CHandle hlight);
+	LightTemplate void CancelEditLight(CHandle hlight);
+
 	void SetSelected(CHandle hlight, bool sel);
+	LightTemplate void SetSelected(CHandle hlight, bool sel);
+
 	bool IsSelected(CHandle hlight);
+	LightTemplate bool IsSelected(CHandle hlight);
+
 	void UpdateEditingLight(CHandle hlight);
 };
 

@@ -8,8 +8,7 @@ class CRenderToTexture;
 
 // ------------------------------------
 struct TCompLightDirShadowsDynamic : public TCompLightDirShadows {
-
-	VEC3 last_position_target = VEC3(0,0,0);
+	VEC3 last_position_target = VEC3(0, 0, 0);
 
 	bool save(std::ofstream & os, MKeyValue & atts);
 	void init();
@@ -23,6 +22,11 @@ struct TCompLightDirShadowsDynamic : public TCompLightDirShadows {
 
 	void activate();
 
+	//Editor
+	TCompLightDirShadowsDynamic* original = nullptr;
+	void start_editing();
+	void cancel_editing();
+	~TCompLightDirShadowsDynamic();
 };
 
 #endif

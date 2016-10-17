@@ -19,6 +19,7 @@ public:
 		std::string filename;
 		bool reload;
 		bool loading_control = false;
+		bool lights_only = false;
 	};
 
 	bool start() override;

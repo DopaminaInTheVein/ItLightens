@@ -1,0 +1,900 @@
+<entities
+>
+<entity
+	permanent="0"
+	reload="0"
+>
+<name
+	name="Omni100"
+	/>
+<room
+	name="1/2"
+	/>
+<transform
+	pos="-9.300000 -8.482000 -1.000000"
+	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<tags
+	tags=""
+	/>
+<light_point
+	color="0.700000 0.700000 0.500000 1.000000"
+	in_radius="25"
+	out_radius="70"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="0"
+>
+<name
+	name="Omni001"
+	/>
+<room
+	name="1/2"
+	/>
+<transform
+	pos="-91.664001 4.218000 -9.648000"
+	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<tags
+	tags=""
+	/>
+<light_point
+	color="0.700000 0.700000 1.000000 0.400000"
+	in_radius="7"
+	out_radius="15"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="0"
+>
+<name
+	name="Omni021"
+	/>
+<room
+	name="1/2"
+	/>
+<transform
+	pos="-92.564003 4.218000 -18.148001"
+	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<tags
+	tags=""
+	/>
+<light_point
+	color="0.700000 0.700000 1.000000 0.400000"
+	in_radius="7"
+	out_radius="15"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="0"
+>
+<name
+	name="Omni022"
+	/>
+<room
+	name="2"
+	/>
+<transform
+	pos="-86.264000 4.218000 -26.448000"
+	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<tags
+	tags=""
+	/>
+<light_point
+	color="0.700000 0.700000 1.000000 0.400000"
+	in_radius="7"
+	out_radius="15"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="0"
+>
+<name
+	name="Omni023"
+	/>
+<room
+	name="2"
+	/>
+<transform
+	pos="-79.564003 4.218000 -26.448000"
+	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<tags
+	tags=""
+	/>
+<light_point
+	color="0.700000 0.700000 1.000000 0.400000"
+	in_radius="7"
+	out_radius="15"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="0"
+>
+<name
+	name="Omni_oficina"
+	/>
+<room
+	name="2"
+	/>
+<transform
+	pos="-80.863998 1.518000 -8.448000"
+	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<tags
+	tags=""
+	/>
+<light_point
+	color="0.700000 0.700000 1.000000 0.700000"
+	in_radius="6"
+	out_radius="12"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="0"
+>
+<name
+	name="Omni_cosas"
+	/>
+<room
+	name="2"
+	/>
+<transform
+	pos="-90.064003 1.318000 16.752001"
+	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<tags
+	tags=""
+	/>
+<light_point
+	color="0.700000 0.700000 1.000000 1.000000"
+	in_radius="5"
+	out_radius="10"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="0"
+>
+<name
+	name="Omni_cosas_p"
+	/>
+<room
+	name="2"
+	/>
+<transform
+	pos="-88.634003 0.318000 21.452000"
+	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<tags
+	tags=""
+	/>
+<light_point
+	color="1.000000 1.000000 0.500000 0.700000"
+	in_radius="3"
+	out_radius="6"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="0"
+>
+<name
+	name="Omni024"
+	/>
+<room
+	name="2"
+	/>
+<transform
+	pos="-77.164001 4.218000 -15.448000"
+	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<tags
+	tags=""
+	/>
+<light_point
+	color="0.700000 0.700000 1.000000 0.400000"
+	in_radius="7"
+	out_radius="15"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="0"
+>
+<name
+	name="Omni007"
+	/>
+<room
+	name="2"
+	/>
+<transform
+	pos="-100.264000 4.218000 -9.148000"
+	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<tags
+	tags=""
+	/>
+<light_point
+	color="0.700000 0.700000 1.000000 0.400000"
+	in_radius="7"
+	out_radius="15"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="0"
+>
+<name
+	name="Omni0011"
+	/>
+<room
+	name="2"
+	/>
+<transform
+	pos="-91.064003 4.218000 2.052000"
+	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<tags
+	tags=""
+	/>
+<light_point
+	color="0.700000 0.700000 1.000000 0.400000"
+	in_radius="7"
+	out_radius="15"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="0"
+>
+<name
+	name="Omni0012"
+	/>
+<room
+	name="2"
+	/>
+<transform
+	pos="-83.863998 4.218000 2.052000"
+	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<tags
+	tags=""
+	/>
+<light_point
+	color="0.700000 0.700000 1.000000 0.400000"
+	in_radius="7"
+	out_radius="15"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="0"
+>
+<name
+	name="Omni0013"
+	/>
+<room
+	name="1/2"
+	/>
+<transform
+	pos="-77.064003 4.218000 2.052000"
+	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<tags
+	tags=""
+	/>
+<light_point
+	color="0.700000 0.700000 1.000000 0.400000"
+	in_radius="7"
+	out_radius="15"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="0"
+>
+<name
+	name="Omni0014"
+	/>
+<room
+	name="1/2"
+	/>
+<transform
+	pos="-70.264000 4.218000 -6.948000"
+	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<tags
+	tags=""
+	/>
+<light_point
+	color="0.700000 0.700000 1.000000 0.400000"
+	in_radius="7"
+	out_radius="15"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="0"
+>
+<name
+	name="Omni0015"
+	/>
+<room
+	name="1/2"
+	/>
+<transform
+	pos="-64.764000 4.218000 -6.948000"
+	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<tags
+	tags=""
+	/>
+<light_point
+	color="0.700000 0.700000 1.000000 0.400000"
+	in_radius="7"
+	out_radius="15"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="0"
+>
+<name
+	name="Omni0016"
+	/>
+<room
+	name="1/2"
+	/>
+<transform
+	pos="-64.963997 4.218000 7.652000"
+	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<tags
+	tags=""
+	/>
+<light_point
+	color="0.700000 0.700000 1.000000 0.400000"
+	in_radius="7"
+	out_radius="15"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="0"
+>
+<name
+	name="Omni0017"
+	/>
+<room
+	name="1/2"
+	/>
+<transform
+	pos="-64.963997 4.218000 17.052000"
+	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<tags
+	tags=""
+	/>
+<light_point
+	color="0.700000 0.700000 1.000000 0.400000"
+	in_radius="7"
+	out_radius="15"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="0"
+>
+<name
+	name="Omni0018"
+	/>
+<room
+	name="1/2"
+	/>
+<transform
+	pos="-69.564003 4.218000 17.052000"
+	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<tags
+	tags=""
+	/>
+<light_point
+	color="0.700000 0.700000 1.000000 0.400000"
+	in_radius="7"
+	out_radius="15"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="0"
+>
+<name
+	name="Omni0019"
+	/>
+<room
+	name="1/2"
+	/>
+<transform
+	pos="-69.564003 4.218000 7.652000"
+	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<tags
+	tags=""
+	/>
+<light_point
+	color="0.700000 0.700000 1.000000 0.400000"
+	in_radius="7"
+	out_radius="15"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="0"
+>
+<name
+	name="Omni002"
+	/>
+<room
+	name="2"
+	/>
+<transform
+	pos="-108.363998 1.180000 -9.848000"
+	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<tags
+	tags=""
+	/>
+<light_point
+	color="1.000000 1.000000 0.500000 0.400000"
+	in_radius="4"
+	out_radius="8"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="0"
+>
+<name
+	name="Omni003"
+	/>
+<room
+	name="2"
+	/>
+<transform
+	pos="-115.863998 1.180000 -9.848000"
+	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<tags
+	tags=""
+	/>
+<light_point
+	color="1.000000 1.000000 0.500000 0.400000"
+	in_radius="4"
+	out_radius="8"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="0"
+>
+<name
+	name="Omni004"
+	/>
+<room
+	name="2"
+	/>
+<transform
+	pos="-122.164001 0.880000 -9.848000"
+	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<tags
+	tags=""
+	/>
+<light_point
+	color="1.000000 1.000000 0.500000 0.400000"
+	in_radius="4"
+	out_radius="8"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="0"
+>
+<name
+	name="Omni005"
+	/>
+<room
+	name="2"
+	/>
+<transform
+	pos="-121.564003 1.280000 -5.848000"
+	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<tags
+	tags=""
+	/>
+<light_point
+	color="0.100000 0.100000 1.000000 0.700000"
+	in_radius="2"
+	out_radius="4"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="0"
+>
+<name
+	name="Omni_cientifico001"
+	/>
+<room
+	name="2"
+	/>
+<transform
+	pos="-67.564003 18.118000 15.552000"
+	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<tags
+	tags=""
+	/>
+<light_point
+	color="0.700000 0.700000 1.000000 0.700000"
+	in_radius="4"
+	out_radius="8"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="0"
+>
+<name
+	name="Omni_cientifico002"
+	/>
+<room
+	name="2"
+	/>
+<transform
+	pos="-65.264000 18.118000 18.052000"
+	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<tags
+	tags=""
+	/>
+<light_point
+	color="0.700000 0.700000 1.000000 0.700000"
+	in_radius="4"
+	out_radius="8"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="0"
+>
+<name
+	name="Omni_cientifico003"
+	/>
+<room
+	name="2"
+	/>
+<transform
+	pos="-65.264000 18.118000 13.152000"
+	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<tags
+	tags=""
+	/>
+<light_point
+	color="0.700000 0.700000 1.000000 0.700000"
+	in_radius="4"
+	out_radius="8"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="0"
+>
+<name
+	name="Omni_cientifico004"
+	/>
+<room
+	name="2"
+	/>
+<transform
+	pos="-63.764000 18.118000 13.152000"
+	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<tags
+	tags=""
+	/>
+<light_point
+	color="0.700000 0.700000 1.000000 0.700000"
+	in_radius="4"
+	out_radius="8"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="0"
+>
+<name
+	name="Omni_cientifico_p_001"
+	/>
+<room
+	name="2"
+	/>
+<transform
+	pos="-65.764000 17.417999 9.052000"
+	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<tags
+	tags=""
+	/>
+<light_point
+	color="1.000000 0.700000 0.500000 0.700000"
+	in_radius="4"
+	out_radius="8"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="0"
+>
+<culling
+	/>
+<light_dir_shadows
+	color="1.000000 1.000000 1.000000 1.000000"
+	fov="0.785398"
+	resolution="512"
+	zfar="12"
+	znear="5"
+	/>
+<name
+	name="light_dir_shadows"
+	/>
+<room
+	name="2"
+	/>
+<transform
+	pos="-99.363998 9.518000 -9.148000"
+	quat="0.706490 0.000000 0.000000 0.707723"
+	scale="1.000000 1.000000 1.000000"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="0"
+>
+<culling
+	/>
+<light_dir_shadows
+	color="1.000000 1.000000 1.000000 1.000000"
+	fov="0.785398"
+	resolution="512"
+	zfar="12"
+	znear="5"
+	/>
+<name
+	name="light_dir_shadows1"
+	/>
+<room
+	name="2"
+	/>
+<transform
+	pos="-91.963997 9.518000 -9.148000"
+	quat="0.706490 0.000000 0.000000 0.707723"
+	scale="1.000000 1.000000 1.000000"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="0"
+>
+<culling
+	/>
+<light_dir_shadows
+	color="1.000000 1.000000 1.000000 1.000000"
+	fov="0.785398"
+	resolution="512"
+	zfar="12"
+	znear="5"
+	/>
+<name
+	name="light_dir_shadows5"
+	/>
+<room
+	name="2"
+	/>
+<transform
+	pos="-83.564003 9.518000 2.452000"
+	quat="0.706490 0.000000 0.000000 0.707723"
+	scale="1.000000 1.000000 1.000000"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="0"
+>
+<culling
+	/>
+<light_dir_shadows
+	color="1.000000 1.000000 1.000000 1.000000"
+	fov="0.785398"
+	resolution="512"
+	zfar="12"
+	znear="5"
+	/>
+<name
+	name="light_dir_shadows6"
+	/>
+<room
+	name="2"
+	/>
+<transform
+	pos="-77.664001 9.218000 2.452000"
+	quat="0.706490 0.000000 0.000000 0.707723"
+	scale="1.000000 1.000000 1.000000"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="0"
+>
+<culling
+	/>
+<light_dir_shadows
+	color="1.000000 1.000000 1.000000 1.000000"
+	fov="0.785398"
+	resolution="512"
+	zfar="12"
+	znear="5"
+	/>
+<name
+	name="light_dir_shadows7"
+	/>
+<room
+	name="2"
+	/>
+<transform
+	pos="-90.963997 9.218000 2.452000"
+	quat="0.706490 0.000000 0.000000 0.707723"
+	scale="1.000000 1.000000 1.000000"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="0"
+>
+<culling
+	/>
+<light_dir_shadows
+	color="1.000000 1.000000 1.000000 1.000000"
+	fov="0.698132"
+	resolution="512"
+	zfar="8"
+	znear="5"
+	/>
+<name
+	name="light_dir_shadows2"
+	/>
+<room
+	name="2"
+	/>
+<transform
+	pos="-108.564003 6.018000 -10.448000"
+	quat="0.706490 0.000000 0.000000 0.707723"
+	scale="1.000000 1.000000 1.000000"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="0"
+>
+<culling
+	/>
+<light_dir_shadows
+	color="1.000000 1.000000 1.000000 1.000000"
+	fov="0.698132"
+	resolution="512"
+	zfar="8"
+	znear="5"
+	/>
+<name
+	name="light_dir_shadows3"
+	/>
+<room
+	name="2"
+	/>
+<transform
+	pos="-116.963997 6.018000 -9.848000"
+	quat="0.706490 0.000000 0.000000 0.707723"
+	scale="1.000000 1.000000 1.000000"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="0"
+>
+<culling
+	/>
+<light_dir_shadows
+	color="1.000000 1.000000 1.000000 1.000000"
+	fov="0.698132"
+	resolution="512"
+	zfar="8"
+	znear="5"
+	/>
+<name
+	name="light_dir_shadows4"
+	/>
+<room
+	name="2"
+	/>
+<transform
+	pos="-122.264000 5.900000 -9.848000"
+	quat="0.706490 0.000000 0.000000 0.707723"
+	scale="1.000000 1.000000 1.000000"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="0"
+>
+<culling
+	/>
+<light_dir_shadows_dynamic
+	color="1.000000 1.000000 1.000000 1.000000"
+	fov="0.872665"
+	resolution="512"
+	zfar="100"
+	znear="5"
+	/>
+<name
+	name="light_dir_shadows10"
+	/>
+<room
+	name="1"
+	/>
+<transform
+	pos="-9.600000 -10.300000 -1.100000"
+	quat="0.706490 0.000000 0.000000 0.707723"
+	scale="1.000000 1.000000 1.000000"
+	/>
+</entity>
+</entities>

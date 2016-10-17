@@ -94,6 +94,7 @@ CHandle createPrefab(const std::string& prefab) {
 #define MUST_COMPILE_SNOOZER (curr_slept_compiler && elem != "entity" && elem != "tags" && elem != "name")
 
 void CEntityParser::onStartElement(const std::string &elem, MKeyValue &atts) {
+	if (!hasToParse(elem)) return;
 	if (curr_prefab_compiler) {
 		CPrefabCompiler::TCall c;
 		c.is_start = true;
@@ -178,6 +179,8 @@ void CEntityParser::onStartElement(const std::string &elem, MKeyValue &atts) {
 }
 
 void CEntityParser::onEndElement(const std::string &elem) {
+	if (!hasToParse(elem)) return;
+
 	if (curr_prefab_compiler) {
 		CPrefabCompiler::TCall c;
 		c.is_start = false;
@@ -234,5 +237,23 @@ bool CEntityParser::hasToCreate()
 {
 	//if (curr_entity_permanent && !first_load) return false;
 	if (reload && !curr_entity_reload) return false;
+	return true;
+}
+
+bool CEntityParser::hasToParse(std::string elem)
+{
+	if (only_lights) {
+		return elem == "entity"
+			|| elem == "tags"
+			|| elem == "name"
+			|| elem == "transform"
+			|| elem == "room"
+			|| elem == "culling"
+			|| elem == "light_point"
+			|| elem == "light_dir"
+			|| elem == "light_dir_shadows"
+			|| elem == "light_dir_shadows_dynamic"
+			;
+	}
 	return true;
 }

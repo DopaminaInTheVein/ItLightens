@@ -67,8 +67,8 @@ DECL_OBJ_MANAGER("abs_aabb", TCompAbsAABB);
 DECL_OBJ_MANAGER("local_aabb", TCompLocalAABB);
 DECL_OBJ_MANAGER("culling", TCompCulling);
 DECL_OBJ_MANAGER("light_dir", TCompLightDir);
-DECL_OBJ_MANAGER("light_dir_shadows_dynamic", TCompLightDirShadowsDynamic);
 DECL_OBJ_MANAGER("light_dir_shadows", TCompLightDirShadows);
+DECL_OBJ_MANAGER("light_dir_shadows_dynamic", TCompLightDirShadowsDynamic);
 DECL_OBJ_MANAGER("tags", TCompTags);
 DECL_OBJ_MANAGER("light_point", TCompLightPoint);
 DECL_OBJ_MANAGER("light_fadable", TCompLightFadable);
@@ -499,6 +499,7 @@ bool CEntitiesModule::loadXML(CEntitiesModule::ParsingInfo& info)
 {
 	CEntityParser ep(info.reload);
 	ep.setLoadingControl(info.loading_control);
+	ep.setOnlyLights(info.lights_only);
 	dbg("Loading XML [%s]... (entities before: %d)\n", info.filename.c_str(), size());
 	bool is_ok = ep.xmlParseFile("data/scenes/" + info.filename + ".xml");
 
