@@ -41,11 +41,13 @@ void CHandle::renderInMenu() {
 		hm->renderInMenu(*this);
 }
 
+#ifndef NDEBUG
 bool* CHandle::getDebug() {
 	auto hm = CHandleManager::getByType(type);
 	if (hm)
 		return hm->getDebug(*this);
 }
+#endif
 
 // ------------------------------------
 void CHandle::setOwner(CHandle new_owner) {

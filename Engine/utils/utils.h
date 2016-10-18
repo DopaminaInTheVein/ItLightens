@@ -21,7 +21,7 @@
 #ifdef NDEBUG
 
 #define dbg(...)
-#define		DEBUG_CODE if (false)
+#define		DEBUG_CODE (false)
 #define		DEBUG_COMP(comp) DEBUG_CODE
 #else
 void		dbg(const char* fmt, ...);

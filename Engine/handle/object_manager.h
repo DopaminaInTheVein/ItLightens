@@ -140,12 +140,14 @@ public:
 		obj->renderInMenu();
 	}
 	// -------------------------
+#ifndef NDEBUG
 	bool* getDebug(CHandle h) override {
 		auto obj = getAddrFromHandle(h);
 		if (!obj)
 			return nullptr;
 		obj->getDebug();
 	}
+#endif
 	// -------------------------
 	void onAll(void (TObj::*member_fn)() const) const {
 		auto o = objs;
