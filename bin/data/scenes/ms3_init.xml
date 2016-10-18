@@ -100,9 +100,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/enchufe"
-   use_navmesh="ms3/enchufe"
-   only_navmesh="ms3/enchufe"/>
+   mesh_name="ms3/enchufe"/>
 <room
    name="2"/>
 
@@ -123,9 +121,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/mesa_cientifico_up_mapeado"
-   use_navmesh="ms3/mesa_cientifico_up_mapeado"
-   only_navmesh="ms3/mesa_cientifico_up_mapeado"/>
+   mesh_name="ms3/mesa_cientifico_up_mapeado"/>
 <room
    name="2"/>
 
@@ -146,9 +142,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/mesa_cientifico_up_mapeado001"
-   use_navmesh="ms3/mesa_cientifico_up_mapeado001"
-   only_navmesh="ms3/mesa_cientifico_up_mapeado001"/>
+   mesh_name="ms3/mesa_cientifico_up_mapeado001"/>
 <room
    name="2"/>
 
@@ -169,9 +163,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/pared_rompible"
-   use_navmesh="ms3/pared_rompible"
-   only_navmesh="ms3/pared_rompible"/>
+   mesh_name="ms3/pared_rompible"/>
 <room
    name="2"/>
 
@@ -1700,9 +1692,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/cargador_bateria"
-   use_navmesh="ms3/cargador_bateria"
-   only_navmesh="ms3/cargador_bateria"/>
+   mesh_name="ms3/cargador_bateria"/>
 
 </entity>
 <entity

@@ -12,9 +12,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="tuto_sci/paredes"
-   use_navmesh="tuto_sci/paredes"
-   only_navmesh="tuto_sci/paredes"/>
+   mesh_name="tuto_sci/paredes"/>
 
 </entity>
 <entity>
@@ -31,9 +29,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="tuto_sci/generator"
-   use_navmesh="tuto_sci/generator"
-   only_navmesh="tuto_sci/generator"/>
+   mesh_name="tuto_sci/generator"/>
 
 </entity>
 <entity>
@@ -61,9 +57,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="tuto_sci/papelera"
-   use_navmesh="tuto_sci/papelera"
-   only_navmesh="tuto_sci/papelera"/>
+   mesh_name="tuto_sci/papelera"/>
 
 </entity>
 <entity>
@@ -79,9 +73,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="tuto_sci/rejillapequenhamapeadabaajo"
-   use_navmesh="tuto_sci/rejillapequenhamapeadabaajo"
-   only_navmesh="tuto_sci/rejillapequenhamapeadabaajo"/>
+   mesh_name="tuto_sci/rejillapequenhamapeadabaajo"/>
 
 </entity>
 <entity>
@@ -97,9 +89,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="tuto_sci/soporte_balcon_mapeado001"
-   use_navmesh="tuto_sci/soporte_balcon_mapeado001"
-   only_navmesh="tuto_sci/soporte_balcon_mapeado001"/>
+   mesh_name="tuto_sci/soporte_balcon_mapeado001"/>
 
 </entity>
 <entity>
@@ -115,9 +105,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="tuto_sci/sillas"
-   use_navmesh="tuto_sci/sillas"
-   only_navmesh="tuto_sci/sillas"/>
+   mesh_name="tuto_sci/sillas"/>
 
 </entity>
 <entity>
@@ -133,9 +121,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="tuto_sci/plafones"
-   use_navmesh="tuto_sci/plafones"
-   only_navmesh="tuto_sci/plafones"/>
+   mesh_name="tuto_sci/plafones"/>
 
 </entity>
 <entity>
@@ -151,9 +137,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="tuto_sci/marco_puerta_abajo"
-   use_navmesh="tuto_sci/marco_puerta_abajo"
-   only_navmesh="tuto_sci/marco_puerta_abajo"/>
+   mesh_name="tuto_sci/marco_puerta_abajo"/>
 
 </entity>
 <entity>
@@ -169,9 +153,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="tuto_sci/banners"
-   use_navmesh="tuto_sci/banners"
-   only_navmesh="tuto_sci/banners"/>
+   mesh_name="tuto_sci/banners"/>
 
 </entity>
 <entity>
@@ -187,9 +169,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="tuto_sci/puerta_gigante"
-   use_navmesh="tuto_sci/puerta_gigante"
-   only_navmesh="tuto_sci/puerta_gigante"/>
+   mesh_name="tuto_sci/puerta_gigante"/>
 
 </entity>
 <entity>
@@ -205,9 +185,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="tuto_sci/farolillos002"
-   use_navmesh="tuto_sci/farolillos002"
-   only_navmesh="tuto_sci/farolillos002"/>
+   mesh_name="tuto_sci/farolillos002"/>
 
 </entity>
 <entity
@@ -279,9 +257,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="tuto_sci/farolillos003"
-   use_navmesh="tuto_sci/farolillos003"
-   only_navmesh="tuto_sci/farolillos003"/>
+   mesh_name="tuto_sci/farolillos003"/>
 
 </entity>
 <entity
@@ -353,9 +329,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="tuto_sci/farolillos004"
-   use_navmesh="tuto_sci/farolillos004"
-   only_navmesh="tuto_sci/farolillos004"/>
+   mesh_name="tuto_sci/farolillos004"/>
 
 </entity>
 <entity
@@ -469,9 +443,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="tuto_sci/extintor_mapeado"
-   use_navmesh="tuto_sci/extintor_mapeado"
-   only_navmesh="tuto_sci/extintor_mapeado"/>
+   mesh_name="tuto_sci/extintor_mapeado"/>
 
 </entity>
 <entity>
@@ -487,9 +459,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="tuto_sci/taquilla"
-   use_navmesh="tuto_sci/taquilla"
-   only_navmesh="tuto_sci/taquilla"/>
+   mesh_name="tuto_sci/taquilla"/>
 
 </entity>
 <entity>
@@ -505,9 +475,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="tuto_sci/estanteria_2"
-   use_navmesh="tuto_sci/estanteria_2"
-   only_navmesh="tuto_sci/estanteria_2"/>
+   mesh_name="tuto_sci/estanteria_2"/>
 
 </entity>
 <entity>
@@ -523,9 +491,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="tuto_sci/panel_mapeado"
-   use_navmesh="tuto_sci/panel_mapeado"
-   only_navmesh="tuto_sci/panel_mapeado"/>
+   mesh_name="tuto_sci/panel_mapeado"/>
 
 </entity>
 <entity>
@@ -541,9 +507,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="tuto_sci/barandilla_mapeaaado001"
-   use_navmesh="tuto_sci/barandilla_mapeaaado001"
-   only_navmesh="tuto_sci/barandilla_mapeaaado001"/>
+   mesh_name="tuto_sci/barandilla_mapeaaado001"/>
 
 </entity>
 <entity>
@@ -559,9 +523,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="tuto_sci/fuente_agua_mapeada"
-   use_navmesh="tuto_sci/fuente_agua_mapeada"
-   only_navmesh="tuto_sci/fuente_agua_mapeada"/>
+   mesh_name="tuto_sci/fuente_agua_mapeada"/>
 
 </entity>
 <entity>
@@ -577,9 +539,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="tuto_sci/escritorio"
-   use_navmesh="tuto_sci/escritorio"
-   only_navmesh="tuto_sci/escritorio"/>
+   mesh_name="tuto_sci/escritorio"/>
 
 </entity>
 <entity>
@@ -595,9 +555,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="tuto_sci/pizarra"
-   use_navmesh="tuto_sci/pizarra"
-   only_navmesh="tuto_sci/pizarra"/>
+   mesh_name="tuto_sci/pizarra"/>
 
 </entity>
 <entity>
@@ -613,9 +571,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="tuto_sci/libro_modelo3"
-   use_navmesh="tuto_sci/libro_modelo3"
-   only_navmesh="tuto_sci/libro_modelo3"/>
+   mesh_name="tuto_sci/libro_modelo3"/>
 
 </entity>
 <entity>
@@ -631,9 +587,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="tuto_sci/libro_modelo2"
-   use_navmesh="tuto_sci/libro_modelo2"
-   only_navmesh="tuto_sci/libro_modelo2"/>
+   mesh_name="tuto_sci/libro_modelo2"/>
 
 </entity>
 <entity>
@@ -649,9 +603,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="tuto_sci/libro_modelo1"
-   use_navmesh="tuto_sci/libro_modelo1"
-   only_navmesh="tuto_sci/libro_modelo1"/>
+   mesh_name="tuto_sci/libro_modelo1"/>
 
 </entity>
 <entity>
@@ -667,9 +619,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="tuto_sci/alarma_mapeada"
-   use_navmesh="tuto_sci/alarma_mapeada"
-   only_navmesh="tuto_sci/alarma_mapeada"/>
+   mesh_name="tuto_sci/alarma_mapeada"/>
 
 </entity>
 <entity>
@@ -685,9 +635,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="tuto_sci/cubo_mapeado_verdad"
-   use_navmesh="tuto_sci/cubo_mapeado_verdad"
-   only_navmesh="tuto_sci/cubo_mapeado_verdad"/>
+   mesh_name="tuto_sci/cubo_mapeado_verdad"/>
 
 </entity>
 <entity>
@@ -703,9 +651,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="tuto_sci/rejillapequenhamapeadabaajo001"
-   use_navmesh="tuto_sci/rejillapequenhamapeadabaajo001"
-   only_navmesh="tuto_sci/rejillapequenhamapeadabaajo001"/>
+   mesh_name="tuto_sci/rejillapequenhamapeadabaajo001"/>
 
 </entity>
 <entity>
@@ -721,9 +667,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="tuto_sci/rejilla_grande_mapeada001"
-   use_navmesh="tuto_sci/rejilla_grande_mapeada001"
-   only_navmesh="tuto_sci/rejilla_grande_mapeada001"/>
+   mesh_name="tuto_sci/rejilla_grande_mapeada001"/>
 
 </entity>
 <entity>
@@ -739,9 +683,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="tuto_sci/andamio_usable"
-   use_navmesh="tuto_sci/andamio_usable"
-   only_navmesh="tuto_sci/andamio_usable"/>
+   mesh_name="tuto_sci/andamio_usable"/>
 
 </entity>
 <entity>
@@ -757,9 +699,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="tuto_sci/columnas_abajo"
-   use_navmesh="tuto_sci/columnas_abajo"
-   only_navmesh="tuto_sci/columnas_abajo"/>
+   mesh_name="tuto_sci/columnas_abajo"/>
 
 </entity>
 <entity>
@@ -775,9 +715,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="tuto_sci/suelo001"
-   use_navmesh="tuto_sci/suelo001"
-   only_navmesh="tuto_sci/suelo001"/>
+   mesh_name="tuto_sci/suelo001"/>
 
 </entity>
 <entity>
@@ -793,9 +731,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="tuto_sci/rodapie"
-   use_navmesh="tuto_sci/rodapie"
-   only_navmesh="tuto_sci/rodapie"/>
+   mesh_name="tuto_sci/rodapie"/>
 
 </entity>
 <entity>
@@ -811,9 +747,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="tuto_sci/pasillo"
-   use_navmesh="tuto_sci/pasillo"
-   only_navmesh="tuto_sci/pasillo"/>
+   mesh_name="tuto_sci/pasillo"/>
 
 </entity>
 <entity>
@@ -829,9 +763,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="tuto_sci/labo"
-   use_navmesh="tuto_sci/labo"
-   only_navmesh="tuto_sci/labo"/>
+   mesh_name="tuto_sci/labo"/>
 
 </entity>
 <entity>
@@ -847,9 +779,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="tuto_sci/puerta_se_abre"
-   use_navmesh="tuto_sci/puerta_se_abre"
-   only_navmesh="tuto_sci/puerta_se_abre"/>
+   mesh_name="tuto_sci/puerta_se_abre"/>
 
 </entity>
 <entity>
@@ -865,9 +795,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="tuto_sci/balcon"
-   use_navmesh="tuto_sci/balcon"
-   only_navmesh="tuto_sci/balcon"/>
+   mesh_name="tuto_sci/balcon"/>
 
 </entity>
 <entity>
@@ -883,9 +811,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="tuto_sci/suelo_2"
-   use_navmesh="tuto_sci/suelo_2"
-   only_navmesh="tuto_sci/suelo_2"/>
+   mesh_name="tuto_sci/suelo_2"/>
 
 </entity>
 <entity>
@@ -901,9 +827,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="tuto_sci/techotutosci"
-   use_navmesh="tuto_sci/techotutosci"
-   only_navmesh="tuto_sci/techotutosci"/>
+   mesh_name="tuto_sci/techotutosci"/>
 
 </entity>
 <entity>
@@ -919,9 +843,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="tuto_sci/farolillos005"
-   use_navmesh="tuto_sci/farolillos005"
-   only_navmesh="tuto_sci/farolillos005"/>
+   mesh_name="tuto_sci/farolillos005"/>
 
 </entity>
 <entity
@@ -965,9 +887,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="tuto_sci/farolillos006"
-   use_navmesh="tuto_sci/farolillos006"
-   only_navmesh="tuto_sci/farolillos006"/>
+   mesh_name="tuto_sci/farolillos006"/>
 
 </entity>
 <entity
@@ -1011,9 +931,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="tuto_sci/puerta_cerrada_mapeada"
-   use_navmesh="tuto_sci/puerta_cerrada_mapeada"
-   only_navmesh="tuto_sci/puerta_cerrada_mapeada"/>
+   mesh_name="tuto_sci/puerta_cerrada_mapeada"/>
 
 </entity>
 

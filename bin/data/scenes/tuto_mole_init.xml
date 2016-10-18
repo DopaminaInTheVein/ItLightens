@@ -250,9 +250,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="tuto_mole/pared_rompible"
-   use_navmesh="tuto_mole/pared_rompible"
-   only_navmesh="tuto_mole/pared_rompible"/>
+   mesh_name="tuto_mole/pared_rompible"/>
 
 </entity>
 <entity
@@ -270,9 +268,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="tuto_mole/pared_rota_jaula"
-   use_navmesh="tuto_mole/pared_rota_jaula"
-   only_navmesh="tuto_mole/pared_rota_jaula"/>
+   mesh_name="tuto_mole/pared_rota_jaula"/>
 
 </entity>
 <entity

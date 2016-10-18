@@ -129,9 +129,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="tuto_sci/mesa_cientifico_up_mapeado"
-   use_navmesh="tuto_sci/mesa_cientifico_up_mapeado"
-   only_navmesh="tuto_sci/mesa_cientifico_up_mapeado"/>
+   mesh_name="tuto_sci/mesa_cientifico_up_mapeado"/>
 
 </entity>
 <entity

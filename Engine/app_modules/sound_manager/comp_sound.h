@@ -11,10 +11,13 @@
 using namespace FMOD;
 
 struct TCompSound : public TCompBase {
+private:
+	void updateHierarchy();
+public:
 	CHandle mParent;
 	VEC3 entity_position;
 	std::string entity_name;
-	TCompHierarchy* hierarchy_comp;
+	//TCompHierarchy* hierarchy_comp;
 
 	// loaded atributes
 	std::string event = "OnFluoriscent";
@@ -25,12 +28,11 @@ struct TCompSound : public TCompBase {
 	float MAX_DISTANCE = 20.f;
 
 	Studio::EventInstance* sound_instance;
-	
+
 	void init();
 	void update(float elapsed);
 	bool load(MKeyValue& atts);
 	bool save(std::ofstream& os, MKeyValue& atts);
-
 };
 
 #endif

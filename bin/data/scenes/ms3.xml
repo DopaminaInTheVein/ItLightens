@@ -24,9 +24,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/alarma_mapeada"
-   use_navmesh="ms3/alarma_mapeada"
-   only_navmesh="ms3/alarma_mapeada"/>
+   mesh_name="ms3/alarma_mapeada"/>
 <room
    name="2"/>
 
@@ -44,9 +42,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/andamio_usable"
-   use_navmesh="ms3/andamio_usable"
-   only_navmesh="ms3/andamio_usable"/>
+   mesh_name="ms3/andamio_usable"/>
 <room
    name="1"/>
 
@@ -64,9 +60,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/antenitas_cargador"
-   use_navmesh="ms3/antenitas_cargador"
-   only_navmesh="ms3/antenitas_cargador"/>
+   mesh_name="ms3/antenitas_cargador"/>
 <room
    name="2"/>
 
@@ -84,9 +78,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/balcon_redondo"
-   use_navmesh="ms3/balcon_redondo"
-   only_navmesh="ms3/balcon_redondo"/>
+   mesh_name="ms3/balcon_redondo"/>
 
 </entity>
 <entity>
@@ -102,9 +94,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/balcon_redondo_pequeno"
-   use_navmesh="ms3/balcon_redondo_pequeno"
-   only_navmesh="ms3/balcon_redondo_pequeno"/>
+   mesh_name="ms3/balcon_redondo_pequeno"/>
 <room
    name="1"/>
 
@@ -122,9 +112,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/balcon_redondo_pequeno001"
-   use_navmesh="ms3/balcon_redondo_pequeno001"
-   only_navmesh="ms3/balcon_redondo_pequeno001"/>
+   mesh_name="ms3/balcon_redondo_pequeno001"/>
 <room
    name="1"/>
 
@@ -142,9 +130,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/bandejas_mapeadas"
-   use_navmesh="ms3/bandejas_mapeadas"
-   only_navmesh="ms3/bandejas_mapeadas"/>
+   mesh_name="ms3/bandejas_mapeadas"/>
 <room
    name="2"/>
 
@@ -162,9 +148,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/barrotes_balcon_arriba"
-   use_navmesh="ms3/barrotes_balcon_arriba"
-   only_navmesh="ms3/barrotes_balcon_arriba"/>
+   mesh_name="ms3/barrotes_balcon_arriba"/>
 <room
    name="1"/>
 
@@ -182,9 +166,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/barrotes_balcon_arriba_adorno"
-   use_navmesh="ms3/barrotes_balcon_arriba_adorno"
-   only_navmesh="ms3/barrotes_balcon_arriba_adorno"/>
+   mesh_name="ms3/barrotes_balcon_arriba_adorno"/>
 <room
    name="1"/>
 
@@ -202,9 +184,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/barrotes_balcon_cuadrado_derecho"
-   use_navmesh="ms3/barrotes_balcon_cuadrado_derecho"
-   only_navmesh="ms3/barrotes_balcon_cuadrado_derecho"/>
+   mesh_name="ms3/barrotes_balcon_cuadrado_derecho"/>
 <room
    name="1"/>
 
@@ -222,9 +202,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/barrotes_balcon_cuadrado_izquierdo"
-   use_navmesh="ms3/barrotes_balcon_cuadrado_izquierdo"
-   only_navmesh="ms3/barrotes_balcon_cuadrado_izquierdo"/>
+   mesh_name="ms3/barrotes_balcon_cuadrado_izquierdo"/>
 <room
    name="1"/>
 
@@ -242,9 +220,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/barrotes_balcon_redondo_pequeno"
-   use_navmesh="ms3/barrotes_balcon_redondo_pequeno"
-   only_navmesh="ms3/barrotes_balcon_redondo_pequeno"/>
+   mesh_name="ms3/barrotes_balcon_redondo_pequeno"/>
 <room
    name="1"/>
 
@@ -262,9 +238,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/biombo_mapeado_arriba"
-   use_navmesh="ms3/biombo_mapeado_arriba"
-   only_navmesh="ms3/biombo_mapeado_arriba"/>
+   mesh_name="ms3/biombo_mapeado_arriba"/>
 <room
    name="2"/>
 
@@ -282,9 +256,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/botegrande"
-   use_navmesh="ms3/botegrande"
-   only_navmesh="ms3/botegrande"/>
+   mesh_name="ms3/botegrande"/>
 
 </entity>
 <entity>
@@ -301,9 +273,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/cable"
-   use_navmesh="ms3/cable"
-   only_navmesh="ms3/cable"/>
+   mesh_name="ms3/cable"/>
 <room
    name="2"/>
 
@@ -322,9 +292,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/cable_arriba"
-   use_navmesh="ms3/cable_arriba"
-   only_navmesh="ms3/cable_arriba"/>
+   mesh_name="ms3/cable_arriba"/>
 <room
    name="2"/>
 
@@ -342,9 +310,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/cables_cacharro_labo_arriba"
-   use_navmesh="ms3/cables_cacharro_labo_arriba"
-   only_navmesh="ms3/cables_cacharro_labo_arriba"/>
+   mesh_name="ms3/cables_cacharro_labo_arriba"/>
 <room
    name="2"/>
 
@@ -362,9 +328,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/cables_cargador"
-   use_navmesh="ms3/cables_cargador"
-   only_navmesh="ms3/cables_cargador"/>
+   mesh_name="ms3/cables_cargador"/>
 <room
    name="2"/>
 
@@ -382,9 +346,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/cacharro_cientificomapeadoabajo"
-   use_navmesh="ms3/cacharro_cientificomapeadoabajo"
-   only_navmesh="ms3/cacharro_cientificomapeadoabajo"/>
+   mesh_name="ms3/cacharro_cientificomapeadoabajo"/>
 <room
    name="2"/>
 
@@ -402,9 +364,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/cacharro_cientificomapeadoarriba"
-   use_navmesh="ms3/cacharro_cientificomapeadoarriba"
-   only_navmesh="ms3/cacharro_cientificomapeadoarriba"/>
+   mesh_name="ms3/cacharro_cientificomapeadoarriba"/>
 <room
    name="2"/>
 
@@ -422,9 +382,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/cajas_de_herramientas_ms1"
-   use_navmesh="ms3/cajas_de_herramientas_ms1"
-   only_navmesh="ms3/cajas_de_herramientas_ms1"/>
+   mesh_name="ms3/cajas_de_herramientas_ms1"/>
 
 </entity>
 <entity>
@@ -440,9 +398,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/camara_centro_mapeado001"
-   use_navmesh="ms3/camara_centro_mapeado001"
-   only_navmesh="ms3/camara_centro_mapeado001"/>
+   mesh_name="ms3/camara_centro_mapeado001"/>
 <room
    name="2"/>
 
@@ -460,9 +416,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/camara_derecha_mapeado002"
-   use_navmesh="ms3/camara_derecha_mapeado002"
-   only_navmesh="ms3/camara_derecha_mapeado002"/>
+   mesh_name="ms3/camara_derecha_mapeado002"/>
 <room
    name="2"/>
 
@@ -480,9 +434,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/camara_izquierda_mapeado"
-   use_navmesh="ms3/camara_izquierda_mapeado"
-   only_navmesh="ms3/camara_izquierda_mapeado"/>
+   mesh_name="ms3/camara_izquierda_mapeado"/>
 <room
    name="2"/>
 
@@ -500,9 +452,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/camilla_mapeada_arriba"
-   use_navmesh="ms3/camilla_mapeada_arriba"
-   only_navmesh="ms3/camilla_mapeada_arriba"/>
+   mesh_name="ms3/camilla_mapeada_arriba"/>
 <room
    name="2"/>
 
@@ -520,9 +470,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/camilla_mapeo"
-   use_navmesh="ms3/camilla_mapeo"
-   only_navmesh="ms3/camilla_mapeo"/>
+   mesh_name="ms3/camilla_mapeo"/>
 <room
    name="2"/>
 
@@ -540,9 +488,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/cartel_puerta003"
-   use_navmesh="ms3/cartel_puerta003"
-   only_navmesh="ms3/cartel_puerta003"/>
+   mesh_name="ms3/cartel_puerta003"/>
 <room
    name="2"/>
 
@@ -560,9 +506,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/cascote"
-   use_navmesh="ms3/cascote"
-   only_navmesh="ms3/cascote"/>
+   mesh_name="ms3/cascote"/>
 <room
    name="1"/>
 
@@ -580,9 +524,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/coluimnas_balcon_superior"
-   use_navmesh="ms3/coluimnas_balcon_superior"
-   only_navmesh="ms3/coluimnas_balcon_superior"/>
+   mesh_name="ms3/coluimnas_balcon_superior"/>
 <room
    name="1"/>
 
@@ -600,9 +542,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/columna_rota_003"
-   use_navmesh="ms3/columna_rota_003"
-   only_navmesh="ms3/columna_rota_003"/>
+   mesh_name="ms3/columna_rota_003"/>
 <room
    name="1"/>
 
@@ -620,9 +560,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/columnas_desechables"
-   use_navmesh="ms3/columnas_desechables"
-   only_navmesh="ms3/columnas_desechables"/>
+   mesh_name="ms3/columnas_desechables"/>
 
 </entity>
 <entity>
@@ -638,9 +576,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/columna_rota001"
-   use_navmesh="ms3/columna_rota001"
-   only_navmesh="ms3/columna_rota001"/>
+   mesh_name="ms3/columna_rota001"/>
 <room
    name="1"/>
 
@@ -658,9 +594,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/columna_rota002"
-   use_navmesh="ms3/columna_rota002"
-   only_navmesh="ms3/columna_rota002"/>
+   mesh_name="ms3/columna_rota002"/>
 <room
    name="1"/>
 
@@ -678,9 +612,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/columnas_abajo"
-   use_navmesh="ms3/columnas_abajo"
-   only_navmesh="ms3/columnas_abajo"/>
+   mesh_name="ms3/columnas_abajo"/>
 <room
    name="1"/>
 
@@ -698,9 +630,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/columnas_balcon_cuadrado_derecho"
-   use_navmesh="ms3/columnas_balcon_cuadrado_derecho"
-   only_navmesh="ms3/columnas_balcon_cuadrado_derecho"/>
+   mesh_name="ms3/columnas_balcon_cuadrado_derecho"/>
 <room
    name="1"/>
 
@@ -718,9 +648,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/columnas_balcon_izquierdo_cuadrado"
-   use_navmesh="ms3/columnas_balcon_izquierdo_cuadrado"
-   only_navmesh="ms3/columnas_balcon_izquierdo_cuadrado"/>
+   mesh_name="ms3/columnas_balcon_izquierdo_cuadrado"/>
 <room
    name="1"/>
 
@@ -738,9 +666,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/cubo_mapeado_verdad"
-   use_navmesh="ms3/cubo_mapeado_verdad"
-   only_navmesh="ms3/cubo_mapeado_verdad"/>
+   mesh_name="ms3/cubo_mapeado_verdad"/>
 <room
    name="2"/>
 
@@ -758,9 +684,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/cubo_mapeado_verdad001"
-   use_navmesh="ms3/cubo_mapeado_verdad001"
-   only_navmesh="ms3/cubo_mapeado_verdad001"/>
+   mesh_name="ms3/cubo_mapeado_verdad001"/>
 <room
    name="2"/>
 
@@ -778,9 +702,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/desk_2"
-   use_navmesh="ms3/desk_2"
-   only_navmesh="ms3/desk_2"/>
+   mesh_name="ms3/desk_2"/>
 <room
    name="2"/>
 
@@ -798,9 +720,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/desk_3"
-   use_navmesh="ms3/desk_3"
-   only_navmesh="ms3/desk_3"/>
+   mesh_name="ms3/desk_3"/>
 <room
    name="2"/>
 
@@ -818,9 +738,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/destornilladores"
-   use_navmesh="ms3/destornilladores"
-   only_navmesh="ms3/destornilladores"/>
+   mesh_name="ms3/destornilladores"/>
 <room
    name="2"/>
 
@@ -838,9 +756,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/elemento_central_labos"
-   use_navmesh="ms3/elemento_central_labos"
-   only_navmesh="ms3/elemento_central_labos"/>
+   mesh_name="ms3/elemento_central_labos"/>
 <room
    name="2"/>
 
@@ -899,9 +815,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/elevator_door_frame"
-   use_navmesh="ms3/elevator_door_frame"
-   only_navmesh="ms3/elevator_door_frame"/>
+   mesh_name="ms3/elevator_door_frame"/>
 <room
    name="2"/>
 
@@ -919,9 +833,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/elevator_door_frame001"
-   use_navmesh="ms3/elevator_door_frame001"
-   only_navmesh="ms3/elevator_door_frame001"/>
+   mesh_name="ms3/elevator_door_frame001"/>
 <room
    name="2"/>
 
@@ -939,9 +851,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/elevator_door_frame002"
-   use_navmesh="ms3/elevator_door_frame002"
-   only_navmesh="ms3/elevator_door_frame002"/>
+   mesh_name="ms3/elevator_door_frame002"/>
 <room
    name="2"/>
 
@@ -959,9 +869,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/escombro_2"
-   use_navmesh="ms3/escombro_2"
-   only_navmesh="ms3/escombro_2"/>
+   mesh_name="ms3/escombro_2"/>
 <room
    name="1"/>
 
@@ -979,9 +887,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/extintor_mapeado"
-   use_navmesh="ms3/extintor_mapeado"
-   only_navmesh="ms3/extintor_mapeado"/>
+   mesh_name="ms3/extintor_mapeado"/>
 <room
    name="2"/>
 
@@ -999,9 +905,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/farolillos"
-   use_navmesh="ms3/farolillos"
-   only_navmesh="ms3/farolillos"/>
+   mesh_name="ms3/farolillos"/>
 <room
    name="1"/>
 
@@ -1243,9 +1147,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/fotocopiadora_mapeado"
-   use_navmesh="ms3/fotocopiadora_mapeado"
-   only_navmesh="ms3/fotocopiadora_mapeado"/>
+   mesh_name="ms3/fotocopiadora_mapeado"/>
 <room
    name="2"/>
 
@@ -1263,9 +1165,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/fregona_mapeada"
-   use_navmesh="ms3/fregona_mapeada"
-   only_navmesh="ms3/fregona_mapeada"/>
+   mesh_name="ms3/fregona_mapeada"/>
 <room
    name="2"/>
 
@@ -1283,9 +1183,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/fregona_mapeada001"
-   use_navmesh="ms3/fregona_mapeada001"
-   only_navmesh="ms3/fregona_mapeada001"/>
+   mesh_name="ms3/fregona_mapeada001"/>
 <room
    name="2"/>
 
@@ -1303,9 +1201,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/fuente_agua_mapeada"
-   use_navmesh="ms3/fuente_agua_mapeada"
-   only_navmesh="ms3/fuente_agua_mapeada"/>
+   mesh_name="ms3/fuente_agua_mapeada"/>
 <room
    name="2"/>
 
@@ -1323,9 +1219,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/hierro001"
-   use_navmesh="ms3/hierro001"
-   only_navmesh="ms3/hierro001"/>
+   mesh_name="ms3/hierro001"/>
 <room
    name="1"/>
 
@@ -1343,9 +1237,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/laboratorio_arriba"
-   use_navmesh="ms3/laboratorio_arriba"
-   only_navmesh="ms3/laboratorio_arriba"/>
+   mesh_name="ms3/laboratorio_arriba"/>
 <room
    name="2"/>
 
@@ -1363,9 +1255,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/lampara001"
-   use_navmesh="ms3/lampara001"
-   only_navmesh="ms3/lampara001"/>
+   mesh_name="ms3/lampara001"/>
 <room
    name="1"/>
 
@@ -1383,9 +1273,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/libro_modelo_3"
-   use_navmesh="ms3/libro_modelo_3"
-   only_navmesh="ms3/libro_modelo_3"/>
+   mesh_name="ms3/libro_modelo_3"/>
 <room
    name="2"/>
 
@@ -1403,9 +1291,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/maquina_1"
-   use_navmesh="ms3/maquina_1"
-   only_navmesh="ms3/maquina_1"/>
+   mesh_name="ms3/maquina_1"/>
 <room
    name="2"/>
 
@@ -1423,9 +1309,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/maquina_2"
-   use_navmesh="ms3/maquina_2"
-   only_navmesh="ms3/maquina_2"/>
+   mesh_name="ms3/maquina_2"/>
 <room
    name="2"/>
 
@@ -1443,9 +1327,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/maquina_004"
-   use_navmesh="ms3/maquina_004"
-   only_navmesh="ms3/maquina_004"/>
+   mesh_name="ms3/maquina_004"/>
 <room
    name="2"/>
 
@@ -1463,9 +1345,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/marco_balcon_cuadrado_izquierdo"
-   use_navmesh="ms3/marco_balcon_cuadrado_izquierdo"
-   only_navmesh="ms3/marco_balcon_cuadrado_izquierdo"/>
+   mesh_name="ms3/marco_balcon_cuadrado_izquierdo"/>
 
 </entity>
 <entity>
@@ -1481,9 +1361,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/marco_balcon_pequeno_arriba"
-   use_navmesh="ms3/marco_balcon_pequeno_arriba"
-   only_navmesh="ms3/marco_balcon_pequeno_arriba"/>
+   mesh_name="ms3/marco_balcon_pequeno_arriba"/>
 
 </entity>
 <entity>
@@ -1499,9 +1377,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/marco_balcon_pequeno_arriba001"
-   use_navmesh="ms3/marco_balcon_pequeno_arriba001"
-   only_navmesh="ms3/marco_balcon_pequeno_arriba001"/>
+   mesh_name="ms3/marco_balcon_pequeno_arriba001"/>
 <room
    name="1"/>
 
@@ -1519,9 +1395,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/marco_balcon_superior_redondo"
-   use_navmesh="ms3/marco_balcon_superior_redondo"
-   only_navmesh="ms3/marco_balcon_superior_redondo"/>
+   mesh_name="ms3/marco_balcon_superior_redondo"/>
 
 </entity>
 <entity>
@@ -1537,9 +1411,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/marco_balcon_superior_redondo001"
-   use_navmesh="ms3/marco_balcon_superior_redondo001"
-   only_navmesh="ms3/marco_balcon_superior_redondo001"/>
+   mesh_name="ms3/marco_balcon_superior_redondo001"/>
 
 </entity>
 <entity>
@@ -1555,9 +1427,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/marco_balcon_superior_redondo002"
-   use_navmesh="ms3/marco_balcon_superior_redondo002"
-   only_navmesh="ms3/marco_balcon_superior_redondo002"/>
+   mesh_name="ms3/marco_balcon_superior_redondo002"/>
 
 </entity>
 <entity>
@@ -1573,9 +1443,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/marco_puerta_abajo"
-   use_navmesh="ms3/marco_puerta_abajo"
-   only_navmesh="ms3/marco_puerta_abajo"/>
+   mesh_name="ms3/marco_puerta_abajo"/>
 
 </entity>
 <entity>
@@ -1591,9 +1459,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/marco_puerta_balcon_cuadrado_drecho"
-   use_navmesh="ms3/marco_puerta_balcon_cuadrado_drecho"
-   only_navmesh="ms3/marco_puerta_balcon_cuadrado_drecho"/>
+   mesh_name="ms3/marco_puerta_balcon_cuadrado_drecho"/>
 
 </entity>
 <entity>
@@ -1609,9 +1475,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/mesita"
-   use_navmesh="ms3/mesita"
-   only_navmesh="ms3/mesita"/>
+   mesh_name="ms3/mesita"/>
 <room
    name="2"/>
 
@@ -1629,9 +1493,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/montanha_de_escombro"
-   use_navmesh="ms3/montanha_de_escombro"
-   only_navmesh="ms3/montanha_de_escombro"/>
+   mesh_name="ms3/montanha_de_escombro"/>
 
 </entity>
 <entity>
@@ -1647,9 +1509,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/montanha_escombro_map"
-   use_navmesh="ms3/montanha_escombro_map"
-   only_navmesh="ms3/montanha_escombro_map"/>
+   mesh_name="ms3/montanha_escombro_map"/>
 
 </entity>
 <entity>
@@ -1665,9 +1525,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/montanha_escombros_mapeada"
-   use_navmesh="ms3/montanha_escombros_mapeada"
-   only_navmesh="ms3/montanha_escombros_mapeada"/>
+   mesh_name="ms3/montanha_escombros_mapeada"/>
 <room
    name="1"/>
 
@@ -1685,9 +1543,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/nivel_ms2"
-   use_navmesh="ms3/nivel_ms2"
-   only_navmesh="ms3/nivel_ms2"/>
+   mesh_name="ms3/nivel_ms2"/>
 
 </entity>
 <entity>
@@ -1703,9 +1559,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/panel_mapeado"
-   use_navmesh="ms3/panel_mapeado"
-   only_navmesh="ms3/panel_mapeado"/>
+   mesh_name="ms3/panel_mapeado"/>
 <room
    name="2"/>
 
@@ -1723,9 +1577,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/panel_seguridad_mapeado"
-   use_navmesh="ms3/panel_seguridad_mapeado"
-   only_navmesh="ms3/panel_seguridad_mapeado"/>
+   mesh_name="ms3/panel_seguridad_mapeado"/>
 <room
    name="2"/>
 
@@ -1743,9 +1595,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/panel_seguridad_mapeado003"
-   use_navmesh="ms3/panel_seguridad_mapeado003"
-   only_navmesh="ms3/panel_seguridad_mapeado003"/>
+   mesh_name="ms3/panel_seguridad_mapeado003"/>
 <room
    name="2"/>
 
@@ -1763,9 +1613,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/panel_seguridad_mapeado004"
-   use_navmesh="ms3/panel_seguridad_mapeado004"
-   only_navmesh="ms3/panel_seguridad_mapeado004"/>
+   mesh_name="ms3/panel_seguridad_mapeado004"/>
 <room
    name="2"/>
 
@@ -1783,9 +1631,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/pantallas"
-   use_navmesh="ms3/pantallas"
-   only_navmesh="ms3/pantallas"/>
+   mesh_name="ms3/pantallas"/>
 <room
    name="2"/>
 
@@ -1803,9 +1649,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/pantallas001"
-   use_navmesh="ms3/pantallas001"
-   only_navmesh="ms3/pantallas001"/>
+   mesh_name="ms3/pantallas001"/>
 <room
    name="2"/>
 
@@ -1823,9 +1667,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/papelera_mapeada"
-   use_navmesh="ms3/papelera_mapeada"
-   only_navmesh="ms3/papelera_mapeada"/>
+   mesh_name="ms3/papelera_mapeada"/>
 <room
    name="2"/>
 
@@ -1843,9 +1685,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/pared_balcon_cuadrado_izquierdo"
-   use_navmesh="ms3/pared_balcon_cuadrado_izquierdo"
-   only_navmesh="ms3/pared_balcon_cuadrado_izquierdo"/>
+   mesh_name="ms3/pared_balcon_cuadrado_izquierdo"/>
 <room
    name="1"/>
 
@@ -1863,9 +1703,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/pared_balcon_redondo_arriba"
-   use_navmesh="ms3/pared_balcon_redondo_arriba"
-   only_navmesh="ms3/pared_balcon_redondo_arriba"/>
+   mesh_name="ms3/pared_balcon_redondo_arriba"/>
 <room
    name="1"/>
 
@@ -1883,9 +1721,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/pared_balcon_redondo_arriba002"
-   use_navmesh="ms3/pared_balcon_redondo_arriba002"
-   only_navmesh="ms3/pared_balcon_redondo_arriba002"/>
+   mesh_name="ms3/pared_balcon_redondo_arriba002"/>
 <room
    name="1"/>
 
@@ -1903,9 +1739,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/pared_derruida_2"
-   use_navmesh="ms3/pared_derruida_2"
-   only_navmesh="ms3/pared_derruida_2"/>
+   mesh_name="ms3/pared_derruida_2"/>
 <room
    name="1"/>
 
@@ -1923,9 +1757,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/pared_derruida_3"
-   use_navmesh="ms3/pared_derruida_3"
-   only_navmesh="ms3/pared_derruida_3"/>
+   mesh_name="ms3/pared_derruida_3"/>
 <room
    name="1"/>
 
@@ -1943,9 +1775,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/pared_rota"
-   use_navmesh="ms3/pared_rota"
-   only_navmesh="ms3/pared_rota"/>
+   mesh_name="ms3/pared_rota"/>
 <room
    name="1"/>
 
@@ -1963,9 +1793,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/paredes_balcon_cuadrado_derecha"
-   use_navmesh="ms3/paredes_balcon_cuadrado_derecha"
-   only_navmesh="ms3/paredes_balcon_cuadrado_derecha"/>
+   mesh_name="ms3/paredes_balcon_cuadrado_derecha"/>
 <room
    name="1"/>
 
@@ -1983,9 +1811,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/paredes_balcon_redondo_grande"
-   use_navmesh="ms3/paredes_balcon_redondo_grande"
-   only_navmesh="ms3/paredes_balcon_redondo_grande"/>
+   mesh_name="ms3/paredes_balcon_redondo_grande"/>
 <room
    name="1"/>
 
@@ -2003,9 +1829,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/paredes_milestone_3"
-   use_navmesh="ms3/paredes_milestone_3"
-   only_navmesh="ms3/paredes_milestone_3"/>
+   mesh_name="ms3/paredes_milestone_3"/>
 
 </entity>
 <entity>
@@ -2021,9 +1845,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/paredes_nivel_bajo001"
-   use_navmesh="ms3/paredes_nivel_bajo001"
-   only_navmesh="ms3/paredes_nivel_bajo001"/>
+   mesh_name="ms3/paredes_nivel_bajo001"/>
 <room
    name="1"/>
 
@@ -2041,9 +1863,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/pibote_balcon_derecho _cuadrado"
-   use_navmesh="ms3/pibote_balcon_derecho _cuadrado"
-   only_navmesh="ms3/pibote_balcon_derecho _cuadrado"/>
+   mesh_name="ms3/pibote_balcon_derecho _cuadrado"/>
 <room
    name="1"/>
 
@@ -2061,9 +1881,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/pibotes_abajo_no_esquineros"
-   use_navmesh="ms3/pibotes_abajo_no_esquineros"
-   only_navmesh="ms3/pibotes_abajo_no_esquineros"/>
+   mesh_name="ms3/pibotes_abajo_no_esquineros"/>
 <room
    name="1"/>
 
@@ -2081,9 +1899,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/pibotes_balcon_adorno"
-   use_navmesh="ms3/pibotes_balcon_adorno"
-   only_navmesh="ms3/pibotes_balcon_adorno"/>
+   mesh_name="ms3/pibotes_balcon_adorno"/>
 <room
    name="1"/>
 
@@ -2101,9 +1917,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/pibotes_balcon_arriba"
-   use_navmesh="ms3/pibotes_balcon_arriba"
-   only_navmesh="ms3/pibotes_balcon_arriba"/>
+   mesh_name="ms3/pibotes_balcon_arriba"/>
 <room
    name="1"/>
 
@@ -2121,9 +1935,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/pibotes_balcon_cuadrado-izquierdo"
-   use_navmesh="ms3/pibotes_balcon_cuadrado-izquierdo"
-   only_navmesh="ms3/pibotes_balcon_cuadrado-izquierdo"/>
+   mesh_name="ms3/pibotes_balcon_cuadrado-izquierdo"/>
 <room
    name="1"/>
 
@@ -2141,9 +1953,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/pibotes_balcon_cuadrado-izquierdo001"
-   use_navmesh="ms3/pibotes_balcon_cuadrado-izquierdo001"
-   only_navmesh="ms3/pibotes_balcon_cuadrado-izquierdo001"/>
+   mesh_name="ms3/pibotes_balcon_cuadrado-izquierdo001"/>
 <room
    name="1"/>
 
@@ -2161,9 +1971,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/pibotes_balcon_pequeno-arribo"
-   use_navmesh="ms3/pibotes_balcon_pequeno-arribo"
-   only_navmesh="ms3/pibotes_balcon_pequeno-arribo"/>
+   mesh_name="ms3/pibotes_balcon_pequeno-arribo"/>
 <room
    name="1"/>
 
@@ -2181,9 +1989,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/pibotes_esquineros_2"
-   use_navmesh="ms3/pibotes_esquineros_2"
-   only_navmesh="ms3/pibotes_esquineros_2"/>
+   mesh_name="ms3/pibotes_esquineros_2"/>
 <room
    name="1"/>
 
@@ -2201,9 +2007,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/pipetas"
-   use_navmesh="ms3/pipetas"
-   only_navmesh="ms3/pipetas"/>
+   mesh_name="ms3/pipetas"/>
 <room
    name="2"/>
 
@@ -2221,9 +2025,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/pirulos_cargador_bateria_mapeado"
-   use_navmesh="ms3/pirulos_cargador_bateria_mapeado"
-   only_navmesh="ms3/pirulos_cargador_bateria_mapeado"/>
+   mesh_name="ms3/pirulos_cargador_bateria_mapeado"/>
 <room
    name="2"/>
 
@@ -2241,9 +2043,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/pirulos_cargador_bateria_mapeado001"
-   use_navmesh="ms3/pirulos_cargador_bateria_mapeado001"
-   only_navmesh="ms3/pirulos_cargador_bateria_mapeado001"/>
+   mesh_name="ms3/pirulos_cargador_bateria_mapeado001"/>
 <room
    name="2"/>
 
@@ -2261,9 +2061,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/pizarra"
-   use_navmesh="ms3/pizarra"
-   only_navmesh="ms3/pizarra"/>
+   mesh_name="ms3/pizarra"/>
 <room
    name="2"/>
 
@@ -2281,9 +2079,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/plafoncitos"
-   use_navmesh="ms3/plafoncitos"
-   only_navmesh="ms3/plafoncitos"/>
+   mesh_name="ms3/plafoncitos"/>
 <room
    name="2"/>
 
@@ -2371,9 +2167,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/plafones"
-   use_navmesh="ms3/plafones"
-   only_navmesh="ms3/plafones"/>
+   mesh_name="ms3/plafones"/>
 <room
    name="2"/>
 
@@ -2685,9 +2479,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/plataforma_balcon_cuadrado_izquierdo"
-   use_navmesh="ms3/plataforma_balcon_cuadrado_izquierdo"
-   only_navmesh="ms3/plataforma_balcon_cuadrado_izquierdo"/>
+   mesh_name="ms3/plataforma_balcon_cuadrado_izquierdo"/>
 <room
    name="1"/>
 
@@ -2705,9 +2497,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/plataforma_balcon_cuadrado_izquierdo001"
-   use_navmesh="ms3/plataforma_balcon_cuadrado_izquierdo001"
-   only_navmesh="ms3/plataforma_balcon_cuadrado_izquierdo001"/>
+   mesh_name="ms3/plataforma_balcon_cuadrado_izquierdo001"/>
 <room
    name="1"/>
 
@@ -2725,9 +2515,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/plataforma_balcon_derecho"
-   use_navmesh="ms3/plataforma_balcon_derecho"
-   only_navmesh="ms3/plataforma_balcon_derecho"/>
+   mesh_name="ms3/plataforma_balcon_derecho"/>
 <room
    name="1"/>
 
@@ -2793,9 +2581,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/puerta_cerrada_mapeada"
-   use_navmesh="ms3/puerta_cerrada_mapeada"
-   only_navmesh="ms3/puerta_cerrada_mapeada"/>
+   mesh_name="ms3/puerta_cerrada_mapeada"/>
 <room
    name="2"/>
 
@@ -2813,9 +2599,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/puerta_gigante"
-   use_navmesh="ms3/puerta_gigante"
-   only_navmesh="ms3/puerta_gigante"/>
+   mesh_name="ms3/puerta_gigante"/>
 <room
    name="1"/>
 
@@ -2833,9 +2617,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/puerta_taquilla"
-   use_navmesh="ms3/puerta_taquilla"
-   only_navmesh="ms3/puerta_taquilla"/>
+   mesh_name="ms3/puerta_taquilla"/>
 <room
    name="2"/>
 
@@ -2853,9 +2635,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/puertas"
-   use_navmesh="ms3/puertas"
-   only_navmesh="ms3/puertas"/>
+   mesh_name="ms3/puertas"/>
 <room
    name="1"/>
 
@@ -2873,9 +2653,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/pared_derruida_4"
-   use_navmesh="ms3/pared_derruida_4"
-   only_navmesh="ms3/pared_derruida_4"/>
+   mesh_name="ms3/pared_derruida_4"/>
 <room
    name="1"/>
 
@@ -2893,9 +2671,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/rejilla_grande_mapeada"
-   use_navmesh="ms3/rejilla_grande_mapeada"
-   only_navmesh="ms3/rejilla_grande_mapeada"/>
+   mesh_name="ms3/rejilla_grande_mapeada"/>
 <room
    name="2"/>
 
@@ -2913,9 +2689,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/rejilla_pequenha_mapeada"
-   use_navmesh="ms3/rejilla_pequenha_mapeada"
-   only_navmesh="ms3/rejilla_pequenha_mapeada"/>
+   mesh_name="ms3/rejilla_pequenha_mapeada"/>
 <room
    name="2"/>
 
@@ -2933,9 +2707,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/rejillapequenhamapeadabaajo"
-   use_navmesh="ms3/rejillapequenhamapeadabaajo"
-   only_navmesh="ms3/rejillapequenhamapeadabaajo"/>
+   mesh_name="ms3/rejillapequenhamapeadabaajo"/>
 <room
    name="2"/>
 
@@ -2953,9 +2725,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/rodapies"
-   use_navmesh="ms3/rodapies"
-   only_navmesh="ms3/rodapies"/>
+   mesh_name="ms3/rodapies"/>
 
 </entity>
 <entity>
@@ -2971,9 +2741,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/sillas"
-   use_navmesh="ms3/sillas"
-   only_navmesh="ms3/sillas"/>
+   mesh_name="ms3/sillas"/>
 <room
    name="2"/>
 
@@ -2991,9 +2759,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/sofa2"
-   use_navmesh="ms3/sofa2"
-   only_navmesh="ms3/sofa2"/>
+   mesh_name="ms3/sofa2"/>
 
 </entity>
 <entity>
@@ -3009,9 +2775,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/soporte_balcon_mapeado"
-   use_navmesh="ms3/soporte_balcon_mapeado"
-   only_navmesh="ms3/soporte_balcon_mapeado"/>
+   mesh_name="ms3/soporte_balcon_mapeado"/>
 <room
    name="1"/>
 
@@ -3029,9 +2793,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/soporte_balcon_mapeado001"
-   use_navmesh="ms3/soporte_balcon_mapeado001"
-   only_navmesh="ms3/soporte_balcon_mapeado001"/>
+   mesh_name="ms3/soporte_balcon_mapeado001"/>
 <room
    name="1"/>
 
@@ -3049,9 +2811,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/soporte_balcon_mapeado002"
-   use_navmesh="ms3/soporte_balcon_mapeado002"
-   only_navmesh="ms3/soporte_balcon_mapeado002"/>
+   mesh_name="ms3/soporte_balcon_mapeado002"/>
 <room
    name="1"/>
 
@@ -3069,9 +2829,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/soporte_balcon_mapeado003"
-   use_navmesh="ms3/soporte_balcon_mapeado003"
-   only_navmesh="ms3/soporte_balcon_mapeado003"/>
+   mesh_name="ms3/soporte_balcon_mapeado003"/>
 <room
    name="1"/>
 
@@ -3089,9 +2847,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/soporte_balcon_mapeado004"
-   use_navmesh="ms3/soporte_balcon_mapeado004"
-   only_navmesh="ms3/soporte_balcon_mapeado004"/>
+   mesh_name="ms3/soporte_balcon_mapeado004"/>
 <room
    name="1"/>
 
@@ -3109,9 +2865,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/soporte_balcon_mapeado005"
-   use_navmesh="ms3/soporte_balcon_mapeado005"
-   only_navmesh="ms3/soporte_balcon_mapeado005"/>
+   mesh_name="ms3/soporte_balcon_mapeado005"/>
 <room
    name="1"/>
 
@@ -3129,9 +2883,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/soporte_balcon_mapeado006"
-   use_navmesh="ms3/soporte_balcon_mapeado006"
-   only_navmesh="ms3/soporte_balcon_mapeado006"/>
+   mesh_name="ms3/soporte_balcon_mapeado006"/>
 <room
    name="1"/>
 
@@ -3149,9 +2901,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/soporte_balcon_mapeado007"
-   use_navmesh="ms3/soporte_balcon_mapeado007"
-   only_navmesh="ms3/soporte_balcon_mapeado007"/>
+   mesh_name="ms3/soporte_balcon_mapeado007"/>
 <room
    name="1"/>
 
@@ -3169,9 +2919,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/soporte_balcon_mapeado008"
-   use_navmesh="ms3/soporte_balcon_mapeado008"
-   only_navmesh="ms3/soporte_balcon_mapeado008"/>
+   mesh_name="ms3/soporte_balcon_mapeado008"/>
 <room
    name="1"/>
 
@@ -3189,9 +2937,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/soporte_balcon_mapeado009"
-   use_navmesh="ms3/soporte_balcon_mapeado009"
-   only_navmesh="ms3/soporte_balcon_mapeado009"/>
+   mesh_name="ms3/soporte_balcon_mapeado009"/>
 <room
    name="1"/>
 
@@ -3209,9 +2955,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/suelo_003"
-   use_navmesh="ms3/suelo_003"
-   only_navmesh="ms3/suelo_003"/>
+   mesh_name="ms3/suelo_003"/>
 
 </entity>
 <entity>
@@ -3227,9 +2971,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/tabla_arriba"
-   use_navmesh="ms3/tabla_arriba"
-   only_navmesh="ms3/tabla_arriba"/>
+   mesh_name="ms3/tabla_arriba"/>
 <room
    name="1"/>
 
@@ -3247,9 +2989,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/taquilla_mapeado"
-   use_navmesh="ms3/taquilla_mapeado"
-   only_navmesh="ms3/taquilla_mapeado"/>
+   mesh_name="ms3/taquilla_mapeado"/>
 <room
    name="2"/>
 
@@ -3267,9 +3007,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/techo"
-   use_navmesh="ms3/techo"
-   only_navmesh="ms3/techo"/>
+   mesh_name="ms3/techo"/>
 <room
    name="1"/>
 
@@ -3287,9 +3025,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/techo_labo"
-   use_navmesh="ms3/techo_labo"
-   only_navmesh="ms3/techo_labo"/>
+   mesh_name="ms3/techo_labo"/>
 <room
    name="2"/>
 
@@ -3307,9 +3043,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/Techo_milestone_3"
-   use_navmesh="ms3/Techo_milestone_3"
-   only_navmesh="ms3/Techo_milestone_3"/>
+   mesh_name="ms3/Techo_milestone_3"/>
 
 </entity>
 <entity>
@@ -3325,9 +3059,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/teclado"
-   use_navmesh="ms3/teclado"
-   only_navmesh="ms3/teclado"/>
+   mesh_name="ms3/teclado"/>
 <room
    name="2"/>
 
@@ -3345,9 +3077,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/trozo_pared_suelto"
-   use_navmesh="ms3/trozo_pared_suelto"
-   only_navmesh="ms3/trozo_pared_suelto"/>
+   mesh_name="ms3/trozo_pared_suelto"/>
 <room
    name="2"/>
 
@@ -3365,9 +3095,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/ventilador_mapeado"
-   use_navmesh="ms3/ventilador_mapeado"
-   only_navmesh="ms3/ventilador_mapeado"/>
+   mesh_name="ms3/ventilador_mapeado"/>
 <room
    name="2"/>
 
@@ -3385,9 +3113,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/ventilador_mapeado_arriba"
-   use_navmesh="ms3/ventilador_mapeado_arriba"
-   only_navmesh="ms3/ventilador_mapeado_arriba"/>
+   mesh_name="ms3/ventilador_mapeado_arriba"/>
 <room
    name="2"/>
 
@@ -3405,9 +3131,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/wc_boxlp"
-   use_navmesh="ms3/wc_boxlp"
-   only_navmesh="ms3/wc_boxlp"/>
+   mesh_name="ms3/wc_boxlp"/>
 <room
    name="2"/>
 
@@ -3464,9 +3188,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="obj/generator"
-   use_navmesh="obj/generator"
-   only_navmesh="obj/generator"/>
+   mesh_name="obj/generator"/>
 <room
    name="1"/>
 
@@ -3485,9 +3207,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="obj/generator"
-   use_navmesh="obj/generator"
-   only_navmesh="obj/generator"/>
+   mesh_name="obj/generator"/>
 <room
    name="1"/>
 
@@ -3506,9 +3226,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="obj/generator"
-   use_navmesh="obj/generator"
-   only_navmesh="obj/generator"/>
+   mesh_name="obj/generator"/>
 <room
    name="1"/>
 
@@ -3527,9 +3245,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="obj/generator"
-   use_navmesh="obj/generator"
-   only_navmesh="obj/generator"/>
+   mesh_name="obj/generator"/>
 <room
    name="1"/>
 
@@ -3548,9 +3264,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="obj/generator"
-   use_navmesh="obj/generator"
-   only_navmesh="obj/generator"/>
+   mesh_name="obj/generator"/>
 <room
    name="2"/>
 
@@ -3569,9 +3283,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="obj/generator"
-   use_navmesh="obj/generator"
-   only_navmesh="obj/generator"/>
+   mesh_name="obj/generator"/>
 <room
    name="2"/>
 
@@ -3602,9 +3314,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/puertas_balcon_redondo_arriba"
-   use_navmesh="ms3/puertas_balcon_redondo_arriba"
-   only_navmesh="ms3/puertas_balcon_redondo_arriba"/>
+   mesh_name="ms3/puertas_balcon_redondo_arriba"/>
 
 </entity>
 <entity>
@@ -3620,9 +3330,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/puertas_balcon_adorno"
-   use_navmesh="ms3/puertas_balcon_adorno"
-   only_navmesh="ms3/puertas_balcon_adorno"/>
+   mesh_name="ms3/puertas_balcon_adorno"/>
 
 </entity>
 <entity>
@@ -3638,9 +3346,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/puertas_balcon_cuadrado"
-   use_navmesh="ms3/puertas_balcon_cuadrado"
-   only_navmesh="ms3/puertas_balcon_cuadrado"/>
+   mesh_name="ms3/puertas_balcon_cuadrado"/>
 
 </entity>
 <entity>
@@ -3656,9 +3362,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/puertas_balcon_adorno_2"
-   use_navmesh="ms3/puertas_balcon_adorno_2"
-   only_navmesh="ms3/puertas_balcon_adorno_2"/>
+   mesh_name="ms3/puertas_balcon_adorno_2"/>
 
 </entity>
 <entity>
@@ -3674,9 +3378,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/puertas_balcon_cuadrado_derecha"
-   use_navmesh="ms3/puertas_balcon_cuadrado_derecha"
-   only_navmesh="ms3/puertas_balcon_cuadrado_derecha"/>
+   mesh_name="ms3/puertas_balcon_cuadrado_derecha"/>
 
 </entity>
 <entity>
@@ -3692,9 +3394,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/puertas_balcon_adorno_3"
-   use_navmesh="ms3/puertas_balcon_adorno_3"
-   only_navmesh="ms3/puertas_balcon_adorno_3"/>
+   mesh_name="ms3/puertas_balcon_adorno_3"/>
 
 </entity>
 <entity>
@@ -3710,9 +3410,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/puertas_milestone"
-   use_navmesh="ms3/puertas_milestone"
-   only_navmesh="ms3/puertas_milestone"/>
+   mesh_name="ms3/puertas_milestone"/>
 
 </entity>
 <entity>
@@ -3728,9 +3426,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/bookshelf_3"
-   use_navmesh="ms3/bookshelf_3"
-   only_navmesh="ms3/bookshelf_3"/>
+   mesh_name="ms3/bookshelf_3"/>
 
 </entity>
 <entity>
@@ -3746,9 +3442,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/Object001"
-   use_navmesh="ms3/Object001"
-   only_navmesh="ms3/Object001"/>
+   mesh_name="ms3/Object001"/>
 
 </entity>
 <entity>
@@ -3764,9 +3458,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/Object002"
-   use_navmesh="ms3/Object002"
-   only_navmesh="ms3/Object002"/>
+   mesh_name="ms3/Object002"/>
 
 </entity>
 <entity>
@@ -3782,9 +3474,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/cubo_de_pintura_grande_mapeado"
-   use_navmesh="ms3/cubo_de_pintura_grande_mapeado"
-   only_navmesh="ms3/cubo_de_pintura_grande_mapeado"/>
+   mesh_name="ms3/cubo_de_pintura_grande_mapeado"/>
 
 </entity>
 <entity>
@@ -3800,9 +3490,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/maquina_3"
-   use_navmesh="ms3/maquina_3"
-   only_navmesh="ms3/maquina_3"/>
+   mesh_name="ms3/maquina_3"/>
 <room
    name="2"/>
 
@@ -3820,9 +3508,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/escritorio"
-   use_navmesh="ms3/escritorio"
-   only_navmesh="ms3/escritorio"/>
+   mesh_name="ms3/escritorio"/>
 
 </entity>
 <entity>
@@ -3838,9 +3524,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/rejilla_aire_006"
-   use_navmesh="ms3/rejilla_aire_006"
-   only_navmesh="ms3/rejilla_aire_006"/>
+   mesh_name="ms3/rejilla_aire_006"/>
 
 </entity>
 <entity>
@@ -3856,9 +3540,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/arbol_arriba_1"
-   use_navmesh="ms3/arbol_arriba_1"
-   only_navmesh="ms3/arbol_arriba_1"/>
+   mesh_name="ms3/arbol_arriba_1"/>
 <room
    name="2"/>
 
@@ -3876,9 +3558,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/arbol_arriba_2"
-   use_navmesh="ms3/arbol_arriba_2"
-   only_navmesh="ms3/arbol_arriba_2"/>
+   mesh_name="ms3/arbol_arriba_2"/>
 <room
    name="2"/>
 
@@ -3896,9 +3576,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/arbol_arriba_3"
-   use_navmesh="ms3/arbol_arriba_3"
-   only_navmesh="ms3/arbol_arriba_3"/>
+   mesh_name="ms3/arbol_arriba_3"/>
 <room
    name="2"/>
 
@@ -3916,9 +3594,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/arbol_arriba_5"
-   use_navmesh="ms3/arbol_arriba_5"
-   only_navmesh="ms3/arbol_arriba_5"/>
+   mesh_name="ms3/arbol_arriba_5"/>
 <room
    name="2"/>
 
@@ -3936,9 +3612,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/arbol_arriba_6"
-   use_navmesh="ms3/arbol_arriba_6"
-   only_navmesh="ms3/arbol_arriba_6"/>
+   mesh_name="ms3/arbol_arriba_6"/>
 <room
    name="2"/>
 
@@ -3956,9 +3630,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/arboles_balcon_cuadrado_derecho"
-   use_navmesh="ms3/arboles_balcon_cuadrado_derecho"
-   only_navmesh="ms3/arboles_balcon_cuadrado_derecho"/>
+   mesh_name="ms3/arboles_balcon_cuadrado_derecho"/>
 <room
    name="1"/>
 
@@ -3976,9 +3648,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/arboles_balcon_cuadrado_izquierdo_abajo"
-   use_navmesh="ms3/arboles_balcon_cuadrado_izquierdo_abajo"
-   only_navmesh="ms3/arboles_balcon_cuadrado_izquierdo_abajo"/>
+   mesh_name="ms3/arboles_balcon_cuadrado_izquierdo_abajo"/>
 <room
    name="1"/>
 
@@ -3996,9 +3666,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/arboles_balcon_decorativo"
-   use_navmesh="ms3/arboles_balcon_decorativo"
-   only_navmesh="ms3/arboles_balcon_decorativo"/>
+   mesh_name="ms3/arboles_balcon_decorativo"/>
 <room
    name="1"/>
 
@@ -4016,9 +3684,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/arboles_balcon_redondo_grande"
-   use_navmesh="ms3/arboles_balcon_redondo_grande"
-   only_navmesh="ms3/arboles_balcon_redondo_grande"/>
+   mesh_name="ms3/arboles_balcon_redondo_grande"/>
 
 </entity>
 <entity>
@@ -4034,9 +3700,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/arboles_balcon_redondo_izquierdo"
-   use_navmesh="ms3/arboles_balcon_redondo_izquierdo"
-   only_navmesh="ms3/arboles_balcon_redondo_izquierdo"/>
+   mesh_name="ms3/arboles_balcon_redondo_izquierdo"/>
 <room
    name="1"/>
 
@@ -4054,9 +3718,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/balcon_decorativo_arboles"
-   use_navmesh="ms3/balcon_decorativo_arboles"
-   only_navmesh="ms3/balcon_decorativo_arboles"/>
+   mesh_name="ms3/balcon_decorativo_arboles"/>
 <room
    name="1"/>
 
@@ -4074,9 +3736,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/bookshelf_2_deformed"
-   use_navmesh="ms3/bookshelf_2_deformed"
-   only_navmesh="ms3/bookshelf_2_deformed"/>
+   mesh_name="ms3/bookshelf_2_deformed"/>
 <room
    name="2"/>
 
@@ -4094,9 +3754,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/control_panel_var1"
-   use_navmesh="ms3/control_panel_var1"
-   only_navmesh="ms3/control_panel_var1"/>
+   mesh_name="ms3/control_panel_var1"/>
 <room
    name="1"/>
 
@@ -4114,9 +3772,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/bookshelf_w_door_2"
-   use_navmesh="ms3/bookshelf_w_door_2"
-   only_navmesh="ms3/bookshelf_w_door_2"/>
+   mesh_name="ms3/bookshelf_w_door_2"/>
 
 </entity>
 <entity>
@@ -4132,9 +3788,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/handle_r_l_h_1"
-   use_navmesh="ms3/handle_r_l_h_1"
-   only_navmesh="ms3/handle_r_l_h_1"/>
+   mesh_name="ms3/handle_r_l_h_1"/>
 
 </entity>
 <entity>
@@ -4150,9 +3804,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/bookshelf_w_doors001"
-   use_navmesh="ms3/bookshelf_w_doors001"
-   only_navmesh="ms3/bookshelf_w_doors001"/>
+   mesh_name="ms3/bookshelf_w_doors001"/>
 
 </entity>
 <entity>
@@ -4168,9 +3820,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/estanteria"
-   use_navmesh="ms3/estanteria"
-   only_navmesh="ms3/estanteria"/>
+   mesh_name="ms3/estanteria"/>
 
 </entity>
 <entity>
@@ -4186,9 +3836,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/arboles_balcon_cuadrado_izquierdo_abajo_ramas"
-   use_navmesh="ms3/arboles_balcon_cuadrado_izquierdo_abajo_ramas"
-   only_navmesh="ms3/arboles_balcon_cuadrado_izquierdo_abajo_ramas"/>
+   mesh_name="ms3/arboles_balcon_cuadrado_izquierdo_abajo_ramas"/>
 
 </entity>
 <entity>
@@ -4204,9 +3852,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/arboles_balcon_cuadrado_izquierdo_abajo_maceta"
-   use_navmesh="ms3/arboles_balcon_cuadrado_izquierdo_abajo_maceta"
-   only_navmesh="ms3/arboles_balcon_cuadrado_izquierdo_abajo_maceta"/>
+   mesh_name="ms3/arboles_balcon_cuadrado_izquierdo_abajo_maceta"/>
 
 </entity>
 <entity>
@@ -4222,9 +3868,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/arboles_balcon_cuadrado_izquierdo_abajo_maceta_2"
-   use_navmesh="ms3/arboles_balcon_cuadrado_izquierdo_abajo_maceta_2"
-   only_navmesh="ms3/arboles_balcon_cuadrado_izquierdo_abajo_maceta_2"/>
+   mesh_name="ms3/arboles_balcon_cuadrado_izquierdo_abajo_maceta_2"/>
 
 </entity>
 <entity>
@@ -4240,9 +3884,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/arboles_balcon_decorativo_ramas_1"
-   use_navmesh="ms3/arboles_balcon_decorativo_ramas_1"
-   only_navmesh="ms3/arboles_balcon_decorativo_ramas_1"/>
+   mesh_name="ms3/arboles_balcon_decorativo_ramas_1"/>
 
 </entity>
 <entity>
@@ -4258,9 +3900,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/arboles_balcon_decorativo_ramas_2"
-   use_navmesh="ms3/arboles_balcon_decorativo_ramas_2"
-   only_navmesh="ms3/arboles_balcon_decorativo_ramas_2"/>
+   mesh_name="ms3/arboles_balcon_decorativo_ramas_2"/>
 
 </entity>
 <entity>
@@ -4276,9 +3916,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/arboles_balcon_decorativo_maceta_1"
-   use_navmesh="ms3/arboles_balcon_decorativo_maceta_1"
-   only_navmesh="ms3/arboles_balcon_decorativo_maceta_1"/>
+   mesh_name="ms3/arboles_balcon_decorativo_maceta_1"/>
 
 </entity>
 <entity>
@@ -4294,9 +3932,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/arboles_balcon_decorativo_maceta_2"
-   use_navmesh="ms3/arboles_balcon_decorativo_maceta_2"
-   only_navmesh="ms3/arboles_balcon_decorativo_maceta_2"/>
+   mesh_name="ms3/arboles_balcon_decorativo_maceta_2"/>
 
 </entity>
 <entity>
@@ -4312,9 +3948,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/arboles_balcon_decorativo_2"
-   use_navmesh="ms3/arboles_balcon_decorativo_2"
-   only_navmesh="ms3/arboles_balcon_decorativo_2"/>
+   mesh_name="ms3/arboles_balcon_decorativo_2"/>
 
 </entity>
 <entity>
@@ -4330,9 +3964,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/balcon_decorativo_arboles_maceta_1"
-   use_navmesh="ms3/balcon_decorativo_arboles_maceta_1"
-   only_navmesh="ms3/balcon_decorativo_arboles_maceta_1"/>
+   mesh_name="ms3/balcon_decorativo_arboles_maceta_1"/>
 
 </entity>
 <entity>
@@ -4348,9 +3980,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/balcon_decorativo_arboles_maceta_2"
-   use_navmesh="ms3/balcon_decorativo_arboles_maceta_2"
-   only_navmesh="ms3/balcon_decorativo_arboles_maceta_2"/>
+   mesh_name="ms3/balcon_decorativo_arboles_maceta_2"/>
 
 </entity>
 <entity>
@@ -4366,9 +3996,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/balcon_decorativo_arboles_ramas_1"
-   use_navmesh="ms3/balcon_decorativo_arboles_ramas_1"
-   only_navmesh="ms3/balcon_decorativo_arboles_ramas_1"/>
+   mesh_name="ms3/balcon_decorativo_arboles_ramas_1"/>
 
 </entity>
 <entity>
@@ -4384,9 +4012,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/balcon_decorativo_arboles_ramas_2"
-   use_navmesh="ms3/balcon_decorativo_arboles_ramas_2"
-   only_navmesh="ms3/balcon_decorativo_arboles_ramas_2"/>
+   mesh_name="ms3/balcon_decorativo_arboles_ramas_2"/>
 
 </entity>
 <entity>
@@ -4402,9 +4028,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/balcon_decorativo_arboles_2"
-   use_navmesh="ms3/balcon_decorativo_arboles_2"
-   only_navmesh="ms3/balcon_decorativo_arboles_2"/>
+   mesh_name="ms3/balcon_decorativo_arboles_2"/>
 
 </entity>
 <entity>
@@ -4420,9 +4044,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/arboles_balcon_cuadrado_derecho_ramas"
-   use_navmesh="ms3/arboles_balcon_cuadrado_derecho_ramas"
-   only_navmesh="ms3/arboles_balcon_cuadrado_derecho_ramas"/>
+   mesh_name="ms3/arboles_balcon_cuadrado_derecho_ramas"/>
 
 </entity>
 <entity>
@@ -4438,9 +4060,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/arboles_balcon_cuadrado_derecho_ramas_2"
-   use_navmesh="ms3/arboles_balcon_cuadrado_derecho_ramas_2"
-   only_navmesh="ms3/arboles_balcon_cuadrado_derecho_ramas_2"/>
+   mesh_name="ms3/arboles_balcon_cuadrado_derecho_ramas_2"/>
 
 </entity>
 <entity>
@@ -4456,9 +4076,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/arboles_balcon_cuadrado_derecho_maceta_1"
-   use_navmesh="ms3/arboles_balcon_cuadrado_derecho_maceta_1"
-   only_navmesh="ms3/arboles_balcon_cuadrado_derecho_maceta_1"/>
+   mesh_name="ms3/arboles_balcon_cuadrado_derecho_maceta_1"/>
 
 </entity>
 <entity>
@@ -4474,9 +4092,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/arboles_balcon_cuadrado_derecho_maceta_2"
-   use_navmesh="ms3/arboles_balcon_cuadrado_derecho_maceta_2"
-   only_navmesh="ms3/arboles_balcon_cuadrado_derecho_maceta_2"/>
+   mesh_name="ms3/arboles_balcon_cuadrado_derecho_maceta_2"/>
 
 </entity>
 <entity>
@@ -4492,9 +4108,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/arboles_balcon_cuadrado_derecho_2"
-   use_navmesh="ms3/arboles_balcon_cuadrado_derecho_2"
-   only_navmesh="ms3/arboles_balcon_cuadrado_derecho_2"/>
+   mesh_name="ms3/arboles_balcon_cuadrado_derecho_2"/>
 
 </entity>
 <entity>
@@ -4510,9 +4124,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/arboles_balcon_redondo_izquierdo_ramas"
-   use_navmesh="ms3/arboles_balcon_redondo_izquierdo_ramas"
-   only_navmesh="ms3/arboles_balcon_redondo_izquierdo_ramas"/>
+   mesh_name="ms3/arboles_balcon_redondo_izquierdo_ramas"/>
 
 </entity>
 <entity>
@@ -4528,9 +4140,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/arboles_balcon_redondo_izquierdo_ramas_1"
-   use_navmesh="ms3/arboles_balcon_redondo_izquierdo_ramas_1"
-   only_navmesh="ms3/arboles_balcon_redondo_izquierdo_ramas_1"/>
+   mesh_name="ms3/arboles_balcon_redondo_izquierdo_ramas_1"/>
 
 </entity>
 <entity>
@@ -4546,9 +4156,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/arboles_balcon_redondo_izquierdo_maceta_2"
-   use_navmesh="ms3/arboles_balcon_redondo_izquierdo_maceta_2"
-   only_navmesh="ms3/arboles_balcon_redondo_izquierdo_maceta_2"/>
+   mesh_name="ms3/arboles_balcon_redondo_izquierdo_maceta_2"/>
 
 </entity>
 <entity>
@@ -4564,9 +4172,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/arboles_balcon_redondo_izquierdo_maceta_1"
-   use_navmesh="ms3/arboles_balcon_redondo_izquierdo_maceta_1"
-   only_navmesh="ms3/arboles_balcon_redondo_izquierdo_maceta_1"/>
+   mesh_name="ms3/arboles_balcon_redondo_izquierdo_maceta_1"/>
 
 </entity>
 <entity>
@@ -4582,9 +4188,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/arboles_balcon_redondo_izquierdo_2"
-   use_navmesh="ms3/arboles_balcon_redondo_izquierdo_2"
-   only_navmesh="ms3/arboles_balcon_redondo_izquierdo_2"/>
+   mesh_name="ms3/arboles_balcon_redondo_izquierdo_2"/>
 
 </entity>
 <entity>
@@ -4600,9 +4204,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/balcon_decorativo_arboles_ramas_3"
-   use_navmesh="ms3/balcon_decorativo_arboles_ramas_3"
-   only_navmesh="ms3/balcon_decorativo_arboles_ramas_3"/>
+   mesh_name="ms3/balcon_decorativo_arboles_ramas_3"/>
 
 </entity>
 <entity>
@@ -4618,9 +4220,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/balcon_decorativo_arboles_3"
-   use_navmesh="ms3/balcon_decorativo_arboles_3"
-   only_navmesh="ms3/balcon_decorativo_arboles_3"/>
+   mesh_name="ms3/balcon_decorativo_arboles_3"/>
 
 </entity>
 <entity>
@@ -4636,9 +4236,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/balcon_decorativo_arboles_maceta"
-   use_navmesh="ms3/balcon_decorativo_arboles_maceta"
-   only_navmesh="ms3/balcon_decorativo_arboles_maceta"/>
+   mesh_name="ms3/balcon_decorativo_arboles_maceta"/>
 
 </entity>
 <entity>
@@ -4654,9 +4252,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/arboles_balcon_redondo_grande_ramas_1"
-   use_navmesh="ms3/arboles_balcon_redondo_grande_ramas_1"
-   only_navmesh="ms3/arboles_balcon_redondo_grande_ramas_1"/>
+   mesh_name="ms3/arboles_balcon_redondo_grande_ramas_1"/>
 
 </entity>
 <entity>
@@ -4672,9 +4268,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/arboles_balcon_redondo_grande_ramas_2"
-   use_navmesh="ms3/arboles_balcon_redondo_grande_ramas_2"
-   only_navmesh="ms3/arboles_balcon_redondo_grande_ramas_2"/>
+   mesh_name="ms3/arboles_balcon_redondo_grande_ramas_2"/>
 
 </entity>
 <entity>
@@ -4690,9 +4284,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/arboles_balcon_redondo_grande_maceta_1"
-   use_navmesh="ms3/arboles_balcon_redondo_grande_maceta_1"
-   only_navmesh="ms3/arboles_balcon_redondo_grande_maceta_1"/>
+   mesh_name="ms3/arboles_balcon_redondo_grande_maceta_1"/>
 
 </entity>
 <entity>
@@ -4708,9 +4300,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/arboles_balcon_redondo_grande_maceta_2"
-   use_navmesh="ms3/arboles_balcon_redondo_grande_maceta_2"
-   only_navmesh="ms3/arboles_balcon_redondo_grande_maceta_2"/>
+   mesh_name="ms3/arboles_balcon_redondo_grande_maceta_2"/>
 
 </entity>
 <entity>
@@ -4726,9 +4316,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/arboles_balcon_redondo_grande_2"
-   use_navmesh="ms3/arboles_balcon_redondo_grande_2"
-   only_navmesh="ms3/arboles_balcon_redondo_grande_2"/>
+   mesh_name="ms3/arboles_balcon_redondo_grande_2"/>
 
 </entity>
 <entity>
@@ -4744,9 +4332,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/arbol_arriba_2_ramas"
-   use_navmesh="ms3/arbol_arriba_2_ramas"
-   only_navmesh="ms3/arbol_arriba_2_ramas"/>
+   mesh_name="ms3/arbol_arriba_2_ramas"/>
 
 </entity>
 <entity>
@@ -4762,9 +4348,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/arbol_arriba_2_maceta"
-   use_navmesh="ms3/arbol_arriba_2_maceta"
-   only_navmesh="ms3/arbol_arriba_2_maceta"/>
+   mesh_name="ms3/arbol_arriba_2_maceta"/>
 
 </entity>
 <entity>
@@ -4780,9 +4364,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/arbol_arriba_1_maceta"
-   use_navmesh="ms3/arbol_arriba_1_maceta"
-   only_navmesh="ms3/arbol_arriba_1_maceta"/>
+   mesh_name="ms3/arbol_arriba_1_maceta"/>
 
 </entity>
 <entity>
@@ -4798,9 +4380,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/arbol_arriba_1_ramas"
-   use_navmesh="ms3/arbol_arriba_1_ramas"
-   only_navmesh="ms3/arbol_arriba_1_ramas"/>
+   mesh_name="ms3/arbol_arriba_1_ramas"/>
 
 </entity>
 <entity>
@@ -4816,9 +4396,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/arbol_arriba_3_maceta"
-   use_navmesh="ms3/arbol_arriba_3_maceta"
-   only_navmesh="ms3/arbol_arriba_3_maceta"/>
+   mesh_name="ms3/arbol_arriba_3_maceta"/>
 
 </entity>
 <entity>
@@ -4834,9 +4412,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/arbol_arriba_3_ramas"
-   use_navmesh="ms3/arbol_arriba_3_ramas"
-   only_navmesh="ms3/arbol_arriba_3_ramas"/>
+   mesh_name="ms3/arbol_arriba_3_ramas"/>
 
 </entity>
 <entity>
@@ -4852,9 +4428,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/arbol_arriba_5_ramas"
-   use_navmesh="ms3/arbol_arriba_5_ramas"
-   only_navmesh="ms3/arbol_arriba_5_ramas"/>
+   mesh_name="ms3/arbol_arriba_5_ramas"/>
 
 </entity>
 <entity>
@@ -4870,9 +4444,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/arbol_arriba_5_maceta"
-   use_navmesh="ms3/arbol_arriba_5_maceta"
-   only_navmesh="ms3/arbol_arriba_5_maceta"/>
+   mesh_name="ms3/arbol_arriba_5_maceta"/>
 
 </entity>
 <entity>
@@ -4888,9 +4460,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/arbol_arriba_6_ramas"
-   use_navmesh="ms3/arbol_arriba_6_ramas"
-   only_navmesh="ms3/arbol_arriba_6_ramas"/>
+   mesh_name="ms3/arbol_arriba_6_ramas"/>
 
 </entity>
 <entity>
@@ -4906,9 +4476,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/arbol_arriba_6_maceta"
-   use_navmesh="ms3/arbol_arriba_6_maceta"
-   only_navmesh="ms3/arbol_arriba_6_maceta"/>
+   mesh_name="ms3/arbol_arriba_6_maceta"/>
 
 </entity>
 <entity>
@@ -4924,9 +4492,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/bookshelf_2_deformed_1"
-   use_navmesh="ms3/bookshelf_2_deformed_1"
-   only_navmesh="ms3/bookshelf_2_deformed_1"/>
+   mesh_name="ms3/bookshelf_2_deformed_1"/>
 
 </entity>
 <entity>
@@ -4942,9 +4508,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/bookshelf_2_deformed_2"
-   use_navmesh="ms3/bookshelf_2_deformed_2"
-   only_navmesh="ms3/bookshelf_2_deformed_2"/>
+   mesh_name="ms3/bookshelf_2_deformed_2"/>
 
 </entity>
 <entity>
@@ -4960,9 +4524,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/control_panel_1"
-   use_navmesh="ms3/control_panel_1"
-   only_navmesh="ms3/control_panel_1"/>
+   mesh_name="ms3/control_panel_1"/>
 
 </entity>
 <entity>
@@ -4978,9 +4540,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/control_panel_2"
-   use_navmesh="ms3/control_panel_2"
-   only_navmesh="ms3/control_panel_2"/>
+   mesh_name="ms3/control_panel_2"/>
 
 </entity>
 <entity>
@@ -4996,9 +4556,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/control_panel_3"
-   use_navmesh="ms3/control_panel_3"
-   only_navmesh="ms3/control_panel_3"/>
+   mesh_name="ms3/control_panel_3"/>
 
 </entity>
 <entity>
@@ -5014,9 +4572,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/control_panel_4"
-   use_navmesh="ms3/control_panel_4"
-   only_navmesh="ms3/control_panel_4"/>
+   mesh_name="ms3/control_panel_4"/>
 
 </entity>
 <entity>
@@ -5032,9 +4588,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/control_panel_5"
-   use_navmesh="ms3/control_panel_5"
-   only_navmesh="ms3/control_panel_5"/>
+   mesh_name="ms3/control_panel_5"/>
 
 </entity>
 <entity>
@@ -5050,9 +4604,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/control_panel_6"
-   use_navmesh="ms3/control_panel_6"
-   only_navmesh="ms3/control_panel_6"/>
+   mesh_name="ms3/control_panel_6"/>
 
 </entity>
 <entity>
@@ -5068,9 +4620,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/control_panel_007"
-   use_navmesh="ms3/control_panel_007"
-   only_navmesh="ms3/control_panel_007"/>
+   mesh_name="ms3/control_panel_007"/>
 
 </entity>
 <entity>
@@ -5086,9 +4636,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/hinge_bookshelf_w_doors_4"
-   use_navmesh="ms3/hinge_bookshelf_w_doors_4"
-   only_navmesh="ms3/hinge_bookshelf_w_doors_4"/>
+   mesh_name="ms3/hinge_bookshelf_w_doors_4"/>
 
 </entity>
 <entity>
@@ -5104,9 +4652,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/doorx4_r_l_h_1_1"
-   use_navmesh="ms3/doorx4_r_l_h_1_1"
-   only_navmesh="ms3/doorx4_r_l_h_1_1"/>
+   mesh_name="ms3/doorx4_r_l_h_1_1"/>
 
 </entity>
 <entity>
@@ -5122,9 +4668,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/estanteria_1"
-   use_navmesh="ms3/estanteria_1"
-   only_navmesh="ms3/estanteria_1"/>
+   mesh_name="ms3/estanteria_1"/>
 
 </entity>
 <entity>
@@ -5140,9 +4684,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/estanteria_2"
-   use_navmesh="ms3/estanteria_2"
-   only_navmesh="ms3/estanteria_2"/>
+   mesh_name="ms3/estanteria_2"/>
 
 </entity>
 <entity>
@@ -5158,9 +4700,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/estanteria_4"
-   use_navmesh="ms3/estanteria_4"
-   only_navmesh="ms3/estanteria_4"/>
+   mesh_name="ms3/estanteria_4"/>
 
 </entity>
 <entity>
@@ -5176,9 +4716,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/suelo_labo_Arriba"
-   use_navmesh="ms3/suelo_labo_Arriba"
-   only_navmesh="ms3/suelo_labo_Arriba"/>
+   mesh_name="ms3/suelo_labo_Arriba"/>
 
 </entity>
 <entity>
@@ -5194,9 +4732,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/suelo_balcon_derecho_cuadrado"
-   use_navmesh="ms3/suelo_balcon_derecho_cuadrado"
-   only_navmesh="ms3/suelo_balcon_derecho_cuadrado"/>
+   mesh_name="ms3/suelo_balcon_derecho_cuadrado"/>
 
 </entity>
 <entity>
@@ -5212,9 +4748,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/suelo_labo_arriba_2"
-   use_navmesh="ms3/suelo_labo_arriba_2"
-   only_navmesh="ms3/suelo_labo_arriba_2"/>
+   mesh_name="ms3/suelo_labo_arriba_2"/>
 
 </entity>
 <entity>
@@ -5230,9 +4764,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/suelo_balcon_cuadrado_izquierdo"
-   use_navmesh="ms3/suelo_balcon_cuadrado_izquierdo"
-   only_navmesh="ms3/suelo_balcon_cuadrado_izquierdo"/>
+   mesh_name="ms3/suelo_balcon_cuadrado_izquierdo"/>
 
 </entity>
 <entity>
@@ -5248,9 +4780,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/turbina_"
-   use_navmesh="ms3/turbina_"
-   only_navmesh="ms3/turbina_"/>
+   mesh_name="ms3/turbina_"/>
 
 </entity>
 <entity>
@@ -5266,9 +4796,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/estanteria_3"
-   use_navmesh="ms3/estanteria_3"
-   only_navmesh="ms3/estanteria_3"/>
+   mesh_name="ms3/estanteria_3"/>
 
 </entity>
 <entity>
@@ -5284,9 +4812,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/maquinas_abajo"
-   use_navmesh="ms3/maquinas_abajo"
-   only_navmesh="ms3/maquinas_abajo"/>
+   mesh_name="ms3/maquinas_abajo"/>
 
 </entity>
 <entity
@@ -5427,9 +4953,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/mod_conduct"
-   use_navmesh="ms3/mod_conduct"
-   only_navmesh="ms3/mod_conduct"/>
+   mesh_name="ms3/mod_conduct"/>
 
 </entity>
 <entity>
@@ -5445,9 +4969,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/cristal"
-   use_navmesh="ms3/cristal"
-   only_navmesh="ms3/cristal"/>
+   mesh_name="ms3/cristal"/>
 
 </entity>
 <entity>
@@ -5463,9 +4985,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/libros_modelo_1"
-   use_navmesh="ms3/libros_modelo_1"
-   only_navmesh="ms3/libros_modelo_1"/>
+   mesh_name="ms3/libros_modelo_1"/>
 
 </entity>
 <entity>
@@ -5481,9 +5001,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/libros_modelo_2"
-   use_navmesh="ms3/libros_modelo_2"
-   only_navmesh="ms3/libros_modelo_2"/>
+   mesh_name="ms3/libros_modelo_2"/>
 
 </entity>
 <entity>
@@ -5499,9 +5017,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/plataforma_rota001"
-   use_navmesh="ms3/plataforma_rota001"
-   only_navmesh="ms3/plataforma_rota001"/>
+   mesh_name="ms3/plataforma_rota001"/>
 
 </entity>
 <entity>
@@ -5517,9 +5033,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/trozo_plataforma_003"
-   use_navmesh="ms3/trozo_plataforma_003"
-   only_navmesh="ms3/trozo_plataforma_003"/>
+   mesh_name="ms3/trozo_plataforma_003"/>
 
 </entity>
 <entity>
@@ -5535,9 +5049,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/suelo_nivel_1"
-   use_navmesh="ms3/suelo_nivel_1"
-   only_navmesh="ms3/suelo_nivel_1"/>
+   mesh_name="ms3/suelo_nivel_1"/>
 
 </entity>
 <entity>
@@ -5553,9 +5065,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/prensa"
-   use_navmesh="ms3/prensa"
-   only_navmesh="ms3/prensa"/>
+   mesh_name="ms3/prensa"/>
 
 </entity>
 <entity>
@@ -5571,9 +5081,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/tuberias"
-   use_navmesh="ms3/tuberias"
-   only_navmesh="ms3/tuberias"/>
+   mesh_name="ms3/tuberias"/>
 
 </entity>
 <entity>
@@ -5589,9 +5097,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/scrap_cube_cinta"
-   use_navmesh="ms3/scrap_cube_cinta"
-   only_navmesh="ms3/scrap_cube_cinta"/>
+   mesh_name="ms3/scrap_cube_cinta"/>
 
 </entity>
 <entity>
@@ -5607,9 +5113,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/cinta_t_"
-   use_navmesh="ms3/cinta_t_"
-   only_navmesh="ms3/cinta_t_"/>
+   mesh_name="ms3/cinta_t_"/>
 
 </entity>
 <entity>
@@ -5625,9 +5129,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/scrap_cube_balcones"
-   use_navmesh="ms3/scrap_cube_balcones"
-   only_navmesh="ms3/scrap_cube_balcones"/>
+   mesh_name="ms3/scrap_cube_balcones"/>
 
 </entity>
 <entity>
@@ -5643,9 +5145,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/compuerta_prensa"
-   use_navmesh="ms3/compuerta_prensa"
-   only_navmesh="ms3/compuerta_prensa"/>
+   mesh_name="ms3/compuerta_prensa"/>
 
 </entity>
 <entity>
@@ -5661,9 +5161,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/tuberias_2"
-   use_navmesh="ms3/tuberias_2"
-   only_navmesh="ms3/tuberias_2"/>
+   mesh_name="ms3/tuberias_2"/>
 
 </entity>
 <entity>
@@ -5679,9 +5177,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/tuberias_3"
-   use_navmesh="ms3/tuberias_3"
-   only_navmesh="ms3/tuberias_3"/>
+   mesh_name="ms3/tuberias_3"/>
 
 </entity>
 <entity>
@@ -5697,9 +5193,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/tuberias_4"
-   use_navmesh="ms3/tuberias_4"
-   only_navmesh="ms3/tuberias_4"/>
+   mesh_name="ms3/tuberias_4"/>
 
 </entity>
 <entity>
@@ -5715,9 +5209,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/tuberias_5"
-   use_navmesh="ms3/tuberias_5"
-   only_navmesh="ms3/tuberias_5"/>
+   mesh_name="ms3/tuberias_5"/>
 
 </entity>
 <entity>
@@ -5733,9 +5225,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/tuberias_6"
-   use_navmesh="ms3/tuberias_6"
-   only_navmesh="ms3/tuberias_6"/>
+   mesh_name="ms3/tuberias_6"/>
 
 </entity>
 <entity>
@@ -5751,9 +5241,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/tuberias_7"
-   use_navmesh="ms3/tuberias_7"
-   only_navmesh="ms3/tuberias_7"/>
+   mesh_name="ms3/tuberias_7"/>
 
 </entity>
 <entity>
@@ -5769,9 +5257,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/tuberias_8"
-   use_navmesh="ms3/tuberias_8"
-   only_navmesh="ms3/tuberias_8"/>
+   mesh_name="ms3/tuberias_8"/>
 
 </entity>
 <entity>
@@ -5787,9 +5273,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/tuberias_9"
-   use_navmesh="ms3/tuberias_9"
-   only_navmesh="ms3/tuberias_9"/>
+   mesh_name="ms3/tuberias_9"/>
 
 </entity>
 <entity>
@@ -5805,9 +5289,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/tuberias_A"
-   use_navmesh="ms3/tuberias_A"
-   only_navmesh="ms3/tuberias_A"/>
+   mesh_name="ms3/tuberias_A"/>
 
 </entity>
 <entity>
@@ -5823,9 +5305,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/tuberias_B"
-   use_navmesh="ms3/tuberias_B"
-   only_navmesh="ms3/tuberias_B"/>
+   mesh_name="ms3/tuberias_B"/>
 
 </entity>
 <entity>
@@ -5877,9 +5357,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/columnas_rotas_3"
-   use_navmesh="ms3/columnas_rotas_3"
-   only_navmesh="ms3/columnas_rotas_3"/>
+   mesh_name="ms3/columnas_rotas_3"/>
 
 </entity>
 <entity>
@@ -5895,9 +5373,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/2"
-   use_navmesh="ms3/2"
-   only_navmesh="ms3/2"/>
+   mesh_name="ms3/2"/>
 
 </entity>
 <entity>
@@ -5913,9 +5389,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/gruaiz"
-   use_navmesh="ms3/gruaiz"
-   only_navmesh="ms3/gruaiz"/>
+   mesh_name="ms3/gruaiz"/>
 
 </entity>
 <entity>
@@ -5931,9 +5405,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/cubos_prensa"
-   use_navmesh="ms3/cubos_prensa"
-   only_navmesh="ms3/cubos_prensa"/>
+   mesh_name="ms3/cubos_prensa"/>
 
 </entity>
 <entity>
@@ -5962,9 +5434,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/viga"
-   use_navmesh="ms3/viga"
-   only_navmesh="ms3/viga"/>
+   mesh_name="ms3/viga"/>
 
 </entity>
 <entity>
@@ -5980,9 +5450,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/viga1"
-   use_navmesh="ms3/viga1"
-   only_navmesh="ms3/viga1"/>
+   mesh_name="ms3/viga1"/>
 
 </entity>
 <entity>
@@ -5998,9 +5466,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/cubo"
-   use_navmesh="ms3/cubo"
-   only_navmesh="ms3/cubo"/>
+   mesh_name="ms3/cubo"/>
 
 </entity>
 <entity>
@@ -6016,9 +5482,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/cubo"
-   use_navmesh="ms3/cubo"
-   only_navmesh="ms3/cubo"/>
+   mesh_name="ms3/cubo"/>
 
 </entity>
 <entity>
@@ -6034,9 +5498,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/cajas_de_herramientas_ms1"
-   use_navmesh="ms3/cajas_de_herramientas_ms1"
-   only_navmesh="ms3/cajas_de_herramientas_ms1"/>
+   mesh_name="ms3/cajas_de_herramientas_ms1"/>
 
 </entity>
 <entity>
@@ -6052,9 +5514,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/pipetas001"
-   use_navmesh="ms3/pipetas001"
-   only_navmesh="ms3/pipetas001"/>
+   mesh_name="ms3/pipetas001"/>
 
 </entity>
 <entity>
@@ -6070,9 +5530,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/cacharro_cientificomapeadoabajo"
-   use_navmesh="ms3/cacharro_cientificomapeadoabajo"
-   only_navmesh="ms3/cacharro_cientificomapeadoabajo"/>
+   mesh_name="ms3/cacharro_cientificomapeadoabajo"/>
 
 </entity>
 <entity>
@@ -6088,9 +5546,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/cacharro_cientificomapeadoarriba"
-   use_navmesh="ms3/cacharro_cientificomapeadoarriba"
-   only_navmesh="ms3/cacharro_cientificomapeadoarriba"/>
+   mesh_name="ms3/cacharro_cientificomapeadoarriba"/>
 
 </entity>
 <entity>
@@ -6106,9 +5562,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/rejas_despacho_izquierda"
-   use_navmesh="ms3/rejas_despacho_izquierda"
-   only_navmesh="ms3/rejas_despacho_izquierda"/>
+   mesh_name="ms3/rejas_despacho_izquierda"/>
 
 </entity>
 <entity>
@@ -6124,9 +5578,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/rejaslaboarriba"
-   use_navmesh="ms3/rejaslaboarriba"
-   only_navmesh="ms3/rejaslaboarriba"/>
+   mesh_name="ms3/rejaslaboarriba"/>
 
 </entity>
 <entity>
@@ -6142,9 +5594,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/marco_libreria"
-   use_navmesh="ms3/marco_libreria"
-   only_navmesh="ms3/marco_libreria"/>
+   mesh_name="ms3/marco_libreria"/>
 
 </entity>
 <entity>
@@ -6160,9 +5610,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/marcosdespacho"
-   use_navmesh="ms3/marcosdespacho"
-   only_navmesh="ms3/marcosdespacho"/>
+   mesh_name="ms3/marcosdespacho"/>
 
 </entity>
 <entity>
@@ -6178,9 +5626,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/rejaslibreria001"
-   use_navmesh="ms3/rejaslibreria001"
-   only_navmesh="ms3/rejaslibreria001"/>
+   mesh_name="ms3/rejaslibreria001"/>
 
 </entity>
 <entity>
@@ -6196,9 +5642,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/rejas_despacho_derecha"
-   use_navmesh="ms3/rejas_despacho_derecha"
-   only_navmesh="ms3/rejas_despacho_derecha"/>
+   mesh_name="ms3/rejas_despacho_derecha"/>
 
 </entity>
 <entity>
@@ -6214,9 +5658,7 @@
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/columnas_fondo"
-   use_navmesh="ms3/columnas_fondo"
-   only_navmesh="ms3/columnas_fondo"/>
+   mesh_name="ms3/columnas_fondo"/>
 
 </entity>
 
