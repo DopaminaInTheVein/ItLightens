@@ -138,8 +138,8 @@ bool TCompPhysics::load(MKeyValue & atts)
 	switch (m_collisionShape) {
 	case TRI_MESH:
 		m_mesh_name = atts.getString("mesh_name", "");
-		m_use_navmesh = atts.getBool("use_navmesh", true);
 		m_only_navmesh = atts.getBool("only_navmesh", false);
+		m_use_navmesh = m_only_navmesh || atts.getBool("use_navmesh", true);
 		break;
 	case SPHERE:
 		m_radius = atts.getFloat("radius", 0.5f);
