@@ -16,7 +16,7 @@ void TCompSound::init() {
 	updateHierarchy();
 
 	MAX_DISTANCE = sound_manager->getMaxDistance();
-
+	entity_name = MY_NAME;
 	// create the sound
 	sound_manager->playFixed3dSound("event:/" + event, entity_name, entity_position, volume, true);
 }
@@ -40,8 +40,7 @@ void TCompSound::update(float elapsed) {
 }
 
 bool TCompSound::load(MKeyValue& atts) {
-
-	event =  atts.getString("event", "OnUseGenerator");
+	event = atts.getString("event", "OnUseGenerator");
 	volume = atts.getFloat("volume", 0.25f);
 
 	return true;
@@ -60,4 +59,3 @@ void TCompSound::updateHierarchy()
 		if (hierarchy_transform) entity_position = hierarchy_transform->getPosition();
 	}
 }
-
