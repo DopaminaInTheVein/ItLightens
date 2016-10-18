@@ -41,6 +41,9 @@ class TCompPhysics : public TCompBase {
 	float				m_radius = 0.0f;
 	float				m_height = 0.0f;
 	VEC3				m_size = VEC3(1.0f, 1.0f, 1.0f);	//default size for box
+	std::string			m_mesh_name = "";
+	bool				m_use_navmesh = true;
+	bool				m_only_navmesh = false;
 
 	PxShape*			m_pShape = nullptr;
 	PxActor*			m_pActor = nullptr;
@@ -52,6 +55,7 @@ class TCompPhysics : public TCompBase {
 	int getCollisionShapeValueFromString(std::string str);
 
 	bool createTriMeshShape();
+	const CMesh* readMesh();
 	bool createBoxShape();
 	bool createCapsuleShape();
 	bool createSphereShape();
@@ -103,6 +107,8 @@ public:
 	void setPosition(VEC3 position, CQuaternion rotation);
 
 	float GetMass() const { return m_mass; }
+	bool IsForNavmesh() { return m_use_navmesh; }
+	void CleanNavmesh() { if (m_only_navmesh) MY_OWNER.destroy(); }
 
 	void update(float dt);
 	void renderInMenu();

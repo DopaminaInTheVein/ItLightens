@@ -277,7 +277,7 @@ bool CPlayerBase::UpdateMovDirection() {
 
 	bool horizontal = false;
 	bool vertical = false;
-	if (!GameController->GetFreeCamera()) {
+	if (!GameController->GetFreeCamera() || io->keys[VK_CONTROL].isPressed()) {
 		if (controller->IsMoveForward()) {
 			float zzz = controller->MoveYNormalized();
 			directionForward = VEC3(0, 0, zzz);

@@ -1,5 +1,8 @@
 #include "mcv_platform.h"
 #include "comp_physics.h"
+
+#include "resources/resources_manager.h"
+
 #include "entity.h"
 #include "comp_transform.h"
 #include "comp_render_static_mesh.h"
@@ -134,7 +137,9 @@ bool TCompPhysics::load(MKeyValue & atts)
 	m_smooth = atts.getFloat("smooth", 0.0f);
 	switch (m_collisionShape) {
 	case TRI_MESH:
-		//nothing extra needed to read
+		m_mesh_name = atts.getString("mesh_name", "");
+		m_use_navmesh = atts.getBool("use_navmesh", true);
+		m_only_navmesh = atts.getBool("only_navmesh", false);
 		break;
 	case SPHERE:
 		m_radius = atts.getFloat("radius", 0.5f);
@@ -159,16 +164,6 @@ bool TCompPhysics::load(MKeyValue & atts)
 
 bool TCompPhysics::save(std::ofstream& os, MKeyValue& atts)
 {
-	/*
-	std::string readString = atts.getString("type_collision", "static");
-	m_collisionType = getCollisionTypeValueFromString(readString);
-	readString = atts.getString("type_shape", "mesh");
-	m_collisionShape = getCollisionShapeValueFromString(readString);
-	m_mass = atts.getFloat("mass", 2.0f);		//default enough to pass polarize threshold
-	m_kinematic = atts.getBool("kinematic", false);		//default enough to pass polarize threshold
-	m_smooth = atts.getFloat("smooth", 0.0f);
-	*/
-
 	std::string t_collisions[] = { "static", "dynamic", "trigger" };
 	atts.put("type_collision", t_collisions[m_collisionType]);
 
@@ -178,16 +173,19 @@ bool TCompPhysics::save(std::ofstream& os, MKeyValue& atts)
 	if (m_collisionShape == BOX) {
 		atts.put("size", m_size);
 	}
-	else {
-		if (m_collisionShape == CAPSULE || m_collisionShape == SPHERE) {
-			atts.put("radius", m_radius);
-			if (m_collisionShape == CAPSULE) atts.put("height", m_height);
-		}
+	else if (m_collisionShape == CAPSULE || m_collisionShape == SPHERE) {
+		atts.put("radius", m_radius);
+		if (m_collisionShape == CAPSULE) atts.put("height", m_height);
+	}
+	else if (m_collisionShape == TRI_MESH) {
+		atts.put("mesh_name", m_mesh_name);
 	}
 
 	atts.put("mass", m_mass);
 	atts.put("kinematic", m_kinematic);
 	atts.put("smooth", m_smooth);
+	if (!m_use_navmesh) atts.put("use_navmesh", m_use_navmesh);
+	if (m_only_navmesh) atts.put("only_navmesh", m_only_navmesh);
 
 	return true;
 }
@@ -300,40 +298,55 @@ void TCompPhysics::update(float dt)
 //----------------------------------------------------------
 bool TCompPhysics::createTriMeshShape()
 {
-	CHandle entity_h = CHandle(this).getOwner();
-	CEntity *e = nullptr;
-	if (entity_h.isValid()) e = entity_h;
-	if (e) {
-		TCompRenderStaticMesh *comp_static_mesh = e->get<TCompRenderStaticMesh>();
-		if (!comp_static_mesh) {
-			char err[1024];
-			sprintf(err, "Objeto [%s] sin malla, pero con física!", e->getName());
-			MessageBox(NULL, err, NULL, MB_OK);
-		}
-		auto name = e->getName();
-		dbg("[Physx]: Cooking static mesh on %s", name);
-		PxTriangleMesh *cookedMesh = g_PhysxManager->CreateCookedTriangleMesh(comp_static_mesh->static_mesh->slots[0].mesh);		//only will cook from mesh from slot 0
-		m_pShape = g_PhysxManager->CreateTriangleMesh(cookedMesh, m_staticFriction, m_dynamicFriction, m_restitution);
-		if (!m_pShape) return false;
-		addRigidbodyScene();
+	const CMesh* mesh = readMesh();
+	dbg("[Physx]: Cooking static mesh on %s", MY_NAME);
+	PxTriangleMesh *cookedMesh = g_PhysxManager->CreateCookedTriangleMesh(mesh);		//only will cook from mesh from slot 0
+	m_pShape = g_PhysxManager->CreateTriangleMesh(cookedMesh, m_staticFriction, m_dynamicFriction, m_restitution);
+	if (!m_pShape) return false;
+	addRigidbodyScene();
 
-		int size_slots = comp_static_mesh->static_mesh->slots.size();
-		if (size_slots > 1) {
-			for (int i = 1; i < size_slots; i++) {
-				PxTriangleMesh *cookedMesh = g_PhysxManager->CreateCookedTriangleMesh(comp_static_mesh->static_mesh->slots[i].mesh);		//only will cook from mesh from slot 0
-				m_pShape = g_PhysxManager->CreateTriangleMesh(cookedMesh, m_staticFriction, m_dynamicFriction, m_restitution);
-				PxRigidActor *ra = m_pActor->isRigidActor();
-				if (ra)
-					ra->attachShape(*m_pShape);
-			}
-		}
-		PxFilterData mFilterData = DEFAULT_DATA_DYNAMIC;
-		updateTagsSetupActor(mFilterData);
-		return true;
-	}
+	//int size_slots = comp_static_mesh->static_mesh->slots.size();
+	//if (size_slots > 1) {
+	//	for (int i = 1; i < size_slots; i++) {
+	//		PxTriangleMesh *cookedMesh = g_PhysxManager->CreateCookedTriangleMesh(comp_static_mesh->static_mesh->slots[i].mesh);		//only will cook from mesh from slot 0
+	//		m_pShape = g_PhysxManager->CreateTriangleMesh(cookedMesh, m_staticFriction, m_dynamicFriction, m_restitution);
+	//		PxRigidActor *ra = m_pActor->isRigidActor();
+	//		if (ra)
+	//			ra->attachShape(*m_pShape);
+	//	}
+	//}
+	PxFilterData mFilterData = DEFAULT_DATA_DYNAMIC;
+	updateTagsSetupActor(mFilterData);
+	return true;
 
 	fatal("component without valid entity!\n");
 	return false;
+}
+
+const CMesh* TCompPhysics::readMesh()
+{
+	const CMesh* res = nullptr;
+	if (m_mesh_name != "")
+		res = Resources.get(m_mesh_name.c_str())->as<CMesh>();
+	else {
+		GET_MY(r_st_mesh, TCompRenderStaticMesh);
+		if (r_st_mesh) {
+			auto st_mesh = r_st_mesh->static_mesh;
+			if (st_mesh) {
+				auto slots = st_mesh->slots;
+				if (slots.size() > 0) {
+					assert(slots.size() == 1);
+					return slots[0].mesh;
+				}
+			}
+		}
+	}
+	if (!res) {
+		char err[1024];
+		sprintf(err, "Error comp_physics: Object [%s] without mesh", MY_OWNER);
+		MessageBox(NULL, err, NULL, MB_OK);
+	}
+	return nullptr;
 }
 
 bool TCompPhysics::createBoxShape()

@@ -54,7 +54,7 @@ void CNavmeshManager::initNavmesh(std::string level_name)
 		if (e) {
 			TCompTransform * trans = e->get<TCompTransform>();
 			TCompPhysics * p = e->get<TCompPhysics>();
-			if (!p) continue;
+			if (!p || !p->IsForNavmesh()) continue;
 			auto actor = p->getActor();
 			if (!actor) continue;
 			PxBounds3 bounds = actor->getWorldBounds();
@@ -99,4 +99,5 @@ void CNavmeshManager::initNavmesh(std::string level_name)
 	else {
 		recalcNavmesh(level_name);
 	}
+	getHandleManager<TCompPhysics>()->onAll(&TCompPhysics::CleanNavmesh);
 }
