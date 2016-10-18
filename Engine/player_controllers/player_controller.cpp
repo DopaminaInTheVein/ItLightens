@@ -593,6 +593,18 @@ void player_controller::UpdateInputActions()
 	if (io->keys['0'].becomesPressed()) {
 		bt_guard bttest;
 		int res = bttest.getPathDebug(startPoint, endPoint);
+		if (res > 0) {
+			auto wpts = bttest.getPathWpts();
+			for (int i = 1; i < wpts.size(); i++) {
+				if (i > 0) {
+					Debug->DrawLine(wpts[i - 1] + VEC3_UP* .2f, wpts[i] + VEC3_UP*.2f, GREEN, 10.f);
+				}
+				i++;
+			}
+		}
+		else {
+			Debug->DrawLine(startPoint + VEC3_UP* .2f, endPoint + VEC3_UP*.2f, RED, 10.f);
+		}
 		dbg("get path result: %d", res);
 		dbg("\n", res);
 	}

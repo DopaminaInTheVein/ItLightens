@@ -1,5 +1,12 @@
 -- -- BASIC COMPONENTS -- --
 
+fn IsCollider obj = (
+	if (getUserProp obj "collision") == "yes" then (
+		if  (classof obj) == Box then (return true)
+	)
+	return false
+)
+
 ----------------------------------------------------------------------
 -- NAME--
 ---------------------------------------------------------------------
@@ -45,10 +52,13 @@ fn parseTransform parent = (
 	scaleVal = s.x as string
 	xmlTransform.addAttr "scale" scaleVal
 )
-
+ 
 fn needToCenter = (
 	local res = (_descriptorObject.getType() == "Trigger")
 	res = res or (_descriptorObject.getType() == "AreaPol")
+	res = res or (IsCollider _parsingObject)
+	--messagebox ("Need to center: " +  (res as string))
+	return res
 )
 
 fn centerIfNeeded = (
@@ -200,8 +210,6 @@ fn _parse_render = (
 		
 		local xmlStMesh = XML_PARSING.addChild "render_static_mesh"
 		xmlStMesh.addAttr "name" ("skeletons/" + skel + "/" + skel + staticMesh_ext)
-		xmlStMesh.addAttr "static" "no"
-		parsePropAttribute xmlStMesh "to_render" "to_render"
 		XML_PARSING.addChild "skeleton_ik"
 		XML_PARSING.addChild "abs_aabb"
 		XML_PARSING.addChild "local_aabb"
@@ -209,18 +217,13 @@ fn _parse_render = (
 		--Tiene staticMesh?
 		stMesh = getUserProp _parsingObject "staticMesh"
 		if (stMesh != undefined) do (
+			local xmlStMesh = XML_PARSING.addChild "render_static_mesh"
+			xmlStMesh.addAttr "name" ("static_meshes/" + stMesh + staticMesh_ext)
 			XML_PARSING.addChild "abs_aabb"
 			local movable = getUserProp _parsingObject "movable"
 			if (movable as string) == "yes" then (
 				XML_PARSING.addChild "local_aabb"
 			)
-			
-			local xmlStMesh = XML_PARSING.addChild "render_static_mesh"
-			xmlStMesh.addAttr "name" ("static_meshes/" + stMesh + staticMesh_ext)
-			local static = "no"
-			if (isStatic _parsingObject) then (static = "yes")
-			xmlStMesh.addAttr "static" static
-			parsePropAttribute xmlStMesh "to_render" "to_render"
 		)
 	)
 )

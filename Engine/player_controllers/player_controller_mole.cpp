@@ -809,7 +809,7 @@ void player_controller_mole::onGrabHit(const TMsgGrabHit& msg)
 
 	VEC3 boxPos = box_t->getPosition();
 	impact.Normalize();
-	Debug->DrawLine(boxPos, impact + VEC3(0.f, 0.2f, 0.f), 1.f, VEC3(0, 0, 1), 10.f);
+	Debug->DrawLine(boxPos, 1.f, impact + VEC3(0.f, 0.2f, 0.f), VEC3(0, 0, 1), 10.f);
 
 	____TIMER_RESET_(t_grab_hit);
 	ChangeState(ST_MOLE_GRABBING_IMPACT);

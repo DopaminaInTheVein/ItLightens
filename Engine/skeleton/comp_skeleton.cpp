@@ -258,22 +258,22 @@ void TCompSkeleton::updateEndAction() {
 
 void TCompSkeleton::render() const {
 #ifndef NDEBUG
-	if (!isInRoom(CHandle(this).getOwner())) return;
-	if (!Debug->isDrawLines()) return;
-	PROFILE_FUNCTION("TCompSkeleton render");
-	auto skel = model->getSkeleton();
-	size_t nbones = skel->getVectorBone().size();
-	std::vector< VEC3 > bone_points;
-	bone_points.resize(nbones * 2); // begin to end
-	int nlines;
-	{
-		PROFILE_FUNCTION("getBoneLines");
-		nlines = skel->getBoneLines(&bone_points[0].x);
-	}
-	float scale = 1.0f;
-	for (int i = 0; i < nlines; ++i) {
-		Debug->DrawLine(bone_points[i * 2] * scale, bone_points[i * 2 + 1] * scale, VEC3(1, 0, 1));
-	}
+	//if (!isInRoom(CHandle(this).getOwner())) return;
+	//if (!Debug->isDrawLines()) return;
+	//PROFILE_FUNCTION("TCompSkeleton render");
+	//auto skel = model->getSkeleton();
+	//size_t nbones = skel->getVectorBone().size();
+	//std::vector< VEC3 > bone_points;
+	//bone_points.resize(nbones * 2); // begin to end
+	//int nlines;
+	//{
+	//	PROFILE_FUNCTION("getBoneLines");
+	//	nlines = skel->getBoneLines(&bone_points[0].x);
+	//}
+	//float scale = 1.0f;
+	//for (int i = 0; i < nlines; ++i) {
+	//	Debug->DrawLine(bone_points[i * 2] * scale, bone_points[i * 2 + 1] * scale, VEC3(1, 0, 1));
+	//}
 #endif
 }
 

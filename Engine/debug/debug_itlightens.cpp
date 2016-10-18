@@ -4,6 +4,8 @@
 #include "resources/resource.h"
 #include "render/shader_cte.h"
 #include "constants/ctes_object.h"
+#include "resources\resources_manager.h"
+
 extern CShaderCte< TCteObject > shader_ctes_object;
 
 struct SimpleVertexColored {
@@ -145,7 +147,7 @@ void CDebug::DrawLine(VEC3 org, VEC3 end, VEC3 color, float time)
 #endif
 }
 
-void CDebug::DrawLine(VEC3 pos, VEC3 direction, float dist, VEC3 color, float time)
+void CDebug::DrawLine(VEC3 pos, float dist, VEC3 direction, VEC3 color, float time)
 {
 #ifndef NDEBUG
 	direction.Normalize();
@@ -191,6 +193,9 @@ void CDebug::update(float dt) {
 void CDebug::render()
 {
 #ifndef NDEBUG
+	Render.activateBackBuffer();
+	auto tech = Resources.get("solid_colored.tech")->as<CRenderTechnique>();
+	tech->activate();
 	if (draw_lines) {
 		shader_ctes_object.World = MAT44::Identity;
 		shader_ctes_object.uploadToGPU();
@@ -216,7 +221,7 @@ void CDebug::render()
 	//Timed line
 	int new_next_line = 0;
 	int i = 0;
-	while (i < next_line) {
+	while (i < next_timed_line) {
 		lines_timed[i].time -= getDeltaTime();
 		// Loop finish because in remove next_line--, otherwhise i++
 		if (lines_timed[i].time <= 0.f) {

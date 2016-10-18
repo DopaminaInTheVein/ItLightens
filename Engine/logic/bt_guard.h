@@ -264,8 +264,14 @@ public:
 
 	bool getUpdateInfo() override;
 	void update(float dt) {
-		if (DEBUG_CODE)	dbg("Test debugging: %f,%f,%f\n", VEC3_VALUES(my_tmx->getPosition()));
-
+		//if (DEBUG_CODE) {
+		//	for (int i = 1; i < pathWpts.size(); i++) {
+		//		if (i > 0) {
+		//			Debug->DrawLine(pathWpts[i - 1] + VEC3_UP* .2f, pathWpts[i] + VEC3_UP*.2f, BLUE);
+		//		}
+		//		i++;
+		//	}
+		//}
 		Debug->DrawLine(my_tmx->getPosition(), player_last_seen_point, VEC3(0, 1, 0));
 		Debug->DrawLine(my_tmx->getPosition(), my_tmx->getPosition() + my_tmx->getFront(), VEC3(1, 1, 0));
 		Debug->DrawLine(my_tmx->getPosition(), my_tmx->getPosition() + my_tmx->getLeft(), VEC3(1, 1, 0));

@@ -97,7 +97,7 @@ public:
 	//Draw lines functions:
 	//-------------------------------------------------------
 	void DrawLine(VEC3 org, VEC3 end, VEC3 color = RED, float time = 0.f);
-	void DrawLine(VEC3 pos, VEC3 direction, float dist, VEC3 color = RED, float time = 0.f);
+	void DrawLine(VEC3 pos, float dist, VEC3 dir, VEC3 color = RED, float time = 0.f);
 	void RenderLine(line);
 	//-------------------------------------------------------
 

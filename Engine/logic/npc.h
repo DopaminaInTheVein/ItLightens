@@ -75,10 +75,13 @@ public:
 	int actionUnstuckMove();
 
 	//Prueba
-
 	int getPathDebug(const VEC3& startPoint, const VEC3& endPoint) {
 		if (getPath(startPoint, endPoint)) return totalPathWpt;
 		else return -1;
+	}
+
+	std::vector<VEC3> getPathWpts() {
+		return pathWpts;
 	}
 
 	void initParent() {
