@@ -17,8 +17,7 @@
 <skeleton
    model="skeletons/player/player.skeleton"/>
 <render_static_mesh
-   name="skeletons/player/player.static_mesh"
-   static="no"/>
+   name="skeletons/player/player.static_mesh"/>
 <skeleton_ik/>
 <abs_aabb/>
 <local_aabb/>
@@ -50,8 +49,7 @@
 <skeleton
    model="skeletons/mole/mole.skeleton"/>
 <render_static_mesh
-   name="skeletons/mole/mole.static_mesh"
-   static="no"/>
+   name="skeletons/mole/mole.static_mesh"/>
 <skeleton_ik/>
 <abs_aabb/>
 <local_aabb/>
@@ -91,10 +89,9 @@
    pos="1033.84 65.0197 -26.0653"
    quat="0 0 0 1.0"
    scale="1.0"/>
-<abs_aabb/>
 <render_static_mesh
-   name="static_meshes/tuto_mole/_wall_down.static_mesh"
-   static="yes"/>
+   name="static_meshes/tuto_mole/_wall_down.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="dynamic"
    type_shape="convex"
@@ -113,10 +110,9 @@
    pos="1033.84 66.2475 -26.0653"
    quat="0 0 0 1.0"
    scale="1.0"/>
-<abs_aabb/>
 <render_static_mesh
-   name="static_meshes/tuto_mole/_wall_up.static_mesh"
-   static="yes"/>
+   name="static_meshes/tuto_mole/_wall_up.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="dynamic"
    type_shape="convex"
@@ -135,10 +131,9 @@
    pos="1033.83 65.8211 -26.7662"
    quat="0 0 0 1.0"
    scale="1.0"/>
-<abs_aabb/>
 <render_static_mesh
-   name="static_meshes/tuto_mole/_wall_right.static_mesh"
-   static="yes"/>
+   name="static_meshes/tuto_mole/_wall_right.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="dynamic"
    type_shape="convex"
@@ -157,10 +152,9 @@
    pos="1033.89 65.5319 -25.4293"
    quat="0 0 0 1.0"
    scale="1.0"/>
-<abs_aabb/>
 <render_static_mesh
-   name="static_meshes/tuto_mole/_wall_left.static_mesh"
-   static="yes"/>
+   name="static_meshes/tuto_mole/_wall_left.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="dynamic"
    type_shape="convex"
@@ -181,10 +175,9 @@
    pos="1016.53 65.0432 -32.2398"
    quat="0 0 0 1.0"
    scale="1.0"/>
-<abs_aabb/>
 <render_static_mesh
-   name="static_meshes/obj/box2.static_mesh"
-   static="no"/>
+   name="static_meshes/obj/box2.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="dynamic"
    type_shape="convex"
@@ -252,12 +245,14 @@
    pos="1033.21 66.0571 -26.0363"
    quat="0 0 0 1.0"
    scale="1.0"/>
-<abs_aabb/>
 <render_static_mesh
-   name="static_meshes/tuto_mole/pared_rompible.static_mesh"
-   static="yes"/>
+   name="static_meshes/tuto_mole/pared_rompible.static_mesh"/>
+<abs_aabb/>
 <rigidbody
-   type_collision="static"/>
+   type_collision="static"
+   mesh_name="tuto_mole/pared_rompible"
+   use_navmesh="tuto_mole/pared_rompible"
+   only_navmesh="tuto_mole/pared_rompible"/>
 
 </entity>
 <entity
@@ -270,12 +265,14 @@
    pos="1033.21 66.0571 -26.0363"
    quat="0 0 0 1.0"
    scale="1.0"/>
-<abs_aabb/>
 <render_static_mesh
-   name="static_meshes/tuto_mole/pared_rota_jaula.static_mesh"
-   static="yes"/>
+   name="static_meshes/tuto_mole/pared_rota_jaula.static_mesh"/>
+<abs_aabb/>
 <rigidbody
-   type_collision="static"/>
+   type_collision="static"
+   mesh_name="tuto_mole/pared_rota_jaula"
+   use_navmesh="tuto_mole/pared_rota_jaula"
+   only_navmesh="tuto_mole/pared_rota_jaula"/>
 
 </entity>
 <entity

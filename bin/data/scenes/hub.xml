@@ -25,7 +25,10 @@
    name="static_meshes/hub/ceiling.static_mesh"/>
 <abs_aabb/>
 <rigidbody
-   type_collision="static"/>
+   type_collision="static"
+   mesh_name="hub/ceiling"
+   use_navmesh="hub/ceiling"
+   only_navmesh="hub/ceiling"/>
 
 </entity>
 <entity>
@@ -40,7 +43,10 @@
    name="static_meshes/hub/reja.static_mesh"/>
 <abs_aabb/>
 <rigidbody
-   type_collision="static"/>
+   type_collision="static"
+   mesh_name="hub/reja"
+   use_navmesh="hub/reja"
+   only_navmesh="hub/reja"/>
 
 </entity>
 <entity>
@@ -55,7 +61,10 @@
    name="static_meshes/hub/cenefa_1.static_mesh"/>
 <abs_aabb/>
 <rigidbody
-   type_collision="static"/>
+   type_collision="static"
+   mesh_name="hub/cenefa_1"
+   use_navmesh="hub/cenefa_1"
+   only_navmesh="hub/cenefa_1"/>
 
 </entity>
 <entity>
@@ -70,7 +79,10 @@
    name="static_meshes/hub/cenefa_2.static_mesh"/>
 <abs_aabb/>
 <rigidbody
-   type_collision="static"/>
+   type_collision="static"
+   mesh_name="hub/cenefa_2"
+   use_navmesh="hub/cenefa_2"
+   only_navmesh="hub/cenefa_2"/>
 
 </entity>
 <entity>
@@ -85,7 +97,10 @@
    name="static_meshes/hub/arc_door.static_mesh"/>
 <abs_aabb/>
 <rigidbody
-   type_collision="static"/>
+   type_collision="static"
+   mesh_name="hub/arc_door"
+   use_navmesh="hub/arc_door"
+   only_navmesh="hub/arc_door"/>
 
 </entity>
 <entity>
@@ -100,7 +115,10 @@
    name="static_meshes/hub/window_wall.static_mesh"/>
 <abs_aabb/>
 <rigidbody
-   type_collision="static"/>
+   type_collision="static"
+   mesh_name="hub/window_wall"
+   use_navmesh="hub/window_wall"
+   only_navmesh="hub/window_wall"/>
 
 </entity>
 <entity>
@@ -115,7 +133,10 @@
    name="static_meshes/hub/columna_2.static_mesh"/>
 <abs_aabb/>
 <rigidbody
-   type_collision="static"/>
+   type_collision="static"
+   mesh_name="hub/columna_2"
+   use_navmesh="hub/columna_2"
+   only_navmesh="hub/columna_2"/>
 
 </entity>
 <entity>
@@ -130,7 +151,10 @@
    name="static_meshes/hub/door.static_mesh"/>
 <abs_aabb/>
 <rigidbody
-   type_collision="static"/>
+   type_collision="static"
+   mesh_name="hub/door"
+   use_navmesh="hub/door"
+   only_navmesh="hub/door"/>
 
 </entity>
 <entity>
@@ -145,7 +169,10 @@
    name="static_meshes/hub/columna.static_mesh"/>
 <abs_aabb/>
 <rigidbody
-   type_collision="static"/>
+   type_collision="static"
+   mesh_name="hub/columna"
+   use_navmesh="hub/columna"
+   only_navmesh="hub/columna"/>
 
 </entity>
 <entity>
@@ -160,7 +187,10 @@
    name="static_meshes/hub/control_panel.static_mesh"/>
 <abs_aabb/>
 <rigidbody
-   type_collision="static"/>
+   type_collision="static"
+   mesh_name="hub/control_panel"
+   use_navmesh="hub/control_panel"
+   only_navmesh="hub/control_panel"/>
 
 </entity>
 <entity>
@@ -175,7 +205,10 @@
    name="static_meshes/hub/sofa1.static_mesh"/>
 <abs_aabb/>
 <rigidbody
-   type_collision="static"/>
+   type_collision="static"
+   mesh_name="hub/sofa1"
+   use_navmesh="hub/sofa1"
+   only_navmesh="hub/sofa1"/>
 
 </entity>
 <entity>
@@ -190,7 +223,10 @@
    name="static_meshes/hub/wall_lamp.static_mesh"/>
 <abs_aabb/>
 <rigidbody
-   type_collision="static"/>
+   type_collision="static"
+   mesh_name="hub/wall_lamp"
+   use_navmesh="hub/wall_lamp"
+   only_navmesh="hub/wall_lamp"/>
 
 </entity>
 <entity
@@ -499,7 +535,10 @@
    name="static_meshes/hub/arc_door.static_mesh"/>
 <abs_aabb/>
 <rigidbody
-   type_collision="static"/>
+   type_collision="static"
+   mesh_name="hub/arc_door"
+   use_navmesh="hub/arc_door"
+   only_navmesh="hub/arc_door"/>
 
 </entity>
 <entity>
@@ -514,7 +553,10 @@
    name="static_meshes/hub/wall1.static_mesh"/>
 <abs_aabb/>
 <rigidbody
-   type_collision="static"/>
+   type_collision="static"
+   mesh_name="hub/wall1"
+   use_navmesh="hub/wall1"
+   only_navmesh="hub/wall1"/>
 
 </entity>
 <entity>
@@ -529,7 +571,10 @@
    name="static_meshes/hub/wall2.static_mesh"/>
 <abs_aabb/>
 <rigidbody
-   type_collision="static"/>
+   type_collision="static"
+   mesh_name="hub/wall2"
+   use_navmesh="hub/wall2"
+   only_navmesh="hub/wall2"/>
 
 </entity>
 <entity>
@@ -544,7 +589,10 @@
    name="static_meshes/hub/wall_3.static_mesh"/>
 <abs_aabb/>
 <rigidbody
-   type_collision="static"/>
+   type_collision="static"
+   mesh_name="hub/wall_3"
+   use_navmesh="hub/wall_3"
+   only_navmesh="hub/wall_3"/>
 
 </entity>
 <entity>
@@ -559,7 +607,10 @@
    name="static_meshes/hub/ceiling_tile.static_mesh"/>
 <abs_aabb/>
 <rigidbody
-   type_collision="static"/>
+   type_collision="static"
+   mesh_name="hub/ceiling_tile"
+   use_navmesh="hub/ceiling_tile"
+   only_navmesh="hub/ceiling_tile"/>
 
 </entity>
 <entity>
@@ -574,7 +625,10 @@
    name="static_meshes/hub/sofa2.static_mesh"/>
 <abs_aabb/>
 <rigidbody
-   type_collision="static"/>
+   type_collision="static"
+   mesh_name="hub/sofa2"
+   use_navmesh="hub/sofa2"
+   only_navmesh="hub/sofa2"/>
 
 </entity>
 <entity
@@ -591,7 +645,10 @@
    name="static_meshes/hub/end_hub.static_mesh"/>
 <abs_aabb/>
 <rigidbody
-   type_collision="static"/>
+   type_collision="static"
+   mesh_name="hub/end_hub"
+   use_navmesh="hub/end_hub"
+   only_navmesh="hub/end_hub"/>
 
 </entity>
 <entity
@@ -629,7 +686,10 @@
    name="static_meshes/hub/floor.static_mesh"/>
 <abs_aabb/>
 <rigidbody
-   type_collision="static"/>
+   type_collision="static"
+   mesh_name="hub/floor"
+   use_navmesh="hub/floor"
+   only_navmesh="hub/floor"/>
 
 </entity>
 <entity>
@@ -644,7 +704,10 @@
    name="static_meshes/hub/machine_table.static_mesh"/>
 <abs_aabb/>
 <rigidbody
-   type_collision="static"/>
+   type_collision="static"
+   mesh_name="hub/machine_table"
+   use_navmesh="hub/machine_table"
+   only_navmesh="hub/machine_table"/>
 
 </entity>
 <entity>
@@ -660,7 +723,10 @@
    name="static_meshes/tuto_sci/generator.static_mesh"/>
 <abs_aabb/>
 <rigidbody
-   type_collision="static"/>
+   type_collision="static"
+   mesh_name="tuto_sci/generator"
+   use_navmesh="tuto_sci/generator"
+   only_navmesh="tuto_sci/generator"/>
 
 </entity>
 

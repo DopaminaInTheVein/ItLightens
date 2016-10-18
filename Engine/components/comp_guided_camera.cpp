@@ -157,8 +157,6 @@ bool TCompGuidedCamera::followGuide(TCompTransform* camTransform, TCompCameraMai
 			: VEC3::CatmullRom(lookCmr[0], lookCmr[1], lookCmr[2], lookCmr[3], factor);
 		cam->smoothLookAt(pos, look, cam->getUpAux(), smoothFactor / getDeltaTime());
 		camTransform->lookAt(pos, look, cam->getUpAux());
-		Debug->DrawLine(comeFrom, goTo);
-		Debug->DrawLine(lookFrom, lookTo, VEC3(0, 0, 1));
 	}
 	else {
 		//New target

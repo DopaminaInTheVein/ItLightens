@@ -28,23 +28,24 @@ bool TCompPolarized::getUpdateInfo() {
 	GET_COMP(t, CHandle(this).getOwner(), TCompTransform);
 	if (!t) return false;
 	origin = t->getPosition() + force.offset;
-	Debug->DrawLine(t->getPosition(), t->getPosition() + force.offset);
+	//Debug->DrawLine(t->getPosition(), t->getPosition() + force.offset);
 }
 
 void TCompPolarized::update(float elapsed)
 {
-	/*
-	CHandle me_h = CHandle(this).getOwner();
+	//if (DEBUG_CODE) {
+	//	CHandle me_h = CHandle(this).getOwner();
 
-	origin = VEC3(0.0f, 0.0f, 0.0f);
-	CEntity *me_e = me_h;
-	TCompTransform *t = me_e->get<TCompTransform>();
-	if (t) {
-		auto my_position = t->getPosition();
-		origin = my_position + force.offset;
-		Debug->DrawLine(my_position, origin);
-	}
-	*/
+	//	origin = VEC3(0.0f, 0.0f, 0.0f);
+	//	CEntity *me_e = me_h;
+	//	TCompTransform *t = me_e->get<TCompTransform>();
+	//	if (t) {
+	//		auto my_position = t->getPosition();
+	//		origin = my_position + force.offset;
+	//		Debug->DrawLine(my_position, origin);
+	//	}
+	//}
+
 	CEntity *e_p = player_h;
 	if (e_p) {
 		TCompCharacterController *cc = e_p->get<TCompCharacterController>();
@@ -54,7 +55,7 @@ void TCompPolarized::update(float elapsed)
 		if (mType == FIXED) {
 			force.deltaPos = origin - player_pos;
 			force.distance = simpleDist(origin, player_pos);
-			Debug->DrawLine(origin, player_pos);
+			//Debug->DrawLine(origin, player_pos);
 			if (dist_effect_fixed > force.distance) {
 				if (!send) {
 					send = true;

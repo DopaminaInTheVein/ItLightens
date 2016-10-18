@@ -93,7 +93,7 @@ public:
 	DECL_INPUT_DEBUG(isPauseDebugPressed);
 
 	DECL_INPUT_DEBUG(isSlowButtonPressed);
-	DECL_INPUT_DEBUG(isDrawLineButtonPressing);
+	DECL_INPUT_DEBUG(isDrawLineButtonPressed);
 	DECL_INPUT_DEBUG(isTestSSAOButoonPressed);
 	DECL_INPUT_DEBUG(isEditorLightsButtonPressed);
 	DECL_INPUT_DEBUG(isParticleEditorButtonPressed);

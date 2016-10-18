@@ -204,11 +204,14 @@ bool TCompBox::getGrabPoints(
 
 	left += pos;
 	right += pos;
-
-	Debug->DrawLine(pos_grab, left, VEC3(0.f, 1.f, 0.f));
-	Debug->DrawLine(pos_grab, right, VEC3(1.f, 1.f, 0.5f));
-	Debug->DrawLine(left, 0.2f, normal_left, VEC3(0.f, 1.f, 0.f));
-	Debug->DrawLine(right, 0.2f, normal_right, VEC3(1.f, 1.f, 0.f));
+#ifndef NDEBUG
+	if (DEBUG_CODE) {
+		Debug->DrawLine(pos_grab, left, VEC3(0.f, 1.f, 0.f));
+		Debug->DrawLine(pos_grab, right, VEC3(1.f, 1.f, 0.5f));
+		Debug->DrawLine(left, 0.2f, normal_left, VEC3(0.f, 1.f, 0.f));
+		Debug->DrawLine(right, 0.2f, normal_right, VEC3(1.f, 1.f, 0.f));
+	}
+#endif
 
 	return true;
 }
@@ -299,11 +302,13 @@ bool TCompBox::getPushPoints(
 
 	left += pos;
 	right += pos;
-
-	Debug->DrawLine(pos_grab, left, VEC3(0.f, 1.f, 0.f));
-	Debug->DrawLine(pos_grab, right, VEC3(1.f, 1.f, 0.5f));
-	Debug->DrawLine(left, 0.2f, normal_left, VEC3(0.f, 1.f, 0.f));
-	Debug->DrawLine(right, 0.2f, normal_right, VEC3(1.f, 1.f, 0.f));
-
+#ifndef NDEBUG
+	if (DEBUG_CODE) {
+		Debug->DrawLine(pos_grab, left, VEC3(0.f, 1.f, 0.f));
+		Debug->DrawLine(pos_grab, right, VEC3(1.f, 1.f, 0.5f));
+		Debug->DrawLine(left, 0.2f, normal_left, VEC3(0.f, 1.f, 0.f));
+		Debug->DrawLine(right, 0.2f, normal_right, VEC3(1.f, 1.f, 0.f));
+	}
+#endif
 	return true;
 }

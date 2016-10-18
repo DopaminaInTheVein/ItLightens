@@ -75,8 +75,8 @@
 <name
    name="_mole_slept"/>
 <transform
-   pos="-1.53947 50.7365 -20.5866"
-   quat="0.0315865 -0.0186054 0.0233158 0.999056"
+   pos="-1.94649 50.6621 -20.0874"
+   quat="0 0.942651 0 0.333781"
    scale="1.0"/>
 <skeleton
    model="skeletons/mole/mole.skeleton"
