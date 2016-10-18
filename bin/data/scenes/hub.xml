@@ -21,10 +21,9 @@
    pos="11.53 50.6611 -25.4918"
    quat="0 0 0 1.0"
    scale="1.0"/>
-<abs_aabb/>
 <render_static_mesh
-   name="static_meshes/hub/ceiling.static_mesh"
-   static="yes"/>
+   name="static_meshes/hub/ceiling.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -37,10 +36,9 @@
    pos="11.53 50.6611 -25.4918"
    quat="0 0 0 1.0"
    scale="1.0"/>
-<abs_aabb/>
 <render_static_mesh
-   name="static_meshes/hub/reja.static_mesh"
-   static="yes"/>
+   name="static_meshes/hub/reja.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -53,10 +51,9 @@
    pos="9.54042 50.6611 -25.4918"
    quat="0 0 0 1.0"
    scale="1.0"/>
-<abs_aabb/>
 <render_static_mesh
-   name="static_meshes/hub/cenefa_1.static_mesh"
-   static="yes"/>
+   name="static_meshes/hub/cenefa_1.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -69,10 +66,9 @@
    pos="9.54042 50.6611 -25.4918"
    quat="0 0 0 1.0"
    scale="1.0"/>
-<abs_aabb/>
 <render_static_mesh
-   name="static_meshes/hub/cenefa_2.static_mesh"
-   static="yes"/>
+   name="static_meshes/hub/cenefa_2.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -85,10 +81,9 @@
    pos="11.53 50.6611 -25.4918"
    quat="0 0 0 1.0"
    scale="1.0"/>
-<abs_aabb/>
 <render_static_mesh
-   name="static_meshes/hub/arc_door.static_mesh"
-   static="yes"/>
+   name="static_meshes/hub/arc_door.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -101,10 +96,9 @@
    pos="11.53 50.6611 -25.4918"
    quat="0 0 0 1.0"
    scale="1.0"/>
-<abs_aabb/>
 <render_static_mesh
-   name="static_meshes/hub/window_wall.static_mesh"
-   static="yes"/>
+   name="static_meshes/hub/window_wall.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -117,10 +111,9 @@
    pos="11.53 50.6611 -25.4918"
    quat="0 0 0 1.0"
    scale="1.0"/>
-<abs_aabb/>
 <render_static_mesh
-   name="static_meshes/hub/columna_2.static_mesh"
-   static="yes"/>
+   name="static_meshes/hub/columna_2.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -133,10 +126,9 @@
    pos="30.2741 50.6749 -25.4918"
    quat="0 0 0 1.0"
    scale="1.0"/>
-<abs_aabb/>
 <render_static_mesh
-   name="static_meshes/hub/door.static_mesh"
-   static="yes"/>
+   name="static_meshes/hub/door.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -149,10 +141,9 @@
    pos="11.53 50.6611 -25.4918"
    quat="0 0 0 1.0"
    scale="1.0"/>
-<abs_aabb/>
 <render_static_mesh
-   name="static_meshes/hub/columna.static_mesh"
-   static="yes"/>
+   name="static_meshes/hub/columna.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -165,10 +156,9 @@
    pos="25.0846 50.6621 -20.1743"
    quat="0 0 0 1.0"
    scale="1.0"/>
-<abs_aabb/>
 <render_static_mesh
-   name="static_meshes/hub/control_panel.static_mesh"
-   static="yes"/>
+   name="static_meshes/hub/control_panel.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -181,10 +171,9 @@
    pos="-1.94649 50.6621 -20.0874"
    quat="0 0 0 1.0"
    scale="1.0"/>
-<abs_aabb/>
 <render_static_mesh
-   name="static_meshes/hub/sofa1.static_mesh"
-   static="yes"/>
+   name="static_meshes/hub/sofa1.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -197,10 +186,9 @@
    pos="15.8054 55.225 -31.1158"
    quat="0 0 0 1.0"
    scale="1.0"/>
-<abs_aabb/>
 <render_static_mesh
-   name="static_meshes/hub/wall_lamp.static_mesh"
-   static="yes"/>
+   name="static_meshes/hub/wall_lamp.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -507,10 +495,9 @@
    pos="11.53 50.6611 -25.4918"
    quat="0 0 0 1.0"
    scale="1.0"/>
-<abs_aabb/>
 <render_static_mesh
-   name="static_meshes/hub/arc_door.static_mesh"
-   static="yes"/>
+   name="static_meshes/hub/arc_door.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -523,10 +510,9 @@
    pos="11.53 50.6611 -17.0373"
    quat="0 0 0 1.0"
    scale="1.0"/>
-<abs_aabb/>
 <render_static_mesh
-   name="static_meshes/hub/wall1.static_mesh"
-   static="yes"/>
+   name="static_meshes/hub/wall1.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -539,10 +525,9 @@
    pos="30.3041 54.7952 -25.4918"
    quat="0 0 0 1.0"
    scale="1.0"/>
-<abs_aabb/>
 <render_static_mesh
-   name="static_meshes/hub/wall2.static_mesh"
-   static="yes"/>
+   name="static_meshes/hub/wall2.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -555,10 +540,9 @@
    pos="11.53 50.6611 -25.4918"
    quat="0 0 0 1.0"
    scale="1.0"/>
-<abs_aabb/>
 <render_static_mesh
-   name="static_meshes/hub/wall_3.static_mesh"
-   static="yes"/>
+   name="static_meshes/hub/wall_3.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -571,10 +555,9 @@
    pos="11.53 62.5135 -25.4918"
    quat="0 0 0 1.0"
    scale="1.0"/>
-<abs_aabb/>
 <render_static_mesh
-   name="static_meshes/hub/ceiling_tile.static_mesh"
-   static="yes"/>
+   name="static_meshes/hub/ceiling_tile.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -587,10 +570,9 @@
    pos="-1.84794 50.6621 -30.7404"
    quat="0 -0.799557 0 0.60059"
    scale="1.0"/>
-<abs_aabb/>
 <render_static_mesh
-   name="static_meshes/hub/sofa2.static_mesh"
-   static="yes"/>
+   name="static_meshes/hub/sofa2.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -605,10 +587,9 @@
    pos="-2.18931 53.361 -25.4419"
    quat="0 0 0 1.0"
    scale="1.0"/>
-<abs_aabb/>
 <render_static_mesh
-   name="static_meshes/hub/end_hub.static_mesh"
-   static="yes"/>
+   name="static_meshes/hub/end_hub.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -644,10 +625,9 @@
    pos="9.5408 50.6611 -25.4919"
    quat="0 0 0 1.0"
    scale="1.0"/>
-<abs_aabb/>
 <render_static_mesh
-   name="static_meshes/hub/floor.static_mesh"
-   static="yes"/>
+   name="static_meshes/hub/floor.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -660,10 +640,9 @@
    pos="-2.27247 50.6611 -25.4918"
    quat="0 0 0 1.0"
    scale="1.0"/>
-<abs_aabb/>
 <render_static_mesh
-   name="static_meshes/hub/machine_table.static_mesh"
-   static="yes"/>
+   name="static_meshes/hub/machine_table.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
@@ -677,10 +656,9 @@
    pos="7.23866 51.44 -30.8202"
    quat="-0.0336897 0 0 0.999401"
    scale="1.0"/>
-<abs_aabb/>
 <render_static_mesh
-   name="static_meshes/tuto_sci/generator.static_mesh"
-   static="yes"/>
+   name="static_meshes/tuto_sci/generator.static_mesh"/>
+<abs_aabb/>
 <rigidbody
    type_collision="static"/>
 
