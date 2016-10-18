@@ -1312,6 +1312,6 @@ struct ImFont
 //---- Include imgui_user.h at the end of imgui.h
 //---- So you can include code that extends ImGui using any of the types declared above.
 //---- (also convenient for user to only explicitly include vanilla imgui.h)
-#ifdef IMGUI_INCLUDE_IMGUI_USER_H
+//#ifdef IMGUI_INCLUDE_IMGUI_USER_H
 #include "imgui_user.h"
-#endif
+//#endif
