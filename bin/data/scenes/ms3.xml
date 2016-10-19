@@ -78,7 +78,8 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/ms3/balcon_redondo.static_mesh"
-   static="true"/>
+   static="true"
+   cast_shadows="no"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
@@ -95,7 +96,8 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/ms3/balcon_redondo_pequeno.static_mesh"
-   static="true"/>
+   static="true"
+   cast_shadows="no"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
@@ -114,7 +116,8 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/ms3/balcon_redondo_pequeno001.static_mesh"
-   static="true"/>
+   static="true"
+   cast_shadows="no"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
