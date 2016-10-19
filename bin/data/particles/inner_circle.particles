@@ -1,6 +1,5 @@
 <particles_emitter
 	num_particles="50"
-	target_pos="player"
 >
 <nframes
 	value="1"
