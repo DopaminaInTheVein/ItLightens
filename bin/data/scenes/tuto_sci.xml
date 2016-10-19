@@ -8,7 +8,8 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_sci/paredes.static_mesh"/>
+   name="static_meshes/tuto_sci/paredes.static_mesh"
+   static="true"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
@@ -25,7 +26,8 @@
    quat="0 0.906308 0 -0.422618"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_sci/generator.static_mesh"/>
+   name="static_meshes/tuto_sci/generator.static_mesh"
+   static="true"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
@@ -53,7 +55,8 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_sci/papelera.static_mesh"/>
+   name="static_meshes/tuto_sci/papelera.static_mesh"
+   static="true"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
@@ -69,7 +72,8 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_sci/rejillapequenhamapeadabaajo.static_mesh"/>
+   name="static_meshes/tuto_sci/rejillapequenhamapeadabaajo.static_mesh"
+   static="true"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
@@ -85,7 +89,8 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_sci/soporte_balcon_mapeado001.static_mesh"/>
+   name="static_meshes/tuto_sci/soporte_balcon_mapeado001.static_mesh"
+   static="true"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
@@ -101,7 +106,8 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_sci/sillas.static_mesh"/>
+   name="static_meshes/tuto_sci/sillas.static_mesh"
+   static="true"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
@@ -117,7 +123,8 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_sci/plafones.static_mesh"/>
+   name="static_meshes/tuto_sci/plafones.static_mesh"
+   static="true"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
@@ -133,7 +140,8 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_sci/marco_puerta_abajo.static_mesh"/>
+   name="static_meshes/tuto_sci/marco_puerta_abajo.static_mesh"
+   static="true"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
@@ -149,7 +157,8 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_sci/banners.static_mesh"/>
+   name="static_meshes/tuto_sci/banners.static_mesh"
+   static="true"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
@@ -165,7 +174,8 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_sci/puerta_gigante.static_mesh"/>
+   name="static_meshes/tuto_sci/puerta_gigante.static_mesh"
+   static="true"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
@@ -175,217 +185,443 @@
 <entity>
 <tags/>
 <name
-   name="farolillos002"/>
+   name="extintor_mapeado"/>
 <transform
-   pos="57.968 1.08534 -4.06373"
+   pos="53.5181 1.42146 -0.301982"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_sci/farolillos002.static_mesh"/>
+   name="static_meshes/tuto_sci/extintor_mapeado.static_mesh"
+   static="true"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="tuto_sci/farolillos002"/>
-
-</entity>
-<entity
-   reload="no">
-<tags/>
-<sound
-   event="OnFluoriscent"
-   volume="0.25"/>
-<name
-   name="farolillos002_sound004"/>
-<transform
-   pos="54.8363 1.08533 -4.1044"
-   quat="0 -0.707107 0.707107 0"
-   scale="1.0"/>
-
-</entity>
-<entity
-   reload="no">
-<tags/>
-<sound
-   event="OnFluoriscent"
-   volume="0.25"/>
-<name
-   name="farolillos002_sound003"/>
-<transform
-   pos="61.091 1.08533 -4.10439"
-   quat="0 -0.707107 0.707107 0"
-   scale="1.0"/>
-
-</entity>
-<entity
-   reload="no">
-<tags/>
-<sound
-   event="OnFluoriscent"
-   volume="0.25"/>
-<name
-   name="farolillos002_sound002"/>
-<transform
-   pos="56.7537 1.08533 -4.1044"
-   quat="0 -0.707107 0.707107 0"
-   scale="1.0"/>
-
-</entity>
-<entity
-   reload="no">
-<tags/>
-<sound
-   event="OnFluoriscent"
-   volume="0.25"/>
-<name
-   name="farolillos002_sound001"/>
-<transform
-   pos="59.0241 1.08533 -4.10439"
-   quat="0 -0.707107 0.707107 0"
-   scale="1.0"/>
+   mesh_name="tuto_sci/extintor_mapeado"/>
 
 </entity>
 <entity>
 <tags/>
 <name
-   name="farolillos003"/>
+   name="taquilla"/>
 <transform
-   pos="56.7485 1.08534 -1.57266"
+   pos="47.1015 1.04688 -7.3909"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_sci/farolillos003.static_mesh"/>
+   name="static_meshes/tuto_sci/taquilla.static_mesh"
+   static="true"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="tuto_sci/farolillos003"/>
-
-</entity>
-<entity
-   reload="no">
-<tags/>
-<sound
-   event="OnFluoriscent"
-   volume="0.25"/>
-<name
-   name="farolillos003_sound001"/>
-<transform
-   pos="60.9406 1.08533 -1.532"
-   quat="0 -0.707107 0.707107 0"
-   scale="1.0"/>
-
-</entity>
-<entity
-   reload="no">
-<tags/>
-<sound
-   event="OnFluoriscent"
-   volume="0.25"/>
-<name
-   name="farolillos003_sound002"/>
-<transform
-   pos="59.0232 1.08533 -1.532"
-   quat="0 -0.707107 0.707107 0"
-   scale="1.0"/>
-
-</entity>
-<entity
-   reload="no">
-<tags/>
-<sound
-   event="OnFluoriscent"
-   volume="0.25"/>
-<name
-   name="farolillos003_sound003"/>
-<transform
-   pos="54.6859 1.08533 -1.532"
-   quat="0 -0.707107 0.707107 0"
-   scale="1.0"/>
-
-</entity>
-<entity
-   reload="no">
-<tags/>
-<sound
-   event="OnFluoriscent"
-   volume="0.25"/>
-<name
-   name="farolillos003_sound004"/>
-<transform
-   pos="56.7528 1.08533 -1.532"
-   quat="0 -0.707107 0.707107 0"
-   scale="1.0"/>
+   mesh_name="tuto_sci/taquilla"/>
 
 </entity>
 <entity>
 <tags/>
 <name
-   name="farolillos004"/>
+   name="estanteria_2"/>
 <transform
-   pos="57.0498 4.94309 -32.3316"
+   pos="47.5521 1.05814 1.78609"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_sci/farolillos004.static_mesh"/>
+   name="static_meshes/tuto_sci/estanteria_2.static_mesh"
+   static="true"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="tuto_sci/farolillos004"/>
+   mesh_name="tuto_sci/estanteria_2"/>
 
 </entity>
-<entity
-   reload="no">
+<entity>
 <tags/>
-<sound
-   event="OnFluoriscent"
-   volume="0.25"/>
 <name
-   name="farolillos004_sound001"/>
+   name="panel_mapeado"/>
 <transform
-   pos="62.5805 1.08533 -1.55085"
-   quat="0 -0.707107 0.707107 0"
+   pos="45.4892 1.1108 -2.62513"
+   quat="0 0 0 1.0"
    scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/tuto_sci/panel_mapeado.static_mesh"
+   static="true"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"
+   mesh_name="tuto_sci/panel_mapeado"/>
 
 </entity>
-<entity
-   reload="no">
+<entity>
 <tags/>
-<sound
-   event="OnFluoriscent"
-   volume="0.25"/>
 <name
-   name="farolillos004_sound002"/>
+   name="barandilla_mapeaaado001"/>
 <transform
-   pos="62.5814 1.08533 -4.11412"
-   quat="0 -0.707107 0.707107 0"
+   pos="52.6314 0.467043 -1.71285"
+   quat="0 0 0 1.0"
    scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/tuto_sci/barandilla_mapeaaado001.static_mesh"
+   static="true"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"
+   mesh_name="tuto_sci/barandilla_mapeaaado001"/>
 
 </entity>
-<entity
-   reload="no">
+<entity>
 <tags/>
-<sound
-   event="OnFluoriscent"
-   volume="0.25"/>
 <name
-   name="farolillos004_sound003"/>
+   name="fuente_agua_mapeada"/>
 <transform
-   pos="75.9401 1.08534 -0.497162"
-   quat="0 -0.707107 0.707107 0"
+   pos="45.7413 0.801477 -6.0518"
+   quat="0 0 0 1.0"
    scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/tuto_sci/fuente_agua_mapeada.static_mesh"
+   static="true"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"
+   mesh_name="tuto_sci/fuente_agua_mapeada"/>
 
 </entity>
-<entity
-   reload="no">
+<entity>
 <tags/>
-<sound
-   event="OnFluoriscent"
-   volume="0.25"/>
 <name
-   name="farolillos004_sound004"/>
+   name="escritorio"/>
 <transform
-   pos="75.9401 1.08533 -4.88326"
-   quat="0 -0.707107 0.707107 0"
+   pos="49.7276 0.405637 1.72748"
+   quat="0 0 0 1.0"
    scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/tuto_sci/escritorio.static_mesh"
+   static="true"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"
+   mesh_name="tuto_sci/escritorio"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="pizarra"/>
+<transform
+   pos="45.8773 0.862203 0"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/tuto_sci/pizarra.static_mesh"
+   static="true"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"
+   mesh_name="tuto_sci/pizarra"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="libro_modelo3"/>
+<transform
+   pos="47.6496 0.698306 1.75277"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/tuto_sci/libro_modelo3.static_mesh"
+   static="true"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"
+   mesh_name="tuto_sci/libro_modelo3"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="libro_modelo2"/>
+<transform
+   pos="49.3876 0.889224 1.83554"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/tuto_sci/libro_modelo2.static_mesh"
+   static="true"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"
+   mesh_name="tuto_sci/libro_modelo2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="libro_modelo1"/>
+<transform
+   pos="47.8156 0.331836 1.74691"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/tuto_sci/libro_modelo1.static_mesh"
+   static="true"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"
+   mesh_name="tuto_sci/libro_modelo1"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="alarma_mapeada"/>
+<transform
+   pos="53.5881 1.42202 0.389851"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/tuto_sci/alarma_mapeada.static_mesh"
+   static="true"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"
+   mesh_name="tuto_sci/alarma_mapeada"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="cubo_mapeado_verdad"/>
+<transform
+   pos="45.599 0.25878 -5.64286"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/tuto_sci/cubo_mapeado_verdad.static_mesh"
+   static="true"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"
+   mesh_name="tuto_sci/cubo_mapeado_verdad"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="rejillapequenhamapeadabaajo001"/>
+<transform
+   pos="63.6575 0.700524 -7.79111"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/tuto_sci/rejillapequenhamapeadabaajo001.static_mesh"
+   static="true"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"
+   mesh_name="tuto_sci/rejillapequenhamapeadabaajo001"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="rejilla_grande_mapeada001"/>
+<transform
+   pos="74.2878 0.779253 -6.99625"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/tuto_sci/rejilla_grande_mapeada001.static_mesh"
+   static="true"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"
+   mesh_name="tuto_sci/rejilla_grande_mapeada001"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="andamio_usable"/>
+<transform
+   pos="64.2359 2.75313 -6.15361"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/tuto_sci/andamio_usable.static_mesh"
+   static="true"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"
+   mesh_name="tuto_sci/andamio_usable"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="columnas_abajo"/>
+<transform
+   pos="29.4423 0 -25.9338"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/tuto_sci/columnas_abajo.static_mesh"
+   static="true"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"
+   mesh_name="tuto_sci/columnas_abajo"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="suelo001"/>
+<transform
+   pos="73.935 -0.0177512 -1.20231"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/tuto_sci/suelo001.static_mesh"
+   static="true"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"
+   mesh_name="tuto_sci/suelo001"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="rodapie"/>
+<transform
+   pos="73.935 -0.0177512 -1.20231"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/tuto_sci/rodapie.static_mesh"
+   static="true"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"
+   mesh_name="tuto_sci/rodapie"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="pasillo"/>
+<transform
+   pos="73.935 -0.0177512 -1.20231"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/tuto_sci/pasillo.static_mesh"
+   static="true"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"
+   mesh_name="tuto_sci/pasillo"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="labo"/>
+<transform
+   pos="73.935 -0.0177512 -1.20231"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/tuto_sci/labo.static_mesh"
+   static="true"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"
+   mesh_name="tuto_sci/labo"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="puerta_se_abre"/>
+<transform
+   pos="75.7865 1.39197 -2.67714"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/tuto_sci/puerta_se_abre.static_mesh"
+   static="true"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"
+   mesh_name="tuto_sci/puerta_se_abre"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="balcon"/>
+<transform
+   pos="73.935 -0.0177512 -1.20231"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/tuto_sci/balcon.static_mesh"
+   static="true"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"
+   mesh_name="tuto_sci/balcon"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="suelo_2"/>
+<transform
+   pos="73.935 -0.0177512 -1.20231"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/tuto_sci/suelo_2.static_mesh"
+   static="true"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"
+   mesh_name="tuto_sci/suelo_2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="techotutosci"/>
+<transform
+   pos="73.935 -0.0177512 -1.20231"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/tuto_sci/techotutosci.static_mesh"
+   static="true"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"
+   mesh_name="tuto_sci/techotutosci"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="puerta_cerrada_mapeada"/>
+<transform
+   pos="51.3795 1.12889 2.21719"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/tuto_sci/puerta_cerrada_mapeada.static_mesh"
+   static="true"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"
+   mesh_name="tuto_sci/puerta_cerrada_mapeada"/>
 
 </entity>
 <entity
@@ -395,9 +631,9 @@
    event="OnFluoriscent"
    volume="0.25"/>
 <name
-   name="farolillos004_sound005"/>
+   name="farolillos004_sound007"/>
 <transform
-   pos="75.9401 8.10499 -0.497157"
+   pos="75.9401 8.80086 -0.801079"
    quat="0 -0.707107 0.707107 0"
    scale="1.0"/>
 
@@ -423,427 +659,81 @@
    event="OnFluoriscent"
    volume="0.25"/>
 <name
-   name="farolillos004_sound007"/>
+   name="farolillos004_sound005"/>
 <transform
-   pos="75.9401 8.80086 -0.801075"
+   pos="75.9401 8.10499 -0.497157"
    quat="0 -0.707107 0.707107 0"
    scale="1.0"/>
 
 </entity>
-<entity>
+<entity
+   reload="no">
 <tags/>
+<sound
+   event="OnFluoriscent"
+   volume="0.25"/>
 <name
-   name="extintor_mapeado"/>
+   name="farolillos004_sound004"/>
 <transform
-   pos="53.5181 1.42146 -0.301982"
-   quat="0 0 0 1.0"
+   pos="75.9401 1.08533 -4.88326"
+   quat="0 -0.707107 0.707107 0"
    scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/tuto_sci/extintor_mapeado.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"
-   mesh_name="tuto_sci/extintor_mapeado"/>
 
 </entity>
-<entity>
+<entity
+   reload="no">
 <tags/>
+<sound
+   event="OnFluoriscent"
+   volume="0.25"/>
 <name
-   name="taquilla"/>
+   name="farolillos004_sound003"/>
 <transform
-   pos="47.1015 1.04688 -7.3909"
-   quat="0 0 0 1.0"
+   pos="75.9401 1.08533 -0.497166"
+   quat="0 -0.707107 0.707107 0"
    scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/tuto_sci/taquilla.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"
-   mesh_name="tuto_sci/taquilla"/>
 
 </entity>
-<entity>
+<entity
+   reload="no">
 <tags/>
+<sound
+   event="OnFluoriscent"
+   volume="0.25"/>
 <name
-   name="estanteria_2"/>
+   name="farolillos004_sound002"/>
 <transform
-   pos="47.5521 1.05814 1.78609"
-   quat="0 0 0 1.0"
+   pos="62.5814 1.08533 -4.11412"
+   quat="0 -0.707107 0.707107 0"
    scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/tuto_sci/estanteria_2.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"
-   mesh_name="tuto_sci/estanteria_2"/>
 
 </entity>
-<entity>
+<entity
+   reload="no">
 <tags/>
+<sound
+   event="OnFluoriscent"
+   volume="0.25"/>
 <name
-   name="panel_mapeado"/>
+   name="farolillos004_sound001"/>
 <transform
-   pos="45.4892 1.1108 -2.62513"
-   quat="0 0 0 1.0"
+   pos="62.5805 1.08533 -1.55085"
+   quat="0 -0.707107 0.707107 0"
    scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/tuto_sci/panel_mapeado.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"
-   mesh_name="tuto_sci/panel_mapeado"/>
 
 </entity>
-<entity>
+<entity
+   reload="no">
 <tags/>
+<sound
+   event="OnFluoriscent"
+   volume="0.25"/>
 <name
-   name="barandilla_mapeaaado001"/>
+   name="farolillos005_sound002"/>
 <transform
-   pos="52.6314 0.467043 -1.71285"
-   quat="0 0 0 1.0"
+   pos="69.9263 1.27906 -7.66484"
+   quat="0 -0.707107 0.707107 0"
    scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/tuto_sci/barandilla_mapeaaado001.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"
-   mesh_name="tuto_sci/barandilla_mapeaaado001"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="fuente_agua_mapeada"/>
-<transform
-   pos="45.7413 0.801477 -6.0518"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/tuto_sci/fuente_agua_mapeada.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"
-   mesh_name="tuto_sci/fuente_agua_mapeada"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="escritorio"/>
-<transform
-   pos="49.7276 0.405637 1.72748"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/tuto_sci/escritorio.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"
-   mesh_name="tuto_sci/escritorio"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="pizarra"/>
-<transform
-   pos="45.8773 0.862203 0"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/tuto_sci/pizarra.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"
-   mesh_name="tuto_sci/pizarra"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="libro_modelo3"/>
-<transform
-   pos="47.6496 0.698306 1.75277"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/tuto_sci/libro_modelo3.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"
-   mesh_name="tuto_sci/libro_modelo3"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="libro_modelo2"/>
-<transform
-   pos="49.3876 0.889224 1.83554"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/tuto_sci/libro_modelo2.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"
-   mesh_name="tuto_sci/libro_modelo2"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="libro_modelo1"/>
-<transform
-   pos="47.8156 0.331836 1.74691"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/tuto_sci/libro_modelo1.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"
-   mesh_name="tuto_sci/libro_modelo1"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="alarma_mapeada"/>
-<transform
-   pos="53.5881 1.42202 0.389851"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/tuto_sci/alarma_mapeada.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"
-   mesh_name="tuto_sci/alarma_mapeada"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="cubo_mapeado_verdad"/>
-<transform
-   pos="45.599 0.25878 -5.64286"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/tuto_sci/cubo_mapeado_verdad.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"
-   mesh_name="tuto_sci/cubo_mapeado_verdad"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="rejillapequenhamapeadabaajo001"/>
-<transform
-   pos="63.6575 0.700524 -7.79111"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/tuto_sci/rejillapequenhamapeadabaajo001.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"
-   mesh_name="tuto_sci/rejillapequenhamapeadabaajo001"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="rejilla_grande_mapeada001"/>
-<transform
-   pos="74.2878 0.779253 -6.99625"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/tuto_sci/rejilla_grande_mapeada001.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"
-   mesh_name="tuto_sci/rejilla_grande_mapeada001"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="andamio_usable"/>
-<transform
-   pos="64.2359 2.75313 -6.15361"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/tuto_sci/andamio_usable.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"
-   mesh_name="tuto_sci/andamio_usable"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="columnas_abajo"/>
-<transform
-   pos="29.4423 0 -25.9338"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/tuto_sci/columnas_abajo.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"
-   mesh_name="tuto_sci/columnas_abajo"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="suelo001"/>
-<transform
-   pos="73.935 -0.0177512 -1.20231"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/tuto_sci/suelo001.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"
-   mesh_name="tuto_sci/suelo001"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="rodapie"/>
-<transform
-   pos="73.935 -0.0177512 -1.20231"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/tuto_sci/rodapie.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"
-   mesh_name="tuto_sci/rodapie"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="pasillo"/>
-<transform
-   pos="73.935 -0.0177512 -1.20231"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/tuto_sci/pasillo.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"
-   mesh_name="tuto_sci/pasillo"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="labo"/>
-<transform
-   pos="73.935 -0.0177512 -1.20231"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/tuto_sci/labo.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"
-   mesh_name="tuto_sci/labo"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="puerta_se_abre"/>
-<transform
-   pos="75.7865 1.39197 -2.67714"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/tuto_sci/puerta_se_abre.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"
-   mesh_name="tuto_sci/puerta_se_abre"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="balcon"/>
-<transform
-   pos="73.935 -0.0177512 -1.20231"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/tuto_sci/balcon.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"
-   mesh_name="tuto_sci/balcon"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="suelo_2"/>
-<transform
-   pos="73.935 -0.0177512 -1.20231"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/tuto_sci/suelo_2.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"
-   mesh_name="tuto_sci/suelo_2"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="techotutosci"/>
-<transform
-   pos="73.935 -0.0177512 -1.20231"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/tuto_sci/techotutosci.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"
-   mesh_name="tuto_sci/techotutosci"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="farolillos005"/>
-<transform
-   pos="68.7029 1.27906 -7.62417"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/tuto_sci/farolillos005.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"
-   mesh_name="tuto_sci/farolillos005"/>
 
 </entity>
 <entity
@@ -867,27 +757,11 @@
    event="OnFluoriscent"
    volume="0.25"/>
 <name
-   name="farolillos005_sound002"/>
+   name="farolillos006_sound002"/>
 <transform
-   pos="69.9263 1.27906 -7.66484"
+   pos="65.5492 1.22669 2.02037"
    quat="0 -0.707107 0.707107 0"
    scale="1.0"/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="farolillos006"/>
-<transform
-   pos="65.5449 1.08534 1.97971"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/tuto_sci/farolillos006.static_mesh"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"
-   mesh_name="tuto_sci/farolillos006"/>
 
 </entity>
 <entity
@@ -911,9 +785,51 @@
    event="OnFluoriscent"
    volume="0.25"/>
 <name
-   name="farolillos006_sound002"/>
+   name="farolillos002_sound001"/>
 <transform
-   pos="65.5492 1.22669 2.02037"
+   pos="59.0241 1.08533 -4.10439"
+   quat="0 -0.707107 0.707107 0"
+   scale="1.0"/>
+
+</entity>
+<entity
+   reload="no">
+<tags/>
+<sound
+   event="OnFluoriscent"
+   volume="0.25"/>
+<name
+   name="farolillos002_sound002"/>
+<transform
+   pos="56.7537 1.08533 -4.1044"
+   quat="0 -0.707107 0.707107 0"
+   scale="1.0"/>
+
+</entity>
+<entity
+   reload="no">
+<tags/>
+<sound
+   event="OnFluoriscent"
+   volume="0.25"/>
+<name
+   name="farolillos003_sound004"/>
+<transform
+   pos="56.7528 1.08533 -1.532"
+   quat="0 -0.707107 0.707107 0"
+   scale="1.0"/>
+
+</entity>
+<entity
+   reload="no">
+<tags/>
+<sound
+   event="OnFluoriscent"
+   volume="0.25"/>
+<name
+   name="farolillos003_sound002"/>
+<transform
+   pos="59.0232 1.08533 -1.532"
    quat="0 -0.707107 0.707107 0"
    scale="1.0"/>
 
@@ -921,17 +837,103 @@
 <entity>
 <tags/>
 <name
-   name="puerta_cerrada_mapeada"/>
+   name="farolillos002"/>
 <transform
-   pos="51.3795 1.12889 2.21719"
+   pos="57.968 1.08534 -4.06373"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_sci/puerta_cerrada_mapeada.static_mesh"/>
+   name="static_meshes/tuto_sci/farolillos002.static_mesh"
+   static="true"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="tuto_sci/puerta_cerrada_mapeada"/>
+   mesh_name="tuto_sci/farolillos002"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="farolillos003"/>
+<transform
+   pos="56.7485 1.08534 -1.57266"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/tuto_sci/farolillos003.static_mesh"
+   static="true"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"
+   mesh_name="tuto_sci/farolillos003"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="farolillos004"/>
+<transform
+   pos="57.0498 4.94309 -32.3316"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/tuto_sci/farolillos004.static_mesh"
+   static="true"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"
+   mesh_name="tuto_sci/farolillos004"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="farolillos005"/>
+<transform
+   pos="68.7029 1.27906 -7.62417"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/tuto_sci/farolillos005.static_mesh"
+   static="true"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"
+   mesh_name="tuto_sci/farolillos005"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="farolillos006"/>
+<transform
+   pos="65.5449 1.08534 1.97971"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/tuto_sci/farolillos006.static_mesh"
+   static="true"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"
+   mesh_name="tuto_sci/farolillos006"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="farolillos_columnas"/>
+<transform
+   pos="62.8799 3.42886 -0.878208"
+   quat="0 0.266244 0 0.963906"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/tuto_sci/farolillos_columnas.static_mesh"
+   static="true"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"
+   mesh_name="tuto_sci/farolillos_columnas"/>
 
 </entity>
 

@@ -34,6 +34,7 @@ public:
 	void reloadLanguageFile();
 	std::string getText(std::string entry, std::string scene = "");
 	bool isControllerMessage(std::string entry, std::string scene = "");
+	static inline std::string toEntry(std::string text) { return "::" + text; }
 };
 
 extern CLangManagerModule* lang_manager;
