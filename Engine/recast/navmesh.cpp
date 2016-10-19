@@ -19,21 +19,20 @@ rcConfig CNavmesh::getRcConfig() {
 	rcConfig config;
 	rcVcopy(config.bmin, &m_input.aabb_min.x);
 	rcVcopy(config.bmax, &m_input.aabb_max.x);
-	config.tileSize = 32;
-	config.cs = 0.05;
-	config.ch = 0.05;
-	config.walkableHeight = 2.f;
-	config.walkableRadius = 0;
-	config.walkableClimb = 0;
-	config.walkableSlopeAngle = 20.0f;
-	config.minRegionArea = 4;
-	config.mergeRegionArea = 6;
-	config.maxEdgeLen = 10;
-	config.maxSimplificationError = 1.5f;
-	config.maxVertsPerPoly = 4;
-	config.detailSampleDist = 1.5f;
-	config.detailSampleMaxError = 0.1f;
-	config.borderSize = 0;
+	config.cs = 0.3f;
+	config.ch = 0.2f;
+	config.walkableHeight = 2.0f;
+	config.walkableRadius = 0.6f;
+	config.walkableClimb = 0.9f;
+	config.walkableSlopeAngle = 45.f;
+	config.minRegionArea = 8.f;
+	config.mergeRegionArea = 20.f;
+	config.maxEdgeLen = 12;
+	config.maxSimplificationError = 1.3f;
+	config.maxVertsPerPoly = 6;
+	config.detailSampleDist = 6.f;
+	config.detailSampleMaxError = 1.f;
+	//config.borderSize = 1;
 	return config;
 }
 
@@ -78,7 +77,7 @@ dtNavMesh* CNavmesh::create(const rcConfig& cfg, std::string salaloc) {
 	m_cfg.maxVertsPerPoly = (int)cfg.maxVertsPerPoly;
 	m_cfg.detailSampleDist = cfg.detailSampleDist < 0.9f ? 0 : cfg.cs * cfg.detailSampleDist;
 	m_cfg.detailSampleMaxError = cfg.ch * cfg.detailSampleMaxError;
-	m_cfg.borderSize = cfg.borderSize;
+	//m_cfg.borderSize = m_cfg.walkableRadius + 3;
 
 	// Set the area where the navigation will be build.
 	// Here the bounds of the input mesh are used, but the
