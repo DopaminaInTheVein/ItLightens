@@ -6,7 +6,7 @@
 
 #define PAD_SUFIX "_pad"
 #define PAD_VERSION(entry) (entry + PAD_SUFIX)
-#define ENTRY_NAME(entry) entry.substr(2)
+#define ENTRY_NAME(entry) (entry.substr(2))
 
 extern CLangManagerModule* lang_manager = nullptr;
 

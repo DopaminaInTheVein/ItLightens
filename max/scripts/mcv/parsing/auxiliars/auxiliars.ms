@@ -1,7 +1,17 @@
 -- Parsing Auxiliares
 --******************
 
+fn isLight obj = (
+	return (classof _parsingObject) == OmniLight or  (classof _parsingObject) == FreeSpot
+)
+
+
 fn parseable = (
+	--Light Filter
+	local it_lightens = (isLight _parsingObject)
+	local parsing_light = (_xml_sufix == "lights")
+	if (it_lightens != parsing_light) then (return false)
+
 	--Is hidden?
 	if _parsingObject.ishidden then (
 		local slept = getUserProp _parsingObject "slept"
