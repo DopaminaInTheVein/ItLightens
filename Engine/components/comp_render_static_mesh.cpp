@@ -21,11 +21,11 @@ bool TCompRenderStaticMesh::load(MKeyValue& atts) {
 	dynamic = !atts.getBool("static", true);
 	to_render = atts.getBool("to_render", true);
 	cast_shadows = atts.getBool("cast_shadows", true);
-	if (cast_shadows) cast_shadows_dyn = true;
-	else {
+	if (!cast_shadows) {
+		cast_shadows_dyn = false;
 		auto type_cast_shadows = atts.getString("cast_shadows", "");
-		if (type_cast_shadows == "static") {
-			cast_shadows = true;
+		if (type_cast_shadows != "static") {
+			cast_shadows = false;
 		}
 	}
 	return true;

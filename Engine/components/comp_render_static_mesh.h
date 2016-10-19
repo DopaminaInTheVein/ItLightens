@@ -11,8 +11,8 @@ struct TCompRenderStaticMesh : public TCompBase {
 	bool onlyDebug = false;
 	bool dynamic = false;
 	bool to_render = true;
-	bool cast_shadows = false;
-	bool cast_shadows_dyn = false;
+	bool cast_shadows = true;
+	bool cast_shadows_dyn = true;
 	const CStaticMesh* static_mesh;
 	std::string res_name;
 	~TCompRenderStaticMesh();
