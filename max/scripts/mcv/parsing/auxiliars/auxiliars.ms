@@ -94,6 +94,7 @@ fn isStatic obj = (
 	if static != undefined then (
 		return (static == "yes")
 	)
+	if (getUserProp obj "skeleton") != undefined then ( return false)
 	return ((getUserProp obj "typeObject") == undefined)
 )
 

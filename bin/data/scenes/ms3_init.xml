@@ -16,7 +16,8 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3/__Door.static_mesh"/>
+   name="static_meshes/ms3/__Door.static_mesh"
+   static="false"/>
 <abs_aabb/>
 <rigidbody
    type_collision="dynamic"
@@ -42,7 +43,8 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3/__pila.static_mesh"/>
+   name="static_meshes/ms3/__pila.static_mesh"
+   static="false"/>
 <abs_aabb/>
 <rigidbody
    type_collision="dynamic"
@@ -70,7 +72,8 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3/elevator.static_mesh"/>
+   name="static_meshes/ms3/elevator.static_mesh"
+   static="false"/>
 <abs_aabb/>
 <rigidbody
    type_collision="dynamic"
@@ -96,7 +99,8 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3/enchufe.static_mesh"/>
+   name="static_meshes/ms3/enchufe.static_mesh"
+   static="true"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
@@ -117,7 +121,8 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3/mesa_cientifico_up_mapeado.static_mesh"/>
+   name="static_meshes/ms3/mesa_cientifico_up_mapeado.static_mesh"
+   static="true"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
@@ -138,7 +143,8 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3/mesa_cientifico_up_mapeado001.static_mesh"/>
+   name="static_meshes/ms3/mesa_cientifico_up_mapeado001.static_mesh"
+   static="true"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
@@ -159,7 +165,8 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3/pared_rompible.static_mesh"/>
+   name="static_meshes/ms3/pared_rompible.static_mesh"
+   static="true"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
@@ -185,7 +192,8 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3/puerta_Ascensor_derecha.static_mesh"/>
+   name="static_meshes/ms3/puerta_Ascensor_derecha.static_mesh"
+   static="false"/>
 <abs_aabb/>
 <rigidbody
    type_collision="dynamic"
@@ -215,7 +223,8 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3/puerta_Ascensor_derecha_arriba.static_mesh"/>
+   name="static_meshes/ms3/puerta_Ascensor_derecha_arriba.static_mesh"
+   static="false"/>
 <abs_aabb/>
 <rigidbody
    type_collision="dynamic"
@@ -245,7 +254,8 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3/puerta_Ascensor_izquierda.static_mesh"/>
+   name="static_meshes/ms3/puerta_Ascensor_izquierda.static_mesh"
+   static="false"/>
 <abs_aabb/>
 <rigidbody
    type_collision="dynamic"
@@ -275,7 +285,8 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3/puerta_Ascensor_izquierda_arriba.static_mesh"/>
+   name="static_meshes/ms3/puerta_Ascensor_izquierda_arriba.static_mesh"
+   static="false"/>
 <abs_aabb/>
 <rigidbody
    type_collision="dynamic"
@@ -300,7 +311,8 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3/trozo_destruible_abajo.static_mesh"/>
+   name="static_meshes/ms3/trozo_destruible_abajo.static_mesh"
+   static="true"/>
 <abs_aabb/>
 <rigidbody
    type_collision="dynamic"
@@ -323,7 +335,8 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3/trozo_destruible_arriba.static_mesh"/>
+   name="static_meshes/ms3/trozo_destruible_arriba.static_mesh"
+   static="true"/>
 <abs_aabb/>
 <rigidbody
    type_collision="dynamic"
@@ -346,7 +359,8 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3/trozo_destruible_derec.static_mesh"/>
+   name="static_meshes/ms3/trozo_destruible_derec.static_mesh"
+   static="true"/>
 <abs_aabb/>
 <rigidbody
    type_collision="dynamic"
@@ -369,7 +383,8 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3/trozo_destruible_iz.static_mesh"/>
+   name="static_meshes/ms3/trozo_destruible_iz.static_mesh"
+   static="true"/>
 <abs_aabb/>
 <rigidbody
    type_collision="dynamic"
@@ -398,7 +413,8 @@
 <skeleton
    model="skeletons/player/player.skeleton"/>
 <render_static_mesh
-   name="skeletons/player/player.static_mesh"/>
+   name="skeletons/player/player.static_mesh"
+   static="false"/>
 <skeleton_ik/>
 <abs_aabb/>
 <local_aabb/>
@@ -472,7 +488,8 @@
 <skeleton
    model="skeletons/mole/mole.skeleton"/>
 <render_static_mesh
-   name="skeletons/mole/mole.static_mesh"/>
+   name="skeletons/mole/mole.static_mesh"
+   static="false"/>
 <skeleton_ik/>
 <abs_aabb/>
 <local_aabb/>
@@ -497,7 +514,8 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/obj/box2.static_mesh"/>
+   name="static_meshes/obj/box2.static_mesh"
+   static="false"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
@@ -525,7 +543,8 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/obj/box2.static_mesh"/>
+   name="static_meshes/obj/box2.static_mesh"
+   static="false"/>
 <abs_aabb/>
 <rigidbody
    type_collision="dynamic"
@@ -568,7 +587,8 @@
 <skeleton
    model="skeletons/mole/mole.skeleton"/>
 <render_static_mesh
-   name="skeletons/mole/mole.static_mesh"/>
+   name="skeletons/mole/mole.static_mesh"
+   static="false"/>
 <skeleton_ik/>
 <abs_aabb/>
 <local_aabb/>
@@ -757,7 +777,8 @@
 <skeleton
    model="skeletons/scientist/scientist.skeleton"/>
 <render_static_mesh
-   name="skeletons/scientist/scientist.static_mesh"/>
+   name="skeletons/scientist/scientist.static_mesh"
+   static="false"/>
 <skeleton_ik/>
 <abs_aabb/>
 <local_aabb/>
@@ -1290,7 +1311,8 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/obj/drone.static_mesh"/>
+   name="static_meshes/obj/drone.static_mesh"
+   static="false"/>
 <abs_aabb/>
 <rigidbody
    type_collision="dynamic"
@@ -1323,7 +1345,8 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/obj/drone.static_mesh"/>
+   name="static_meshes/obj/drone.static_mesh"
+   static="false"/>
 <abs_aabb/>
 <rigidbody
    type_collision="dynamic"
@@ -1356,7 +1379,8 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/obj/drone.static_mesh"/>
+   name="static_meshes/obj/drone.static_mesh"
+   static="false"/>
 <abs_aabb/>
 <rigidbody
    type_collision="dynamic"
@@ -1389,7 +1413,8 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/obj/drone.static_mesh"/>
+   name="static_meshes/obj/drone.static_mesh"
+   static="false"/>
 <abs_aabb/>
 <rigidbody
    type_collision="dynamic"
@@ -1435,7 +1460,8 @@
 <skeleton
    model="skeletons/guard/guard.skeleton"/>
 <render_static_mesh
-   name="skeletons/guard/guard.static_mesh"/>
+   name="skeletons/guard/guard.static_mesh"
+   static="false"/>
 <skeleton_ik/>
 <abs_aabb/>
 <local_aabb/>
@@ -1485,7 +1511,8 @@
 <skeleton
    model="skeletons/guard/guard.skeleton"/>
 <render_static_mesh
-   name="skeletons/guard/guard.static_mesh"/>
+   name="skeletons/guard/guard.static_mesh"
+   static="false"/>
 <skeleton_ik/>
 <abs_aabb/>
 <local_aabb/>
@@ -1523,7 +1550,8 @@
 <skeleton
    model="skeletons/guard/guard.skeleton"/>
 <render_static_mesh
-   name="skeletons/guard/guard.static_mesh"/>
+   name="skeletons/guard/guard.static_mesh"
+   static="false"/>
 <skeleton_ik/>
 <abs_aabb/>
 <local_aabb/>
@@ -1561,7 +1589,8 @@
 <skeleton
    model="skeletons/guard/guard.skeleton"/>
 <render_static_mesh
-   name="skeletons/guard/guard.static_mesh"/>
+   name="skeletons/guard/guard.static_mesh"
+   static="false"/>
 <skeleton_ik/>
 <abs_aabb/>
 <local_aabb/>
@@ -1614,7 +1643,8 @@
 <skeleton
    model="skeletons/guard/guard.skeleton"/>
 <render_static_mesh
-   name="skeletons/guard/guard.static_mesh"/>
+   name="skeletons/guard/guard.static_mesh"
+   static="false"/>
 <skeleton_ik/>
 <abs_aabb/>
 <local_aabb/>
@@ -1664,7 +1694,8 @@
 <skeleton
    model="skeletons/guard/guard.skeleton"/>
 <render_static_mesh
-   name="skeletons/guard/guard.static_mesh"/>
+   name="skeletons/guard/guard.static_mesh"
+   static="false"/>
 <skeleton_ik/>
 <abs_aabb/>
 <local_aabb/>
@@ -1688,7 +1719,8 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3/cargador_bateria.static_mesh"/>
+   name="static_meshes/ms3/cargador_bateria.static_mesh"
+   static="true"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
