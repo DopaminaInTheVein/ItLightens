@@ -16,6 +16,8 @@ class TCompGuidedCamera : public TCompBase {
 	bool stop_final;
 	bool skippable;
 	bool skipped_extern;
+	bool skipped_by_user;
+	bool finish;
 
 	std::vector<VEC3> positions;
 	std::vector<VEC3> targets;
@@ -23,6 +25,12 @@ class TCompGuidedCamera : public TCompBase {
 	int curPoint = 0;
 	float factor = 0.0f;
 	float smoothFactor = 0.9f;
+	enum CinematicState {
+		EXEC,
+		PAUSE,
+		END
+	};
+	CinematicState checkState();
 public:
 	TCompGuidedCamera() {
 	}
