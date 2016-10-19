@@ -64,11 +64,12 @@ private:
   //shape
   int				m_shape_type;
 
+  //center position particle system
+  PxVec3			m_initialPosition;
+
   //Position
   PxVec3			m_RandomMaxPos;		//randoms are modifiers from initalPosition
   PxVec3			m_RandomMinPos;
-
-  PxVec3			m_initialPosition;
 
   //velocity
   PxVec3			m_RandomMaxVel;	//randoms are modifiers from initialVelocity
@@ -99,6 +100,11 @@ private:
 
   PxVec3			m_front_transform;
 
+  //number frames
+  int				m_nframes;
+
+  
+
   //bones
   std::vector<int>		m_listBones;
   std::map<int, bool>	m_busyBones;		//list of bones with particles activated
@@ -109,6 +115,10 @@ private:
   bool				m_usePhysx;
 
 public:
+
+
+	std::string		target_pos;
+
   CParticlesEmitter() {
     m_initialPosition = PxVec3(0, 0, 0);
     m_RandomMaxPos = PxVec3(0, 0, 0);
@@ -128,6 +138,8 @@ public:
     m_size = 1.0f;
     m_modifier_lifetime = -1.0f;
 
+	m_nframes = 1;
+
     m_lifeTimeMax = 1.0f;
     m_randomLifeTimeMax = 0.0f;
     m_randomLifeTimeMin = 0.0f;
@@ -136,6 +148,8 @@ public:
 
     m_color = PxVec4(1, 1, 1, 1);
     m_modifier_color = 1.0f;
+
+	target_pos = "null";
 
     m_gravity = false;
     m_collisions = false;
@@ -161,6 +175,8 @@ public:
     m_size = 1.0f;
     m_modifier_lifetime = 1.0f;
 
+	target_pos = "null";
+
     m_lifeTimeMax = 1.0f;
     m_randomLifeTimeMax = 0.0f;
     m_randomLifeTimeMin = 0.0f;
@@ -169,6 +185,8 @@ public:
 
     m_color = PxVec4(1, 1, 1, 1);
     m_modifier_color = 1.0f;
+
+	m_nframes = 1;
 
     m_gravity = gravity;
     m_collisions = collisions;
@@ -316,7 +334,7 @@ public:
   int* GetShape() { return &m_shape_type; }
 
   PxVec3 GetInitialPosByShape(const VEC3& front, const VEC3& up);
-  PxVec3 GetInitialVelByShape(const VEC3& front, const VEC3& up);
+  PxVec3 GetInitialVelByShape(const VEC3& front, const VEC3& up, PxVec3 curr_position = PxVec3(0,0,0));
 
   //delays
   //-----------------------------------------------------------------
@@ -328,6 +346,12 @@ public:
   float* GetRandomDelay() { return &m_delay_start_particles; }
   void SetRandomDelay(float new_modifier) {
     m_delay_start_particles = new_modifier;
+  }
+
+  //Number Frames
+  int* GetNumberFrames() { return &m_nframes; }
+  void SetNumberFrames(int new_frames) {
+	  m_nframes = new_frames;
   }
 
   //LIST BONES

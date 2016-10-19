@@ -4,7 +4,7 @@
 >
 <nframes
 	value="1"
-/>
+	/>
 <collisions
 	value="1"
 	/>
@@ -18,8 +18,8 @@
 	angle="45"
 	max="1.000000 1.000000 1.000000"
 	min="-1.000000 -1.000000 -1.000000"
-	radius="1"
-	type="4"
+	radius="2"
+	type="2"
 	/>
 <position
 	randmax="0.000000 0.000000 0.000000"
@@ -33,7 +33,7 @@
 	/>
 <size
 	modifier="-1"
-	value="1"
+	value="0.5"
 	/>
 <lifetime
 	max_rand="0"

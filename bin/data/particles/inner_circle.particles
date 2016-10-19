@@ -1,10 +1,10 @@
 <particles_emitter
-	num_particles="250"
+	num_particles="50"
 	target_pos="player"
 >
 <nframes
 	value="1"
-/>
+	/>
 <collisions
 	value="1"
 	/>
@@ -16,10 +16,10 @@
 	/>
 <shape
 	angle="45"
-	max="1.000000 1.000000 1.000000"
-	min="-1.000000 -1.000000 -1.000000"
+	max="0.500000 0.500000 0.500000"
+	min="-0.500000 -0.500000 -0.500000"
 	radius="1"
-	type="4"
+	type="2"
 	/>
 <position
 	randmax="0.000000 0.000000 0.000000"
@@ -29,28 +29,29 @@
 <velocity
 	randmax="0.000000 0.000000 0.000000"
 	randmin="0.000000 0.000000 0.000000"
+	vel_over_lifeTime = "0.8 0.8 0.8"
 	value="0.000000 1.000000 0.000000"
 	/>
 <size
 	modifier="-1"
-	value="1"
+	value="0.5"
 	/>
 <lifetime
-	max_rand="0"
+	max_rand="0.2"
 	min_rand="0"
-	value="1"
+	value="1.5"
 	/>
 <acceleration
 	modifier="0.000000 0.000000 0.000000"
 	value="0.000000 0.000000 0.000000"
 	/>
 <delay
-	delay_particle_rand="5"
+	delay_particle_rand="0.5"
 	delay_start="0"
 	/>
 <color
-	modifier="1"
-	value="0.000000 0.000000 0.000000 1.000000"
+	modifier="0.8"
+	value="1.000000 1.000000 1.000000 1.000000"
 	/>
 <bonesList
 	size="0"

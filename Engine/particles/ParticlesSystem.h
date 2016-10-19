@@ -6,7 +6,7 @@
 #include "render\render_instanced.h"
 #include "ParticlesEmitter.h"
 
-#define DEFAULT_PARTICLES_FILE "test1"
+#define DEFAULT_PARTICLES_FILE "default_name"
 
 using namespace physx;
 
@@ -39,7 +39,8 @@ class CParticleSystem : public TCompBase {
   bool StepLifeTimeParticle(unsigned idx, float dt);
   //void SetParticleInitialValues(unsigned idx);
 
-  
+  bool active;
+  bool loop;
 
 
   //debug ui values
@@ -67,6 +68,8 @@ public:
 	if(m_pParticleSystem) m_pParticleSystem->releaseParticles();
     PX_SAFE_RELEASE(m_pParticleSystem);
 	PX_SAFE_RELEASE(m_pIndexPool);
+	list_bones.clear();
+	offset_bones.clear();
   }
 
   void render() {}	//not used
@@ -78,7 +81,15 @@ public:
 
   void updateParticlesWithoutPhysx(float elapsed);
 
+  void SetTargetEmitter(std::string new_target);
+
+  void ActiveParticleSystem();
+
   void updateParticlesPhysx(float elapsed);
+
+  void UpdateAccelerationParticles();
+
+  void SetPositionPhysxBuffer(std::vector<PxU32>& buffer);
   
   void SetBufferData();
   bool load(MKeyValue& atts);

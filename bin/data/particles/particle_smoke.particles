@@ -1,10 +1,9 @@
 <particles_emitter
-	num_particles="250"
-	target_pos="player"
+	num_particles="10"
 >
 <nframes
 	value="1"
-/>
+>
 <collisions
 	value="1"
 	/>
@@ -16,24 +15,24 @@
 	/>
 <shape
 	angle="45"
-	max="1.000000 1.000000 1.000000"
-	min="-1.000000 -1.000000 -1.000000"
+	max="-1.000000 -1.000000 -1.000000"
+	min="1.000000 1.000000 1.000000"
 	radius="1"
 	type="4"
 	/>
 <position
 	randmax="0.000000 0.000000 0.000000"
 	randmin="0.000000 0.000000 0.000000"
-	value="23.739090 50.661098 -25.005915"
+	value="0.000000 0.000000 0.000000"
 	/>
 <velocity
 	randmax="0.000000 0.000000 0.000000"
 	randmin="0.000000 0.000000 0.000000"
-	value="0.000000 1.000000 0.000000"
+	value="0.000000 5.000000 0.000000"
 	/>
 <size
 	modifier="-1"
-	value="1"
+	value="0.2"
 	/>
 <lifetime
 	max_rand="0"

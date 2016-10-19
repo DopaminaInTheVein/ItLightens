@@ -13,7 +13,7 @@ struct TParticle {
   //TEXCOORD1
   float nframe;
   float size;
-  //float utime;
+  float max_frames;
 
   //rotation
   VEC3 rotation;

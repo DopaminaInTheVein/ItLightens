@@ -25,6 +25,13 @@
    radius="0.3"
    height="0.7"/>
 
+<particles_system
+	texture_particles = "textures/particles/particulahumo1.dds"
+	file = "data/particles/inner_circle.particles"
+	loop = "no"
+	active = "no"
+	/>
+   
 </entity>
 <entity
    reload="yes">
