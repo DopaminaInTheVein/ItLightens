@@ -43,7 +43,13 @@ fn _parse_lightpoint = (
 fn _parse_lightDir = (
 	local xml 
 	if _parsingObject.castShadows then (
-		xml = XML_PARSING.addChild "light_dir_shadows"
+		local shadow_dyn = (getUserProp _parsingObject "ldynamic") as string
+		if shadow_dyn == "yes" then(
+			xml = XML_PARSING.addChild "light_dir_shadows_dynamic"
+		) else (
+			xml = XML_PARSING.addChild "light_dir_shadows"
+		)
+		
 	) else (
 		xml = XML_PARSING.addChild "light_dir"
 	)
