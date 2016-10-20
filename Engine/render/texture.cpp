@@ -23,14 +23,17 @@ IResource* createObjFromName<CTexture>(const std::string& name) {
 	//if (!texture->load(name_locale.c_str())) {
 	if (!texture->load(name.c_str())) {
 		dbg("Can't load texture %s. Will try placeholder...\n", name.c_str());
+		delete texture;
 		// try to load a placeholder...
 		texture = new CTexture;
 		if (!texture->load("textures/missing.dds")) {
 			fatal("Can't load texture %s\n", name.c_str());
+			delete texture;
+			texture = nullptr;
 		}
 	}
 	//}
-	texture->setName(name.c_str());
+	if (texture) texture->setName(name.c_str());
 	return texture;
 }
 
