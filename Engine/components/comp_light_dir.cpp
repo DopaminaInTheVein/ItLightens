@@ -5,6 +5,8 @@
 #include "render/draw_utils.h"
 #include "resources/resources_manager.h"
 
+bool TCompLightDir::debug_render = false;
+
 bool TCompLightDir::load(MKeyValue& atts) {
 	TCompCamera::load(atts);
 	color = atts.getQuat("color");

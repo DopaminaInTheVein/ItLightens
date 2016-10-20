@@ -5,6 +5,8 @@
 #include "render/draw_utils.h"
 #include "resources/resources_manager.h"
 
+bool TCompLightPoint::debug_render = false;
+
 bool TCompLightPoint::load(MKeyValue& atts) {
 	color = atts.getQuat("color");
 	in_radius = atts.getFloat("in_radius", in_radius);
