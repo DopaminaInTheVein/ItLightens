@@ -21,7 +21,6 @@ private:
 	bool ui_control = false;
 
 	bool initedText = false;
-
 public:
 	//Font
 	float letter_sizes[256];

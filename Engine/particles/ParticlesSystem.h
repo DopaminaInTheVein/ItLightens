@@ -54,6 +54,8 @@ class CParticleSystem : public TCompBase {
   std::vector<int>	list_bones;
   std::vector<VEC3>	offset_bones;
 
+  std::string  tex_particles_path;
+
   void UpdateRandomsAttr();
   
 

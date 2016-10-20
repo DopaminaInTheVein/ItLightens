@@ -88,6 +88,7 @@ private:
 	bool m_activated_editor;
 	bool m_show_axis = false;
 	bool multi_editing = false;
+	bool delete_lights;
 	EditLight multi_edit_light;
 	std::string m_base_path;
 	VHandles m_Lights;
@@ -98,6 +99,7 @@ private:
 	VTypeLights m_TypesTemp;
 	LightList engine_list;
 	LightList temp_list;
+	std::string last_scene_name = "";
 public:
 
 	bool* GetLightsEditorState() { return &m_activated_editor; }
@@ -124,13 +126,14 @@ public:
 	bool HideLight(CHandle h);
 	LightTemplate bool HideLight(CEntity* e);
 
-	void SetRenderDebug(bool value, std::vector<CHandle> v_lights, std::vector<TypeLight> v_types);
-	LightTemplate void SetRenderDebug(CHandle light, bool value);
+	//void SetRenderDebug(bool value, std::vector<CHandle> v_lights, std::vector<TypeLight> v_types);
+	LightTemplate void SetRenderDebug(bool value);
 
 	LightTemplate void renderLightComp(TLight * pl);
 
-	bool GetShowAxis() const { return m_show_axis; }
+	LightTemplate void DestroyLights();
 
+	bool GetShowAxis() const { return m_show_axis; }
 	void RenderInMenu();
 	void RenderGeneral();
 	void RenderNewLight();
