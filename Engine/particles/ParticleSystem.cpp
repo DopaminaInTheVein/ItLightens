@@ -19,6 +19,8 @@
 #define P_WAITING		TParticleData::State::WAITING
 #define P_STARTED		TParticleData::State::STARTED
 
+#define BASE_PATH		std::string("data/particles/")
+
 PxVec3 mulPxVec3(PxVec3 a, PxVec3 b) {
 	PxVec3 ret;
 	ret.x = a.x * b.x;
@@ -35,15 +37,10 @@ void CParticleSystem::renderParticles()
 
 bool CParticleSystem::load(MKeyValue & atts)
 {
-  std::string tex_particles = atts.getString("texture_particles", "textures/fire.dds");
-  m_pTexture = Resources.get(tex_particles.c_str())->as<CTexture>();
-
-  loop = atts.getBool("loop", false);
-  active = atts.getBool("active", false);
-
-  std::string full_path = std::string("data/particles/") + DEFAULT_PARTICLES_FILE + ".particles";
+	std::string default_path = std::string( DEFAULT_PARTICLES_FILE) + ".particles";
   
-  std::string file_particles = atts.getString("file", full_path.c_str());
+  std::string file_particles = BASE_PATH;
+  file_particles += atts.getString("file", default_path.c_str());
   CParticleLoader parser = CParticleLoader(CHandle(this));
   m_Emitter = CParticlesEmitter();
   bool is_ok = parser.xmlParseFile(file_particles);
@@ -62,6 +59,13 @@ bool CParticleSystem::loadFileValues(MKeyValue& atts, std::string element) {
 		//if(m_RenderParticles.){
 			//m_RenderParticles.clear();
 		//}
+
+		tex_particles_path = atts.getString("texture_particles", "textures/fire.dds");
+		m_pTexture = Resources.get(tex_particles_path.c_str())->as<CTexture>();
+
+		loop = atts.getBool("loop", false);
+		active = atts.getBool("active", false);
+
 
 		if(!m_pParticle_mesh ) m_pParticle_mesh = Resources.get("textured_quad_xy_centered.mesh")->as<CMesh>();
 
@@ -773,6 +777,12 @@ void CParticleSystem::saveToFile(std::string fileName)
 	//start_element
 	atts.put("num_particles", m_numParticles);
 	atts.put("target_pos", m_Emitter.target_pos);
+
+	atts.put("texture_particles", tex_particles_path);
+
+	atts.put("loop", loop);
+	atts.put("active", active);
+
 	atts.writeStartElement(file, "particles_emitter");
 	atts.clear();
 

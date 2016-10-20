@@ -1,5 +1,8 @@
 <particles_emitter
+    texture_particles = "textures/particles/particulahumo1.dds"
 	num_particles="50"
+	loop = "no"
+	active = "no"
 >
 <nframes
 	value="1"
