@@ -236,6 +236,12 @@ fn _parse_render = (
 	if xmlStMesh != undefined then (
 		parse_render_common xmlStMesh
 	)
+	
+	local part = getUserProp _parsingObject "particles"
+	if part != undefined then (
+		local xml_part = XML_PARSING.addChild "particles_system"
+		xml_part.addAttr "file" (part + ".particles")
+	)
 )
 
 ----------------------------------------------------------------------

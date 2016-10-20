@@ -29,7 +29,7 @@ bool TCompTransform::load(MKeyValue& atts) {
 	auto s = atts.getFloat("scale", 1.0f);
 	setPosition(p);
 	setRotation(q);
-	setScale(VEC3(s));
+	setScaleBase(VEC3(s));
 	//if (atts.getString("lookat", "") != "") {
 	if (atts.has("yaw") || atts.has("pitch")) {
 		float yaw, pitch;

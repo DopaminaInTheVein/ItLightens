@@ -14,6 +14,7 @@
 #include "constants/ctes_camera.h"
 #include "constants/ctes_globals.h"
 #include "comp_camera_main.h"
+#include "app_modules/gui/comps/gui_basic.h"
 
 #include <math.h>
 
@@ -28,7 +29,7 @@ bool TCompFadingGlobe::load(MKeyValue& atts)
 	prefab_route = atts.getString("route", "ui/effects/bafarada");
 	globe_name = atts.getString("name", "char_globe" + to_string(globes++));
 	//globe_name = atts.getString("name", "char_globe");
-	distance = atts.getFloat("dist", 1.0f);
+	float distance = atts.getFloat("dist", 1.0f);
 	char_x = atts.getFloat("posx", 1.0f);
 	char_y = atts.getFloat("posy", 1.0f);
 	char_z = atts.getFloat("posz", 1.0f);
@@ -76,15 +77,24 @@ bool TCompFadingGlobe::load(MKeyValue& atts)
 	//screen_z = 0.75f;
 
 	if (!isBehindCamera() && inDistance()) {
-		Gui->addGuiElement(prefab_route, VEC3(screen_x, 1.f - screen_y, screen_z), globe_name);
-		added = true;
+		globe_handle = Gui->addGuiElement(prefab_route, VEC3(screen_x, 1.f - screen_y, screen_z), globe_name);
+		//added = true;
 	}
 
-	if (distance < 4.0f)
-		distance = 4.0f;
+	//if (distance < 4.0f)
+		//distance = 4.0f;
 
-	globe_width = 1.0f / distance;
-	globe_height = 1.0f / distance;
+	//globe_width = 1.0f / distance;
+	//globe_height = 1.0f / distance;
+
+	return true;
+}
+
+bool TCompFadingGlobe::getUpdateInfo() {
+	if (!camera_main.isValid()) tags_manager.getFirstHavingTag("camera_main");
+	cam = GETH_COMP(camera_main, TCompCameraMain);
+	cam_tmx = GETH_COMP(camera_main, TCompTransform);
+	if (!cam || !cam_tmx) return false;
 
 	return true;
 }
@@ -100,16 +110,19 @@ void TCompFadingGlobe::update(float dt) {
 	screen_x = ((proj_coords.x + 1.0f) / 2.0f);
 	screen_y = ((1.f - proj_coords.y) / 2.0f);
 
-	if (!added && !isBehindCamera() && inDistance()) {
-		Gui->addGuiElement(prefab_route, VEC3(screen_x, 1.f - screen_y, screen_z), globe_name);
-		added = true;
+	if (!globe_handle.isValid() && !isBehindCamera() && inDistance()) {
+		globe_handle = Gui->addGuiElement(prefab_route, VEC3(screen_x, 1.f - screen_y, screen_z), globe_name);
+		GET_COMP(gui, globe_handle, TCompGui);															   //updateGuiElementPositionByTag(globe_name, VEC3(screen_x, 1.f - screen_y, screen_z));
+		if (gui) size_world = gui->GetSizeWorld();
+		else size_world = -1.f;
 	}
-	else if (added && !isBehindCamera() && inDistance()) {
-		Gui->updateGuiElementPositionByTag(globe_name, VEC3(screen_x, 1.f - screen_y, screen_z));
+	if (globe_handle.isValid() && !isBehindCamera() && inDistance()) { //Removed else, we need to scale prefab, after add it
+		Gui->moveGuiElement(globe_handle, VEC3(screen_x, 1.f - screen_y, screen_z), getGlobeScale());
 	}
 	else {
 		Gui->removeGuiElementByTag(globe_name);
-		added = false;
+		globe_handle = CHandle();
+		//added = false;
 	}
 
 	// time to life control for the globe
@@ -123,10 +136,18 @@ void TCompFadingGlobe::update(float dt) {
 		h.destroy();
 
 		// clean instance of the globe
-		Gui->removeGuiElementByTag(globe_name);
+		//Gui->removeGuiElementByTag(globe_name);
+		globe_handle.destroy();
 	}
 }
 
+float TCompFadingGlobe::getGlobeScale()
+{
+	if (size_world < 0.f) return 1.f;
+	float dist = realDist(VEC3(char_x, char_y, char_z), cam_tmx->getPosition());
+	float range_x = sinf(cam->getFov())*dist*2.f;
+	return Gui->getUiSize().x * size_world / range_x;
+}
 void TCompFadingGlobe::render() const {
 #ifndef NDEBUG
 	PROFILE_FUNCTION("TCompFadingGlobe render");
