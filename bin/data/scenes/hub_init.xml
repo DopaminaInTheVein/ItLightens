@@ -88,6 +88,8 @@
 <skeleton_ik/>
 <abs_aabb/>
 <local_aabb/>
+<particles_system
+   file="inner_circle.particles"/>
 
 </entity>
 <entity

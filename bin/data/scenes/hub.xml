@@ -613,8 +613,6 @@
    name="static_meshes/hub/end_hub.static_mesh"
    static="true"/>
 <abs_aabb/>
-<particles_system
-   file="inner_circle.particles"/>
 <rigidbody
    type_collision="static"
    mesh_name="hub/end_hub"/>
