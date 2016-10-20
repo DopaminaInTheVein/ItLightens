@@ -26,6 +26,10 @@
    radius="0.3"
    height="0.7"/>
 
+<particles_system
+	file = "inner_circle.particles"
+	/>
+   
 </entity>
 <entity
    reload="yes">
