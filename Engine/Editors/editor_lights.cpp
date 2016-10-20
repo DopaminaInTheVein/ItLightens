@@ -558,7 +558,6 @@ void CEditorLights::EditLight::LightParam::renderInMenu()
 {
 	ImGui::PushID(this);
 	ImGui::Text(name.c_str());
-	ImGui::PopID();
 
 	ImGui::PushID(&v);
 	ImGui::PushItemWidth(320);
