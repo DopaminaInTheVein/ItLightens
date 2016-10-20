@@ -65,7 +65,7 @@ bool TCompGui::load(MKeyValue& atts)
 	height = atts.getFloat("height", 0.f);
 	color = VEC4(1, 1, 1, 1);
 	language = atts.getBool("lang", false);
-
+	size_world = atts.getFloat("size_world", -1.f);
 	return true;
 }
 

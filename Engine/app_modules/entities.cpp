@@ -784,13 +784,14 @@ void CEntitiesModule::render() {
 	}
 	else {
 		getHandleManager<TCompSkeleton>()->onAll(&TCompSkeleton::render);
-		getHandleManager<TCompLightDir>()->onAll(&TCompLightDir::render);
 
-		getHandleManager<TCompLightDirShadows>()->onAll(&TCompLightDirShadows::render);
 		getHandleManager<TCompFadingMessage>()->onAll(&TCompFadingMessage::render);
 		getHandleManager<TCompFadingGlobe>()->onAll(&TCompFadingGlobe::render);
 
 #ifndef NDEBUG
+		getHandleManager<TCompLightPoint>()->onAll(&TCompLightPoint::render);
+		getHandleManager<TCompLightDir>()->onAll(&TCompLightDir::render);
+		getHandleManager<TCompLightDirShadows>()->onAll(&TCompLightDirShadows::render);
 		getHandleManager<TCompBox>()->onAll(&TCompBox::render);
 #endif
 	}

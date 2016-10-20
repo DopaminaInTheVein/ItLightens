@@ -52,28 +52,45 @@ void CEditorLights::RenderGeneral()
 	ImGui::Text("VIEW OPTIONS");
 	ImGui::Separator();
 	if (ImGui::Checkbox("show axis", &m_show_axis)) {
-		SetRenderDebug(m_show_axis, m_Lights, m_Types);
-		SetRenderDebug(m_show_axis, m_LightsTemp, m_TypesTemp);
+		EACH__LIGHT__(SetRenderDebug, (m_show_axis);)
 	}
 	ImGui::Separator();
 	ImGui::Text("LOAD / SAVE");
 	ImGui::Separator();
-	static char filename[32] = "";
+	static char filename[64] = "";
+	auto current_scene = CApp::get().getCurrentRealLevel();
+	if (last_scene_name != current_scene) {
+		last_scene_name = current_scene;
+		sprintf(filename, "%s", current_scene.c_str());
+	}
+
 	ImGui::Text("bin/data/scenes/");
 	ImGui::SameLine();
 	ImGui::PushItemWidth(160);
-	ImGui::InputText(".xml", filename, 32);
+	ImGui::InputText("_lights.xml", filename, 64);
 	ImGui::PopItemWidth();
 	//To load a specific file
 	if (ImGui::SmallButton("Load")) {
-		BROADCAST_MSG(TMsgDestroyLight);
-		CApp::get().loadLights(filename);
+		EACH__LIGHT__(DestroyLights, (););
+		delete_lights = true;
+		CApp::get().loadLights(filename + std::string("_lights"));
+		LoadLights();
 	}
 	ImGui::SameLine();
 	if (ImGui::SmallButton("Save")) {
 		SaveLights(filename);
 	}
 	ImGui::Separator();
+}
+
+LightTemplate
+void CEditorLights::DestroyLights()
+{
+	getHandleManager<TLight>()->each([](TLight * e) {
+		if (CHandle(e).isValid()) {
+			CHandle(e).getOwner().destroy();
+		}
+	});
 }
 void CEditorLights::RenderNewLight()
 {
@@ -128,9 +145,9 @@ void CEditorLights::RenderMultiEdit()
 				for (auto lhandle : m_LightsTemp) StartEditLight(lhandle);
 				multi_editing = EDITING;
 			}
-			//if (ImGui::Button("Destroy Selected")) {
-			//	DestroySelected(); //peta el imgui por alguna razon
-			//}
+			if (ImGui::Button("Destroy Selected")) {
+				DestroySelected(); //peta el imgui por alguna razon
+			}
 		}
 		else if (multi_editing == EDITING) {
 			if (ImGui::Button("Apply")) {
@@ -152,10 +169,12 @@ void CEditorLights::RenderMultiEdit()
 void CEditorLights::DestroySelected()
 {
 	for (auto hlight : m_Lights) {
-		if (IsSelected(hlight)) hlight.destroy();
+		if (IsSelected(hlight)) {
+			hlight.destroy();//if (hlight.isValid()) hlight.getOwner().destroy();
+		}
 	}
 	for (auto hlight : m_LightsTemp) {
-		if (IsSelected(hlight)) hlight.destroy();
+		if (IsSelected(hlight))  hlight.destroy();//if (hlight.isValid()) hlight.getOwner().destroy();
 	}
 }
 
@@ -198,7 +217,7 @@ bool CEditorLights::SaveLights(std::string fileName)
 		fileName += "_lights";
 	}
 
-	std::string full_path = "data/scenes/" + fileName + ".xml";
+	std::string full_path = "data/scenes/" + fileName + "_lights.xml";
 
 	MKeyValue atts;
 
@@ -350,17 +369,14 @@ bool CEditorLights::HideLight(CEntity* e)
 	return l;
 }
 
-void CEditorLights::SetRenderDebug(bool value, std::vector<CHandle> v_lights, std::vector<TypeLight> v_types) {
-	for (auto hlight : v_lights) {
-		EACH__LIGHT__(SetRenderDebug, (hlight, value););
-	}
-}
+//void CEditorLights::SetRenderDebug(bool value, std::vector<CHandle> v_lights, std::vector<TypeLight> v_types) {
+//	for (auto hlight : v_lights) {
+//		EACH__LIGHT__(SetRenderDebug, (value););
+//	}
+//}
 LightTemplate
-void CEditorLights::SetRenderDebug(CHandle light, bool value) {
-	if (light.isValid()) {
-		TLight* l = light;
-		if (l) l->debug_render = value;
-	}
+void CEditorLights::SetRenderDebug(bool value) {
+	TLight::debug_render = value;
 }
 
 LightTemplate
@@ -392,7 +408,6 @@ void CEditorLights::RenderLightList(VHandles& lights, VTypeLights& types, bool t
 		if (ImGui::TreeNodeCheck(room_title, list.rcheck + room, r_changed[room], multi_editing == IDLE)) {
 			//Every Light
 			for (int idx = 0; idx < lights.size(); ++idx) {
-				if (!lights[idx].isValid()) return;
 				if (TCompRoom::SameRoom(lights[idx].getOwner(), room)) {
 					RenderLight(lights[idx], types[idx], temporal);
 				}
@@ -441,13 +456,14 @@ template <typename TLight>
 void CEditorLights::RenderLight(CHandle& h_light, TypeLight& type, bool temporal)
 {
 	CHandle h_owner = h_light.getOwner();
+	bool changed_selection = false;
 	GET_COMP(name, h_owner, TCompName);
 	GET_COMP(light, h_owner, TLight);
 	GET_COMP(trans, h_owner, TCompTransform);
-	if (light) {
-		bool changed_selection = false;
+	if (light && name && trans) {
 		ImGui::PushID(light);
 		if (ImGui::TreeNodeCheck(GET_NAME(h_owner), &light->selected, changed_selection, multi_editing == IDLE)) {
+			CHandle h_owner = h_light.getOwner();
 			if (name) name->renderInMenu();
 			if (trans)trans->renderInMenu();
 			renderLightComp(light);
@@ -542,6 +558,7 @@ void CEditorLights::EditLight::LightParam::renderInMenu()
 {
 	ImGui::PushID(this);
 	ImGui::Text(name.c_str());
+	ImGui::PopID();
 
 	ImGui::PushID(&v);
 	ImGui::PushItemWidth(320);

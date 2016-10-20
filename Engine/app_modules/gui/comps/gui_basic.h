@@ -41,6 +41,7 @@ class TCompGui : public TCompBase {
 
 	// Size
 	float width, height;
+	float size_world = -1.f;
 
 	// Render state float for render manager
 	float render_state;
@@ -94,6 +95,7 @@ public:
 	// Size
 	float GetWidth();
 	float GetHeight();
+	float GetSizeWorld() { return size_world; }
 	void SetWidth(float);
 	void SetHeight(float);
 
