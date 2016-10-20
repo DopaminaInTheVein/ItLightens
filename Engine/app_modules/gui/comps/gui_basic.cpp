@@ -66,6 +66,9 @@ bool TCompGui::load(MKeyValue& atts)
 	color = VEC4(1, 1, 1, 1);
 	language = atts.getBool("lang", false);
 	size_world = atts.getFloat("size_world", -1.f);
+	if (size_world > 0.f) {
+		dbg("leo size_world\n");
+	}
 	return true;
 }
 

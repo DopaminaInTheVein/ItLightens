@@ -85,7 +85,7 @@ struct TCompTags : public TCompBase {
 		int i = 0;
 		for (auto str : tags_str) {
 			if (str != "")
-				ImGui::Text("%d: %s", str, i++);
+				ImGui::Text("%d: %s", i++, str);
 		}
 	}
 

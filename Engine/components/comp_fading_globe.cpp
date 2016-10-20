@@ -45,8 +45,8 @@ bool TCompFadingGlobe::load(MKeyValue& atts)
 	resolution_x = CApp::get().getXRes();
 	resolution_y = CApp::get().getYRes();
 
-	if (prefab_route.find("bafarada") != string::npos)
-		char_y += 2.0f - (1.f / distance);
+	//if (prefab_route.find("bafarada") != string::npos)
+	//	char_y += 2.0f - (1.f / distance);
 
 	// First option: computing manually the projective space coords
 
@@ -77,7 +77,8 @@ bool TCompFadingGlobe::load(MKeyValue& atts)
 	//screen_z = 0.75f;
 
 	if (!isBehindCamera() && inDistance()) {
-		globe_handle = Gui->addGuiElement(prefab_route, VEC3(screen_x, 1.f - screen_y, screen_z), globe_name);
+		createGlobe();
+		//globe_handle = Gui->addGuiElement(prefab_route, VEC3(screen_x, 1.f - screen_y, screen_z), globe_name);
 		//added = true;
 	}
 
@@ -91,7 +92,7 @@ bool TCompFadingGlobe::load(MKeyValue& atts)
 }
 
 bool TCompFadingGlobe::getUpdateInfo() {
-	if (!camera_main.isValid()) tags_manager.getFirstHavingTag("camera_main");
+	if (!camera_main.isValid()) camera_main = tags_manager.getFirstHavingTag("camera_main");
 	cam = GETH_COMP(camera_main, TCompCameraMain);
 	cam_tmx = GETH_COMP(camera_main, TCompTransform);
 	if (!cam || !cam_tmx) return false;
@@ -111,20 +112,22 @@ void TCompFadingGlobe::update(float dt) {
 	screen_y = ((1.f - proj_coords.y) / 2.0f);
 
 	if (!globe_handle.isValid() && !isBehindCamera() && inDistance()) {
-		globe_handle = Gui->addGuiElement(prefab_route, VEC3(screen_x, 1.f - screen_y, screen_z), globe_name);
-		GET_COMP(gui, globe_handle, TCompGui);															   //updateGuiElementPositionByTag(globe_name, VEC3(screen_x, 1.f - screen_y, screen_z));
-		if (gui) size_world = gui->GetSizeWorld();
-		else size_world = -1.f;
+		createGlobe();
 	}
-	if (globe_handle.isValid() && !isBehindCamera() && inDistance()) { //Removed else, we need to scale prefab, after add it
+	else if (globe_handle.isValid() && !isBehindCamera() && inDistance()) {
 		Gui->moveGuiElement(globe_handle, VEC3(screen_x, 1.f - screen_y, screen_z), getGlobeScale());
 	}
 	else {
-		Gui->removeGuiElementByTag(globe_name);
+		//Gui->removeGuiElementByTag(globe_name);
+		globe_handle.destroy();
 		globe_handle = CHandle();
 		//added = false;
 	}
 
+	if (globe_handle.isValid()) {
+		GET_COMP(globe_tmx, globe_handle, TCompTransform);
+		globe_tmx->setScale(getGlobeScale());
+	}
 	// time to life control for the globe
 
 	if (ttl >= 0.0f && !perenne) {
@@ -139,6 +142,14 @@ void TCompFadingGlobe::update(float dt) {
 		//Gui->removeGuiElementByTag(globe_name);
 		globe_handle.destroy();
 	}
+}
+
+void TCompFadingGlobe::createGlobe()
+{
+	globe_handle = Gui->addGuiElement(prefab_route, VEC3(screen_x, 1.f - screen_y, screen_z), globe_name);
+	GET_COMP(gui, globe_handle, TCompGui);
+	if (gui) size_world = gui->GetSizeWorld();
+	else size_world = -1.f;
 }
 
 float TCompFadingGlobe::getGlobeScale()

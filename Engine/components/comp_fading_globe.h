@@ -38,6 +38,7 @@ class TCompFadingGlobe : public TCompBase {
 
 	bool isBehindCamera();
 	bool inDistance();
+	void createGlobe();
 	float getGlobeScale();
 
 public:
