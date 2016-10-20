@@ -412,7 +412,7 @@ PxU32 lowestSetBit(PxU32 b) {
 }
 
 void CParticleSystem::update(float elapsed) {
-
+	if (m_particles.indexBuffer.size() <= 0) return;
 	if (!m_Emitter.m_useSkeleton)
 		updateParticlesPhysx(elapsed);
 	else

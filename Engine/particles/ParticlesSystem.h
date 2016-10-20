@@ -65,6 +65,7 @@ public:
   ~CParticleSystem() {}
 
   void stop() {
+	m_numParticles = 0;
     m_particles.clear();
 	m_RenderParticles.clear();
 	if(m_pParticleSystem) m_pParticleSystem->releaseParticles();
