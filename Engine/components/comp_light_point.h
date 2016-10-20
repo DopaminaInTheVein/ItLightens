@@ -14,8 +14,7 @@ struct TCompLightPoint : public TCompBase {
 
 	bool		enabled = true;
 	bool		selected = false;
-	bool		debug_render = false;
-
+	static bool		debug_render;
 	VEC4 color;
 	bool load(MKeyValue& atts);
 	bool save(std::ofstream& os, MKeyValue& atts);
@@ -33,5 +32,4 @@ struct TCompLightPoint : public TCompBase {
 	float* getFovPointer() { return nullptr; }
 	~TCompLightPoint();
 };
-
 #endif
