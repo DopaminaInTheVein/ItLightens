@@ -73,6 +73,7 @@ public:
 		list_bones.clear();
 		offset_bones.clear();
 	}
+	void setLoop(bool b) { loop = b; }
 
 	void render() {}	//not used
 	void renderParticles();

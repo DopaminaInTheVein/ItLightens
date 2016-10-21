@@ -42,27 +42,7 @@ bool CParticleSystem::load(MKeyValue & atts)
 	std::string default_path = std::string(DEFAULT_PARTICLES_FILE) + ".particles";
 	std::string file_particles = BASE_PATH;
 	file_particles += atts.getString("file", default_path.c_str());
-
-	m_Emitter = CParticlesEmitter();
-
-	auto it = compiled_particles.find(file_particles);
-	if (it == compiled_particles.end()) {
-		// Compile it
-		cur_compiling = new CPrefabCompiler;
-		bool is_ok = xmlParseFile(file_particles);
-		assert(is_ok);
-
-		// And register it
-		compiled_particles[file_particles] = cur_compiling;
-	}
-	else {
-		cur_compiling = it->second;
-		assert(cur_compiling);
-		CPrefabCompiler* compiler = cur_compiling;
-		cur_compiling = nullptr;
-		compiler->execute(this);
-	}
-	return true;
+	return loadFromFile(file_particles);
 }
 
 void CParticleSystem::onStartElement(const std::string &element, MKeyValue& atts) {
@@ -906,16 +886,35 @@ void CParticleSystem::saveToFile(std::string fileName)
 	fb.close();
 }
 
-bool CParticleSystem::loadFromFile(std::string fileName)
+bool CParticleSystem::loadFromFile(std::string file_particles)
 {
-	//CParticleLoader ep = CParticleLoader(CHandle(this));
-	bool is_ok = xmlParseFile(fileName);
-	if (!is_ok) {
-		fatal("error reading particle system %s file, the file wont be loaded\n", fileName.c_str());
-		return false;
-	}
+	m_Emitter = CParticlesEmitter();
 
+	auto it = compiled_particles.find(file_particles);
+	if (it == compiled_particles.end()) {
+		// Compile it
+		cur_compiling = new CPrefabCompiler;
+		bool is_ok = xmlParseFile(file_particles);
+		assert(is_ok);
+
+		// And register it
+		compiled_particles[file_particles] = cur_compiling;
+	}
+	else {
+		cur_compiling = it->second;
+		assert(cur_compiling);
+		CPrefabCompiler* compiler = cur_compiling;
+		cur_compiling = nullptr;
+		compiler->execute(this);
+	}
 	return true;
+	//CParticleLoader ep = CParticleLoader(CHandle(this));
+	//bool is_ok = xmlParseFile(fileName);
+	//if (!is_ok) {
+	//	fatal("error reading particle system %s file, the file wont be loaded\n", fileName.c_str());
+	//	return false;
+	//}
+	//return true;
 }
 
 #pragma endregion

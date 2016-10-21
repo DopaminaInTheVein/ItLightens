@@ -433,6 +433,49 @@ void SLBHandle::setDragValue(float value)
 		if (gui_drag) gui_drag->SetValue(value);
 	}
 }
+//Handle Particles
+void SLBHandle::particlesOn()
+{
+	if (real_handle.isValid()) {
+		GET_COMP(part, real_handle, CParticleSystem); //me
+		if (!part) part = GETH_MY(CParticleSystem); //or my owner
+		if (part) part->ActiveParticleSystem();
+	}
+}
+void SLBHandle::particlesOff()
+{
+	if (real_handle.isValid()) {
+		GET_COMP(part, real_handle, CParticleSystem); //me
+		if (!part) part = GETH_MY(CParticleSystem); //or my owner
+		if (part) part->setLoop(false);
+	}
+}
+void SLBHandle::particlesLoop()
+{
+	if (real_handle.isValid()) {
+		GET_COMP(part, real_handle, CParticleSystem); //me
+		if (!part) part = GETH_MY(CParticleSystem); //or my owner
+		if (part) part->setLoop(true);
+	}
+}
+void SLBHandle::particlesLoad(const char* name, int enabled)
+{
+	if (real_handle.isValid()) {
+		CEntity* e = real_handle;
+		if (e) {
+			auto hm_part = CHandleManager::getByName("particle_system");
+			CHandle new_hpart = hm_part->createHandle();
+			CParticleSystem* part = new_hpart;
+			if (part) {
+				part->loadFromFile(std::string(name));
+				e->add(new_hpart);
+				if (enabled == 1) part->ActiveParticleSystem();
+				else if (enabled > 1) part->setLoop(true);
+			}
+		}
+	}
+}
+
 // Handle group By Tag
 void SLBHandleGroup::getHandlesByTag(const char * tag) {
 	handle_group = tags_manager.getHandlesByTag(string(tag));
@@ -1070,6 +1113,21 @@ void SLBPublicFunctions::unforceSenseVision() {
 	if (sense) {
 		sense->setSenseVisionMode(TCompSenseVision::eSenseVision::DEFAULT);
 	}
+}
+
+SLBHandle SLBPublicFunctions::createParticles(const char* name, float x, float y, float z, int enabled)
+{
+	CHandle h = createPrefab("particles_default.prefab");
+	GET_COMP(part, h, CParticleSystem);
+	if (part) part->loadFromFile(std::string(name));
+	GET_COMP(tmx, h, TCompTransform);
+	if (tmx) tmx->setPosition(VEC3(x, y, z));
+	if (part && enabled == 1) part->ActiveParticleSystem();
+	if (part && enabled == 2) part->setLoop(false);
+	std::string name = "unnamed";
+	CEntity* e = h;
+	if (e) name = e->getName();
+	return SLBHandle(h, name);
 }
 
 //test
