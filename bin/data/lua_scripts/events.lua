@@ -679,11 +679,11 @@ function OnStepOutScientistParquet( step )
 end
 
 function OnStartVibration( param )
-	cam:start_vibration(0.0, 0.75)
+	cam:start_vibration(0.0, 0.75, 9)
 end
 
 function OnStopVibration( param )
-	cam:stop_vibration()
+	cam:stop_vibration(7.5)
 end
 
 -- GUI

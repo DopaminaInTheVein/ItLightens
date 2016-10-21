@@ -21,8 +21,6 @@
 #define THIRD_PERSON_CONTROLLER_SCIENTIST_POS_OFFSET_Y		0.f
 #define E_NUMBER											2.71828f
 #define PI_NUMBER											3.14159f
-#define	VIBRATION_SPEED										9.f
-#define VIBRATION_STOP_SPEED								7.5f
 
 class TCompController3rdPerson : public TCompBase {
 	float		yaw;
@@ -48,6 +46,8 @@ class TCompController3rdPerson : public TCompBase {
 	float		vibration_x_max;
 	float		vibration_y_max;
 	float		vibration_t = 0.f;
+	float		VIBRATION_SPEED = 0.f;
+	float		VIBRATION_STOP_SPEED = 0.f;
 
 public:
 	CHandle		target;
@@ -89,18 +89,20 @@ public:
 	}
 
 	// camera vibration
-	void startVibration(float x_max, float y_max) {
+	void startVibration(float x_max, float y_max, float speed) {
 
 		// set the new parameters
 		vibrating = true;
 		vibration_t = 0.f;
 		vibration_x_max = x_max;
 		vibration_y_max = y_max;
+		VIBRATION_SPEED = speed;
 	}
 
-	void stopVibration() {
-		vibration_t = 0.f;
+	void stopVibration(float speed) {
 		stopping_vibration = true;
+		vibration_t = 0.f;
+		VIBRATION_STOP_SPEED = speed;
 	}
 
 	void onCreate(const TMsgEntityCreated& msg) {

@@ -851,9 +851,11 @@ void CLogicManagerModule::bindCamera(SLB::Manager& m) {
 		.comment("starts the cambera vibration")
 		.param("float: max vibration in X direction")
 		.param("float: max vibration in Y direction")
+		.param("float: speed of the vibration")
 		// stop vibration
 		.set("stop_vibration", &SLBCamera::stopVibration)
 		.comment("stops the cambera vibration")
+		.param("float: speed decreasal of the vibration")
 		;
 	;
 }
