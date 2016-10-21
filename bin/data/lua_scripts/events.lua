@@ -400,6 +400,8 @@ function OnExplode_throw_bomb()
 	p:print( "OnExplode_throw_bomb\n")
 	h:getHandleCaller()
 	p:play_3d_sound("event:/OnBombExplodes", h:get_x(), h:get_y(), h:get_z(), 1.0, false, 32)
+	cam:start_vibration(0.5, 2.0, 20)
+	p:exec_command("cam:stop_vibration(10)", 1.0)
 end
 
 
