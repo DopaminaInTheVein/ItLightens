@@ -313,6 +313,8 @@ end
 function OnJumpLandMoleBaldosa( param )
 	p:print( "OnJumpLandMoleBaldosa: "..param.."\n" )
 	p:play_sound("event:/OnMoleJump", 1.0, false)
+	cam:start_vibration(0.0, 0.75, 15)
+	p:exec_command("cam:stop_vibration(10)", 0.3)
 end
 
 function OnJumpLandMoleParquet( param )
