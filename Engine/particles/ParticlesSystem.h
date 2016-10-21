@@ -96,8 +96,8 @@ public:
 	void SetBufferData();
 	bool load(MKeyValue& atts);
 
-	void onStartElement(MKeyValue &atts, const std::string &elem);
-	void onEndElement(const std::string &elem);
+	void onStartElement(const std::string &elem, MKeyValue &atts) override;
+	void onEndElement(const std::string &elem) override;
 
 	//-----------------------------------------------------------------------------------------------------
 	//										Particles systems file manager

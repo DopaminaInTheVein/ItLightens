@@ -26,10 +26,6 @@
    radius="0.3"
    height="0.7"/>
 
-<particles_system
-	file = "inner_circle.particles"
-	/>
-   
 </entity>
 <entity
    reload="yes">
@@ -92,8 +88,6 @@
 <skeleton_ik/>
 <abs_aabb/>
 <local_aabb/>
-<particles_system
-   file="inner_circle.particles"/>
 
 </entity>
 <entity
@@ -115,8 +109,6 @@
 <skeleton_ik/>
 <abs_aabb/>
 <local_aabb/>
-<particles_system
-   file="inner_circle.particles"/>
 
 </entity>
 <entity

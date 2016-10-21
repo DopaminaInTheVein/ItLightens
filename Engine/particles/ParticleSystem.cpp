@@ -58,12 +58,22 @@ bool CParticleSystem::load(MKeyValue & atts)
 	else {
 		cur_compiling = it->second;
 		assert(cur_compiling);
-		cur_compiling->execute(this);
+		CPrefabCompiler* compiler = cur_compiling;
+		cur_compiling = nullptr;
+		compiler->execute(this);
 	}
 	return true;
 }
 
-void CParticleSystem::onStartElement(MKeyValue& atts, const std::string &element) {
+void CParticleSystem::onStartElement(const std::string &element, MKeyValue& atts) {
+	if (cur_compiling) {
+		CPrefabCompiler::TCall c;
+		c.is_start = true;
+		c.elem = element;
+		c.atts = atts;
+		cur_compiling->calls.push_back(c);
+	}
+
 	if (element == "particles_emitter") {
 		m_numParticles = atts.getInt("num_particles", 1);
 		m_particles = TParticleData(m_numParticles);
@@ -196,6 +206,13 @@ void CParticleSystem::onStartElement(MKeyValue& atts, const std::string &element
 
 void CParticleSystem::onEndElement(const std::string & elem)
 {
+	if (cur_compiling) {
+		CPrefabCompiler::TCall c;
+		c.is_start = false;
+		c.elem = elem;
+		cur_compiling->calls.push_back(c);
+	}
+
 	if (elem == "particles_emitter")
 		SetBufferData();
 }
