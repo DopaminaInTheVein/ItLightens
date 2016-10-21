@@ -678,6 +678,14 @@ function OnStepOutScientistParquet( step )
 	-- p:print("StepOutScientist")
 end
 
+function OnStartVibration( param )
+	cam:start_vibration(0.0, 0.75)
+end
+
+function OnStopVibration( param )
+	cam:stop_vibration()
+end
+
 -- GUI
 ---------------------------------------------------
 function OnCreateGui( param )

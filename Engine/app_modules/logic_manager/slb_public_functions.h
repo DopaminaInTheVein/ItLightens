@@ -129,6 +129,8 @@ public:
 	void orbit(bool);
 	void resetCamera();
 	void fx(const char * name, int enabled);
+	void startVibration(float x_max, float y_max);
+	void stopVibration();
 };
 
 // camera control in LUA

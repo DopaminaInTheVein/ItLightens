@@ -506,7 +506,15 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 		sprintf(lua_code, "OnSenseVision(\"%s\");", params.c_str());
 		break;
 	}
-						  //GUI
+	case (OnStartVibration): {
+		sprintf(lua_code, "OnStartVibration(\"%s\");", params.c_str());
+		break;
+	}
+	case (OnStopVibration): {
+		sprintf(lua_code, "OnStopVibration(\"%s\");", params.c_str());
+		break;
+	}
+	//GUI
 	case (OnCreateGui): {
 		sprintf(lua_code, "OnCreateGui(\"%s\");", params.c_str());
 		break;
@@ -828,6 +836,14 @@ void CLogicManagerModule::bindCamera(SLB::Manager& m) {
 		.comment("Enable or disable an fx shader")
 		.param("string: name FX")
 		.param("int: 0 disabled, 1 enabled")
+		// start vibration
+		.set("start_vibration", &SLBCamera::startVibration)
+		.comment("starts the cambera vibration")
+		.param("float: max vibration in X direction")
+		.param("float: max vibration in Y direction")
+		// stop vibration
+		.set("stop_vibration", &SLBCamera::stopVibration)
+		.comment("stops the cambera vibration")
 		;
 	;
 }

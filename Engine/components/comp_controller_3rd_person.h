@@ -13,12 +13,16 @@
 #include "comp_charactercontroller.h"
 #include "comp_camera_main.h"
 
-#define THIRD_PERSON_CONTROLLER_PLAYER_DIST				2.0f
-#define THIRD_PERSON_CONTROLLER_MOLE_DIST				5.f
-#define THIRD_PERSON_CONTROLLER_SCIENTIST_DIST			4.f
+#define THIRD_PERSON_CONTROLLER_PLAYER_DIST					2.0f
+#define THIRD_PERSON_CONTROLLER_MOLE_DIST					5.f
+#define THIRD_PERSON_CONTROLLER_SCIENTIST_DIST				4.f
 #define THIRD_PERSON_CONTROLLER_PLAYER_POS_OFFSET_Y			-1.0f
 #define THIRD_PERSON_CONTROLLER_MOLE_POS_OFFSET_Y			0.f
 #define THIRD_PERSON_CONTROLLER_SCIENTIST_POS_OFFSET_Y		0.f
+#define E_NUMBER											2.71828f
+#define PI_NUMBER											3.14159f
+#define	VIBRATION_SPEED										9.f
+#define VIBRATION_STOP_SPEED								7.5f
 
 class TCompController3rdPerson : public TCompBase {
 	float		yaw;
@@ -38,6 +42,12 @@ class TCompController3rdPerson : public TCompBase {
 	bool		orbit_mode = false;
 	VEC3		position_diff;
 	VEC3		offset;
+	// camera vibration
+	bool		vibrating = false;
+	bool		stopping_vibration = false;
+	float		vibration_x_max;
+	float		vibration_y_max;
+	float		vibration_t = 0.f;
 
 public:
 	CHandle		target;
@@ -76,6 +86,21 @@ public:
 
 	void setPositionOffset(VEC3 offset) {
 		position_diff = offset;
+	}
+
+	// camera vibration
+	void startVibration(float x_max, float y_max) {
+
+		// set the new parameters
+		vibrating = true;
+		vibration_t = 0.f;
+		vibration_x_max = x_max;
+		vibration_y_max = y_max;
+	}
+
+	void stopVibration() {
+		vibration_t = 0.f;
+		stopping_vibration = true;
 	}
 
 	void onCreate(const TMsgEntityCreated& msg) {
@@ -182,8 +207,57 @@ public:
 
 		offset = position_diff - VEC3(targettrans->getLeft()*cc->GetRadius());
 		my_tmx->lookAt(origin, target_loc);
-		//Aplicar offset
-		my_tmx->setPosition(my_tmx->getPosition() + position_diff + VEC3_UP * 2.f);
+		//Aplicar offset y vibracion, si es necesario
+
+		float x_pos = 0.f;
+		float y_pos = 0.f;
+
+		if (vibrating) {
+			// starting to vibrate
+			if (!stopping_vibration) {
+				vibration_t += VIBRATION_SPEED / 100.f;
+				// x vibration
+				x_pos = cos(2.f*PI_NUMBER*vibration_t)*pow(E_NUMBER, vibration_t);
+				if (x_pos > vibration_x_max)
+					x_pos = vibration_x_max;
+				else if (x_pos < -vibration_x_max)
+					x_pos = -vibration_x_max;
+				// y vibration
+				y_pos = cos(2.f*PI_NUMBER*vibration_t)*pow(E_NUMBER, vibration_t);
+				if (y_pos > vibration_y_max)
+					y_pos = vibration_y_max;
+				else if (y_pos < 0.f)
+					y_pos = 0.f;
+				else if (y_pos < -vibration_y_max)
+					y_pos = -vibration_y_max;
+			}
+			// stoping vibration
+			else {
+				vibration_t += VIBRATION_STOP_SPEED / 100.f;
+				// x vibration
+				x_pos = cos(2.f*PI_NUMBER*vibration_t)*pow(E_NUMBER, -vibration_t);
+				if (x_pos > vibration_x_max)
+					x_pos = vibration_x_max;
+				else if (x_pos < -vibration_x_max)
+					x_pos = -vibration_x_max;
+				// y vibration
+				y_pos = cos(2.f*PI_NUMBER*vibration_t)*pow(E_NUMBER, -vibration_t);
+				if (y_pos > vibration_y_max)
+					y_pos = vibration_y_max;
+				else if (y_pos < 0.f)
+					y_pos = 0.f;
+				else if (y_pos < -vibration_y_max)
+					y_pos = -vibration_y_max;
+
+				if (vibration_t >= 10.f) {
+					vibrating = false;
+					stopping_vibration = false;
+				}
+			}
+		}
+
+		VEC3 vibration = VEC3(x_pos, y_pos, 0.f);
+		my_tmx->setPosition(my_tmx->getPosition() + vibration + position_diff + VEC3_UP * 2.f);
 	}
 
 	VEC3 GetOffset() const { return offset; }

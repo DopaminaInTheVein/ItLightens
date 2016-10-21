@@ -608,6 +608,13 @@ void player_controller::UpdateInputActions()
 		dbg("get path result: %d", res);
 		dbg("\n", res);
 	}
+	//Test vibracion camara
+	if (io->keys['5'].becomesPressed()) {
+		logic_manager->throwEvent(logic_manager->OnStartVibration, "");
+	}
+	if (io->keys['6'].becomesPressed()) {
+		logic_manager->throwEvent(logic_manager->OnStopVibration, "");
+	}
 	//---------------------
 
 	//if (isDamaged()) {
