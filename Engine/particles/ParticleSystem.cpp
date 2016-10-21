@@ -98,25 +98,7 @@ bool CParticleSystem::loadFileValues(MKeyValue& atts, std::string element) {
 
 	if (element == "position")
 	{
-		VEC3 offset = VEC3(0,0,0);
-		if (!(m_Emitter.target_pos == "mine")) {
-			CEntity* e_target = tags_manager.getFirstHavingTag(m_Emitter.target_pos);
-			if (e_target) {
-				TCompTransform* t_target = e_target->get<TCompTransform>();
-				if (t_target) {
-					offset = t_target->getPosition();
-				}
-			}
-		}
-		else {
-			CEntity* e_target = CHandle(this).getOwner();
-			if (e_target) {
-				TCompTransform* t_target = e_target->get<TCompTransform>();
-				if (t_target) {
-					offset = t_target->getPosition();
-				}
-			}
-		}
+		
 		m_Emitter.SetPosition(PhysxConversion::Vec3ToPxVec3(atts.getPoint("value")));
 		m_Emitter.SetPositionRandomMin(PhysxConversion::Vec3ToPxVec3(atts.getPoint("randmin")));
 		m_Emitter.SetPositionRandomMax(PhysxConversion::Vec3ToPxVec3(atts.getPoint("randmax")));
@@ -196,16 +178,7 @@ void CParticleSystem::SetBufferData() {
 
   m_particles.initialize(m_numParticles);
 
-  VEC3 offset = VEC3(0, 0, 0);
-  if (!(m_Emitter.target_pos == "null")) {
-	  CEntity* e_target = tags_manager.getFirstHavingTag(m_Emitter.target_pos);
-	  if (e_target) {
-		  TCompTransform* t_target = e_target->get<TCompTransform>();
-		  if (t_target) {
-			  offset = t_target->getPosition();
-		  }
-	  }
-  }
+  VEC3 offset = GetOffsetPosition();
 
   PxVec3 pos = PxVec3(0,0,0);
 
@@ -479,16 +452,9 @@ void CParticleSystem::updateParticlesWithoutPhysx(float elapsed) {
 	}
 }
 
-void CParticleSystem::SetTargetEmitter(std::string new_target) {
-	m_Emitter.target_pos = new_target;
-}
-
-static std::vector<int> particles_finished;
-void CParticleSystem::ActiveParticleSystem() {
-	particles_finished.clear();
-	particles_finished.resize(m_numParticles);
+VEC3 CParticleSystem::GetOffsetPosition() {
 	VEC3 offset = VEC3(0, 0, 0);
-	if (!(m_Emitter.target_pos == "null")) {
+	if (!(m_Emitter.target_pos == "mine")) {
 		CEntity* e_target = tags_manager.getFirstHavingTag(m_Emitter.target_pos);
 		if (e_target) {
 			TCompTransform* t_target = e_target->get<TCompTransform>();
@@ -497,6 +463,29 @@ void CParticleSystem::ActiveParticleSystem() {
 			}
 		}
 	}
+	else {
+		CEntity* e_target = CHandle(this).getOwner();
+		if (e_target) {
+			TCompTransform* t_target = e_target->get<TCompTransform>();
+			if (t_target) {
+				offset = t_target->getPosition();
+			}
+		}
+	}
+
+	return offset;
+}
+
+void CParticleSystem::SetTargetEmitter(std::string new_target) {
+	m_Emitter.target_pos = new_target;
+}
+
+static std::vector<int> particles_finished;
+void CParticleSystem::ActiveParticleSystem() {
+	particles_finished.clear();
+	particles_finished.resize(m_numParticles);
+
+	VEC3 offset = GetOffsetPosition();
 
 
 	PxVec3 pos = PxVec3(0, 0, 0);
@@ -515,7 +504,6 @@ void CParticleSystem::ActiveParticleSystem() {
 		m_particles.lifeTimeBuffer[i] = m_particles.maxLifeTimeBuffer[i];
 		dbg("Particle %d - max lifetime = %f\n", i, m_particles.lifeTimeBuffer[i]);
 
-		m_particles.positionInitBuffer[i] = pos;
 		m_particles.velocityInitBuffer[i] = m_initial_velocity;
 
 		m_particles.colorBuffer[i] = PhysxConversion::PxVec4ToVec4(*m_Emitter.GetColor());
@@ -686,7 +674,7 @@ void CParticleSystem::SetPositionPhysxBuffer(std::vector<PxU32>& buffer) {
 	//m_pParticleSystem->releaseParticles(static_cast<PxU32>(mTmpIndexArray.size()), indexData);
 	//m_pIndexPool->freeIndices(static_cast<PxU32>(mTmpIndexArray.size()), indexData);
 
-	auto initPos = PxStrideIterator<const PxVec3>(&m_particles.positionInitBuffer[0]);
+	auto initPos = PxStrideIterator<const PxVec3>(&m_particles.positionBuffer[0]);
 	auto initVel = PxStrideIterator<const PxVec3>(&m_particles.velocityInitBuffer[0]);
 
 	auto negativeVel = PxStrideIterator<const PxVec3>(&m_particles.negativeVelocityBuffer[0]);
@@ -711,9 +699,11 @@ void CParticleSystem::UpdateRandomsAttr() {
 		up = t->getUp();
 	}
 
+	VEC3 offset = GetOffsetPosition();
+
   if (random_value_position) {
     for (int i = 0; i < m_numParticles; i++) {
-      PxVec3 pos_random = *m_Emitter.GetPosition();
+      PxVec3 pos_random = *m_Emitter.GetPosition() + PhysxConversion::Vec3ToPxVec3(offset);
       PxVec3 max_limit = *m_Emitter.GetPositionRandomMax();
       PxVec3 min_limit = *m_Emitter.GetPositionRandomMin();
 
@@ -724,12 +714,12 @@ void CParticleSystem::UpdateRandomsAttr() {
 	  m_particles.colorBuffer[i].x = m_particles.colorOriginBuffer[i].x;
 	  m_particles.colorBuffer[i].y = m_particles.colorOriginBuffer[i].y;
 	  m_particles.colorBuffer[i].z = m_particles.colorOriginBuffer[i].z;
-      m_particles.positionInitBuffer[i] = pos_random;
+      m_particles.positionBuffer[i] = pos_random;
     }
   }
   else {
 	  for (int i = 0; i < m_numParticles; i++) {
-		  m_particles.positionInitBuffer[i] = m_Emitter.GetInitialPosByShape(front, up);
+		  m_particles.positionBuffer[i] = m_Emitter.GetInitialPosByShape(front, up) + PhysxConversion::Vec3ToPxVec3(offset);
 		  m_particles.colorBuffer[i].x = m_particles.colorOriginBuffer[i].x;
 		  m_particles.colorBuffer[i].y = m_particles.colorOriginBuffer[i].y;
 		  m_particles.colorBuffer[i].z = m_particles.colorOriginBuffer[i].z;
@@ -966,17 +956,6 @@ void CParticleSystem::renderInMenu()
 	if (ImGui::InputText("target position", text, 64, flags)) {
 		m_Emitter.target_pos = std::string(text);
 
-		VEC3 offset = VEC3(0, 0, 0);
-		if (!(m_Emitter.target_pos == "null")) {
-			CEntity* e_target = tags_manager.getFirstHavingTag(m_Emitter.target_pos);
-			if (e_target) {
-				TCompTransform* t_target = e_target->get<TCompTransform>();
-				if (t_target) {
-					offset = t_target->getPosition();
-				}
-			}
-		}
-
 		//m_Emitter.SetPosition(*m_Emitter.GetPosition()+ PhysxConversion::Vec3ToPxVec3(offset));
 		m_RenderParticles.clear();
 		m_RenderParticles.create(m_numParticles, m_pParticle_mesh);
@@ -1156,7 +1135,7 @@ void CParticleSystem::renderInMenu()
 
 		if (file_texture != "") {		//valid entry
 		
-			file_texture = "textures/" + file_texture;
+			file_texture = "textures/particles/" + file_texture;
 			//int i = 0;
 			m_pTexture = Resources.get(file_texture.c_str())->as<CTexture>();
 		}
