@@ -5962,5 +5962,15 @@
    mesh_name="ms3/farolillos_puertas"/>
 
 </entity>
+<entity>
+<tags/>
+<name
+   name="Sky001"/>
+<transform
+   pos="-0.675018 0 -37.0084"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
 
 </entities>
