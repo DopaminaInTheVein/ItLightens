@@ -578,7 +578,7 @@ void player_controller::UpdateInputActions()
 
 	//Test CLH navmeshes
 	//----------------------
-	if (io->keys['8'].becomesPressed()) {
+	/*if (io->keys['8'].becomesPressed()) {
 		CHandle player = tags_manager.getFirstHavingTag("raijin");
 		GET_COMP(tPlayer, player, TCompTransform);
 		startPoint = tPlayer->getPosition();
@@ -614,7 +614,7 @@ void player_controller::UpdateInputActions()
 	}
 	if (io->keys['6'].becomesPressed()) {
 		logic_manager->throwEvent(logic_manager->OnStopVibration, "");
-	}
+	}*/
 	//---------------------
 
 	//if (isDamaged()) {
