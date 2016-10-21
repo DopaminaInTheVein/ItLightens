@@ -54,6 +54,7 @@ class SLBHandle
 	//Aux
 	void _setAnim(const char* name, bool loop);
 public:
+	SLBHandle() {}
 	SLBHandle(CHandle h, std::string name, std::string tag = "")
 		: real_handle(h), handle_name(name), handle_tag(tag) {}
 	// Gets

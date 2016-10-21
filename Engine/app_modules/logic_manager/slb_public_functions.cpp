@@ -438,7 +438,7 @@ void SLBHandle::particlesOn()
 {
 	if (real_handle.isValid()) {
 		GET_COMP(part, real_handle, CParticleSystem); //me
-		if (!part) part = GETH_MY(CParticleSystem); //or my owner
+		if (!part) part = GETH_COMP(real_handle.getOwner(), CParticleSystem); //or my owner
 		if (part) part->ActiveParticleSystem();
 	}
 }
@@ -446,7 +446,7 @@ void SLBHandle::particlesOff()
 {
 	if (real_handle.isValid()) {
 		GET_COMP(part, real_handle, CParticleSystem); //me
-		if (!part) part = GETH_MY(CParticleSystem); //or my owner
+		if (!part) part = GETH_COMP(real_handle.getOwner(), CParticleSystem); //or my owner
 		if (part) part->setLoop(false);
 	}
 }
@@ -454,7 +454,7 @@ void SLBHandle::particlesLoop()
 {
 	if (real_handle.isValid()) {
 		GET_COMP(part, real_handle, CParticleSystem); //me
-		if (!part) part = GETH_MY(CParticleSystem); //or my owner
+		if (!part) part = GETH_COMP(real_handle.getOwner(), CParticleSystem); //or my owner
 		if (part) part->setLoop(true);
 	}
 }
@@ -1124,10 +1124,10 @@ SLBHandle SLBPublicFunctions::createParticles(const char* name, float x, float y
 	if (tmx) tmx->setPosition(VEC3(x, y, z));
 	if (part && enabled == 1) part->ActiveParticleSystem();
 	if (part && enabled == 2) part->setLoop(false);
-	std::string name = "unnamed";
+	std::string e_name = "unnamed";
 	CEntity* e = h;
-	if (e) name = e->getName();
-	return SLBHandle(h, name);
+	if (e) e_name = e->getName();
+	return SLBHandle(h, e_name);
 }
 
 //test

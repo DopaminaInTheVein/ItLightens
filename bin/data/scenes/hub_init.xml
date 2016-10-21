@@ -107,6 +107,7 @@
    name="skeletons/scientist/scientist.static_mesh"
    static="false"/>
 <skeleton_ik/>
+<particles_system file="smoke_bomb"/>
 <abs_aabb/>
 <local_aabb/>
 
