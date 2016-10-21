@@ -1,0 +1,185 @@
+<entities>
+<entity
+   reload="yes">
+<tags
+   tags="player raijin"/>
+<player/>
+<life
+   points="10"/>
+<skc_player/>
+<skeleton_lookat/>
+<name
+   name="player_1"/>
+<transform
+   pos="23.7633 51.5728 -25.121"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<skeleton
+   model="skeletons/player/player.skeleton"/>
+<render_static_mesh
+   name="skeletons/player/player.static_mesh"/>
+<skeleton_ik/>
+<abs_aabb/>
+<local_aabb/>
+<character_controller
+   radius="0.3"
+   height="0.7"/>
+
+<particles_system
+	file = "inner_circle.particles"
+	/>
+   
+</entity>
+<entity
+   reload="yes">
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="3.74809 1.96415 5.74808"/>
+<tags
+   tags="trigger"/>
+<trigger_lua
+   action="dream"/>
+<name
+   name="thub_mole"/>
+<transform
+   pos="-1.94649 51.6442 -20.0874"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<room
+   name="2"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="3.74809 1.96415 5.74808"/>
+<tags
+   tags="trigger"/>
+<trigger_lua
+   action="dream"/>
+<name
+   name="thub_sci"/>
+<transform
+   pos="-1.78958 51.6442 -30.8095"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<room
+   name="2"/>
+
+</entity>
+<entity
+   id="5"
+   reload="yes">
+<tags/>
+<name
+   name="_mole_slept"/>
+<transform
+   pos="-1.94649 50.6621 -20.0874"
+   quat="0 0.942651 0 0.333781"
+   scale="1.0"/>
+<skeleton
+   model="skeletons/mole/mole.skeleton"
+   anim="sleep"/>
+<render_static_mesh
+   name="skeletons/mole/mole.static_mesh"/>
+<skeleton_ik/>
+<abs_aabb/>
+<local_aabb/>
+
+</entity>
+<entity
+   id="6"
+   reload="yes">
+<tags/>
+<name
+   name="_scientist_1"/>
+<transform
+   pos="-1.70325 51.4159 -30.7175"
+   quat="0 0.401707 0 0.915768"
+   scale="0.00929856"/>
+<skeleton
+   model="skeletons/scientist/scientist.skeleton"
+   anim="sleep"/>
+<render_static_mesh
+   name="skeletons/scientist/scientist.static_mesh"/>
+<skeleton_ik/>
+<abs_aabb/>
+<local_aabb/>
+
+</entity>
+<entity
+   reload="yes">
+<tags
+   tags="tasklist"/>
+<render_static_mesh
+   name="static_meshes/test/baliza.static_mesh"
+   to_render="no"/>
+<room
+   name="-1"/>
+<tasklist
+   points_size="3"
+   pos0="-1.94649 51.3869 -20.0874"
+   room0="-1"
+   pos1="-1.94649 51.3869 -30.7676"
+   room1="-1"
+   pos2="-1.94649 51.3869 -25.6129"
+   room2="-1"/>
+<name
+   name="tasklist"/>
+<transform
+   pos="-1.94649 51.3869 -20.0874"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags
+   tags="guided_camera"/>
+<guided_camera
+   velocity="0.5"
+   default_dirs="0"
+   points_size="4"
+   skippable="no"
+   stop_final="yes"
+   wpt1="21.1506 54.8714 -25.5393"
+   wpt2="15.4449 54.8714 -24.8663"
+   wpt3="3.96856 52.0162 -20.8374"
+   wpt4="2.93209 52.0285 -25.4208"
+   lpt1="7.27662 51.6521 -30.4931"
+   lpt2="7.28009 51.678 -30.4807"
+   lpt3="-1.76961 51.7298 -20.3509"
+   lpt4="-1.89637 52.6522 -25.383"/>
+<name
+   name="CineEndTarget"/>
+<transform
+   pos="35.6838 66.6056 -25.4918"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="sphere"
+   radius="1.64"/>
+<tags
+   tags="trigger generator"/>
+<generator/>
+<name
+   name="gen_hub"/>
+<transform
+   pos="7.23866 51.44 -30.8202"
+   quat="-0.0219023 0.638564 -0.0263097 0.768807"
+   scale="1.0"/>
+
+</entity>
+
+</entities>

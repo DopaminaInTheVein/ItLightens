@@ -101,10 +101,12 @@ void CHandleManager::destroyHandle(CHandle h) {
 
 	// Guardarlo en la lista de objetos pendientes
 	// de destruir
-	objs_to_destroy.push_back(h);
+	if (setContains(objs_to_destroy, h)) return;
+	h.nextAge();
+	objs_to_destroy.insert(h);
 
-	// Acceder a la tabla y actualiza la current
-	// age para invalidar el handle
+	//// Acceder a la tabla y actualiza la current
+	//// age para invalidar el handle
 	auto external_index = h.getExternalIndex();
 	auto ed = external_to_internal + external_index;
 	ed->current_age++;
@@ -125,6 +127,7 @@ void CHandleManager::destroyPendingObjects() {
 		// dtor. For example, the RenderStaticMesh
 		// uses it's own handle as id in the render
 		// manager
+
 		ed->current_age--;
 
 		// Llamar al dtor del objecto real #1

@@ -13,8 +13,23 @@
 #include "skeleton\skeleton.h"
 
 #include "app_modules\imgui\module_imgui.h"
+#include "components/entity_parser.h"
 
-using namespace std;
+#define P_OFF			TParticleData::State::OFF
+#define P_WAITING		TParticleData::State::WAITING
+#define P_STARTED		TParticleData::State::STARTED
+
+#define BASE_PATH		std::string("data/particles/")
+
+CParticleSystem::CachedParticles CParticleSystem::compiled_particles = CParticleSystem::CachedParticles();
+
+PxVec3 mulPxVec3(PxVec3 a, PxVec3 b) {
+	PxVec3 ret;
+	ret.x = a.x * b.x;
+	ret.y = a.y * b.y;
+	ret.z = a.z * b.z;
+	return ret;
+}
 
 void CParticleSystem::renderParticles()
 {
@@ -24,49 +39,47 @@ void CParticleSystem::renderParticles()
 
 bool CParticleSystem::load(MKeyValue & atts)
 {
-	std::string tex_particles = atts.getString("texture_particles", "textures/fire.dds");
-	m_pTexture = Resources.get(tex_particles.c_str())->as<CTexture>();
-
-	std::string full_path = std::string("data/particles/") + DEFAULT_PARTICLES_FILE + ".particles";
-
-	std::string file_particles = atts.getString("file", full_path.c_str());
-	CParticleLoader parser = CParticleLoader(CHandle(this));
-	m_Emitter = CParticlesEmitter();
-	bool is_ok = parser.xmlParseFile(file_particles);
-	return is_ok;
-
-	//return true;
+	std::string default_path = std::string(DEFAULT_PARTICLES_FILE) + ".particles";
+	std::string file_particles = BASE_PATH;
+	file_particles += atts.getString("file", default_path.c_str());
+	return loadFromFile(file_particles);
 }
 
-bool CParticleSystem::loadFileValues(MKeyValue& atts, std::string element) {
-	//FORMAT:
-	/*
-	<particles_emitter num_particles = "int">
-		<collisions value = "bool"/>
-		<gravity value = "bool"/>
-		<use_physx value = "bool"/>
-		<shape type = "int" angle = "float" radius = "flaot" max = "x y z" min = "x y z" />
-		<position value = "x y z" randmax = "x y z" randmin = "x y z"/>
-		<velocity value = "x y z" randmax = "x y z" randmin = "x y z"/>
-		<size value = "float" modifier = "float"/>
-		<lifetime value = "float" max_rand = "float" min_rand = "float"/>
-		<acceleration value = "x y z" modifier = "x y z"/>
-		<delay delay_start = "float" delay_particle_rand = "float"/>
-		<color value = "x y z w" modifier = "float"/>
-	<particles_emitter/>
-	*/
+void CParticleSystem::onStartElement(const std::string &element, MKeyValue& atts) {
+	if (cur_compiling) {
+		CPrefabCompiler::TCall c;
+		c.is_start = true;
+		c.elem = element;
+		c.atts = atts;
+		cur_compiling->calls.push_back(c);
+	}
+
 	if (element == "particles_emitter") {
 		m_numParticles = atts.getInt("num_particles", 1);
 		m_particles = TParticleData(m_numParticles);
 		m_Emitter = CParticlesEmitter();
+
 		//if(m_RenderParticles.){
 			//m_RenderParticles.clear();
 		//}
 
+		tex_particles_path = atts.getString("texture_particles", "textures/fire.dds");
+		m_pTexture = Resources.get(tex_particles_path.c_str())->as<CTexture>();
+
+		loop = atts.getBool("loop", false);
+		active = atts.getBool("active", false);
+
 		if (!m_pParticle_mesh) m_pParticle_mesh = Resources.get("textured_quad_xy_centered.mesh")->as<CMesh>();
+
+		m_Emitter.target_pos = atts.getString("target_pos", "mine");
 
 		m_RenderParticles.create(m_numParticles, m_pParticle_mesh);
 	}
+	if (element == "nframes") {
+		m_Emitter.SetNumberFrames(atts.getInt("value", 1));
+		m_particles.max_frames = *m_Emitter.GetNumberFrames();
+	}
+
 	if (element == "collisions")
 		m_Emitter.SetCollisions(atts.getBool("value", true));
 
@@ -96,6 +109,7 @@ bool CParticleSystem::loadFileValues(MKeyValue& atts, std::string element) {
 		m_Emitter.SetVelocity(PhysxConversion::Vec3ToPxVec3(atts.getPoint("value")));
 		m_Emitter.SetVelocityRandomMin(PhysxConversion::Vec3ToPxVec3(atts.getPoint("randmin")));
 		m_Emitter.SetVelocityRandomMax(PhysxConversion::Vec3ToPxVec3(atts.getPoint("randmax")));
+		m_Emitter.SetVelocityModifier(PhysxConversion::Vec3ToPxVec3(atts.getPoint("vel_over_lifeTime")));
 	}
 
 	if (element == "size")
@@ -124,7 +138,7 @@ bool CParticleSystem::loadFileValues(MKeyValue& atts, std::string element) {
 
 	if (element == "color")
 	{
-		m_Emitter.SetColor(PhysxConversion::VEC4ToPxVec4(atts.getQuat("color")));
+		m_Emitter.SetColor(PhysxConversion::VEC4ToPxVec4(atts.getQuat("value")));
 		m_Emitter.SetModifierColor(atts.getFloat("modifier", 1.0f));
 	}
 
@@ -136,21 +150,32 @@ bool CParticleSystem::loadFileValues(MKeyValue& atts, std::string element) {
 
 		//loop to read active bones
 		for (int i = 0; i < num_bones; i++) {
-			std::string read = "bone" + to_string(i);
+			std::string read = "bone" + std::to_string(i);
 
 			//read bone id
 			int num_bone = atts.getInt(read.c_str(), 0);
 
 			//read offset bone
-			read = "offset" + to_string(i);
+			read = "offset" + std::to_string(i);
 			VEC3 offset = atts.getPoint(read.c_str());
 
 			m_Emitter.AddBone(num_bone, offset);
 			m_Emitter.AddParticleToBone(num_bone);
 		}
 	}
+}
 
-	return true;
+void CParticleSystem::onEndElement(const std::string & elem)
+{
+	if (cur_compiling) {
+		CPrefabCompiler::TCall c;
+		c.is_start = false;
+		c.elem = elem;
+		cur_compiling->calls.push_back(c);
+	}
+
+	if (elem == "particles_emitter")
+		SetBufferData();
 }
 
 void CParticleSystem::SetBufferData() {
@@ -163,15 +188,22 @@ void CParticleSystem::SetBufferData() {
 
 	m_particles.initialize(m_numParticles);
 
+	VEC3 offset = GetOffsetPosition();
+
+	PxVec3 pos = PxVec3(0, 0, 0);
+
 	for (int i = 0; i < m_numParticles; i++) {
 		m_particles.indexBuffer[i] = i;
-		m_particles.maxLifeTimeBuffer[i] = *m_Emitter.GetLifeTime(); //max time
-		m_particles.positionBuffer[i] = m_initial_pos;
+		m_particles.maxLifeTimeBuffer[i] = *m_Emitter.GetLifeTime() + random(*m_Emitter.GetLifeTimeRandomMin(), *m_Emitter.GetLifeTimeRandomMax()); //max time
+
+		pos = *m_Emitter.GetPosition() + PhysxConversion::Vec3ToPxVec3(offset);
+		m_particles.positionBuffer[i] = pos;
 		m_particles.velocityBuffer[i] = *m_Emitter.GetVelocity();
 		m_particles.negativeVelocityBuffer[i] = -*m_Emitter.GetVelocity();
 		m_particles.lifeTimeBuffer[i] = m_particles.maxLifeTimeBuffer[i];
+		dbg("Particle %d - max lifetime = %f\n", i, m_particles.lifeTimeBuffer[i]);
 
-		m_particles.positionInitBuffer[i] = m_initial_pos;
+		m_particles.positionInitBuffer[i] = pos;
 		m_particles.velocityInitBuffer[i] = m_initial_velocity;
 
 		m_particles.colorBuffer[i] = PhysxConversion::PxVec4ToVec4(*m_Emitter.GetColor());
@@ -355,6 +387,7 @@ PxU32 lowestSetBit(PxU32 b) {
 }
 
 void CParticleSystem::update(float elapsed) {
+	if (m_particles.indexBuffer.size() <= 0) return;
 	if (!m_Emitter.m_useSkeleton)
 		updateParticlesPhysx(elapsed);
 	else
@@ -375,7 +408,7 @@ void CParticleSystem::updateParticlesWithoutPhysx(float elapsed) {
 		bool removed = false;
 
 		//start delay
-		if (!m_particles.started[idx]) {
+		if (m_particles.started[idx] == P_WAITING) {
 			//particle has not started, waiting to start
 			removed = true;
 
@@ -383,7 +416,7 @@ void CParticleSystem::updateParticlesWithoutPhysx(float elapsed) {
 				//particle start time finished, particle to start
 				m_particles.sizeBuffer[idx] = *m_Emitter.GetSize();
 				m_particles.lifeTimeBuffer[idx] = m_particles.maxLifeTimeBuffer[idx];
-				m_particles.started[idx] = true;
+				m_particles.started[idx] = P_STARTED;
 			}
 
 			//update delay start timer
@@ -394,19 +427,21 @@ void CParticleSystem::updateParticlesWithoutPhysx(float elapsed) {
 			}
 		}
 		else {
+			//if (loop) {
 			if (m_particles.lifeTimeBuffer[idx] <= 0.0f) {
 				m_particles.currDelayStart[idx] = random(0.0f, *m_Emitter.GetRandomDelay()) + *m_Emitter.GetAbsoluteDelay();
-				m_particles.started[idx] = false;
+				m_particles.started[idx] = P_WAITING;
 				m_particles.sizeBuffer[idx] = 0.0f;
 				to_update = false;
 			}
+			//}
 		}
 
 		//update running particles
 		if (to_update) {
 			m_particles.positionBuffer[idx] = PhysxConversion::Vec3ToPxVec3(m_Emitter.GetPosBone(bone_id));
 			m_particles.sizeBuffer[idx] = *m_Emitter.GetSize();
-			m_particles.started[idx] = true;
+			m_particles.started[idx] = P_STARTED;
 
 			//add dt to particle lifetime
 			if (m_particles.maxLifeTimeBuffer[idx] > 0)
@@ -417,8 +452,77 @@ void CParticleSystem::updateParticlesWithoutPhysx(float elapsed) {
 	}
 }
 
+VEC3 CParticleSystem::GetOffsetPosition() {
+	VEC3 offset = VEC3(0, 0, 0);
+	if (!(m_Emitter.target_pos == "mine")) {
+		CEntity* e_target = tags_manager.getFirstHavingTag(m_Emitter.target_pos);
+		if (e_target) {
+			TCompTransform* t_target = e_target->get<TCompTransform>();
+			if (t_target) {
+				offset = t_target->getPosition();
+			}
+		}
+	}
+	else {
+		CEntity* e_target = CHandle(this).getOwner();
+		if (e_target) {
+			TCompTransform* t_target = e_target->get<TCompTransform>();
+			if (t_target) {
+				offset = t_target->getPosition();
+			}
+		}
+	}
+
+	return offset;
+}
+
+void CParticleSystem::SetTargetEmitter(std::string new_target) {
+	m_Emitter.target_pos = new_target;
+}
+
+static std::vector<int> particles_finished;
+void CParticleSystem::ActiveParticleSystem() {
+	particles_finished.clear();
+	particles_finished.resize(m_numParticles);
+
+	VEC3 offset = GetOffsetPosition();
+
+	PxVec3 pos = PxVec3(0, 0, 0);
+
+	std::vector<PxU32> buffer;
+
+	for (int i = 0; i < m_numParticles; i++) {
+		m_particles.indexBuffer[i] = i;
+		m_particles.maxLifeTimeBuffer[i] = *m_Emitter.GetLifeTime() + random(*m_Emitter.GetLifeTimeRandomMin(), *m_Emitter.GetLifeTimeRandomMax()); //max time
+
+		pos = *m_Emitter.GetPosition() + PhysxConversion::Vec3ToPxVec3(offset);
+		m_particles.positionBuffer[i] = pos;
+		m_particles.velocityBuffer[i] = *m_Emitter.GetVelocity();
+		m_particles.negativeVelocityBuffer[i] = -*m_Emitter.GetVelocity();
+		m_particles.lifeTimeBuffer[i] = m_particles.maxLifeTimeBuffer[i];
+		dbg("Particle %d - max lifetime = %f\n", i, m_particles.lifeTimeBuffer[i]);
+
+		m_particles.velocityInitBuffer[i] = m_initial_velocity;
+
+		m_particles.colorBuffer[i] = PhysxConversion::PxVec4ToVec4(*m_Emitter.GetColor());
+		m_particles.colorOriginBuffer[i] = m_particles.colorBuffer[i];
+
+		m_particles.currDelayStart[i] = random(0.0f, *m_Emitter.GetRandomDelay()) + *m_Emitter.GetAbsoluteDelay();
+		dbg("Particle %d - max delay = %f\n", i, m_particles.currDelayStart[i]);
+
+		m_particles.started[i] = P_WAITING;
+
+		buffer.push_back(i);
+	}
+
+	SetPositionPhysxBuffer(buffer);
+}
+
 void CParticleSystem::updateParticlesPhysx(float elapsed) {
 	VEC3 forward = VEC3(0, 0, 1);
+	if (!m_pParticleSystem)
+		return;
+
 	PxParticleReadData *data = m_pParticleSystem->lockParticleReadData();
 	//m_numParticles = 0;
 
@@ -431,95 +535,101 @@ void CParticleSystem::updateParticlesPhysx(float elapsed) {
 		PxStrideIterator<const PxVec3> positions(data->positionBuffer);
 		PxStrideIterator<const PxVec3> velocities(data->velocityBuffer);
 		PxStrideIterator<const PxParticleFlags> particleFlags(data->flagsBuffer);
-		PxMemCopy(m_pParticleValidity, data->validParticleBitmap, ((data->validParticleRange + 31) >> 5) << 2);
 
 		// copy particles positions
-		for (PxU32 w = 0; w <= (data->validParticleRange - 1) >> 5; w++)
-		{
-			for (PxU32 b = data->validParticleBitmap[w]; b; b &= b - 1)
-			{
-				bool removed = false;
-				PxU32 idx = (w << 5 | lowestSetBit(b));
+		for (int idx = 0; idx < m_numParticles; idx++) {
+			bool removed = false;
 
-				//start delay
-				if (!m_particles.started[idx]) {
-					removed = true;
-					if (m_particles.currDelayStart[idx] <= 0.0f) {
-						m_particles.sizeBuffer[idx] = *m_Emitter.GetSize();
-						m_particles.started[idx] = true;
-						to_remove = true;
-						mTmpIndexArray.push_back(idx);
-					}
-					else {
-						m_particles.currDelayStart[idx] -= elapsed;
-						m_particles.sizeBuffer[idx] = 0.0f;	//inivisible particle
-					}
+			if (m_particles.started[idx] == P_OFF) {
+				m_particles.colorBuffer[idx].w = 0.0f;	//inivisible particle
+				continue;
+			}
+
+			//start delay
+			if (m_particles.started[idx] == P_WAITING) {
+				removed = true;
+				if (m_particles.currDelayStart[idx] <= 0.0f) {
+					m_particles.sizeBuffer[idx] = *m_Emitter.GetSize();
+					m_particles.started[idx] = P_STARTED;
+					to_remove = true;
+					mTmpIndexArray.push_back(idx);
 				}
+				else {
+					m_particles.currDelayStart[idx] -= elapsed;
+					m_particles.colorBuffer[idx].w = 0.0f;	//inivisible particle
+				}
+			}
 
-				//check if particle has time limit
-				if (m_particles.maxLifeTimeBuffer[idx] > 0 && !removed)
+			//check if particle has time limit
+			if (m_particles.maxLifeTimeBuffer[idx] > 0 && !removed && m_particles.started[idx] != P_OFF)
+			{
+				if ((std::find(particles_finished.begin(), particles_finished.end(), idx) != particles_finished.end())) {
+					int i = 0;
+				}
+				//check if particle has surprassed its time limit
+				if (m_particles.lifeTimeBuffer[idx] <= 0.0f)
 				{
-					//check if particle has surprassed its time limit
-					if (m_particles.lifeTimeBuffer[idx] <= 0.0f)
-					{
+					if (loop) {
 						m_particles.lifeTimeBuffer[idx] = m_particles.maxLifeTimeBuffer[idx];
 						m_particles.currDelayStart[idx] = random(0.0f, *m_Emitter.GetRandomDelay()) + *m_Emitter.GetAbsoluteDelay();
-						m_particles.started[idx] = false;
-						//generate random start time
-						mTmpIndexArray.push_back(idx);
-						removed = true;
-						to_remove = true;
+						m_particles.started[idx] = P_WAITING;
 					}
-				}
-
-				//if particle is not removed
-				if (!removed)
-				{
-					m_particles.positionBuffer[idx] = positions[idx];
-					m_particles.velocityBuffer[idx] = velocities.ptr() ? velocities[idx] : PxVec3(0.0f);
-					m_particles.negativeVelocityBuffer[idx] = -m_particles.velocityBuffer[idx];
-					m_particles.colorBuffer[idx] = m_particles.colorOriginBuffer[idx] * m_particles.lifeTimeBuffer[idx] * *m_Emitter.GetModifierColor();
-					//m_particles.colorBuffer[idx] = max(m_);
-
-					//add dt to particle lifetime
-					if (m_particles.maxLifeTimeBuffer[idx] > 0)
+					else
 					{
-						m_particles.lifeTimeBuffer[idx] -= elapsed;
+						m_particles.started[idx] = P_OFF;
+						particles_finished.push_back(idx);
+						m_particles.colorBuffer[idx] = VEC4(0, 0, 0, 0);
 					}
 
-					//draw particle, disabled for now
-					//VEC3 pos = PhysxConversion::PxVec3ToVec3(positions[idx]);
-					//Debug->DrawLine(pos, forward, 2);
-
-					//m_numParticles++;
-					newValidRange = idx;
+					//generate random start time
+					mTmpIndexArray.push_back(idx);
+					removed = true;
+					to_remove = true;
 				}
+			}
+
+			//if particle is not removed
+			if (!removed)
+			{
+				m_particles.positionBuffer[idx] = positions[idx];
+				m_particles.velocityBuffer[idx] = velocities.ptr() ? velocities[idx] : PxVec3(0.0f);
+				m_particles.negativeVelocityBuffer[idx] = -m_particles.velocityBuffer[idx];
+				if (*m_Emitter.GetModifierColor() != 1) {
+					m_particles.colorBuffer[idx].x = m_particles.colorOriginBuffer[idx].x * m_particles.lifeTimeBuffer[idx] * *m_Emitter.GetModifierColor();
+					m_particles.colorBuffer[idx].y = m_particles.colorOriginBuffer[idx].y * m_particles.lifeTimeBuffer[idx] * *m_Emitter.GetModifierColor();
+					m_particles.colorBuffer[idx].z = m_particles.colorOriginBuffer[idx].z * m_particles.lifeTimeBuffer[idx] * *m_Emitter.GetModifierColor();
+				}
+				m_particles.colorBuffer[idx].w = m_particles.colorOriginBuffer[idx].w * m_particles.lifeTimeBuffer[idx];
+
+				//m_particles.colorBuffer[idx] = max(m_);
+
+				//add dt to particle lifetime
+				if (m_particles.maxLifeTimeBuffer[idx] > 0)
+				{
+					m_particles.lifeTimeBuffer[idx] -= elapsed;
+				}
+
+				//draw particle, disabled for now
+				//VEC3 pos = PhysxConversion::PxVec3ToVec3(positions[idx]);
+				//Debug->DrawLine(pos, forward, 2);
+
+				//m_numParticles++;
+				newValidRange = idx;
 			}
 		}
 	}
 	//dbg("end\n");
 
-	m_validParticleRange = newValidRange;
 	data->unlock();
 
+	UpdateAccelerationParticles();
+
 	//free removed particles
-	if (to_remove)
-	{
-		UpdateRandomsAttr();
-
-		PxStrideIterator<const PxU32> indexData(&mTmpIndexArray[0]);
-
-		//m_pParticleSystem->releaseParticles(static_cast<PxU32>(mTmpIndexArray.size()), indexData);
-		//m_pIndexPool->freeIndices(static_cast<PxU32>(mTmpIndexArray.size()), indexData);
-
-		auto initPos = PxStrideIterator<const PxVec3>(&m_particles.positionInitBuffer[0]);
-		auto initVel = PxStrideIterator<const PxVec3>(&m_particles.velocityInitBuffer[0]);
-
-		auto negativeVel = PxStrideIterator<const PxVec3>(&m_particles.negativeVelocityBuffer[0]);
-
-		m_pParticleSystem->setPositions(static_cast<PxU32>(mTmpIndexArray.size()), indexData, initPos);
-		m_pParticleSystem->setVelocities(static_cast<PxU32>(mTmpIndexArray.size()), indexData, initVel);
-		//m_pParticleSystem->addForces(static_cast<PxU32>(mTmpIndexArray.size()), indexData, negativeVel, PxForceMode::eVELOCITY_CHANGE);
+	if (loop) {
+		if (to_remove)
+		{
+			SetPositionPhysxBuffer(mTmpIndexArray);
+		}
 	}
 
 	//bool ret = CreateParticles(m_particles);
@@ -527,6 +637,43 @@ void CParticleSystem::updateParticlesPhysx(float elapsed) {
 	  //fatal("particles not created\n");
 	//return;
 	//}
+}
+
+void CParticleSystem::UpdateAccelerationParticles() {
+	std::vector<PxU32> buffer;
+	std::vector<PxVec3> buffer_accels;
+	for (int i = 0; i < m_numParticles; i++) {
+		buffer.push_back(i);
+
+		PxVec3 vel_modif = (*m_Emitter.GetVelocityModifier());
+		PxVec3 accel = mulPxVec3(vel_modif, m_particles.negativeVelocityBuffer[i]) * (m_particles.maxLifeTimeBuffer[i] - m_particles.lifeTimeBuffer[i]);
+
+		buffer_accels.push_back(accel);
+	}
+
+	PxStrideIterator<const PxU32> indexData(&buffer[0]);
+	PxStrideIterator<const PxVec3> accelData(&buffer_accels[0]);
+
+	m_pParticleSystem->addForces(static_cast<PxU32>(buffer.size()), indexData, accelData, PxForceMode::eACCELERATION);
+}
+
+void CParticleSystem::SetPositionPhysxBuffer(std::vector<PxU32>& buffer) {
+	UpdateRandomsAttr();
+
+	PxStrideIterator<const PxU32> indexData(&buffer[0]);
+
+	//m_pParticleSystem->releaseParticles(static_cast<PxU32>(mTmpIndexArray.size()), indexData);
+	//m_pIndexPool->freeIndices(static_cast<PxU32>(mTmpIndexArray.size()), indexData);
+
+	auto initPos = PxStrideIterator<const PxVec3>(&m_particles.positionBuffer[0]);
+	auto initVel = PxStrideIterator<const PxVec3>(&m_particles.velocityInitBuffer[0]);
+
+	auto negativeVel = PxStrideIterator<const PxVec3>(&m_particles.negativeVelocityBuffer[0]);
+
+	m_pParticleSystem->setPositions(static_cast<PxU32>(buffer.size()), indexData, initPos);
+	m_pParticleSystem->setVelocities(static_cast<PxU32>(buffer.size()), indexData, initVel);
+
+	//m_pParticleSystem->addForces(static_cast<PxU32>(mTmpIndexArray.size()), indexData, negativeVel, PxForceMode::eVELOCITY_CHANGE);
 }
 
 void CParticleSystem::UpdateRandomsAttr() {
@@ -542,9 +689,11 @@ void CParticleSystem::UpdateRandomsAttr() {
 		up = t->getUp();
 	}
 
+	VEC3 offset = GetOffsetPosition();
+
 	if (random_value_position) {
 		for (int i = 0; i < m_numParticles; i++) {
-			PxVec3 pos_random = *m_Emitter.GetPosition();
+			PxVec3 pos_random = *m_Emitter.GetPosition() + PhysxConversion::Vec3ToPxVec3(offset);
 			PxVec3 max_limit = *m_Emitter.GetPositionRandomMax();
 			PxVec3 min_limit = *m_Emitter.GetPositionRandomMin();
 
@@ -552,12 +701,18 @@ void CParticleSystem::UpdateRandomsAttr() {
 			pos_random.y += random(max_limit.y, min_limit.y);
 			pos_random.z += random(max_limit.z, min_limit.z);
 
-			m_particles.positionInitBuffer[i] = pos_random;
+			m_particles.colorBuffer[i].x = m_particles.colorOriginBuffer[i].x;
+			m_particles.colorBuffer[i].y = m_particles.colorOriginBuffer[i].y;
+			m_particles.colorBuffer[i].z = m_particles.colorOriginBuffer[i].z;
+			m_particles.positionBuffer[i] = pos_random;
 		}
 	}
 	else {
 		for (int i = 0; i < m_numParticles; i++) {
-			m_particles.positionInitBuffer[i] = m_Emitter.GetInitialPosByShape(front, up);
+			m_particles.positionBuffer[i] = m_Emitter.GetInitialPosByShape(front, up) + PhysxConversion::Vec3ToPxVec3(offset);
+			m_particles.colorBuffer[i].x = m_particles.colorOriginBuffer[i].x;
+			m_particles.colorBuffer[i].y = m_particles.colorOriginBuffer[i].y;
+			m_particles.colorBuffer[i].z = m_particles.colorOriginBuffer[i].z;
 		}
 	}
 
@@ -576,7 +731,7 @@ void CParticleSystem::UpdateRandomsAttr() {
 	}
 	else {
 		for (int i = 0; i < m_numParticles; i++) {
-			m_particles.velocityInitBuffer[i] = m_Emitter.GetInitialVelByShape(front, up);
+			m_particles.velocityInitBuffer[i] = m_Emitter.GetInitialVelByShape(front, up, m_particles.positionInitBuffer[i]);
 		}
 	}
 }
@@ -593,24 +748,6 @@ void CParticleSystem::saveToFile(std::string fileName)
 
 	MKeyValue atts;
 
-	//FORMAT:
-	/*
-	<particles_emitter num_particles = "int">
-		<collisions value = "bool"/>
-		<gravity value = "bool"/>
-		<use_physx value = "bool"/>
-		<shape type = "int" angle = "float" radius = "flaot" max = "x y z" min = "x y z" />
-		<position value = "x y z" randmax = "x y z" randmin = "x y z"/>
-		<velocity value = "x y z" randmax = "x y z" randmin = "x y z"/>
-		<size value = "float" modifier = "float"/>
-		<lifetime value = "float" max_rand = "float" min_rand = "float"/>
-		<acceleration value = "x y z" modifier = "x y z"/>
-		<delay delay_start = "float" delay_particle_rand = "float"/>
-		<color value = "x y z w" modifier = "float"/>
-	<particles_emitter/>
-
-	*/
-
 	//file buffer
 	std::filebuf fb;
 	fb.open(full_path.c_str(), std::ios::out);
@@ -618,7 +755,19 @@ void CParticleSystem::saveToFile(std::string fileName)
 
 	//start_element
 	atts.put("num_particles", m_numParticles);
+	atts.put("target_pos", m_Emitter.target_pos);
+
+	atts.put("texture_particles", tex_particles_path);
+
+	atts.put("loop", loop);
+	atts.put("active", active);
+
 	atts.writeStartElement(file, "particles_emitter");
+	atts.clear();
+
+	//number particles
+	atts.put("value", *m_Emitter.GetNumberFrames());
+	atts.writeSingle(file, "nframes");
 	atts.clear();
 
 	//collisions
@@ -662,6 +811,8 @@ void CParticleSystem::saveToFile(std::string fileName)
 	atts.put("randmax", PhysxConversion::PxVec3ToVec3(data));
 	data = *m_Emitter.GetVelocityRandomMin();
 	atts.put("randmin", PhysxConversion::PxVec3ToVec3(data));
+	data = *m_Emitter.GetVelocityModifier();
+	atts.put("vel_over_lifeTime", PhysxConversion::PxVec3ToVec3(data));
 	atts.writeSingle(file, "velocity");
 	atts.clear();
 
@@ -711,7 +862,7 @@ void CParticleSystem::saveToFile(std::string fileName)
 	atts.put("size", size);
 
 	for (int i = 0; i < lb.size(); i++) {
-		std::string name = "bone" + to_string(i);
+		std::string name = "bone" + std::to_string(i);
 		atts.put(name.c_str(), lb[i]);
 	}
 
@@ -724,13 +875,19 @@ void CParticleSystem::saveToFile(std::string fileName)
 	fb.close();
 }
 
-bool CParticleSystem::loadFromFile(std::string fileName)
+bool CParticleSystem::loadFromFile(std::string file_particles)
 {
-	CParticleLoader ep = CParticleLoader(CHandle(this));
-	bool is_ok = ep.xmlParseFile(fileName);
-	if (!is_ok) {
-		fatal("error reading particle system %s file, the file wont be loaded\n", fileName.c_str());
-		return false;
+	m_Emitter = CParticlesEmitter();
+	auto it = compiled_particles.find(file_particles);
+	if (it == compiled_particles.end()) {
+		cur_compiling = new CPrefabCompiler;
+		bool is_ok = xmlParseFile(file_particles);
+		assert(is_ok);
+		compiled_particles[file_particles] = cur_compiling;
+	}
+	else {
+		cur_compiling = nullptr;
+		it->second->execute(this);
 	}
 
 	return true;
@@ -751,6 +908,14 @@ void CParticleSystem::renderInMenu()
 	ImGui::Separator();
 
 	if (ImGui::TreeNode("Particles System editor")) {
+		if (ImGui::Checkbox("loop", &loop)) {
+			ActiveParticleSystem();
+		}
+		if (ImGui::Checkbox("active", &active)) {
+			ActiveParticleSystem();
+			active = false;
+		}
+
 		if (ImGui::Checkbox("collisions(only with PC)", m_Emitter.GetCollisions())) {
 			bool collisions = *m_Emitter.GetCollisions();
 			if (collisions) {
@@ -776,9 +941,34 @@ void CParticleSystem::renderInMenu()
 			SetBufferData();
 		}
 
+		char text[64];
+		strcpy(text, m_Emitter.target_pos.c_str());
+		ImGuiInputTextFlags flags = ImGuiInputTextFlags_EnterReturnsTrue;
+		if (ImGui::InputText("target position", text, 64, flags)) {
+			m_Emitter.target_pos = std::string(text);
+
+			//m_Emitter.SetPosition(*m_Emitter.GetPosition()+ PhysxConversion::Vec3ToPxVec3(offset));
+			m_RenderParticles.clear();
+			m_RenderParticles.create(m_numParticles, m_pParticle_mesh);
+			SetBufferData();
+		}
+
 		ImGui::Text("\n");
 
 		ImGui::Checkbox("attach particles to skeleton", &m_Emitter.m_useSkeleton);
+
+		if (ImGui::SmallButton("clear all bones")) {
+			for (int i = 0; i < list_bones.size(); i++) {
+				list_bones[i] = 0;
+				offset_bones[i] = VEC3(0, 0, 0);
+			}
+		}
+
+		if (ImGui::SmallButton("Select all bones")) {
+			for (int i = 0; i < list_bones.size(); i++) {
+				list_bones[i] = 1;
+			}
+		}
 
 		if (m_Emitter.m_useSkeleton) {
 			RenderMenuSkeletonParticles();
@@ -817,7 +1007,7 @@ void CParticleSystem::renderInMenu()
 		ImGui::RadioButton("Circle", m_Emitter.GetShape(), CParticlesEmitter::SHAPE_CIRCLE);
 		if (*m_Emitter.GetShape() == CParticlesEmitter::SHAPE_CIRCLE) {
 			ImGui::DragFloat3("vector up", &m_Emitter.m_shape_emitter.direction.x, 0.02f);
-			ImGui::DragFloat("radius", &m_Emitter.m_shape_emitter.angle);
+			ImGui::DragFloat("radius", &m_Emitter.m_shape_emitter.radius);
 		}
 
 		ImGui::Text("\n");
@@ -846,9 +1036,9 @@ void CParticleSystem::renderInMenu()
 		ImGui::Checkbox("random position range", &random_value_position);
 		if (!random_value_position) {
 			if (ImGui::DragFloat3("initial position particles", &m_Emitter.GetPosition()->x, 0.1f)) {
-				m_Emitter.SetPosition(m_initial_pos);
+				m_initial_pos = *m_Emitter.GetPosition();
 				for (int i = 0; i < m_particles.numParticles; i++) {
-					m_particles.positionInitBuffer[i] = m_initial_pos;
+					m_particles.positionInitBuffer[i] = *m_Emitter.GetPosition();
 				}
 			}
 		}
@@ -929,7 +1119,7 @@ void CParticleSystem::renderInMenu()
 			file_texture = file_texture.substr(p + 1);
 
 			if (file_texture != "") {		//valid entry
-				file_texture = "textures/" + file_texture;
+				file_texture = "textures/particles/" + file_texture;
 				//int i = 0;
 				m_pTexture = Resources.get(file_texture.c_str())->as<CTexture>();
 			}
@@ -938,13 +1128,18 @@ void CParticleSystem::renderInMenu()
 			file_texture = "NOT_TO_LOAD";
 		}
 
-		ImGui::DragInt("number frames texture", &m_numberFrames);
+		if (ImGui::DragInt("number frames texture", m_Emitter.GetNumberFrames())) {
+			m_particles.max_frames = *m_Emitter.GetNumberFrames();
+		}
 
 		ImGui::TreePop();
 	}
 }
 
 void CParticleSystem::RenderMenuSystemParticles() {
+	if (!m_pParticleSystem)
+		return;
+
 	PxParticleReadData *data = m_pParticleSystem->lockParticleReadData();
 
 	PxStrideIterator<const PxVec3> positions(data->positionBuffer);

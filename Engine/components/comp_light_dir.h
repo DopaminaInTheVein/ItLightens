@@ -12,7 +12,8 @@ struct TCompLightDir : public TCompCamera {
 	VEC4				color;
 	bool				enabled = true;
 	bool				selected = false;
-	bool				debug_render = false;
+	static bool			debug_render;
+	static void setRenderDebug(bool b) { debug_render = b; }
 
 	bool				load(MKeyValue& atts);
 	bool				save(std::ofstream& os, MKeyValue& atts);
@@ -28,5 +29,4 @@ struct TCompLightDir : public TCompCamera {
 	void cancel_editing();
 	~TCompLightDir();
 };
-
 #endif

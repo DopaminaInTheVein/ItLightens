@@ -250,8 +250,8 @@ bool CInputWrapper::isPauseDebugPressed() {
 bool CInputWrapper::isSlowButtonPressed() {
 	return io->keys['M'].becomesPressed();
 }
-bool CInputWrapper::isDrawLineButtonPressing() {
-	return io->keys['N'].isPressed();
+bool CInputWrapper::isDrawLineButtonPressed() {
+	return io->keys['N'].becomesPressed();
 }
 bool CInputWrapper::isTestSSAOButoonPressed() {
 	return io->keys[VK_F3].becomesPressed();

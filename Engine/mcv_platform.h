@@ -2,7 +2,7 @@
 #define INC_MCV_PLATFORM_H_
 
 // -- Global settings -- //
-#define FINAL_BUILD
+//#define FINAL_BUILD
 #ifndef FINAL_BUILD //Defines para version NO final
 
 #define TEST_VALUES // Read initialization_test.json
@@ -10,8 +10,10 @@
 //#define CALIBRATE_GAME
 //#define SECURE_HANDLES
 #else //defines obligatorios version final
+#ifndef NDEBUG
+void error() { ¡You are trying Compile Final Build on Debug! }
+#endif
 //#define SECURE_HANDLES
-
 #endif
 // -- Final Global settings -- //
 

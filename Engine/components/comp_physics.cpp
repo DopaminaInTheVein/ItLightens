@@ -138,8 +138,8 @@ bool TCompPhysics::load(MKeyValue & atts)
 	switch (m_collisionShape) {
 	case TRI_MESH:
 		m_mesh_name = atts.getString("mesh_name", "");
-		m_use_navmesh = atts.getBool("use_navmesh", true);
 		m_only_navmesh = atts.getBool("only_navmesh", false);
+		m_use_navmesh = m_only_navmesh || atts.getBool("use_navmesh", true);
 		break;
 	case SPHERE:
 		m_radius = atts.getFloat("radius", 0.5f);
@@ -327,7 +327,7 @@ const CMesh* TCompPhysics::readMesh()
 {
 	const CMesh* res = nullptr;
 	if (m_mesh_name != "")
-		res = Resources.get(m_mesh_name.c_str())->as<CMesh>();
+		res = Resources.get(("meshes/" + m_mesh_name + ".mesh").c_str())->as<CMesh>();
 	else {
 		GET_MY(r_st_mesh, TCompRenderStaticMesh);
 		if (r_st_mesh) {
@@ -346,7 +346,7 @@ const CMesh* TCompPhysics::readMesh()
 		sprintf(err, "Error comp_physics: Object [%s] without mesh", MY_OWNER);
 		MessageBox(NULL, err, NULL, MB_OK);
 	}
-	return nullptr;
+	return res;
 }
 
 bool TCompPhysics::createBoxShape()

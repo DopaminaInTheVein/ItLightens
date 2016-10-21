@@ -9,7 +9,7 @@
 
 
 VEC3 CParticlesEmitter::GetPosBone(int num) {
-	CEntity *player = tags_manager.getFirstHavingTag("player");
+	CEntity *player = tags_manager.getFirstHavingTag(target_pos);
 	assert(player);
 	TCompSkeleton *skel_player = player->get<TCompSkeleton>();
 	assert(skel_player);
@@ -121,16 +121,34 @@ PxVec3 CParticlesEmitter::GetInitialPosByShape(const VEC3& front, const VEC3& up
 			return init_pos;
 			break;
 		case SHAPE_CIRCLE:
-			return init_pos;
+		{
+			PxVec3 pos = init_pos;
+			PxVec3 limit = PhysxConversion::Vec3ToPxVec3(VEC3(1, 1, 1) - up);
+
+			PxVec3 dir;
+
+			dir.x = random(-1, 1)*limit.x;
+			dir.y = random(-1, 1)*limit.y;
+			dir.z = random(-1, 1)*limit.z;
+
+			dir.normalize();
+
+			pos += dir*m_shape_emitter.radius;
+
+			return pos;
+
 			break;
+		}
 		default:
 			return init_pos;
 			break;
 
 	}
+
+	return init_pos;
 }
 
-PxVec3 CParticlesEmitter::GetInitialVelByShape(const VEC3& front, const VEC3& up)
+PxVec3 CParticlesEmitter::GetInitialVelByShape(const VEC3& front, const VEC3& up, PxVec3 curr_position)
 {
 	PxVec3 init_vel = m_initialVelocity;
 	float random_angle = random(-m_shape_emitter.angle, m_shape_emitter.angle);
@@ -154,9 +172,9 @@ PxVec3 CParticlesEmitter::GetInitialVelByShape(const VEC3& front, const VEC3& up
 		return init_vel;
 		break;
 	case SHAPE_SPHERE:
-		init_vel.x = random(-1, 1);
-		init_vel.y = random(-1, 1);
-		init_vel.z = random(-1, 1);
+		init_vel.x += random(-1, 1);
+		init_vel.y += random(-1, 1);
+		init_vel.z += random(-1, 1);
 		init_vel *= m_shape_emitter.radius;
 		return init_vel;
 		break;
@@ -164,9 +182,7 @@ PxVec3 CParticlesEmitter::GetInitialVelByShape(const VEC3& front, const VEC3& up
 		return init_vel;
 		break;
 	case SHAPE_CIRCLE:
-		init_vel.x += (1 - m_shape_emitter.direction.x)*random(-m_shape_emitter.radius, m_shape_emitter.radius);
-		init_vel.y += (1 - m_shape_emitter.direction.y)*random(-m_shape_emitter.radius, m_shape_emitter.radius);
-		init_vel.z += (1 - m_shape_emitter.direction.z)*random(-m_shape_emitter.radius, m_shape_emitter.radius);
+		init_vel += curr_position - m_initialPosition;
 		return init_vel;
 		break;
 	default:

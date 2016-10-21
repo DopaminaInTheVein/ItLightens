@@ -26,7 +26,7 @@
    model="skeletons/guard/guard.skeleton"/>
 <render_static_mesh
    name="skeletons/guard/guard.static_mesh"
-   static="no"/>
+   static="false"/>
 <skeleton_ik/>
 <abs_aabb/>
 <local_aabb/>
@@ -62,7 +62,7 @@
    model="skeletons/guard/guard.skeleton"/>
 <render_static_mesh
    name="skeletons/guard/guard.static_mesh"
-   static="no"/>
+   static="false"/>
 <skeleton_ik/>
 <abs_aabb/>
 <local_aabb/>
@@ -90,7 +90,7 @@
    model="skeletons/player/player.skeleton"/>
 <render_static_mesh
    name="skeletons/player/player.static_mesh"
-   static="no"/>
+   static="false"/>
 <skeleton_ik/>
 <abs_aabb/>
 <local_aabb/>
@@ -127,12 +127,13 @@
    pos="51.6847 2.81285 -6.69464"
    quat="0 0 0 1.0"
    scale="1.0"/>
-<abs_aabb/>
 <render_static_mesh
    name="static_meshes/tuto_sci/mesa_cientifico_up_mapeado.static_mesh"
-   static="yes"/>
+   static="true"/>
+<abs_aabb/>
 <rigidbody
-   type_collision="static"/>
+   type_collision="static"
+   mesh_name="tuto_sci/mesa_cientifico_up_mapeado"/>
 
 </entity>
 <entity
@@ -152,7 +153,7 @@
    model="skeletons/scientist/scientist.skeleton"/>
 <render_static_mesh
    name="skeletons/scientist/scientist.static_mesh"
-   static="no"/>
+   static="false"/>
 <skeleton_ik/>
 <abs_aabb/>
 <local_aabb/>
@@ -197,10 +198,10 @@
    pos="70.6917 3.82912 -2.78086"
    quat="0 0 0 1.0"
    scale="1.0"/>
-<abs_aabb/>
 <render_static_mesh
    name="static_meshes/obj/drone.static_mesh"
-   static="no"/>
+   static="false"/>
+<abs_aabb/>
 <rigidbody
    type_collision="dynamic"
    type_shape="drone"/>
@@ -264,10 +265,10 @@
    pos="75.9743 8.61366 -2.82908"
    quat="0 0 0 1.0"
    scale="1.0"/>
-<abs_aabb/>
 <render_static_mesh
    name="static_meshes/tuto_sci/door_tuto_end.static_mesh"
-   static="no"/>
+   static="false"/>
+<abs_aabb/>
 <rigidbody
    type_collision="dynamic"
    type_shape="convex"

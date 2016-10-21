@@ -52,6 +52,9 @@ fn parseRigidBodyDefault parent = (
 		if colision as string != "no" then (
 			local xml = parent.addChild "rigidbody"
 			xml.addAttr "type_collision" "static"
+			parsePropAttribute xml "mesh" "mesh_name"
+			parsePropAttribute xml "use_navmesh" "use_navmesh"
+			parsePropAttribute xml "only_navmesh" "only_navmesh"
 		)
 	)
 )

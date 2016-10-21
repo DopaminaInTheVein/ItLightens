@@ -48,6 +48,7 @@ public:
 	uint32_t getType()          const { return type; }
 	uint32_t getExternalIndex() const { return external_index; }
 	uint32_t getAge()           const { return age; }
+	void nextAge() { age++; }
 	const char* getTypeName() const;
 
 	bool isValid() const;

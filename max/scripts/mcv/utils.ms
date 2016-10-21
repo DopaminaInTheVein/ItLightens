@@ -358,3 +358,8 @@ fn selectDynamic = (
 		)
 	)	
 )
+
+--Math
+fn xor b1 b2 = (
+	(not (b1 and b2)) and (b1 or b2)
+)

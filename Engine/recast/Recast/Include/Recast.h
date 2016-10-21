@@ -235,7 +235,7 @@ struct rcConfig
 
 	/// The distance to erode/shrink the walkable area of the heightfield away from
 	/// obstructions.  [Limit: >=0] [Units: vx]
-	int walkableRadius;
+	float walkableRadius;
 
 	/// The maximum allowed length for contour edges along the border of the mesh. [Limit: >=0] [Units: vx]
 	int maxEdgeLen;

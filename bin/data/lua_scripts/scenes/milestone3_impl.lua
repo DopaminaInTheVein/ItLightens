@@ -31,6 +31,7 @@ function OnStart_ms3()
   --p:exec_command("auxiliarMusic();",14)
   --triggerGuardFormation();
   --p:exec_command( "triggerGuardFormation();", 15 )
+  p:setControlEnabled(0)
   cam:run_cinematic("CinematicIntro", 10)
   p:ai_start()
 end
@@ -60,6 +61,10 @@ function OnLoad_ms3()
   --cam:run_cinematic("CinematicIntro", 10)
 end
 ---------------------------------------------------------------------------------------------
+
+function OnCinematicEnd_CinematicIntro()
+	p:exec_command("p:setControlEnabled(1)", 0.2)
+end
 
 
 function OnEnter_tElevator( )

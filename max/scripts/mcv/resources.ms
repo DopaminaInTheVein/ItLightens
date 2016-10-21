@@ -7,6 +7,7 @@ struct TResources (
 	copy_textures = false,
 	move_resources = false,
 	exported_obj = undefined,
+	only_mesh = false,
 	is_ok = true,
 	
 	fn report_error msg = (
@@ -210,7 +211,7 @@ struct TResources (
 		local mes = obj.mesh
 		
 		local res
-		if classof mat == MultiMaterial then (
+		if (mat != undefined) and (classof mat == MultiMaterial) then (
 			res = #()
 			for f = 1 to mes.faces.count do (
 				local m = getFaceMatID mes f
@@ -278,7 +279,8 @@ struct TResources (
 				local mat_infos = getMeshMaterialInfo obj
 				local filenameXML = "meshes/" + meshName + mesh_ext
 				try (
-					export_mesh obj meshName mat_infos
+					tm = TMeshes()
+					tm.export_mesh obj meshName mat_infos
 				) catch (
 					report_error("Error exporting mesh!") -- TODO: class TMeshes message / is_ok
 				)
@@ -374,7 +376,22 @@ struct TResources (
 		
 		return false
 	),
-	
+	fn exportOnlyMesh = (
+		local mat_infos = getMeshMaterialInfo exported_obj -- needed for null material as well
+		local meshName = getResourceName exported_obj "mesh"
+		if meshName == undefined then (
+			report_error("Corrupt object! Has static mesh but not mesh!")
+		)
+		local filenameXML = "meshes/" + meshName + mesh_ext
+		--try (
+			local tm = TMeshes()
+			tm.use_material = false
+			tm.export_mesh exported_obj meshName mat_infos
+		--) catch (
+		--	report_error("Error exporting mesh!") -- TODO: class TMeshes message / is_ok
+		--)
+	),
+		
 	fn exportObject obj = (
 		exported_obj = obj
 		--if ( (not (classof obj == Delegate)) and  (not obj.isHidden) and (getUserProp obj "typeHelper") == undefined) and ((getUserProp obj "typeObject") != "Trigger") then (
@@ -385,10 +402,13 @@ struct TResources (
 				if (ConvertToMesh obj) == undefined then ( canExport = false)
 			)
 			if canExport then (
-				--select obj
 				append _list_objs obj.name
-				exportCompStaticMesh obj
-				--if obj.parent != undefined then exportCompHierarchy fs obj
+				--messageBox ("Only mesh:" + (only_mesh as string))
+				if only_mesh then (
+					exportOnlyMesh()
+				) else (
+					exportCompStaticMesh obj
+				)
 			) else (					
 				-- Export the children (may be a group, layer, etc)
 				for c in obj.children do (

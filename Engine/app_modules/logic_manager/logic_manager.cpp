@@ -759,6 +759,16 @@ void CLogicManagerModule::bindHandle(SLB::Manager& m) {
 		.set("set_drag_value", &SLBHandle::setDragValue)
 		.param("float: value")
 		.comment("set new value to drag component")
+		//---------Particles
+		// On
+		.set("part_on", &SLBHandle::particlesOn)
+		.set("part_off", &SLBHandle::particlesOff)
+		.set("part_loop", &SLBHandle::particlesLoop)
+		// Load (and active optional)
+		.set("part_load", &SLBHandle::particlesLoad)
+		.param("string: particles name")
+		.param("int: 1 --> active too")
+		.comment("load a particle system on entity handle")
 		;
 }
 
@@ -1160,5 +1170,12 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		.set("force_sense_vision", &SLBPublicFunctions::forceSenseVision)
 		.comment("force sense vision")
 		.set("unforce_sense_vision", &SLBPublicFunctions::unforceSenseVision)
-		.comment("force normal vision");
+		.comment("force normal vision")
+		//Particles create
+		.set("part_create", &SLBPublicFunctions::createParticles)
+		.param("string: name")
+		.param("float: x")
+		.param("float: y")
+		.param("float: z")
+		.param("int: 0,1,2 --> paused, active, loop");
 }

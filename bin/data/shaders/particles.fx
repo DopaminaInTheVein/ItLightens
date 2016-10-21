@@ -17,18 +17,20 @@ VS_TEXTURED_OUTPUT VS(
   float4 Pos : POSITION0              // Stream 0
   , float2 UV : TEXCOORD0
   , float3 InstancePos : POSITION1    // Stream 1
-  , float2  InstanceData : TEXCOORD1    // Stream 1
+  , float3  InstanceData : TEXCOORD1    // Stream 1
   , float3  InstanceRot : ROTATION1    // Stream 1
   , float4  InstanceColor : COLOR1
   )
 {
   //instanceData.r = frames
   //instanceData.g = size
-  //instanceData.b = utime, needed?;
+  //instanceData.b = quantity of animation frames
 
   float size = InstanceData.g;
   float nframe = InstanceData.r;
+  float q_frames = InstanceData.b;	
 
+  //float q_frames = 4;
   VS_TEXTURED_OUTPUT output = (VS_TEXTURED_OUTPUT)0;
 
   float cs = cos(InstanceRot);
@@ -49,11 +51,11 @@ VS_TEXTURED_OUTPUT VS(
   // Animate the UV's. Assuming 4x4 frames
   float nmod16 = fmod(nframe * 32, 16.0);
   int   idx = int(nmod16);
-  float coords_x = fmod(idx, 4);
-  float coords_y = int(idx / 4);
+  float coords_x = fmod(idx, q_frames);
+  float coords_y = int(idx / q_frames);
 
-  output.UV.x = (coords_x + UV.x) / 4.0;
-  output.UV.y = (coords_y + UV.y) / 4.0;
+  output.UV.x = (coords_x + UV.x) / q_frames;
+  output.UV.y = (coords_y + UV.y) / q_frames;
 
   output.wPos = wpos;
   output.ins1 = float4(nframe, nframe, nframe, 1.0f);
@@ -83,8 +85,9 @@ float4 PS(VS_TEXTURED_OUTPUT input
 //return float4(input.ins2.yyy, 1.0f);
 
 float4 color = txDiffuse.Sample(samLinear, input.UV);
-color.xyz *= color.xyz;
-color.a = input.color.a;
-color.a *= length(color.xyz);
+color.xyz *= input.color.xyz;
+color.a *= input.color.a;
+//color.a *= length(color.xyz);
+//return float4(1,1,1,1);
 return color;
 }

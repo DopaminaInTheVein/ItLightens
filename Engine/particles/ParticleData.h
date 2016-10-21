@@ -8,6 +8,13 @@
 using namespace physx;
 
 struct TParticleData {
+
+	enum State {
+		WAITING = 0,
+		STARTED = 1,
+		OFF = -1,
+	};
+
 	std::vector<PxU32>		indexBuffer;
 	std::vector<PxVec3>		positionBuffer;
 	std::vector<PxVec3>		positionInitBuffer;
@@ -18,7 +25,7 @@ struct TParticleData {
 	std::vector<float>		sizeBuffer;
 
 	std::vector<float>		currDelayStart;
-	std::vector<bool>		started;
+	std::vector<State>		started;
 
 	std::vector<VEC4>		colorBuffer;
 	std::vector<VEC4>		colorOriginBuffer;
@@ -28,6 +35,8 @@ struct TParticleData {
 
 	PxU32	maxParticles;
 	PxU32	numParticles;
+
+	int max_frames;
 
 	TParticleData() : maxParticles(0), numParticles(0) {}
 

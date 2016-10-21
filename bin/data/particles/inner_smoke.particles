@@ -1,0 +1,59 @@
+<particles_emitter
+	num_particles="250"
+	target_pos="player"
+>
+<nframes
+	value="1"
+	/>
+<collisions
+	value="1"
+	/>
+<gravity
+	value="0"
+	/>
+<use_physx
+	value="1"
+	/>
+<shape
+	angle="45"
+	max="1.000000 1.000000 1.000000"
+	min="-1.000000 -1.000000 -1.000000"
+	radius="2"
+	type="2"
+	/>
+<position
+	randmax="0.000000 0.000000 0.000000"
+	randmin="0.000000 0.000000 0.000000"
+	value="23.739090 50.661098 -25.005915"
+	/>
+<velocity
+	randmax="0.000000 0.000000 0.000000"
+	randmin="0.000000 0.000000 0.000000"
+	value="0.000000 1.000000 0.000000"
+	/>
+<size
+	modifier="-1"
+	value="0.5"
+	/>
+<lifetime
+	max_rand="0"
+	min_rand="0"
+	value="1"
+	/>
+<acceleration
+	modifier="0.000000 0.000000 0.000000"
+	value="0.000000 0.000000 0.000000"
+	/>
+<delay
+	delay_particle_rand="5"
+	delay_start="0"
+	/>
+<color
+	modifier="1"
+	value="0.000000 0.000000 0.000000 1.000000"
+	/>
+<bonesList
+	size="0"
+	value="0"
+	/>
+</particles_emitter>

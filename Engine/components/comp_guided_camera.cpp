@@ -57,6 +57,8 @@ void TCompGuidedCamera::start(float speed) {
 	velocity = speed == 0.f ? velocity_default : speed;
 	reversed = (velocity < 0.f);
 	skipped_extern = false;
+	skipped_by_user = false;
+	finish = false;
 	if (reversed) {
 		std::reverse(positions.begin(), positions.end());
 		std::reverse(targets.begin(), targets.end());
@@ -110,17 +112,10 @@ void TCompGuidedCamera::moveCinePoint(int point_index) {
 	}
 }
 
-bool TCompGuidedCamera::followGuide(TCompTransform* camTransform, TCompCameraMain* cam) {
-	bool finish = false;
-	if (skipped_extern || curPoint > positions.size() - 2) {
-		finish = true;
-	}
-	if (skippable && controller->IsBackPressed()) {
-		CHandle me = CHandle(this).getOwner();
-		CEntity* eMe = me;
-		logic_manager->throwEvent(CLogicManagerModule::EVENT::OnCinematicSkipped, std::string(eMe->getName())), CHandle(this).getOwner();
-		finish = true;
-	}
+TCompGuidedCamera::CinematicState TCompGuidedCamera::checkState()
+{
+	//Condicion fin este mismo frame
+	if (curPoint > positions.size() - 2) finish = true;
 
 	if (finish) {
 		if (!stop_final || skipped_extern) {
@@ -128,11 +123,27 @@ bool TCompGuidedCamera::followGuide(TCompTransform* camTransform, TCompCameraMai
 				std::reverse(positions.begin(), positions.end());
 				std::reverse(targets.begin(), targets.end());
 			}
-			return false;
+			if (skipped_by_user) {
+				logic_manager->throwEvent(CLogicManagerModule::EVENT::OnCinematicSkipped, std::string(MY_NAME), MY_OWNER);
+			}
+			return CinematicState::END;
 		}
-		return true;
+		return CinematicState::PAUSE;
 	}
+	// Condiciones de fin para el siguiente frame
+	if (skippable && controller->IsBackPressed()) {
+		finish = skipped_by_user = skipped_extern = true;
+	}
+	if (skipped_extern) finish = true;
+	return CinematicState::EXEC;
+}
 
+bool TCompGuidedCamera::followGuide(TCompTransform* camTransform, TCompCameraMain* cam) {
+	//Check and update finish
+	CinematicState state = checkState();
+
+	if (state == CinematicState::PAUSE)  return true;
+	else if (state == CinematicState::END)  return false;
 	VEC3 goTo = positions[curPoint];
 	VEC3 comeFrom = positions[curPoint - 1];
 	VEC3 lookTo = targets[curPoint];
@@ -157,8 +168,6 @@ bool TCompGuidedCamera::followGuide(TCompTransform* camTransform, TCompCameraMai
 			: VEC3::CatmullRom(lookCmr[0], lookCmr[1], lookCmr[2], lookCmr[3], factor);
 		cam->smoothLookAt(pos, look, cam->getUpAux(), smoothFactor / getDeltaTime());
 		camTransform->lookAt(pos, look, cam->getUpAux());
-		Debug->DrawLine(comeFrom, goTo);
-		Debug->DrawLine(lookFrom, lookTo, VEC3(0, 0, 1));
 	}
 	else {
 		//New target

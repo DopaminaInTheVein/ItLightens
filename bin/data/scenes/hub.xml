@@ -1,20 +1,6 @@
 <entities>
 <entity>
 <tags/>
-<light_point
-   color="0.560784 0.862745 0.960784 5.0"
-   in_radius="18.0"
-   out_radius="28.5"/>
-<name
-   name="Omni005"/>
-<transform
-   pos="9.27955 56.6631 -17.7151"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity>
-<tags/>
 <name
    name="ceiling"/>
 <transform
@@ -22,10 +8,12 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/hub/ceiling.static_mesh"/>
+   name="static_meshes/hub/ceiling.static_mesh"
+   static="true"/>
 <abs_aabb/>
 <rigidbody
-   type_collision="static"/>
+   type_collision="static"
+   mesh_name="hub/ceiling"/>
 
 </entity>
 <entity>
@@ -37,10 +25,12 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/hub/reja.static_mesh"/>
+   name="static_meshes/hub/reja.static_mesh"
+   static="true"/>
 <abs_aabb/>
 <rigidbody
-   type_collision="static"/>
+   type_collision="static"
+   mesh_name="hub/reja"/>
 
 </entity>
 <entity>
@@ -52,10 +42,12 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/hub/cenefa_1.static_mesh"/>
+   name="static_meshes/hub/cenefa_1.static_mesh"
+   static="true"/>
 <abs_aabb/>
 <rigidbody
-   type_collision="static"/>
+   type_collision="static"
+   mesh_name="hub/cenefa_1"/>
 
 </entity>
 <entity>
@@ -67,10 +59,12 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/hub/cenefa_2.static_mesh"/>
+   name="static_meshes/hub/cenefa_2.static_mesh"
+   static="true"/>
 <abs_aabb/>
 <rigidbody
-   type_collision="static"/>
+   type_collision="static"
+   mesh_name="hub/cenefa_2"/>
 
 </entity>
 <entity>
@@ -82,10 +76,12 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/hub/arc_door.static_mesh"/>
+   name="static_meshes/hub/arc_door.static_mesh"
+   static="true"/>
 <abs_aabb/>
 <rigidbody
-   type_collision="static"/>
+   type_collision="static"
+   mesh_name="hub/arc_door"/>
 
 </entity>
 <entity>
@@ -97,10 +93,12 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/hub/window_wall.static_mesh"/>
+   name="static_meshes/hub/window_wall.static_mesh"
+   static="true"/>
 <abs_aabb/>
 <rigidbody
-   type_collision="static"/>
+   type_collision="static"
+   mesh_name="hub/window_wall"/>
 
 </entity>
 <entity>
@@ -112,10 +110,12 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/hub/columna_2.static_mesh"/>
+   name="static_meshes/hub/columna_2.static_mesh"
+   static="true"/>
 <abs_aabb/>
 <rigidbody
-   type_collision="static"/>
+   type_collision="static"
+   mesh_name="hub/columna_2"/>
 
 </entity>
 <entity>
@@ -127,10 +127,12 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/hub/door.static_mesh"/>
+   name="static_meshes/hub/door.static_mesh"
+   static="true"/>
 <abs_aabb/>
 <rigidbody
-   type_collision="static"/>
+   type_collision="static"
+   mesh_name="hub/door"/>
 
 </entity>
 <entity>
@@ -142,10 +144,12 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/hub/columna.static_mesh"/>
+   name="static_meshes/hub/columna.static_mesh"
+   static="true"/>
 <abs_aabb/>
 <rigidbody
-   type_collision="static"/>
+   type_collision="static"
+   mesh_name="hub/columna"/>
 
 </entity>
 <entity>
@@ -157,10 +161,12 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/hub/control_panel.static_mesh"/>
+   name="static_meshes/hub/control_panel.static_mesh"
+   static="true"/>
 <abs_aabb/>
 <rigidbody
-   type_collision="static"/>
+   type_collision="static"
+   mesh_name="hub/control_panel"/>
 
 </entity>
 <entity>
@@ -172,10 +178,12 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/hub/sofa1.static_mesh"/>
+   name="static_meshes/hub/sofa1.static_mesh"
+   static="true"/>
 <abs_aabb/>
 <rigidbody
-   type_collision="static"/>
+   type_collision="static"
+   mesh_name="hub/sofa1"/>
 
 </entity>
 <entity>
@@ -187,10 +195,12 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/hub/wall_lamp.static_mesh"/>
+   name="static_meshes/hub/wall_lamp.static_mesh"
+   static="true"/>
 <abs_aabb/>
 <rigidbody
-   type_collision="static"/>
+   type_collision="static"
+   mesh_name="hub/wall_lamp"/>
 
 </entity>
 <entity
@@ -496,10 +506,12 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/hub/arc_door.static_mesh"/>
+   name="static_meshes/hub/arc_door.static_mesh"
+   static="true"/>
 <abs_aabb/>
 <rigidbody
-   type_collision="static"/>
+   type_collision="static"
+   mesh_name="hub/arc_door"/>
 
 </entity>
 <entity>
@@ -511,10 +523,12 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/hub/wall1.static_mesh"/>
+   name="static_meshes/hub/wall1.static_mesh"
+   static="true"/>
 <abs_aabb/>
 <rigidbody
-   type_collision="static"/>
+   type_collision="static"
+   mesh_name="hub/wall1"/>
 
 </entity>
 <entity>
@@ -526,10 +540,12 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/hub/wall2.static_mesh"/>
+   name="static_meshes/hub/wall2.static_mesh"
+   static="true"/>
 <abs_aabb/>
 <rigidbody
-   type_collision="static"/>
+   type_collision="static"
+   mesh_name="hub/wall2"/>
 
 </entity>
 <entity>
@@ -541,10 +557,12 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/hub/wall_3.static_mesh"/>
+   name="static_meshes/hub/wall_3.static_mesh"
+   static="true"/>
 <abs_aabb/>
 <rigidbody
-   type_collision="static"/>
+   type_collision="static"
+   mesh_name="hub/wall_3"/>
 
 </entity>
 <entity>
@@ -556,10 +574,12 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/hub/ceiling_tile.static_mesh"/>
+   name="static_meshes/hub/ceiling_tile.static_mesh"
+   static="true"/>
 <abs_aabb/>
 <rigidbody
-   type_collision="static"/>
+   type_collision="static"
+   mesh_name="hub/ceiling_tile"/>
 
 </entity>
 <entity>
@@ -571,10 +591,12 @@
    quat="0 -0.799557 0 0.60059"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/hub/sofa2.static_mesh"/>
+   name="static_meshes/hub/sofa2.static_mesh"
+   static="true"/>
 <abs_aabb/>
 <rigidbody
-   type_collision="static"/>
+   type_collision="static"
+   mesh_name="hub/sofa2"/>
 
 </entity>
 <entity
@@ -588,10 +610,12 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/hub/end_hub.static_mesh"/>
+   name="static_meshes/hub/end_hub.static_mesh"
+   static="true"/>
 <abs_aabb/>
 <rigidbody
-   type_collision="static"/>
+   type_collision="static"
+   mesh_name="hub/end_hub"/>
 
 </entity>
 <entity
@@ -626,10 +650,12 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/hub/floor.static_mesh"/>
+   name="static_meshes/hub/floor.static_mesh"
+   static="true"/>
 <abs_aabb/>
 <rigidbody
-   type_collision="static"/>
+   type_collision="static"
+   mesh_name="hub/floor"/>
 
 </entity>
 <entity>
@@ -641,10 +667,12 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/hub/machine_table.static_mesh"/>
+   name="static_meshes/hub/machine_table.static_mesh"
+   static="true"/>
 <abs_aabb/>
 <rigidbody
-   type_collision="static"/>
+   type_collision="static"
+   mesh_name="hub/machine_table"/>
 
 </entity>
 <entity>
@@ -657,10 +685,12 @@
    quat="-0.0336897 0 0 0.999401"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_sci/generator.static_mesh"/>
+   name="static_meshes/tuto_sci/generator.static_mesh"
+   static="true"/>
 <abs_aabb/>
 <rigidbody
-   type_collision="static"/>
+   type_collision="static"
+   mesh_name="tuto_sci/generator"/>
 
 </entity>
 

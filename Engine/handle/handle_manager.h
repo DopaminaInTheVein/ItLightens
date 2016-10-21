@@ -38,7 +38,7 @@ protected:
 
 	uint32_t        next_free_handle_ext_index;
 	uint32_t        last_free_handle_ext_index;
-	std::vector< CHandle > objs_to_destroy;
+	std::set< CHandle > objs_to_destroy;
 	// Shared by all managers
 	static uint32_t next_type_of_handle_manager;
 	static CHandleManager* all_managers[CHandle::max_types];

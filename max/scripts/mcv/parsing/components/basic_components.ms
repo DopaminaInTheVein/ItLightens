@@ -197,9 +197,15 @@ fn _parse_tracker = (
 ----------------------------------------------------------------------
 -- RENDER  --
 ----------------------------------------------------------------------
+fn parse_render_common xml = (
+	xml.addAttr "static" (isStatic _parsingObject)
+	parsePropAttribute xml "cast_shadows" "cast_shadows"
+)
+
 fn _parse_render = (
 	-- Tiene skeleton?
 	skel = getUserProp _parsingObject "skeleton"
+	local xmlStMesh = undefined
 	if skel != undefined then (
 		local xmlSkel = XML_PARSING.addChild "skeleton"
 		xmlSkel.addAttr "model" ("skeletons/" + skel + "/" + skel + skel_ext)
@@ -208,23 +214,33 @@ fn _parse_render = (
 			xmlSkel.addAttr "anim" anim
 		)
 		
-		local xmlStMesh = XML_PARSING.addChild "render_static_mesh"
+		xmlStMesh = XML_PARSING.addChild "render_static_mesh"
 		xmlStMesh.addAttr "name" ("skeletons/" + skel + "/" + skel + staticMesh_ext)
 		XML_PARSING.addChild "skeleton_ik"
 		XML_PARSING.addChild "abs_aabb"
-		XML_PARSING.addChild "local_aabb"
+		XML_PARSING.addChild "local_aabb"		
 	) else (
 		--Tiene staticMesh?
 		stMesh = getUserProp _parsingObject "staticMesh"
 		if (stMesh != undefined) do (
-			local xmlStMesh = XML_PARSING.addChild "render_static_mesh"
+			xmlStMesh = XML_PARSING.addChild "render_static_mesh"
 			xmlStMesh.addAttr "name" ("static_meshes/" + stMesh + staticMesh_ext)
 			XML_PARSING.addChild "abs_aabb"
 			local movable = getUserProp _parsingObject "movable"
 			if (movable as string) == "yes" then (
 				XML_PARSING.addChild "local_aabb"
 			)
+			
 		)
+	)
+	if xmlStMesh != undefined then (
+		parse_render_common xmlStMesh
+	)
+	
+	local part = getUserProp _parsingObject "particles"
+	if part != undefined then (
+		local xml_part = XML_PARSING.addChild "particles_system"
+		xml_part.addAttr "file" (part + ".particles")
 	)
 )
 

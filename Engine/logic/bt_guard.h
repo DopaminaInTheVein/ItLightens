@@ -272,10 +272,14 @@ public:
 		//		i++;
 		//	}
 		//}
-		Debug->DrawLine(my_tmx->getPosition(), player_last_seen_point, VEC3(0, 1, 0));
-		Debug->DrawLine(my_tmx->getPosition(), my_tmx->getPosition() + my_tmx->getFront(), VEC3(1, 1, 0));
-		Debug->DrawLine(my_tmx->getPosition(), my_tmx->getPosition() + my_tmx->getLeft(), VEC3(1, 1, 0));
+#ifndef NDEBUG
+		if (DEBUG_CODE) {
+			Debug->DrawLine(my_tmx->getPosition(), player_last_seen_point, VEC3(0, 1, 0));
+			Debug->DrawLine(my_tmx->getPosition(), my_tmx->getPosition() + my_tmx->getFront(), VEC3(1, 1, 0));
+			Debug->DrawLine(my_tmx->getPosition(), my_tmx->getPosition() + my_tmx->getLeft(), VEC3(1, 1, 0));
+		}
 		if (curkpt >= 0) Debug->DrawLine(getTransform()->getPosition(), keyPoints[curkpt].pos + VEC3_UP, VEC3(1.f, 1.f, 1.f));
+#endif
 		if (t_reduceStats > 0.0f) {	//CRISTIAN!!! ordenalo como prefieras
 			t_reduceStats -= getDeltaTime();
 			if (t_reduceStats <= 0.0f) {

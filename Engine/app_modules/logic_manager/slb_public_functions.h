@@ -54,6 +54,9 @@ class SLBHandle
 	//Aux
 	void _setAnim(const char* name, bool loop);
 public:
+	SLBHandle() {}
+	SLBHandle(CHandle h, std::string name, std::string tag = "")
+		: real_handle(h), handle_name(name), handle_tag(tag) {}
 	// Gets
 	CHandle getHandle();
 
@@ -93,6 +96,12 @@ public:
 	bool isComeBack();
 	void setGuiEnabled(bool);
 	void setDragValue(float);
+
+	//Handle Particles
+	void SLBHandle::particlesOn();
+	void SLBHandle::particlesOff();
+	void SLBHandle::particlesLoop();
+	void SLBHandle::particlesLoad(const char* name, int enabled);
 };
 
 class SLBHandleGroup
@@ -215,6 +224,7 @@ public:
 	//void showLoadingScreen();
 	void forceSenseVision();
 	void unforceSenseVision();
+	SLBHandle SLBPublicFunctions::createParticles(const char* name, float x, float y, float z, int enabled);
 	void loadLevel(const char* level_name);
 	void saveLevel();
 	void clearSaveData();

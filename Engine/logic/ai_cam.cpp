@@ -146,11 +146,13 @@ bool ai_cam::playerInRange() {
 
 		// raycasts
 #ifndef NDEBUG
-		Debug->DrawLine(origin, playerPos, VEC3(1.0f, 0.0f, 0.0f));
-		Debug->DrawLine(origin, playerPosUp, VEC3(1.0f, 0.0f, 0.0f));
-		Debug->DrawLine(origin, playerPosDown, VEC3(1.0f, 0.0f, 0.0f));
-		Debug->DrawLine(origin, playerPosRight, VEC3(1.0f, 0.0f, 0.0f));
-		Debug->DrawLine(origin, playerPosLeft, VEC3(1.0f, 0.0f, 0.0f));
+		if (DEBUG_CODE) {
+			Debug->DrawLine(origin, playerPos, VEC3(1.0f, 0.0f, 0.0f));
+			Debug->DrawLine(origin, playerPosUp, VEC3(1.0f, 0.0f, 0.0f));
+			Debug->DrawLine(origin, playerPosDown, VEC3(1.0f, 0.0f, 0.0f));
+			Debug->DrawLine(origin, playerPosRight, VEC3(1.0f, 0.0f, 0.0f));
+			Debug->DrawLine(origin, playerPosLeft, VEC3(1.0f, 0.0f, 0.0f));
+		}
 #endif
 
 		// player center
@@ -223,8 +225,10 @@ void ai_cam::RotatingLeft() {
 	VEC3 myposinitial = me_transform->getPosition();
 	VEC3 origin = myposinitial;
 	myposinitial.y -= distToFloor;
-	Debug->DrawLine(origin, (myposinitial + front*(range + width)), VEC3(1.0f, 0.0f, 0.0f));
-	Debug->DrawLine(origin, (myposinitial + front*(range - width)), VEC3(1.0f, 0.0f, 0.0f));
+	if (DEBUG_CODE) {
+		Debug->DrawLine(origin, (myposinitial + front*(range + width)), VEC3(1.0f, 0.0f, 0.0f));
+		Debug->DrawLine(origin, (myposinitial + front*(range - width)), VEC3(1.0f, 0.0f, 0.0f));
+	}
 #endif
 
 	float yaw, pitch;
@@ -253,8 +257,10 @@ void ai_cam::RotatingRight() {
 	VEC3 myposinitial = me_transform->getPosition();
 	VEC3 origin = myposinitial;
 	myposinitial.y -= distToFloor;
-	Debug->DrawLine(origin, (myposinitial + front*(range + width)), VEC3(1.0f, 0.0f, 0.0f));
-	Debug->DrawLine(origin, (myposinitial + front*(range - width)), VEC3(1.0f, 0.0f, 0.0f));
+	if (DEBUG_CODE) {
+		Debug->DrawLine(origin, (myposinitial + front*(range + width)), VEC3(1.0f, 0.0f, 0.0f));
+		Debug->DrawLine(origin, (myposinitial + front*(range - width)), VEC3(1.0f, 0.0f, 0.0f));
+	}
 #endif
 
 	float yaw, pitch;

@@ -6,14 +6,13 @@
 #include "render/draw_utils.h"
 #include "render/mesh.h"
 #include "components\entity.h"
-#include "components\entity_parser.h"
 #include "resources/resources_manager.h"
 #include "components\comp_name.h"
 
 #include "app_modules\imgui\module_imgui.h"
+#include "components\entity_parser.h"
 
 CParticlesManager *g_particlesManager;
-
 bool CParticlesManager::start()
 {
 	m_pTechniqueParticles = Resources.get("particles.tech")->as<CRenderTechnique>();

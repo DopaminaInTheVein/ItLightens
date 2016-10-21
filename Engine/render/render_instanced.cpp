@@ -32,7 +32,7 @@ bool CRenderParticlesInstanced::create(size_t n, const CMesh* instanced) {
     p.center.y = random(1.f, 20.f);
     p.size = 1.0f;
     p.rotation = VEC3(random(-50, 50), 0, random(-50, 50));
-    //p.utime = 0.f;
+    p.max_frames = 1.f;
     p.nframe = random(0, 15);
     p.color = VEC4(1.0f, 1.0f, 1.0f, 1.0f);
     ++idx;
@@ -65,7 +65,7 @@ void CRenderParticlesInstanced::render() const {
   //tech->activate();
   //texture->activate(TEXTURE_SLOT_DIFFUSE);
   activateBlend(BLENDCFG_COMBINATIVE);
-  //activateZ(ZCFG_TEST_BUT_NO_WRITE);
+  activateZ(ZCFG_TEST_BUT_NO_WRITE);
   //activateZ(ZCFG_ALL_DISABLED);
   //activateZ(ZCFG_DEFAULT);
   instanced_mesh->renderInstanced(instances_data_mesh, instances.size());
@@ -89,6 +89,7 @@ void CRenderParticlesInstanced::update(float elapsed, const TParticleData& parti
     if (p.center.y < 0)
       p.center.y += 10.f;*/
 
+	p.max_frames = particle_data.max_frames;
     p.center = PhysxConversion::PxVec3ToVec3(particle_data.positionBuffer[idx - 1]);
 	float modifier_over_lifetime;
 
@@ -108,6 +109,6 @@ void CRenderParticlesInstanced::update(float elapsed, const TParticleData& parti
 
 void CRenderParticlesInstanced::clear()
 {
-  instances_data_mesh->destroy();
+  if(instances_data_mesh) instances_data_mesh->destroy();
 }
 

@@ -99,8 +99,8 @@ bool CApp::start() {
 	mod_update.push_back(render_deferred);
 	mod_update.push_back(Gui);
 	mod_update.push_back(g_PhysxManager);
-	mod_update.push_back(io);
 	mod_update.push_back(Debug);
+	mod_update.push_back(io);
 
 	mod_renders.push_back(render_fx);
 	mod_renders.push_back(render_deferred);

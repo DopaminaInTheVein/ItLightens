@@ -91,5 +91,5 @@ void CGuiActionText::render() {
 
 std::string CGuiActionText::getActionText(std::string action)
 {
-	return lang_manager->getText(action, "actions");
+	return lang_manager->getText(CLangManagerModule::toEntry(action), "actions");
 }

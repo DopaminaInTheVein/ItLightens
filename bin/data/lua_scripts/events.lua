@@ -341,7 +341,7 @@ function OnDetected( distance )
 	p:play_3d_sound("event:/OnDetected", h:get_x(), h:get_y(), h:get_z(), 1.0, false, 32)
 	name_guard = h:get_name()
 	CallFunction("OnDetected_"..name_guard)
-	p:character_globe("ui/effects/bafarada", distance, h:get_x(), h:get_y(), h:get_z(), 2.0, -1.0)
+	p:character_globe("ui/effects/bafarada", distance, h:get_x(), h:get_y() + 1.5, h:get_z(), 2.0, -1.0)
 end
 
 function OnNextPatrol( guard_name )
