@@ -1156,7 +1156,7 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		.set("unforce_sense_vision", &SLBPublicFunctions::unforceSenseVision)
 		.comment("force normal vision")
 		//Particles create
-		.set("part_create", &SLBPublicFunctions::createParticles)
+		.set("create", &SLBPublicFunctions::create)
 		.param("string: name")
 		.param("float: x")
 		.param("float: y")

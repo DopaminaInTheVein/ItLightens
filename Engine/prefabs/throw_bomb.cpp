@@ -135,11 +135,11 @@ void CThrowBomb::Explode()
 	logic_manager->throwEvent(CLogicManagerModule::EVENT::OnExplode, "throw_bomb", CHandle(this).getOwner());
 	SendMsg();
 	ChangeState("dead");
-	CHandle(this).getOwner().destroy();
 }
 
 void CThrowBomb::Dead()
 {
+	CHandle(this).getOwner().destroy();
 	return; //Nothing to do
 }
 

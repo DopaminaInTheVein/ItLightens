@@ -145,6 +145,15 @@ void CImGuiModule::update(float dt) {
 	ImGui::Checkbox("Ui control", Gui->IsUiControlPointer());
 	//ImGui::Checkbox("Continous Collision Detection", &(g_PhysxManager->ccdActive));
 
+	if (ImGui::TreeNode("LUA Test")) {
+		static char test_lua_txt[256] = "OnTest();";
+		ImGui::InputTextMultiline("Test Lua", test_lua_txt, 256);
+		if (ImGui::Button("Execute")) {
+			logic_manager->throwUserEvent(test_lua_txt);
+		}
+		ImGui::TreePop();
+	}
+
 	if (ImGui::TreeNode("Gui create elements")) {
 		static VEC3 pos_new_ui = VEC3(0.5f, 0.5f, 0.9f);
 		static char gui_prebab_name[64] = "Fading_Letter";

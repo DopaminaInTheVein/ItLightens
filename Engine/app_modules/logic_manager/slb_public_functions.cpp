@@ -1115,18 +1115,16 @@ void SLBPublicFunctions::unforceSenseVision() {
 	}
 }
 
-SLBHandle SLBPublicFunctions::createParticles(const char* name, float x, float y, float z, int enabled)
+SLBHandle SLBPublicFunctions::create(const char* name, float x, float y, float z)
 {
-	CHandle h = createPrefab("particles_default.prefab");
-	GET_COMP(part, h, CParticleSystem);
-	if (part) part->loadFromFile(std::string(name));
+	CHandle h = createPrefab(name);
 	GET_COMP(tmx, h, TCompTransform);
 	if (tmx) tmx->setPosition(VEC3(x, y, z));
-	if (part && enabled == 1) part->ActiveParticleSystem();
-	if (part && enabled == 2) part->setLoop(false);
 	std::string e_name = "unnamed";
 	CEntity* e = h;
 	if (e) e_name = e->getName();
+	GET_COMP(part, h, CParticleSystem);
+	if (part) part->init();
 	return SLBHandle(h, e_name);
 }
 

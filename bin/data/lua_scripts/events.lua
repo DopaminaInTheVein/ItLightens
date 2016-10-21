@@ -387,12 +387,16 @@ end
 --------------------------------
 function OnExplode( param )
 	p:print( "OnExplode\n")
+	h:getHandleCaller()
 	CallFunction("OnExplode_"..param)
 end
 
 function OnExplode_throw_bomb()
 	p:print( "OnExplode_throw_bomb\n")
 	h:getHandleCaller()
+	explosion_particle = p:create(SMOKE_1, pl:get_x(), pl:get_y(), pl:get_z())
+	--explosion_particle = p:part_create(SMOKE_1, h:get_x(), h:get_y(), h:get_z(), 1)
+	--p:exec_command("explosion_particle:destroy()", 5)	
 	p:play_3d_sound("event:/OnBombExplodes", h:get_x(), h:get_y(), h:get_z(), 1.0, false, 32)
 end
 
@@ -720,4 +724,10 @@ function OnPause( )
 	if not g_dead then
 		p:load_entities("menu")
 	end
+end
+
+function OnTest( )
+	p:print("Hola")
+	explosion_particle = p:create(SMOKE_1, pl:get_x(), pl:get_y(), pl:get_z())
+	--p:exec_command("explosion_particle:destroy()", 5)
 end

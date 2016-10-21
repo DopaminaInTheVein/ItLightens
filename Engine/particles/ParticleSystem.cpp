@@ -39,9 +39,7 @@ void CParticleSystem::renderParticles()
 
 bool CParticleSystem::load(MKeyValue & atts)
 {
-	std::string default_path = std::string(DEFAULT_PARTICLES_FILE) + ".particles";
-	std::string file_particles = BASE_PATH;
-	file_particles += atts.getString("file", default_path.c_str());
+	std::string file_particles = atts.getString("file", "");
 	return loadFromFile(file_particles);
 }
 
@@ -228,6 +226,8 @@ void CParticleSystem::SetBufferData() {
 }
 
 void CParticleSystem::init() {
+	if (m_initialized) return;
+	m_initialized = true;
 	/*m_numParticles = 1;
 	m_numberFrames = 1;
 	int max_particles = 1;
@@ -328,7 +328,6 @@ void CParticleSystem::init() {
 	//delete vector_bones;
 
 #endif
-
 	m_pParticle_mesh = Resources.get("textured_quad_xy_centered.mesh")->as<CMesh>();
 	g_particlesManager->AddParticlesSystem(this);
 }
@@ -875,8 +874,11 @@ void CParticleSystem::saveToFile(std::string fileName)
 	fb.close();
 }
 
-bool CParticleSystem::loadFromFile(std::string file_particles)
+bool CParticleSystem::loadFromFile(std::string filename)
 {
+	if (filename == "") filename = std::string(DEFAULT_PARTICLES_FILE) + ".particles";
+	std::string file_particles = BASE_PATH + filename;
+
 	m_Emitter = CParticlesEmitter();
 	auto it = compiled_particles.find(file_particles);
 	if (it == compiled_particles.end()) {

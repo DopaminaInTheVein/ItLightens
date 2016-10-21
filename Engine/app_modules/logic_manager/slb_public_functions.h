@@ -222,7 +222,7 @@ public:
 	//void showLoadingScreen();
 	void forceSenseVision();
 	void unforceSenseVision();
-	SLBHandle SLBPublicFunctions::createParticles(const char* name, float x, float y, float z, int enabled);
+	SLBHandle SLBPublicFunctions::create(const char* name, float x, float y, float z);
 	void loadLevel(const char* level_name);
 	void saveLevel();
 	void clearSaveData();

@@ -15,6 +15,7 @@ class CalCoreSkeleton;
 class CParticleSystem : public TCompBase, public CXMLParser {
 	typedef std::map<std::string, CPrefabCompiler*> CachedParticles;
 	static CachedParticles compiled_particles;
+	bool m_initialized = false;
 	CPrefabCompiler* cur_compiling = nullptr;
 	PxParticleSystem *			    m_pParticleSystem;
 	PxParticleCreationData			m_particleData;
@@ -84,7 +85,7 @@ public:
 
 	void updateParticlesWithoutPhysx(float elapsed);
 
-VEC3 GetOffsetPosition();
+	VEC3 GetOffsetPosition();
 
 	void SetTargetEmitter(std::string new_target);
 
