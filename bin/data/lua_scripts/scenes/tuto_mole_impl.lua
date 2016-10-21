@@ -151,13 +151,15 @@ function tutomole_destroyWallEffect()
   h:get_handle_by_id(idWall_out)
   h:destroy()
   
-  --Reproducimos sonido
-  p:play_sound("event:/OnBreakWall", 1.0, false)
   p:exec_command("TutoMoleWallDestroyed();", 0.5)
   --Activamos fragmentos pared
   all_fragments1:get_handles_by_tag(tagWallFragment1)
   all_fragments1:awake()
   p:exec_command( "all_fragments1:remove_physics();", 4 )
+  --Reproducimos sonido y vibracion
+  p:play_sound("event:/OnBreakWall", 1.0, false)
+  cam:start_vibration(0.0, 0.75, 10)
+  p:exec_command("cam:stop_vibration(8)", 1.0)
   
   --Tasklist
   p:complete_tasklist(TASK_TUTOM_WALL)

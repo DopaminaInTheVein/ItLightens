@@ -652,6 +652,22 @@ void SLBCamera::fx(const char* name, int enabled) {
 	}
 }
 
+void SLBCamera::startVibration(float x_max, float y_max, float speed) {
+	if (!checkCamera()) return;
+	GET_COMP(cam_control, camera_h, TCompController3rdPerson);
+	if (cam_control) {
+		cam_control->startVibration(x_max, y_max, speed);
+	}
+}
+
+void SLBCamera::stopVibration(float speed) {
+	if (!checkCamera()) return;
+	GET_COMP(cam_control, camera_h, TCompController3rdPerson);
+	if (cam_control) {
+		cam_control->stopVibration(speed);
+	}
+}
+
 //Ui Camera control in LUA
 void SLBUiCamera::getCamera() {
 	ui_camera_h = tags_manager.getFirstHavingTag("ui_camera");

@@ -399,6 +399,9 @@ function moveElevator( )
   --else if elevatorState == 2
   --  p:playerRoom("2")
   --end
+  --Vibracion de la camara
+  p:exec_command("cam:start_vibration(0.0, 0.25, 20)", 2)
+  p:exec_command("cam:stop_vibration(18)", 6)
 end
 
 function checkPointElevator( )
@@ -497,8 +500,10 @@ function destroyWallEffect()
   h:get_handle_by_id(idWall)
   h:destroy()
   
-    --Reproducimos sonido
-  	p:play_sound("event:/OnBreakWall", 1.0, false)
+  --Reproducimos sonido y vibracion
+  p:play_sound("event:/OnBreakWall", 1.0, false)
+  cam:start_vibration(0.0, 0.75, 10)
+  p:exec_command("cam:stop_vibration(8)", 1.0)
   
   --Activamos fragmentos pared
   

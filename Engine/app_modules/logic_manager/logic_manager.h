@@ -123,6 +123,8 @@ public:
 		OnStep,
 		OnStepOut,
 		OnSenseVision,
+		OnStartVibration,
+		OnStopVibration,
 
 		//GUI
 		OnButtonPressed,

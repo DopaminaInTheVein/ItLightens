@@ -210,6 +210,8 @@ end
 function OnBreakWall( param )
 	p:print( "OnBreakWall: "..param.."\n" )
 	p:play_sound("event:/OnBreakWall", 1.0, false)
+	cam:start_vibration(0.0, 0.75, 10)
+	p:exec_command("cam:stop_vibration(8)", 1.0)
 end
 
 function OnDroneMoving( sound_name )
@@ -313,11 +315,15 @@ end
 function OnJumpLandMoleBaldosa( param )
 	p:print( "OnJumpLandMoleBaldosa: "..param.."\n" )
 	p:play_sound("event:/OnMoleJump", 1.0, false)
+	cam:start_vibration(0.0, 0.75, 15)
+	p:exec_command("cam:stop_vibration(10)", 0.3)
 end
 
 function OnJumpLandMoleParquet( param )
 	p:print( "OnJumpLandScientistParquet: "..param.."\n" )
 	p:play_sound("event:/OnMoleJumpParquet", 1.0, false)
+	cam:start_vibration(0.0, 0.75, 15)
+	p:exec_command("cam:stop_vibration(10)", 0.3)
 end
 
 function OnScientistJump( param )
@@ -398,6 +404,8 @@ function OnExplode_throw_bomb()
 	--explosion_particle = p:part_create(SMOKE_1, h:get_x(), h:get_y(), h:get_z(), 1)
 	--p:exec_command("explosion_particle:destroy()", 5)	
 	p:play_3d_sound("event:/OnBombExplodes", h:get_x(), h:get_y(), h:get_z(), 1.0, false, 32)
+	cam:start_vibration(0.5, 2.0, 20)
+	p:exec_command("cam:stop_vibration(10)", 1.0)
 end
 
 
@@ -680,6 +688,14 @@ end
 
 function OnStepOutScientistParquet( step )
 	-- p:print("StepOutScientist")
+end
+
+function OnStartVibration( param )
+	cam:start_vibration(0.0, 0.75, 9)
+end
+
+function OnStopVibration( param )
+	cam:stop_vibration(7.5)
 end
 
 -- GUI
