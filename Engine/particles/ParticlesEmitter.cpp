@@ -9,7 +9,7 @@
 
 
 VEC3 CParticlesEmitter::GetPosBone(int num) {
-	CEntity *player = tags_manager.getFirstHavingTag("player");
+	CEntity *player = tags_manager.getFirstHavingTag(target_pos);
 	assert(player);
 	TCompSkeleton *skel_player = player->get<TCompSkeleton>();
 	assert(skel_player);

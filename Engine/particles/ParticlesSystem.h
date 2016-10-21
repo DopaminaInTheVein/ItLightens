@@ -84,6 +84,8 @@ public:
 
 	void updateParticlesWithoutPhysx(float elapsed);
 
+VEC3 GetOffsetPosition();
+
 	void SetTargetEmitter(std::string new_target);
 
 	void ActiveParticleSystem();
