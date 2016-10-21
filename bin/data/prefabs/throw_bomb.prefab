@@ -17,5 +17,4 @@
 		radius="2.0"
 	/>
 	<bone_tracker/>
-	<particle_system file="smoke_bomb" />
 </entity>

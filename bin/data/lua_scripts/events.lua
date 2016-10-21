@@ -210,6 +210,8 @@ end
 function OnBreakWall( param )
 	p:print( "OnBreakWall: "..param.."\n" )
 	p:play_sound("event:/OnBreakWall", 1.0, false)
+	cam:start_vibration(0.0, 0.75, 10)
+	p:exec_command("cam:stop_vibration(8)", 1.0)
 end
 
 function OnDroneMoving( sound_name )
@@ -320,6 +322,8 @@ end
 function OnJumpLandMoleParquet( param )
 	p:print( "OnJumpLandScientistParquet: "..param.."\n" )
 	p:play_sound("event:/OnMoleJumpParquet", 1.0, false)
+	cam:start_vibration(0.0, 0.75, 15)
+	p:exec_command("cam:stop_vibration(10)", 0.3)
 end
 
 function OnScientistJump( param )
