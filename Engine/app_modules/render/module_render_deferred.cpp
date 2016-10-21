@@ -928,7 +928,6 @@ void CRenderDeferredModule::render() {
 	activateZ(ZCFG_DEFAULT);
 
 	ShootGuardRender();
-	MarkInteractives(VEC4(1, 1, 1, 1), "interactive", INTERACTIVE_OBJECTS);
 
 	//Render.activateBackBuffer();
 	SetOutputDeferred();
