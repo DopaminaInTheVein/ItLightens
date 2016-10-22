@@ -59,9 +59,9 @@ void CParticleSystem::onStartElement(const std::string &element, MKeyValue& atts
 	if (element == "particles_emitter") {
 		m_numParticles = atts.getInt("num_particles", 1);
 		m_particles = TParticleData(m_numParticles);
-#ifndef FINAL_BUILD
-		m_particles.id_owner = id_particle_system;
-#endif // !FINAL_BUILD
+		//#ifndef FINAL_BUILD
+		//		m_particles.id_owner = id_particle_system;
+		//#endif // !FINAL_BUILD
 
 		m_Emitter = CParticlesEmitter();
 
@@ -78,9 +78,9 @@ void CParticleSystem::onStartElement(const std::string &element, MKeyValue& atts
 		if (!m_pParticle_mesh) m_pParticle_mesh = Resources.get("textured_quad_xy_centered.mesh")->as<CMesh>();
 
 		m_Emitter.target_pos = atts.getString("target_pos", "mine");
-#ifndef FINAL_BUILD
-		m_RenderParticles.id_owner = id_particle_system;
-#endif
+		//#ifndef FINAL_BUILD
+		//		m_RenderParticles.id_owner = id_particle_system;
+		//#endif
 		m_RenderParticles.create(m_numParticles, m_pParticle_mesh);
 	}
 	if (element == "nframes") {
@@ -961,9 +961,9 @@ void CParticleSystem::renderInMenu()
 
 		if (ImGui::DragInt("Number particles", &m_numParticles, 1)) {
 			m_RenderParticles.clear();
-#ifndef FINAL_BUILD
-			m_RenderParticles.id_owner = id_particle_system;
-#endif
+			//#ifndef FINAL_BUILD
+			//			m_RenderParticles.id_owner = id_particle_system;
+			//#endif
 			m_RenderParticles.create(m_numParticles, m_pParticle_mesh);
 			SetBufferData();
 		}
@@ -976,9 +976,9 @@ void CParticleSystem::renderInMenu()
 
 			//m_Emitter.SetPosition(*m_Emitter.GetPosition()+ PhysxConversion::Vec3ToPxVec3(offset));
 			m_RenderParticles.clear();
-#ifndef FINAL_BUILD
-			m_RenderParticles.id_owner = id_particle_system;
-#endif
+			//#ifndef FINAL_BUILD
+			//			m_RenderParticles.id_owner = id_particle_system;
+			//#endif
 			m_RenderParticles.create(m_numParticles, m_pParticle_mesh);
 			SetBufferData();
 		}
@@ -1308,9 +1308,9 @@ void CParticleSystem::ShowListBones(CEntity* owner, std::vector<int>& bones_acti
 
 			//reset num_particles
 			m_RenderParticles.clear();
-#ifndef FINAL_BUILD
-			m_RenderParticles.id_owner = id_particle_system;
-#endif
+			//#ifndef FINAL_BUILD
+			//			m_RenderParticles.id_owner = id_particle_system;
+			//#endif
 			m_RenderParticles.create(m_numParticles, m_pParticle_mesh);
 			//SetBufferData();
 

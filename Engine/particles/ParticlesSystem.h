@@ -67,9 +67,9 @@ class CParticleSystem : public TCompBase, public CXMLParser {
 public:
 
 	CParticleSystem() : m_pParticleSystem(nullptr), m_pParticleValidity(nullptr) {
-#ifndef FINAL_BUILD
-		id_particle_system = next_id++;
-#endif
+		//#ifndef FINAL_BUILD
+		//		id_particle_system = next_id++;
+		//#endif
 	}
 	~CParticleSystem() {
 		stop();

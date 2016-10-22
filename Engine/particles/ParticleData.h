@@ -35,9 +35,9 @@ struct TParticleData {
 	PxU32	numParticles;
 
 	int max_frames;
-#ifndef FINAL_BUILD
-	int id_owner = 0;
-#endif
+	//#ifndef FINAL_BUILD
+	//	int id_owner = 0;
+	//#endif
 	TParticleData() : maxParticles(0), numParticles(0) {}
 
 	TParticleData(PxU32 _maxParticles)

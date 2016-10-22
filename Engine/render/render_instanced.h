@@ -20,10 +20,11 @@ struct TParticle {
 
 	//color
 	VEC4 color;
-#ifndef FINAL_BUILD
-	int id_particle = 0;
-	int id_owner = 0;
-#endif
+	//#ifndef FINAL_BUILD
+	//  Adding this throws an assert because TParticle is used to vertex declaration
+	//	int id_particle = 0;
+	//	int id_owner = 0;
+	//#endif
 };
 
 // ------------------------------
@@ -39,9 +40,9 @@ class CRenderParticlesInstanced {
 	float global_time;
 
 public:
-#ifndef FINAL_BUILD
-	int id_owner = 0;
-#endif
+	//#ifndef FINAL_BUILD
+	//	int id_owner = 0;
+	//#endif
 	bool create(size_t max_instances, const CMesh* new_instanced_mesh);
 	void update(float dt, const TParticleData& particle_data);
 	void clear();
