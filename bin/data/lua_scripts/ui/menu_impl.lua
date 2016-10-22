@@ -29,6 +29,7 @@ function OnClicked_btn_back_title( )
 end
 
 function OnClicked_btn_opt_menu( )
+	options_from = "pause"
 	p:wait_escape_cancel()
 	p:load_entities("options")
 end

@@ -89,7 +89,10 @@ end
 --Click go back
 function OnClicked_btn_opt_back( )
 	destroyOptions()
-	OnCreateGui_btn_resume() --Simulamos q se crea otra vez el boton resume del menu
+	if options_from == "pause" then
+		OnCreateGui_btn_resume() --Simulamos q se crea otra vez el boton resume del menu
+	end
+	options_from = ""
 end
 
 -- Auxiliar functions --
