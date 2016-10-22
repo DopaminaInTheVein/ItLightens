@@ -514,7 +514,7 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 		sprintf(lua_code, "OnStopVibration(\"%s\");", params.c_str());
 		break;
 	}
-	//GUI
+							//GUI
 	case (OnCreateGui): {
 		sprintf(lua_code, "OnCreateGui(\"%s\");", params.c_str());
 		break;
@@ -658,6 +658,10 @@ void CLogicManagerModule::bindHandle(SLB::Manager& m) {
 		// destroy the handler
 		.set("destroy", &SLBHandle::destroy)
 		.comment("Destroy this element")
+		// set new to the object
+		.set("set_size", &SLBHandle::setSize)
+		.comment("set size to the object")
+		.param("float: new size")
 		// set handle position function (coords)
 		.set("set_position", &SLBHandle::setPosition)
 		.comment("Sets the position of the NPC")
@@ -1078,6 +1082,7 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		.param("float: y coord of the character")
 		.param("float: z coord of the character")
 		.param("float: time to live in seconds")
+
 		// launch aim red circle
 		.set("aim_circle", &SLBPublicFunctions::addAimCircle)
 		.comment("Shows aim circle")

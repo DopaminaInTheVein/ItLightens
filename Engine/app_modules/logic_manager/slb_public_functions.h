@@ -71,6 +71,7 @@ public:
 	bool isValid();
 	SLBPosition getPos();
 	void setPos(SLBPosition);
+	void setSize(float size);
 	void setPosition(float x, float y, float z);
 	float getX();
 	float getY();
@@ -216,7 +217,7 @@ public:
 	void AIStop();
 	//void alterText(const char* id, float new_posx, float new_posy, float new_scale);
 	void removeText(const char* id);
-	void characterGlobe(const char* route, float distance, float char_x, float char_y, float char_z, float ttl, float max_distance);
+	SLBHandle characterGlobe(const char* route, float distance, float char_x, float char_y, float char_z, float ttl, float max_distance);
 	void addAimCircle(const char* id, const char* prefab, float char_x, float char_y, float char_z, float ttl);
 	void removeAimCircle(const char* id);
 	void toggleIntroState();

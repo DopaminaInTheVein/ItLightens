@@ -204,6 +204,21 @@ void SLBHandle::setPos(SLBPosition p) {
 	}
 }
 
+void SLBHandle::setSize(float size) {
+	if (real_handle.isValid()) {
+		GET_COMP(globe, real_handle, TCompFadingGlobe);
+		if (globe) {
+			globe->setWorldSize(size);
+		}
+		else {
+			GET_COMP(t, real_handle, TCompTransform);
+			if (t) {
+				t->setScaleBase(size);
+			}
+		}
+	}
+}
+
 void SLBHandle::setPosition(float x, float y, float z) {
 	const PxVec3 new_position(x, y, z);
 
@@ -985,7 +1000,7 @@ void SLBPublicFunctions::removeAimCircle(const char* id) {
 //	);
 //}
 
-void SLBPublicFunctions::characterGlobe(const char* route, float distance, float char_x, float char_y, float char_z, float ttl, float max_distance) {
+SLBHandle SLBPublicFunctions::characterGlobe(const char* route, float distance, float char_x, float char_y, float char_z, float ttl, float max_distance) {
 	auto hm = CHandleManager::getByName("entity");
 	CHandle new_hp = hm->createHandle();
 	CEntity* entity = new_hp;
@@ -1016,6 +1031,7 @@ void SLBPublicFunctions::characterGlobe(const char* route, float distance, float
 
 	new_hl.load(atts3);
 	entity->add(new_hl);
+	return SLBHandle(CHandle(entity), entity->getName());
 }
 
 void SLBPublicFunctions::toggleIntroState() {
