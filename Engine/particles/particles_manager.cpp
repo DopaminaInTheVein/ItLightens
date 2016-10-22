@@ -71,12 +71,13 @@ void CParticlesManager::AddParticlesSystem(CParticleSystem * particle_system)
 	if (to_add.isValid()) m_Particles.push_back(to_add);
 }
 void CParticlesManager::stop() {
-	for (auto p : m_Particles) {
-		SECURE_PART(p, ->stop());
-		//p->stop();
+	if (m_Particles.size() > 0) {
+		for (int i = 0; i < m_Particles.size(); i++) {
+			SECURE_PART(m_Particles[i], ->stop());
+		}
+		//if (m_pNewParticleSystem) m_pNewParticleSystem->stop();
+		m_Particles.clear();
 	}
-	//if (m_pNewParticleSystem) m_pNewParticleSystem->stop();
-	m_Particles.clear();
 }
 void CParticlesManager::DeleteParticleSytem(CParticleSystem * particle_system)
 {

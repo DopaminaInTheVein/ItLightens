@@ -101,6 +101,7 @@ void CParticleSystem::onStartElement(const std::string &element, MKeyValue& atts
 		m_Emitter.SetShape(atts.getInt("type", 0));
 		m_Emitter.m_shape_emitter.angle = atts.getFloat("angle", 45);
 		m_Emitter.m_shape_emitter.direction = atts.getPoint("direction");
+		m_Emitter.m_shape_emitter.radius = atts.getFloat("radius", 1.f);
 		m_Emitter.m_shape_emitter.max = atts.getPoint("max");
 		m_Emitter.m_shape_emitter.min = atts.getPoint("min");
 	}
@@ -307,7 +308,6 @@ void CParticleSystem::init() {
 
 #ifndef FINAL_BUILD
 	//Init editor values
-
 	CEntity *player = tags_manager.getFirstHavingTag("player");
 	if (!player)
 		return;
@@ -340,12 +340,16 @@ void CParticleSystem::init() {
 #endif
 	m_pParticle_mesh = Resources.get("textured_quad_xy_centered.mesh")->as<CMesh>();
 	g_particlesManager->AddParticlesSystem(this);
+
+	m_pParticleSystem->setParticleBaseFlag(PxParticleBaseFlag::eCOLLISION_WITH_DYNAMIC_ACTORS, false);
+	m_pParticleSystem->setParticleBaseFlag(PxParticleBaseFlag::eCOLLISION_TWOWAY, false);
+	m_pParticleSystem->setParticleBaseFlag(PxParticleBaseFlag::ePER_PARTICLE_COLLISION_CACHE_HINT, false);
 }
 
 void CParticleSystem::stop() {
 	m_particles.clear();
 	m_RenderParticles.clear();
-	if (m_pParticleSystem) m_pParticleSystem->releaseParticles();
+	//if (m_pParticleSystem) m_pParticleSystem->releaseParticles(); //TODO: descomentar y arreglar bug!
 	PX_SAFE_RELEASE(m_pParticleSystem);
 	PX_SAFE_RELEASE(m_pIndexPool);
 	list_bones.clear();

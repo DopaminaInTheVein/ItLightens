@@ -20,7 +20,7 @@
 	angle="45"
 	max="0.500000 0.500000 0.500000"
 	min="-0.500000 -0.500000 -0.500000"
-	radius="1"
+	radius="5"
 	type="2"
 	/>
 <position
@@ -36,7 +36,7 @@
 	/>
 <size
 	modifier="-1"
-	value="0.5"
+	value="2.0"
 	/>
 <lifetime
 	max_rand="0.2"
