@@ -152,6 +152,7 @@ bool CApp::start() {
 	io->mouse.toggle();
 
 	imgui->StartLightEditor(); //need to be created after entities
+	imgui->StartMessagesEditor();
 
 	GameController->SetGameState(CGameController::RUNNING);
 
