@@ -1,5 +1,6 @@
 <entities>
 <entity>
+<gui/>
 <tags
    tags="loading"/>
 <name
@@ -14,6 +15,7 @@
 
 </entity>
 <entity>
+<gui/>
 <tags
    tags="loading"/>
 <name

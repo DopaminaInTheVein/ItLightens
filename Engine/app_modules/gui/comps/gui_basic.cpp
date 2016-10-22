@@ -4,10 +4,13 @@
 #include "render\draw_utils.h"
 #include "components\comp_transform.h"
 #include "components\entity.h"
+#include "components\comp_loading_screen.h"
 #include "gui_cursor.h"
 #include "../gui.h"
 
 #include "app_modules/lang_manager/lang_manager.h"
+#include "app_modules/logic_manager/logic_manager.h"
+#include "app_modules/gui/comps/gui_selector.h"
 
 using namespace std;
 
@@ -19,6 +22,11 @@ void TCompGui::onCreate(const TMsgEntityCreated&)
 		addGuiElement(menu_name, col, row, MY_OWNER);
 	}
 	RenderManager.ModifyUI();
+	GET_MY(selector, TCompGuiSelector);
+	if (selector) selector->onCreate();
+	GET_MY(loading, TCompLoadingScreen);
+	if (loading) loading->onCreate();
+	logic_manager->throwEvent(CLogicManagerModule::EVENT::OnCreateGui, MY_NAME, MY_OWNER);
 }
 
 void TCompGui::setRenderTarget(float rs_target, float speed = FLT_MAX)

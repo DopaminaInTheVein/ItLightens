@@ -458,17 +458,17 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(player_controller, TMsgDifficultyChanged, onDifficultyChanged);
 
 	//Gui
-	SUBSCRIBE(TCompGui, TMsgEntityCreated, onCreate);
+	SUBSCRIBE(TCompGui, TMsgEntityCreated, onCreate); //Este onCreate se encarga de llamar al resto de creates de gui!
+	//SUBSCRIBE(TCompGuiSelector, TMsgEntityCreated, onCreate);
+	//SUBSCRIBE(TCompLoadingScreen, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompGuiCursor, TMsgOverButton, onButton);
 	SUBSCRIBE(TCompGuiCursor, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompGuiButton, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompGuiButton, TMsgClicked, onClick);
 	SUBSCRIBE(TCompGuiButton, TMsgGuiSetListener, onSetListener);
 
-	SUBSCRIBE(TCompGuiSelector, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompGuiSelector, TMsgGuiNotify, onGuiNotify);
 	//SUBSCRIBE(TCompGuiSelector, TMsgLanguageChanged, onLanguageChanged);
-	SUBSCRIBE(TCompLoadingScreen, TMsgEntityCreated, onCreate);
 
 	SUBSCRIBE(TCompGuiDrag, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompText, TMsgLanguageChanged, onLanguageChanged);

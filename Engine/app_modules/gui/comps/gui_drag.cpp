@@ -34,7 +34,6 @@ void TCompGuiDrag::onCreate(const TMsgEntityCreated&) {
 	AddDragStates();
 	my_pos = myTransform->getPosition();
 	AddDragItem();
-	logic_manager->throwEvent(CLogicManagerModule::EVENT::OnCreateGui, MY_NAME, MY_OWNER);
 	// Add side arrows
 }
 

@@ -33,14 +33,14 @@ bool TCompGuiSelector::load(MKeyValue& atts)
 }
 
 // onCreate
-void TCompGuiSelector::onCreate(const TMsgEntityCreated&) {
+void TCompGuiSelector::onCreate() {
 	getUpdateInfo();
 	options = VHandles();
 	cur_option = 0;
 	AddSelectorStates();
 	my_pos = myTransform->getPosition();
 	AddArrows();
-	logic_manager->throwEvent(CLogicManagerModule::EVENT::OnCreateGui, MY_NAME, MY_OWNER);
+	//logic_manager->throwEvent(CLogicManagerModule::EVENT::OnCreateGui, MY_NAME, MY_OWNER);
 	// Add side arrows
 }
 
@@ -178,6 +178,7 @@ void TCompGuiSelector::renderInMenu()
 
 int TCompGuiSelector::AddOption(string option)
 {
+	getUpdateInfo();
 	int res = options.size();
 
 	CHandle h_option = createPrefab("ui/text");
@@ -198,6 +199,7 @@ int TCompGuiSelector::AddOption(string option)
 
 void TCompGuiSelector::onGuiNotify(const TMsgGuiNotify& msg)
 {
+	getUpdateInfo();
 	if (options.size() == 0) {
 		assert(false);
 		return;
@@ -226,6 +228,7 @@ void TCompGuiSelector::onGuiNotify(const TMsgGuiNotify& msg)
 
 void TCompGuiSelector::SelectOption(int id)
 {
+	getUpdateInfo();
 	setTextVisible(cur_option, false);
 	cur_option = clamp(id, 0, options.size());
 	assert(id == cur_option);

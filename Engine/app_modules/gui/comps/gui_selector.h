@@ -59,7 +59,8 @@ public:
 	void Over();
 
 	//Messages
-	void onCreate(const TMsgEntityCreated&);
+	//void onCreate(const TMsgEntityCreated&);
+	void onCreate();
 	void onGuiNotify(const TMsgGuiNotify&);
 	//void onLanguageChanged(const TMsgLanguageChanged&);
 
