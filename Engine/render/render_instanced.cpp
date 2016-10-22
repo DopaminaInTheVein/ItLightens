@@ -35,10 +35,10 @@ bool CRenderParticlesInstanced::create(size_t n, const CMesh* instanced) {
 		p.max_frames = 1.f;
 		p.nframe = random(0, 15);
 		p.color = VEC4(1.0f, 1.0f, 1.0f, 1.0f);
-#ifndef FINAL_BUILD
-		p.id_owner = id_owner;
-		p.id_particle = idx;
-#endif
+		//#ifndef FINAL_BUILD
+		//		p.id_owner = id_owner;
+		//		p.id_particle = idx;
+		//#endif
 		++idx;
 	}
 
@@ -85,13 +85,13 @@ void CRenderParticlesInstanced::update(float elapsed, const TParticleData& parti
 	if (particle_data.indexBuffer.size() != instances.size()) return;
 	int size = instances.size();
 	assert(size > 0);
-	int idx = 0;
-	dbg("Particles update: %d\n", id_owner);
+	//int idx = 0;
+	//dbg("Particles update: %d\n", id_owner);
 	//for (auto p = instances.begin(); idx < size/*p != instances.end()*/; p++) {
-	for (int i = 0; idx < size; idx++) {
-		dbg("[real id: %d] ", idx);
+	for (int idx = 0; idx < size; idx++) {
+		//dbg("[real id: %d] ", idx);
 		auto p = &instances[idx];
-		dbg("Part update -> Id:%d, par_id:%d\n", p->id_owner, p->id_particle);
+		//dbg("Part update -> Id:%d, par_id:%d\n", p->id_owner, p->id_particle);
 		p->nframe += elapsed;
 
 		p->color = particle_data.colorBuffer[idx];
