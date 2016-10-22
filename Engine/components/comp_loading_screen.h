@@ -33,7 +33,7 @@ public:
 	//void printLetters() const;
 	//void updateLetters(bool loaded) const;
 	void renderInMenu();
-	void onCreate(const TMsgEntityCreated&);
+	void onCreate();
 };
 
 #endif

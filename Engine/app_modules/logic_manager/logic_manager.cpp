@@ -63,19 +63,42 @@ void CLogicManagerModule::update(float dt) {
 	}
 	command_queue_to_add.clear();
 
-	if (exec_wait) {
-		const char* copy_code = command_wait.code;
-		exec_wait = false;
-		command_wait.code = "";
+	//Exec wait
+	updateWait(command_wait, exec_wait, controller->IsBackPressed());
+	updateWait(command_wait_escape, exec_wait_escape, controller->IsEscapePressed());
+	//if (exec_wait) {
+	//	const char* copy_code = command_wait.code;
+	//	exec_wait = false;
+	//	command_wait.code = "";
+	//	slb_script.doString(copy_code);
+	//}
+	//else if (controller->IsBackPressed()) {
+	//	if (command_wait.code != "") {
+	//		if (!command_wait.only_runtime ||
+	//			GameController->GetGameState() == CGameController::RUNNING ||
+	//			GameController->GetGameState() == CGameController::SPECIAL_ACTION)
+	//		{
+	//			exec_wait = true;
+	//		}
+	//	}
+	//}
+}
+
+void CLogicManagerModule::updateWait(command& c, bool& exec, bool condition)
+{
+	if (exec) {
+		const char* copy_code = c.code;
+		exec = false;
+		c.code = "";
 		slb_script.doString(copy_code);
 	}
-	else if (controller->IsBackPressed()) {
-		if (command_wait.code != "") {
-			if (!command_wait.only_runtime ||
+	else if (condition) {
+		if (c.code != "") {
+			if (!c.only_runtime ||
 				GameController->GetGameState() == CGameController::RUNNING ||
 				GameController->GetGameState() == CGameController::SPECIAL_ACTION)
 			{
-				exec_wait = true;
+				exec = true;
 			}
 		}
 	}
@@ -931,6 +954,16 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		.set("wait_button", &SLBPublicFunctions::waitButton)
 		.comment("Executes the specified command after press button")
 		.param("string: code to execute")
+		// cancel command function
+		.set("wait_escape", &SLBPublicFunctions::waitEscape)
+		.comment("Executes the specified command after press escape/back button")
+		.param("string: code to execute")
+		// cancel command function
+		.set("wait_button_cancel", &SLBPublicFunctions::cancelWaitButton)
+		.comment("Cancel wait command")
+		// cancel command function escape
+		.set("wait_escape_cancel", &SLBPublicFunctions::cancelWaitEscape)
+		.comment("Cancel wait escape command")
 		// basic print function
 		.set("print", &SLBPublicFunctions::print)
 		.comment("Prints via VS console")
@@ -1185,4 +1218,9 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		.param("float: y")
 		.param("float: z")
 		.param("int: 0,1,2 --> paused, active, loop");
+}
+
+command::command(const char* c) {
+	code = c;
+	only_runtime = GameController->GetGameState() == CGameController::RUNNING;
 }

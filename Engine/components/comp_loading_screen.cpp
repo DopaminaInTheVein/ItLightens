@@ -28,7 +28,7 @@ bool TCompLoadingScreen::load(MKeyValue& atts)
 	return true;
 }
 
-void TCompLoadingScreen::onCreate(const TMsgEntityCreated&) {
+void TCompLoadingScreen::onCreate() {
 	//text = "";
 	//for (int i = 0; i < 100; i++) {
 	//	text += "g";
