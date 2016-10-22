@@ -111,7 +111,7 @@ struct CRenderManager::sortByTechDistance
 		VEC3 cam_pos = cam->getPosition();
 
 		GET_COMP(t_k1, h_k1, TCompTransform);
-		GET_COMP(t_k2, h_k1, TCompTransform);
+		GET_COMP(t_k2, h_k2, TCompTransform);
 		if (!t_k1 || !t_k2)
 			return 0;
 

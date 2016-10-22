@@ -22,6 +22,10 @@ void TCompLife::update(float elapsed) {
 
 		else if (currentlife > maxlife)
 			currentlife = maxlife;
+
+		if (GameController->IsCheatGodModeActivated()) {
+			currentlife = maxlife;
+		}
 	}
 
 	shader_ctes_globals.current_life_player = currentlife;

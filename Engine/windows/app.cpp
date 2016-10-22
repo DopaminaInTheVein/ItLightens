@@ -144,7 +144,6 @@ void CApp::generateFrame() {
 	PROFILE_FRAME_BEGINS();
 	PROFILE_FUNCTION("generateFrame");
 	static int frame = 0;
-	dbg("-------------GENERATE FRAME %d----------------------\n", frame++);
 	float delta_time = timer_app.deltaAndReset();
 	delta_time = getDeltaTime();
 	const float max_delta_time = 5.f / 60.f;      // 5 frames
