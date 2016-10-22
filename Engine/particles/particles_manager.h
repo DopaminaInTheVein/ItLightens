@@ -5,7 +5,7 @@
 #include "ParticlesSystem.h"
 
 class CParticlesManager : public IAppModule {
-	std::vector<CParticleSystem*>		m_Particles;
+	VHandles		m_Particles;
 
 	const CRenderTechnique*			m_pTechniqueParticles;
 	bool								m_particleEditor;
@@ -14,13 +14,7 @@ class CParticlesManager : public IAppModule {
 
 public:
 	virtual bool start();
-	virtual void stop() {
-		for (auto& p : m_Particles) {
-			p->stop();
-		}
-		//if (m_pNewParticleSystem) m_pNewParticleSystem->stop();
-		m_Particles.clear();
-	}
+	virtual void stop();
 	virtual void update(float dt);
 
 	//call render for each particle

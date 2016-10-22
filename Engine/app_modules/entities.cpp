@@ -719,9 +719,6 @@ void CEntitiesModule::update(float dt) {
 		//Look Target
 		getHandleManager<TCompLookTarget>()->updateAll(dt);
 
-		//particles
-		getHandleManager<CParticleSystem>()->updateAll(dt);
-
 		getHandleManager<TCompBoxSpawner>()->updateAll(dt);
 		getHandleManager<TCompBoxDestructor>()->updateAll(dt);
 

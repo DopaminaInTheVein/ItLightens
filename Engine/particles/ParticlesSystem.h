@@ -60,20 +60,22 @@ class CParticleSystem : public TCompBase, public CXMLParser {
 	std::string  tex_particles_path;
 
 	void UpdateRandomsAttr();
+#ifndef FINAL_BUILD
+	static int next_id;
+	int id_particle_system;
+#endif
 public:
 
-	CParticleSystem() : m_pParticleSystem(nullptr), m_pParticleValidity(nullptr) {}
-	~CParticleSystem() {}
-
-	void stop() {
-		m_particles.clear();
-		m_RenderParticles.clear();
-		if (m_pParticleSystem) m_pParticleSystem->releaseParticles();
-		PX_SAFE_RELEASE(m_pParticleSystem);
-		PX_SAFE_RELEASE(m_pIndexPool);
-		list_bones.clear();
-		offset_bones.clear();
+	CParticleSystem() : m_pParticleSystem(nullptr), m_pParticleValidity(nullptr) {
+#ifndef FINAL_BUILD
+		id_particle_system = next_id++;
+#endif
 	}
+	~CParticleSystem() {
+		stop();
+	}
+
+	void stop();
 	void setLoop(bool b) { loop = b; }
 
 	void render() {}	//not used
