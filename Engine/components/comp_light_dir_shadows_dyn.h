@@ -10,6 +10,8 @@ class CRenderToTexture;
 struct TCompLightDirShadowsDynamic : public TCompLightDirShadows {
 	VEC3 last_position_target = VEC3(0, 0, 0);
 
+	bool is_inRoom = true;
+
 	bool save(std::ofstream & os, MKeyValue & atts);
 	void init();
 	void update(float dt);
@@ -21,6 +23,10 @@ struct TCompLightDirShadowsDynamic : public TCompLightDirShadows {
 	void setNewFov(float fov_in_rads);
 
 	void activate();
+
+	bool isInRoom() const {
+		return is_inRoom;
+	}
 
 	//Editor
 	TCompLightDirShadowsDynamic* original = nullptr;

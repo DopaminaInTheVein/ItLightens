@@ -25,6 +25,8 @@ bool TCompLightDirShadows::load(MKeyValue& atts) {
 
 	enabled = atts.getBool("enabled", true);
 
+	
+
 	return is_ok;
 }
 bool TCompLightDirShadows::save(std::ofstream& os, MKeyValue& atts) {

@@ -12,6 +12,7 @@ void TCompLightDirShadowsDynamic::init() {
 	debug_render = true;
 	CHandle owner = CHandle(this).getOwner();
 	updateFromEntityTransform(owner);
+	is_inRoom = true;
 }
 
 void TCompLightDirShadowsDynamic::update(float dt) {
@@ -19,6 +20,16 @@ void TCompLightDirShadowsDynamic::update(float dt) {
 	CHandle owner = CHandle(this).getOwner();
 	CHandle player = CPlayerBase::handle_player;
 	GET_COMP(t_player, player, TCompTransform);
+
+	//check if component same room as player
+	CEntity *e = owner;
+	if (!e) return;
+	TCompRoom* cam_room = e->get<TCompRoom>();
+
+	is_inRoom = ROOM_IS_IN(cam_room, SBB::readSala());
+
+	if (!is_inRoom) return;
+
 	if (t_player) {
 		VEC3 target = t_player->getPosition();
 		if (last_position_target != target)
@@ -29,6 +40,7 @@ void TCompLightDirShadowsDynamic::update(float dt) {
 
 void TCompLightDirShadowsDynamic::activate() {
 	PROFILE_FUNCTION("shadows: activate");
+	if (!is_inRoom) return;
 	if (!enabled) return;
 	CHandle owner = CHandle(this).getOwner();
 	activateWorldMatrix(getViewProjection().Invert());
@@ -45,11 +57,18 @@ bool TCompLightDirShadowsDynamic::save(std::ofstream& os, MKeyValue& atts) {
 void TCompLightDirShadowsDynamic::generateShadowMap() {
 	if (!enabled)
 		return;
+	
+	if (!is_inRoom) return;
+
 	assert(rt_shadows);
 
+	PROFILE_FUNCTION("shadows: generateShadowMap");
+
 	// Vamos a empezar a pintar en el shadow map
-	rt_shadows->activateRT();
 	rt_shadows->clearZ();
+	//rt_shadows->setZ(rt_shadows_base->getZ(), rt_shadows_base->getRT());
+	//
+	rt_shadows->activateRT();
 	activateRS(RSCFG_SHADOWS);
 
 	// Desde MI punto de vista, el pt de vista de la luz direccional
@@ -60,7 +79,7 @@ void TCompLightDirShadowsDynamic::generateShadowMap() {
 	Resources.get("shadow_gen.tech")->as<CRenderTechnique>()->activate();
 
 	// Pintar los shadow casters
-	RenderManager.renderShadowCasters(CHandle(this).getOwner(), SBB::readSala());
+	RenderManager.renderShadowCasters(CHandle(this).getOwner(), SBB::readSala(), true);
 
 	// activar la tech de shadow map generation
 	Resources.get("shadow_gen_skin.tech")->as<CRenderTechnique>()->activate();

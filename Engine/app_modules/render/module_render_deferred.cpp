@@ -174,6 +174,10 @@ void CRenderDeferredModule::update(float dt) {
 		test_dream_shader = !test_dream_shader;
 	}
 
+	if (io->keys[VK_F6].becomesPressed()) {
+		generateStaticShadowMaps();
+	}
+
 	//m_isSpecialVisionActive = tags_manager.getFirstHavingTag(getID("player")).hasTag("raijin") && controller->IsSenseButtonPressed();
 	m_isSpecialVisionActive = GameController->isSenseVisionEnabled();
 	//if (controller->SenseButtonBecomesPressed()) {
@@ -342,9 +346,11 @@ void CRenderDeferredModule::addDirectionalLightsShadows() {
 		// la world para la mesh y las constantes en el pixel shader
 		PROFILE_FUNCTION("upload shadow dir");
 
-		c->activate();
-		// Pintar la mesh que hemos activado hace un momento
-		mesh->render();
+		if (c->isInRoom()) {
+			c->activate();
+			// Pintar la mesh que hemos activado hace un momento
+			mesh->render();
+		}
 	});
 
 	CTexture::deactivate(TEXTURE_SLOT_SHADOWMAP);
@@ -553,7 +559,8 @@ void CRenderDeferredModule::generateShadowMaps() {
 		// la world para la mesh y las constantes en el pixel shader
 		PROFILE_FUNCTION("check gen shadow");
 
-		c->generateShadowMap();
+		if(c->isInRoom()) 
+			c->generateShadowMap();
 	});
 }
 
