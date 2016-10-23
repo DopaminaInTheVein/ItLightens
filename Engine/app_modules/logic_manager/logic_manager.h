@@ -8,6 +8,8 @@
 #include "SLB\SLB.hpp"
 
 struct command {
+	command() {};
+	command(const char* c);
 	const char* code = "";
 	float execution_time = 0.f;
 	bool only_runtime = false;
@@ -20,7 +22,9 @@ class CLogicManagerModule : public IAppModule
 	std::deque<command> command_queue;
 	std::deque<command> command_queue_to_add;
 	command command_wait;
-	bool exec_wait = false;;
+	command command_wait_escape;
+	bool exec_wait = false;
+	bool exec_wait_escape = false;
 
 	CHandle caller_handle;
 
@@ -140,6 +144,7 @@ public:
 	CLogicManagerModule();
 	bool start() override;
 	void update(float dt) override;
+	void updateWait(command& c, bool& exec, bool condition);
 	void resetTimers();
 	void reloadFile(std::string filename);
 	void stop() override;
@@ -160,6 +165,10 @@ public:
 	void setWait(command com) {
 		command_wait = com;
 		exec_wait = false;
+	}
+	void setWaitEscape(command com) {
+		command_wait_escape = com;
+		exec_wait_escape = false;
 	}
 
 	// module specific functions

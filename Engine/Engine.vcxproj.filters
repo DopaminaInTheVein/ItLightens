@@ -602,6 +602,9 @@
     <ClCompile Include="imgui\imgui_user.cpp">
       <Filter>app_modules\imgui</Filter>
     </ClCompile>
+    <ClCompile Include="Editors\editor_messages.cpp">
+      <Filter>Editors</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -1556,6 +1559,9 @@
     </ClInclude>
     <ClInclude Include="imgui\imgui_user.h">
       <Filter>app_modules\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Editors\editor_messages.h">
+      <Filter>Editors</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

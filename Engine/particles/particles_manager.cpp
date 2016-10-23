@@ -5,12 +5,15 @@
 #include "render/render_instanced.h"
 #include "render/draw_utils.h"
 #include "render/mesh.h"
-#include "components\entity.h"
+#include "components/entity.h"
+#include "handle/handle.h"
 #include "resources/resources_manager.h"
 #include "components\comp_name.h"
 
 #include "app_modules\imgui\module_imgui.h"
 #include "components\entity_parser.h"
+
+#define SECURE_PART(handle, code) if (handle.isValid()) { ((CParticleSystem*)handle)##code;}
 
 CParticlesManager *g_particlesManager;
 bool CParticlesManager::start()
@@ -32,8 +35,11 @@ bool CParticlesManager::start()
 
 void CParticlesManager::update(float dt)
 {
-	for (auto& particles : m_Particles) {
-		particles->update(dt);
+	for (auto particles : m_Particles) {
+		SECURE_PART(particles, ->update(dt));
+		if (particles.isValid()) {
+			((CParticleSystem*)particles)->update(dt);
+		}
 	}
 #ifndef FINAL_BUILD
 	if (controller->isParticleEditorActivationPressed()) {
@@ -51,7 +57,8 @@ void CParticlesManager::renderParticles()
 	activateZ(ZCFG_TEST_BUT_NO_WRITE);
 
 	for (auto& particles : m_Particles) {
-		particles->renderParticles();
+		SECURE_PART(particles, ->renderParticles());
+		//particles->renderParticles();
 	}
 
 	activateZ(ZCFG_ALL_DISABLED);
@@ -60,11 +67,22 @@ void CParticlesManager::renderParticles()
 
 void CParticlesManager::AddParticlesSystem(CParticleSystem * particle_system)
 {
-	m_Particles.push_back(particle_system);
+	CHandle to_add = CHandle(particle_system);
+	if (to_add.isValid()) m_Particles.push_back(to_add);
 }
-
+void CParticlesManager::stop() {
+	if (m_Particles.size() > 0) {
+		for (int i = 0; i < m_Particles.size(); i++) {
+			SECURE_PART(m_Particles[i], ->stop());
+		}
+		//if (m_pNewParticleSystem) m_pNewParticleSystem->stop();
+		m_Particles.clear();
+	}
+}
 void CParticlesManager::DeleteParticleSytem(CParticleSystem * particle_system)
 {
+	CHandle to_remove = CHandle(particle_system);
+	if (to_remove.isValid()) removeFromVector(m_Particles, to_remove);
 }
 
 void CParticlesManager::RenderParticlesEditor()
@@ -161,7 +179,7 @@ void CParticlesManager::renderInMenu()
 				name = "default name";
 			}
 			if (ImGui::TreeNode(name.c_str())) {
-				p->renderInMenu();
+				SECURE_PART(p, ->renderInMenu());
 				ImGui::TreePop();
 			}
 		}

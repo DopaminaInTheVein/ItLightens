@@ -204,6 +204,21 @@ void SLBHandle::setPos(SLBPosition p) {
 	}
 }
 
+void SLBHandle::setSize(float size) {
+	if (real_handle.isValid()) {
+		GET_COMP(globe, real_handle, TCompFadingGlobe);
+		if (globe) {
+			globe->setWorldSize(size);
+		}
+		else {
+			GET_COMP(t, real_handle, TCompTransform);
+			if (t) {
+				t->setScaleBase(size);
+			}
+		}
+	}
+}
+
 void SLBHandle::setPosition(float x, float y, float z) {
 	const PxVec3 new_position(x, y, z);
 
@@ -754,13 +769,21 @@ void SLBPublicFunctions::execCommand(const char* exec_code, float exec_time) {
 }
 void SLBPublicFunctions::waitButton(const char* exec_code) {
 	// create the new command
-	command new_command;
-	new_command.code = exec_code;
-	new_command.only_runtime = GameController->GetGameState() == CGameController::RUNNING;
-	// add the new command to the queue
-	//logic_manager->getCommandQueue()->push_back(new_command);
+	command new_command(exec_code);
 	logic_manager->setWait(new_command);
 }
+void SLBPublicFunctions::waitEscape(const char* exec_code) {
+	// create the new command
+	command new_command(exec_code);
+	logic_manager->setWaitEscape(new_command);
+}
+void SLBPublicFunctions::cancelWaitButton() {
+	logic_manager->setWait(command());
+}
+void SLBPublicFunctions::cancelWaitEscape() {
+	logic_manager->setWaitEscape(command());
+}
+
 void SLBPublicFunctions::print(const char* to_print) {
 	Debug->LogWithTag("LUA", "%s\n", to_print);
 }
@@ -985,7 +1008,7 @@ void SLBPublicFunctions::removeAimCircle(const char* id) {
 //	);
 //}
 
-void SLBPublicFunctions::characterGlobe(const char* route, float distance, float char_x, float char_y, float char_z, float ttl, float max_distance) {
+SLBHandle SLBPublicFunctions::characterGlobe(const char* route, float distance, float char_x, float char_y, float char_z, float ttl, float max_distance) {
 	auto hm = CHandleManager::getByName("entity");
 	CHandle new_hp = hm->createHandle();
 	CEntity* entity = new_hp;
@@ -1016,6 +1039,7 @@ void SLBPublicFunctions::characterGlobe(const char* route, float distance, float
 
 	new_hl.load(atts3);
 	entity->add(new_hl);
+	return SLBHandle(CHandle(entity), entity->getName());
 }
 
 void SLBPublicFunctions::toggleIntroState() {
@@ -1131,18 +1155,16 @@ void SLBPublicFunctions::unforceSenseVision() {
 	}
 }
 
-SLBHandle SLBPublicFunctions::createParticles(const char* name, float x, float y, float z, int enabled)
+SLBHandle SLBPublicFunctions::create(const char* name, float x, float y, float z)
 {
-	CHandle h = createPrefab("particles_default.prefab");
-	GET_COMP(part, h, CParticleSystem);
-	if (part) part->loadFromFile(std::string(name));
+	CHandle h = createPrefab(name);
 	GET_COMP(tmx, h, TCompTransform);
 	if (tmx) tmx->setPosition(VEC3(x, y, z));
-	if (part && enabled == 1) part->ActiveParticleSystem();
-	if (part && enabled == 2) part->setLoop(false);
 	std::string e_name = "unnamed";
 	CEntity* e = h;
 	if (e) e_name = e->getName();
+	GET_COMP(part, h, CParticleSystem);
+	if (part) part->init();
 	return SLBHandle(h, e_name);
 }
 

@@ -20,6 +20,7 @@ typedef DirectX::BoundingBox AABB;
 #define VEC3_RIGHT VEC3(1.f, 0.f, 0.f)
 #define VEC3_FRONT VEC3(0.f, 0.f, 1.f)
 #define VEC3_BACK VEC3(0.f, 0.f, -1.f)
+#define VEC3_FROM_VALUE(v) (VEC3(v, v, v))
 
 #include "angular.h"
 #include "transform.h"

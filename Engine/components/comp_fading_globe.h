@@ -53,6 +53,8 @@ public:
 	void update(float elapsed);
 	void render() const;
 	bool load(MKeyValue& atts);
+	void setWorldSize(float new_size_world) { size_world = new_size_world; }
+	float getWorldSize() { return size_world; }
 };
 
 #endif

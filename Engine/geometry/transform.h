@@ -144,6 +144,11 @@ public:
 		scale = new_scale;
 		mat_changed = true;
 	}
+	void setScaleBase(float new_scale) {
+		scale_base = VEC3_FROM_VALUE(new_scale);
+		scale = scale_base;
+		mat_changed = true;
+	}
 	void setRotation(CQuaternion new_rotation) {
 		rotation = new_rotation;
 		rotation.Normalize();

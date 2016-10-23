@@ -23,6 +23,10 @@
 
 CParticleSystem::CachedParticles CParticleSystem::compiled_particles = CParticleSystem::CachedParticles();
 
+#ifndef FINAL_BUILD
+int CParticleSystem::next_id = 1;
+#endif
+
 PxVec3 mulPxVec3(PxVec3 a, PxVec3 b) {
 	PxVec3 ret;
 	ret.x = a.x * b.x;
@@ -39,9 +43,7 @@ void CParticleSystem::renderParticles()
 
 bool CParticleSystem::load(MKeyValue & atts)
 {
-	std::string default_path = std::string(DEFAULT_PARTICLES_FILE) + ".particles";
-	std::string file_particles = BASE_PATH;
-	file_particles += atts.getString("file", default_path.c_str());
+	std::string file_particles = atts.getString("file", "");
 	return loadFromFile(file_particles);
 }
 
@@ -57,6 +59,10 @@ void CParticleSystem::onStartElement(const std::string &element, MKeyValue& atts
 	if (element == "particles_emitter") {
 		m_numParticles = atts.getInt("num_particles", 1);
 		m_particles = TParticleData(m_numParticles);
+		//#ifndef FINAL_BUILD
+		//		m_particles.id_owner = id_particle_system;
+		//#endif // !FINAL_BUILD
+
 		m_Emitter = CParticlesEmitter();
 
 		//if(m_RenderParticles.){
@@ -72,7 +78,9 @@ void CParticleSystem::onStartElement(const std::string &element, MKeyValue& atts
 		if (!m_pParticle_mesh) m_pParticle_mesh = Resources.get("textured_quad_xy_centered.mesh")->as<CMesh>();
 
 		m_Emitter.target_pos = atts.getString("target_pos", "mine");
-
+		//#ifndef FINAL_BUILD
+		//		m_RenderParticles.id_owner = id_particle_system;
+		//#endif
 		m_RenderParticles.create(m_numParticles, m_pParticle_mesh);
 	}
 	if (element == "nframes") {
@@ -93,6 +101,7 @@ void CParticleSystem::onStartElement(const std::string &element, MKeyValue& atts
 		m_Emitter.SetShape(atts.getInt("type", 0));
 		m_Emitter.m_shape_emitter.angle = atts.getFloat("angle", 45);
 		m_Emitter.m_shape_emitter.direction = atts.getPoint("direction");
+		m_Emitter.m_shape_emitter.radius = atts.getFloat("radius", 1.f);
 		m_Emitter.m_shape_emitter.max = atts.getPoint("max");
 		m_Emitter.m_shape_emitter.min = atts.getPoint("min");
 	}
@@ -228,6 +237,8 @@ void CParticleSystem::SetBufferData() {
 }
 
 void CParticleSystem::init() {
+	if (m_initialized) return;
+	m_initialized = true;
 	/*m_numParticles = 1;
 	m_numberFrames = 1;
 	int max_particles = 1;
@@ -297,7 +308,6 @@ void CParticleSystem::init() {
 
 #ifndef FINAL_BUILD
 	//Init editor values
-
 	CEntity *player = tags_manager.getFirstHavingTag("player");
 	if (!player)
 		return;
@@ -328,9 +338,23 @@ void CParticleSystem::init() {
 	//delete vector_bones;
 
 #endif
-
 	m_pParticle_mesh = Resources.get("textured_quad_xy_centered.mesh")->as<CMesh>();
 	g_particlesManager->AddParticlesSystem(this);
+
+	m_pParticleSystem->setParticleBaseFlag(PxParticleBaseFlag::eCOLLISION_WITH_DYNAMIC_ACTORS, false);
+	m_pParticleSystem->setParticleBaseFlag(PxParticleBaseFlag::eCOLLISION_TWOWAY, false);
+	m_pParticleSystem->setParticleBaseFlag(PxParticleBaseFlag::ePER_PARTICLE_COLLISION_CACHE_HINT, false);
+}
+
+void CParticleSystem::stop() {
+	m_particles.clear();
+	m_RenderParticles.clear();
+	//if (m_pParticleSystem) m_pParticleSystem->releaseParticles(); //TODO: descomentar y arreglar bug!
+	PX_SAFE_RELEASE(m_pParticleSystem);
+	PX_SAFE_RELEASE(m_pIndexPool);
+	list_bones.clear();
+	offset_bones.clear();
+	g_particlesManager->DeleteParticleSytem(this);
 }
 
 bool CParticleSystem::CreateParticles(TParticleData& particles) {
@@ -875,8 +899,11 @@ void CParticleSystem::saveToFile(std::string fileName)
 	fb.close();
 }
 
-bool CParticleSystem::loadFromFile(std::string file_particles)
+bool CParticleSystem::loadFromFile(std::string filename)
 {
+	if (filename == "") filename = std::string(DEFAULT_PARTICLES_FILE) + ".particles";
+	std::string file_particles = BASE_PATH + filename;
+
 	m_Emitter = CParticlesEmitter();
 	auto it = compiled_particles.find(file_particles);
 	if (it == compiled_particles.end()) {
@@ -903,6 +930,7 @@ bool CParticleSystem::loadFromFile(std::string file_particles)
 
 void CParticleSystem::renderInMenu()
 {
+	ImGui::Text("ID: %d\n", id_particle_system);
 	ImGui::Text("num particles: %d\n", m_numParticles);
 
 	ImGui::Separator();
@@ -937,6 +965,9 @@ void CParticleSystem::renderInMenu()
 
 		if (ImGui::DragInt("Number particles", &m_numParticles, 1)) {
 			m_RenderParticles.clear();
+			//#ifndef FINAL_BUILD
+			//			m_RenderParticles.id_owner = id_particle_system;
+			//#endif
 			m_RenderParticles.create(m_numParticles, m_pParticle_mesh);
 			SetBufferData();
 		}
@@ -949,6 +980,9 @@ void CParticleSystem::renderInMenu()
 
 			//m_Emitter.SetPosition(*m_Emitter.GetPosition()+ PhysxConversion::Vec3ToPxVec3(offset));
 			m_RenderParticles.clear();
+			//#ifndef FINAL_BUILD
+			//			m_RenderParticles.id_owner = id_particle_system;
+			//#endif
 			m_RenderParticles.create(m_numParticles, m_pParticle_mesh);
 			SetBufferData();
 		}
@@ -1278,6 +1312,9 @@ void CParticleSystem::ShowListBones(CEntity* owner, std::vector<int>& bones_acti
 
 			//reset num_particles
 			m_RenderParticles.clear();
+			//#ifndef FINAL_BUILD
+			//			m_RenderParticles.id_owner = id_particle_system;
+			//#endif
 			m_RenderParticles.create(m_numParticles, m_pParticle_mesh);
 			//SetBufferData();
 

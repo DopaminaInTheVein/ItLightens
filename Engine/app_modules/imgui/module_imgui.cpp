@@ -23,6 +23,7 @@
 
 //editors
 #include "Editors\editor_lights.h"
+#include "Editors\editor_messages.h"
 
 #include <Commdlg.h>
 
@@ -35,6 +36,11 @@ void CImGuiModule::StartLightEditor() {
 	m_pLights_editor = new CEditorLights;
 	m_pLights_editor->LoadLights();
 }
+//messages editor
+void CImGuiModule::StartMessagesEditor() {
+	m_pMessages_editor = new CEditorMessages;
+	m_pMessages_editor->LoadTexts();
+}
 
 ImGuiTextFilter CImGuiModule::filter = ImGuiTextFilter();
 
@@ -45,6 +51,7 @@ bool CImGuiModule::start() {
 
 void CImGuiModule::stop() {
 	delete m_pLights_editor;
+	delete m_pMessages_editor;
 	ImGui_ImplDX11_Shutdown();
 }
 
@@ -59,6 +66,7 @@ void CImGuiModule::update(float dt) {
 	ImGui::PushItemWidth(-140);                                 // Right align, keep 140 pixels for labels
 
 	m_pLights_editor->update(dt);
+	m_pMessages_editor->update(dt);
 
 	//Engine Apps
 	//---------------------------------------
@@ -71,6 +79,7 @@ void CImGuiModule::update(float dt) {
 
 			ImGui::MenuItem("Particle editor (F8)", NULL, g_particlesManager->GetParticleEditorState());
 			ImGui::MenuItem("Lights editor (F9)", NULL, m_pLights_editor->GetLightsEditorState());
+			ImGui::MenuItem("Messages editor (F10)", NULL, m_pMessages_editor->GetEditorState());
 
 			//Debug->OpenConsole();
 			ImGui::EndMenu();
@@ -144,6 +153,15 @@ void CImGuiModule::update(float dt) {
 	ImGui::Checkbox("Free camera (K)", GameController->GetFreeCameraPointer());
 	ImGui::Checkbox("Ui control", Gui->IsUiControlPointer());
 	//ImGui::Checkbox("Continous Collision Detection", &(g_PhysxManager->ccdActive));
+
+	if (ImGui::TreeNode("LUA Test")) {
+		static char test_lua_txt[256] = "OnTest();";
+		ImGui::InputTextMultiline("Test Lua", test_lua_txt, 256);
+		if (ImGui::Button("Execute")) {
+			logic_manager->throwUserEvent(test_lua_txt);
+		}
+		ImGui::TreePop();
+	}
 
 	if (ImGui::TreeNode("Gui create elements")) {
 		static VEC3 pos_new_ui = VEC3(0.5f, 0.5f, 0.9f);
@@ -411,7 +429,8 @@ void CImGuiModule::update(float dt) {
 
 	//Debug->update();		//update log
 	m_pLights_editor->RenderInMenu();
-		}
+	m_pMessages_editor->RenderInMenu();
+}
 
 void CImGuiModule::render() {
 	activateZ(ZCFG_ALL_DISABLED);

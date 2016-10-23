@@ -16,6 +16,7 @@ function OnClicked_btn_start( )
 end
 
 function OnClicked_btn_options( )
+	options_from = "title"
 	p:load_entities("options")
 end
 

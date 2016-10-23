@@ -71,6 +71,7 @@ public:
 	bool isValid();
 	SLBPosition getPos();
 	void setPos(SLBPosition);
+	void setSize(float size);
 	void setPosition(float x, float y, float z);
 	float getX();
 	float getY();
@@ -180,6 +181,9 @@ public:
 	// public functions
 	void execCommand(const char* exec_code, float exec_time);
 	void waitButton(const char* exec_code);
+	void waitEscape(const char* exec_code);
+	void cancelWaitButton();
+	void cancelWaitEscape();
 	void completeTasklist(int i);
 	void print(const char* to_print);
 	void setupGame();
@@ -216,7 +220,7 @@ public:
 	void AIStop();
 	//void alterText(const char* id, float new_posx, float new_posy, float new_scale);
 	void removeText(const char* id);
-	void characterGlobe(const char* route, float distance, float char_x, float char_y, float char_z, float ttl, float max_distance);
+	SLBHandle characterGlobe(const char* route, float distance, float char_x, float char_y, float char_z, float ttl, float max_distance);
 	void addAimCircle(const char* id, const char* prefab, float char_x, float char_y, float char_z, float ttl);
 	void removeAimCircle(const char* id);
 	void toggleIntroState();
@@ -224,7 +228,7 @@ public:
 	//void showLoadingScreen();
 	void forceSenseVision();
 	void unforceSenseVision();
-	SLBHandle SLBPublicFunctions::createParticles(const char* name, float x, float y, float z, int enabled);
+	SLBHandle SLBPublicFunctions::create(const char* name, float x, float y, float z);
 	void loadLevel(const char* level_name);
 	void saveLevel();
 	void clearSaveData();

@@ -1,14 +1,12 @@
 #ifndef INC_PARTICLE_DATA_H_
 #define	INC_PARTICLE_DATA_H_
 
-
 #include "PxPhysicsAPI.h"
 #include <vector>
 
 using namespace physx;
 
 struct TParticleData {
-
 	enum State {
 		WAITING = 0,
 		STARTED = 1,
@@ -37,7 +35,9 @@ struct TParticleData {
 	PxU32	numParticles;
 
 	int max_frames;
-
+	//#ifndef FINAL_BUILD
+	//	int id_owner = 0;
+	//#endif
 	TParticleData() : maxParticles(0), numParticles(0) {}
 
 	TParticleData(PxU32 _maxParticles)
@@ -87,7 +87,6 @@ struct TParticleData {
 		started.clear();
 		currDelayStart.clear();
 		colorBuffer.clear();
-
 
 		positionInitBuffer.clear();
 		negativeVelocityBuffer.clear();

@@ -111,7 +111,7 @@ struct CRenderManager::sortByTechDistance
 		VEC3 cam_pos = cam->getPosition();
 
 		GET_COMP(t_k1, h_k1, TCompTransform);
-		GET_COMP(t_k2, h_k1, TCompTransform);
+		GET_COMP(t_k2, h_k2, TCompTransform);
 		if (!t_k1 || !t_k2)
 			return 0;
 
@@ -588,7 +588,7 @@ void CRenderManager::renderStaticShadowCasters(CHandle h_light, int room) {
 	CEntity* e_camera = h_light;
 	TCompRoom* cam_room = e_camera->get<TCompRoom>();
 
-	if (ROOM_IS_IN(cam_room, room)) return;
+	if (!ROOM_IS_IN(cam_room, room)) return;
 	//auto i = find(cam_room->name.begin(), cam_room->name.end(), room);
 
 	//if (i == cam_room->name.end()) {
@@ -672,7 +672,7 @@ void CRenderManager::renderStaticShadowCasters(CHandle h_light, int room) {
 }
 
 // ------------------------------------------
-void CRenderManager::renderShadowCasters(CHandle h_light, int room) {
+void CRenderManager::renderShadowCasters(CHandle h_light, int room, bool render_all) {
 	CTraceScoped scope("Shadow Casters");
 	PROFILE_FUNCTION("SHADOW CASTERS OBJ");
 
@@ -700,7 +700,7 @@ void CRenderManager::renderShadowCasters(CHandle h_light, int room) {
 	CEntity* e_camera = h_light;
 	TCompRoom* cam_room = e_camera->get<TCompRoom>();
 
-	if (ROOM_IS_IN(cam_room, room)) return;
+	if (!ROOM_IS_IN(cam_room, room)) return;
 	//auto i = find(cam_room->name.begin(), cam_room->name.end(), room);
 
 	//if (i == cam_room->name.end()) {
@@ -724,13 +724,15 @@ void CRenderManager::renderShadowCasters(CHandle h_light, int room) {
 	while (true) {
 		PROFILE_FUNCTION("SHADOW CASTERS OBJ: while");
 
-		if (!it->isDynamic) {
-			if (it != end_it) {
-				++it;
-				continue;
-			}
-			else {
-				return;
+		if (!render_all) {
+			if (!it->isDynamic) {
+				if (it != end_it) {
+					++it;
+					continue;
+				}
+				else {
+					return;
+				}
 			}
 		}
 
@@ -810,7 +812,7 @@ void CRenderManager::renderShadowCastersSkin(CHandle h_light, int room) {
 	// Check if we have culling information from the camera source
 
 	TCompRoom* cam_room = e_camera->get<TCompRoom>();
-	if (ROOM_IS_IN(cam_room, room)) return;
+	if (!ROOM_IS_IN(cam_room, room)) return;
 	//auto i = find(cam_room->name.begin(), cam_room->name.end(), room);
 
 	//if (i == cam_room->name.end()) {

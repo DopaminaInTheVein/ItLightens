@@ -54,7 +54,7 @@ end
 function OnPossess_tuto_sci( )
 	if not poss_done then
 		poss_done = true
-		tutosci_help_wb()
+		p:exec_command("tutosci_help_wb()",0.1)
 		p:complete_tasklist(TASK_TUTOS_POSS)
 	end
 end

@@ -206,6 +206,9 @@ bool CInputWrapper::IsPausePressed() {
 bool CInputWrapper::IsBackPressed() {
 	return io->keys[VK_SPACE].becomesPressed() || io->joystick.button_A.becomesPressed() || io->mouse.left.becomesPressed();
 }
+bool CInputWrapper::IsEscapePressed() {
+	return IsPausePressed() && !io->keys[VK_RETURN].becomesPressed();
+}
 bool CInputWrapper::IsBackBeingPressed() {
 	return io->keys[VK_ESCAPE].isPressed() || io->joystick.button_BACK.isPressed();
 }
@@ -258,6 +261,9 @@ bool CInputWrapper::isTestSSAOButoonPressed() {
 }
 bool CInputWrapper::isEditorLightsButtonPressed() {
 	return io->keys[VK_F9].becomesPressed();
+}
+bool CInputWrapper::isEditorMessagesButtonPressed() {
+	return io->keys[VK_F7].becomesPressed();
 }
 bool CInputWrapper::isParticleEditorActivationPressed() {
 	return io->keys[VK_F8].becomesPressed();

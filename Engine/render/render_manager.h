@@ -80,7 +80,7 @@ public:
 	void renderAll(CHandle h_camera, CRenderTechnique::eCategory category, int room = 0);
 	bool renderSkeleton(TKey * it);
 	bool renderUI(TKey * it);
-	void renderShadowCasters(CHandle h_light, int room);
+	void renderShadowCasters(CHandle h_light, int room, bool render_all = false);
 	void renderStaticShadowCasters(CHandle h_light, int room);
 	void renderShadowCastersSkin(CHandle h_light, int room);
 

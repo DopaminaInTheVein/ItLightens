@@ -458,17 +458,17 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(player_controller, TMsgDifficultyChanged, onDifficultyChanged);
 
 	//Gui
-	SUBSCRIBE(TCompGui, TMsgEntityCreated, onCreate);
+	SUBSCRIBE(TCompGui, TMsgEntityCreated, onCreate); //Este onCreate se encarga de llamar al resto de creates de gui!
+	//SUBSCRIBE(TCompGuiSelector, TMsgEntityCreated, onCreate);
+	//SUBSCRIBE(TCompLoadingScreen, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompGuiCursor, TMsgOverButton, onButton);
 	SUBSCRIBE(TCompGuiCursor, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompGuiButton, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompGuiButton, TMsgClicked, onClick);
 	SUBSCRIBE(TCompGuiButton, TMsgGuiSetListener, onSetListener);
 
-	SUBSCRIBE(TCompGuiSelector, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompGuiSelector, TMsgGuiNotify, onGuiNotify);
 	//SUBSCRIBE(TCompGuiSelector, TMsgLanguageChanged, onLanguageChanged);
-	SUBSCRIBE(TCompLoadingScreen, TMsgEntityCreated, onCreate);
 
 	SUBSCRIBE(TCompGuiDrag, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompText, TMsgLanguageChanged, onLanguageChanged);
@@ -610,10 +610,6 @@ void CEntitiesModule::update(float dt) {
 		return;
 	}
 
-	//physx objects
-	getHandleManager<TCompCharacterController>()->updateAll(dt);
-	getHandleManager<TCompPhysics>()->updateAll(dt);
-
 	getHandleManager<TCompLightDir>()->updateAll(dt);
 	getHandleManager<TCompLightDirShadows>()->updateAll(dt);
 	getHandleManager<TCompLightDirShadowsDynamic>()->updateAll(dt);
@@ -655,6 +651,10 @@ void CEntitiesModule::update(float dt) {
 		//	//getHandleManager<TCompFadeScreen>()->updateAll(dt);
 		//	//getHandleManager<Tasklist>()->updateAll(dt);
 		//}
+
+		//physx objects
+		getHandleManager<TCompCharacterController>()->updateAll(dt);
+		getHandleManager<TCompPhysics>()->updateAll(dt);
 
 		getHandleManager<player_controller>()->updateAll(dt);
 		getHandleManager<player_controller_mole>()->updateAll(dt);
@@ -718,9 +718,6 @@ void CEntitiesModule::update(float dt) {
 
 		//Look Target
 		getHandleManager<TCompLookTarget>()->updateAll(dt);
-
-		//particles
-		getHandleManager<CParticleSystem>()->updateAll(dt);
 
 		getHandleManager<TCompBoxSpawner>()->updateAll(dt);
 		getHandleManager<TCompBoxDestructor>()->updateAll(dt);

@@ -63,19 +63,42 @@ void CLogicManagerModule::update(float dt) {
 	}
 	command_queue_to_add.clear();
 
-	if (exec_wait) {
-		const char* copy_code = command_wait.code;
-		exec_wait = false;
-		command_wait.code = "";
+	//Exec wait
+	updateWait(command_wait, exec_wait, controller->IsBackPressed());
+	updateWait(command_wait_escape, exec_wait_escape, controller->IsEscapePressed());
+	//if (exec_wait) {
+	//	const char* copy_code = command_wait.code;
+	//	exec_wait = false;
+	//	command_wait.code = "";
+	//	slb_script.doString(copy_code);
+	//}
+	//else if (controller->IsBackPressed()) {
+	//	if (command_wait.code != "") {
+	//		if (!command_wait.only_runtime ||
+	//			GameController->GetGameState() == CGameController::RUNNING ||
+	//			GameController->GetGameState() == CGameController::SPECIAL_ACTION)
+	//		{
+	//			exec_wait = true;
+	//		}
+	//	}
+	//}
+}
+
+void CLogicManagerModule::updateWait(command& c, bool& exec, bool condition)
+{
+	if (exec) {
+		const char* copy_code = c.code;
+		exec = false;
+		c.code = "";
 		slb_script.doString(copy_code);
 	}
-	else if (controller->IsBackPressed()) {
-		if (command_wait.code != "") {
-			if (!command_wait.only_runtime ||
+	else if (condition) {
+		if (c.code != "") {
+			if (!c.only_runtime ||
 				GameController->GetGameState() == CGameController::RUNNING ||
 				GameController->GetGameState() == CGameController::SPECIAL_ACTION)
 			{
-				exec_wait = true;
+				exec = true;
 			}
 		}
 	}
@@ -514,7 +537,7 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 		sprintf(lua_code, "OnStopVibration(\"%s\");", params.c_str());
 		break;
 	}
-	//GUI
+							//GUI
 	case (OnCreateGui): {
 		sprintf(lua_code, "OnCreateGui(\"%s\");", params.c_str());
 		break;
@@ -658,6 +681,10 @@ void CLogicManagerModule::bindHandle(SLB::Manager& m) {
 		// destroy the handler
 		.set("destroy", &SLBHandle::destroy)
 		.comment("Destroy this element")
+		// set new to the object
+		.set("set_size", &SLBHandle::setSize)
+		.comment("set size to the object")
+		.param("float: new size")
 		// set handle position function (coords)
 		.set("set_position", &SLBHandle::setPosition)
 		.comment("Sets the position of the NPC")
@@ -927,6 +954,16 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		.set("wait_button", &SLBPublicFunctions::waitButton)
 		.comment("Executes the specified command after press button")
 		.param("string: code to execute")
+		// cancel command function
+		.set("wait_escape", &SLBPublicFunctions::waitEscape)
+		.comment("Executes the specified command after press escape/back button")
+		.param("string: code to execute")
+		// cancel command function
+		.set("wait_button_cancel", &SLBPublicFunctions::cancelWaitButton)
+		.comment("Cancel wait command")
+		// cancel command function escape
+		.set("wait_escape_cancel", &SLBPublicFunctions::cancelWaitEscape)
+		.comment("Cancel wait escape command")
 		// basic print function
 		.set("print", &SLBPublicFunctions::print)
 		.comment("Prints via VS console")
@@ -1078,6 +1115,7 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		.param("float: y coord of the character")
 		.param("float: z coord of the character")
 		.param("float: time to live in seconds")
+
 		// launch aim red circle
 		.set("aim_circle", &SLBPublicFunctions::addAimCircle)
 		.comment("Shows aim circle")
@@ -1174,10 +1212,15 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		.set("unforce_sense_vision", &SLBPublicFunctions::unforceSenseVision)
 		.comment("force normal vision")
 		//Particles create
-		.set("part_create", &SLBPublicFunctions::createParticles)
+		.set("create", &SLBPublicFunctions::create)
 		.param("string: name")
 		.param("float: x")
 		.param("float: y")
 		.param("float: z")
 		.param("int: 0,1,2 --> paused, active, loop");
+}
+
+command::command(const char* c) {
+	code = c;
+	only_runtime = GameController->GetGameState() == CGameController::RUNNING;
 }
