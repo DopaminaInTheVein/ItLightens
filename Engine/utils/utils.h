@@ -121,4 +121,5 @@ void mod(int& value, int module);
 //Handles, messages, ...
 #define BROADCAST_MSG(Msg) getHandleManager<CEntity>()->each([](CEntity * e) {e->sendMsg(Msg());});
 
+std::string decodeFromUTF8(const char *data, size_t nMax); // Declared on CXMLParser!
 #endif

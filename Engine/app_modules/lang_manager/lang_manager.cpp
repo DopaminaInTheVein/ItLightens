@@ -18,7 +18,12 @@ CLangManagerModule::CLangManagerModule(std::string language) {
 }
 
 bool CLangManagerModule::start() {
-	auto file = CApp::get().get().file_options_json;
+	all_lang_sufixes.push_back("EN");
+	all_lang_sufixes.push_back("ES");
+	all_lang_sufixes.push_back("CAT");
+	all_lang_sufixes.push_back("GA");
+
+	auto file = CApp::get().file_options_json;
 	auto language = readIniAtrDataStr(file, "language");
 	game_language = language["lang"];
 
@@ -94,4 +99,27 @@ bool CLangManagerModule::isControllerMessage(std::string entry, std::string scen
 bool CLangManagerModule::HasEntryFormat(std::string entry)
 {
 	return entry.length() > 1 && entry[0] == ':' && entry[1] == ':';
+}
+
+void CLangManagerModule::GetAllTexts(MultiLangMap* all_texts) {
+	all_texts->clear();
+	for (int i = 0; i < all_lang_sufixes.size(); i++) {
+		LangMap lmap;
+		auto lang = all_lang_sufixes[i];
+		std::string file = lang_folder + "lang_" + lang + ".json";
+
+		auto scenes = CApp::get().GetNameScenes();
+		//std::map<std::string, std::string> scenes = readIniAtrDataStr(CApp::get().file_options_json, "scenes");
+
+		typedef std::map<std::string, std::string>::iterator it_type;
+
+		// Read map texts
+		for (it_type iterator = scenes.begin(); iterator != scenes.end(); iterator++) {
+			lmap[iterator->second] = readIniAtrDataStr(file, iterator->second);
+		}
+
+		// Read action texts
+		lmap["actions"] = readIniAtrDataStr(file, "actions");
+		(*all_texts)[lang] = lmap;
+	}
 }

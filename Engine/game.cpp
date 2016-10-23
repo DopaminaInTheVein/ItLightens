@@ -74,6 +74,7 @@ bool CApp::start() {
 	render_fx = new CRenderPostProcessModule;
 
 	// Will contain all modules created
+	all_modules.push_back(lang_manager);
 	all_modules.push_back(imgui);
 	all_modules.push_back(Gui);
 	all_modules.push_back(g_PhysxManager);
@@ -85,7 +86,6 @@ bool CApp::start() {
 	all_modules.push_back(render_deferred);
 	all_modules.push_back(logic_manager);
 	all_modules.push_back(sound_manager);
-	all_modules.push_back(lang_manager);
 	all_modules.push_back(render_fx);
 
 	mod_update.push_back(lang_manager);
