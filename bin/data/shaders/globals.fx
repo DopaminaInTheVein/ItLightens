@@ -7,31 +7,35 @@
 #include "constants/ctes_gui.h"
 #include "constants/ctes_blur.h"
 #include "constants/ctes_dream.h"
+#include "constants/ctes_fog.h"
 
 #define PI 3.1415926
 
-Texture2D txDiffuse   : USE_SHADER_REG(TEXTURE_SLOT_DIFFUSE);
-Texture2D txGloss	  : USE_SHADER_REG(TEXTURE_SLOT_GLOSS);
-Texture2D txNormal    : USE_SHADER_REG(TEXTURE_SLOT_NORMALS);
-Texture2D txSpecular  : USE_SHADER_REG(TEXTURE_SLOT_SPECULAR);
-Texture2D txDepths    : USE_SHADER_REG(TEXTURE_SLOT_DEPTHS);
-Texture2D txLightMask : USE_SHADER_REG(TEXTURE_SLOT_LIGHT_MASK);
-Texture2D txSelfIlum  : USE_SHADER_REG(TEXTURE_SLOT_SELFILUM);
-Texture2D txNoise     : USE_SHADER_REG(TEXTURE_SLOT_NOISE);
+Texture2D txDiffuse   	: USE_SHADER_REG(TEXTURE_SLOT_DIFFUSE);
+Texture2D txGloss	  	: USE_SHADER_REG(TEXTURE_SLOT_GLOSS);
+Texture2D txNormal    	: USE_SHADER_REG(TEXTURE_SLOT_NORMALS);
+Texture2D txSpecular  	: USE_SHADER_REG(TEXTURE_SLOT_SPECULAR);
+Texture2D txDepths    	: USE_SHADER_REG(TEXTURE_SLOT_DEPTHS);
+Texture2D txLightMask 	: USE_SHADER_REG(TEXTURE_SLOT_LIGHT_MASK);
+Texture2D txSelfIlum  	: USE_SHADER_REG(TEXTURE_SLOT_SELFILUM);
+Texture2D txNoise     	: USE_SHADER_REG(TEXTURE_SLOT_NOISE);
 
-Texture2D txSpeculars : USE_SHADER_REG(TEXTURE_SLOT_SPECULAR_GL);
-Texture2D txGlossiness : USE_SHADER_REG(TEXTURE_SLOT_GLOSSINESS);
+Texture2D txSpeculars 	: USE_SHADER_REG(TEXTURE_SLOT_SPECULAR_GL);
+Texture2D txGlossiness 	: USE_SHADER_REG(TEXTURE_SLOT_GLOSSINESS);
 Texture2D txSpeculars_lights : USE_SHADER_REG(TEXTURE_SLOT_SPECULAR_LIGHTS);
 
 
 //shadows
-Texture2D txShadowMap : USE_SHADER_REG(TEXTURE_SLOT_SHADOWMAP);
+Texture2D txShadowMap 	: USE_SHADER_REG(TEXTURE_SLOT_SHADOWMAP);
 Texture2D txShadowMapStatic : USE_SHADER_REG(TEXTURE_SLOT_SHADOWMAP_STATICS);
-
 
 Texture2D txEnvironment : USE_SHADER_REG(TEXTURE_SLOT_ENVIRONMENT);
 
-Texture2D txWarpLight : USE_SHADER_REG(TEXTURE_SLOT_RAMP);
+Texture2D txWarpLight 	: USE_SHADER_REG(TEXTURE_SLOT_RAMP);
+
+//temporal data
+Texture2D txData1		: USE_SHADER_REG(TEXTURE_SLOT_DATA1);
+Texture2D txData2		: USE_SHADER_REG(TEXTURE_SLOT_DATA2);
 
 // Same order as
 SamplerState samLinear : register(s0);
