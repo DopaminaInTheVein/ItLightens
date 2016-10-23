@@ -10,6 +10,7 @@ end
 
 function OnClicked_btn_start( )
 	--ui_cam:fade_out(1)
+	p:play_sound("event:/OnMenuAccept", 1.0, false)
 	p:set_cursor_enabled(false)
 	p:exec_command("playVideoIntro();", 1)
 	p:stop_music()
@@ -17,6 +18,7 @@ end
 
 function OnClicked_btn_options( )
 	options_from = "title"
+	p:play_sound("event:/OnMenuAccept", 1.0, false)
 	p:load_entities("options")
 end
 
@@ -28,6 +30,7 @@ function playVideoIntro( )
 end
 
 function OnClicked_btn_exit( )
+	p:play_sound("event:/OnMenuCancel", 1.0, false)
 	p:exit_game()
 end
 
