@@ -31,7 +31,7 @@
         "leave_pad": "*XPAD*: Abandonar"
     },
     "title": {
-        "test": "Prem*WASD*, perquè*WASD*mola",
+        "test": "Prem *WASD*, perquè *WASD* mola",
         "easy": "Fàcil",
         "medium": "Mitjà",
         "hard": "Difícil",
@@ -78,9 +78,9 @@
         "fall_column": "Vaja, he caigut..."
     },
     "tuto_sci": {
-        "help_possess": "Aquest és el somni de la CIENTÍFIC.\nApropa't a ella i prem *SHIFT* per controlar-la.",
-        "help_possess_pad": "Aquest és el somni de la CIENTÍFIC. \nApropa't a ella i prem *YPAD* per controlar-la.",
-        "help_wb": "Aquesta personatge és molt llesta, pot crear bombes\nals llocs de treball. Prem *LMOUSE* per crear algunes.\nTambé sembla que has descobert com sobrecargarregar-te, \naixí pots estabornir els guàrdies amb *LMOUSE*, però perdràs molta vida.",
+        "help_possess": "Aquest és el somni de la CIENTÍFICA.\nApropa't a ella i prem *SHIFT* per controlar-la.",
+        "help_possess_pad": "Aquest és el somni de la CIENTÍFICA. \nApropa't a ella i prem *YPAD* per controlar-la.",
+        "help_wb": "Aquest personatge és molt llesta, pot crear bombes\nals llocs de treball. Prem *LMOUSE* per crear algunes.\nTambé sembla que has descobert com sobrecargarregar-te, \naixí pots estabornir els guàrdies amb *LMOUSE*, però perdràs molta vida.",
         "help_wb_pad": "Aquesta personatge és molt llesta, pot crear bombes\nals llocs de treball. Prem *XPAD* per crear algunes.\nTambé sembla que has descobert com sobrecargarregar-te, \naixí pots estabornir els guàrdies amb *XPAD*, però perdràs molta vida. ",
         "help_bomb": "Llença bombes amb *EKEY*.\nLes bombes permeten estabornir els guàrdies una estoneta \nEls guàrdies són els únics personatges que et veuen...\nI volen la teva mort, vés amb compte!",
         "help_bomb_pad": "Llença bombes amb *RB*.\nLes bombes permeten estabornir els guàrdies una estoneta \nEls guàrdies són els únics personatges que et veuen...\nI volen la teva mort, vés amb compte!",
@@ -89,8 +89,8 @@
         "help_repair_pad": "Com és un somni, els guàrdies es quedessin estabornits.\nApropa't al DRONE i prem *XPAD* per reparar-lo.",
         "help_unpossess": "Prem *SHIFT* de nou per sortir de la CIENTÍFIC.",
         "help_unpossess_pad": "Prem *YPAD* de nou per sortir de la CIENTÍFIC.",
-        "help_polarity": "Prem *QKEY* i *EKEY* per canviar la teva polaritat. \nUtilitza aquesta abilitat per ser atret o repel·lit pel DRONE. \n*WKEY**Akey**Skey**DKEY*+*SPACE*et permet situar-te sobre del DRONE per a la repulsió. \Hi ha caixes amb polaritat pel món ... ",
-        "help_polarity_pad": "Prem *LB* i *RB* per canviar la teva polaritat. \nUtilitza aquesta abilitat per ser atret o repel·lit pel DRONE. \n*LSTICK*+*APAD*et permet situar-te sobre del DRONE per a la repulsió. \nHi ha caixes amb polaritat pel món ... ",
+        "help_polarity": "Prem *QKEY* i *EKEY* per canviar la teva polaritat. \nUtilitza aquesta abilitat per ser atret o repel·lit pel DRONE. \n*WKEY**AKEY**SKEY**DKEY* + *SPACE* et permet situar-te sobre del DRONE per a la repulsió. \nTambé hi ha caixes amb polaritat pel món ... ",
+        "help_polarity_pad": "Prem *LB* i *RB* per canviar la teva polaritat. \nUtilitza aquesta abilitat per ser atret o repel·lit pel DRONE. \n*LSTICK*+*APAD* et permet situar-te sobre del DRONE per a la repulsió. \nTambé hi ha caixes amb polaritat pel món ... ",
         "help_generator": "Prem *LMOUSE* prop d'un generador per recuperar la teva energia. \nAquí també obrirà la porta.",
         "help_generator_pad": "Prem *XPAD* prop d'un generador per recuperar la teva energia. \nAquí també obrirà la porta.",
         "help_exit": "Has recuperat la teva energia!\nTravessa la porta per completar el tutorial."

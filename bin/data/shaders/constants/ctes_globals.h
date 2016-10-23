@@ -9,8 +9,13 @@ ShaderBuffer(TCteGlobals, CTE_SHADER_GLOBALS_SLOT)
 
   float current_life_player;
   float max_life_player;
-  float polarity;
+  float use_ramp_color;
   float use_ramp;
+
+  float env_factor;
+  float shadow_intensity;
+  float polarity;
+  float goblal_dummy;
 
   float4 global_color;
 };

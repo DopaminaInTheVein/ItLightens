@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.01.08.00">
+    <object class="AudioFile" id="{f3a8894a-1577-409a-ba06-becd15e26361}">
+        <property name="assetPath">
+            <value>MENU Aceptar.mp3</value>
+        </property>
+        <property name="frequencyInKHz">
+            <value>48</value>
+        </property>
+        <property name="channelCount">
+            <value>2</value>
+        </property>
+        <property name="length">
+            <value>0.14399999999999999</value>
+        </property>
+        <relationship name="masterAssetFolder">
+            <destination>{27c9e485-159e-4d91-9702-b6efb99fec5b}</destination>
+        </relationship>
+    </object>
+</objects>

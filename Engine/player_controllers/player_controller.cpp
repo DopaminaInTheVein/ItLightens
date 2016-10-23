@@ -274,6 +274,7 @@ void player_controller::DoubleFalling() {
 	UpdateMovDirection();
 	if (cc->OnGround()) {
 		ChangeState("idle");
+		logic_manager->throwEvent(logic_manager->OnJumpLand, "");
 		SET_ANIM_PLAYER(AST_IDLE);
 	}
 }

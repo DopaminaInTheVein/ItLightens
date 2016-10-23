@@ -31,7 +31,7 @@
         "leave_pad": "*XPAD*: Leave"
     },
     "title": {
-        "test": "Pulsa *WASD*, porque *WASD* mola",
+        "test": "Press *WASD*, because *WASD* rules",
         "easy": "Easy",
         "medium": "Medium",
         "hard": "Hard",

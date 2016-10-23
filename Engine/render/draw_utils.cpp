@@ -4,15 +4,16 @@
 #include "resources/resources_manager.h"
 #include "camera/camera.h"
 
-CShaderCte< TCteCamera > shader_ctes_camera;
-CShaderCte< TCteObject > shader_ctes_object;
-CShaderCte< TCteBones >  shader_ctes_bones;
-CShaderCte< TCteLight >  shader_ctes_lights;
-CShaderCte< TCteGlobals > shader_ctes_globals;
-CShaderCte< TCteBlur >     shader_ctes_blur;
-CShaderCte< TCteHatching > shader_ctes_hatching;
-CShaderCte< TCteGui > shader_ctes_gui;
-CShaderCte< TCteDream > shader_ctes_dream;
+CShaderCte< TCteCamera >	shader_ctes_camera;
+CShaderCte< TCteObject >	shader_ctes_object;
+CShaderCte< TCteBones >		shader_ctes_bones;
+CShaderCte< TCteLight >		shader_ctes_lights;
+CShaderCte< TCteGlobals >	shader_ctes_globals;
+CShaderCte< TCteBlur >		shader_ctes_blur;
+CShaderCte< TCteHatching >	shader_ctes_hatching;
+CShaderCte< TCteGui >		shader_ctes_gui;
+CShaderCte< TCteDream >		shader_ctes_dream;
+CShaderCte< TCteFog >		shader_ctes_fog;
 
 const CTexture* all_black;
 
@@ -165,6 +166,8 @@ bool drawUtilsCreate() {
 		return false;
 	if (!shader_ctes_dream.create("ctes_dream"))
 		return false;
+	if (!shader_ctes_fog.create("ctes_fog"))
+		return false;
 
 	all_black = Resources.get("textures/missing_black.dds")->as<CTexture>();
 
@@ -182,6 +185,7 @@ void activateDefaultStates() {
 	shader_ctes_hatching.activate(CTE_SHADER_HATCHING_SLOT);
 	shader_ctes_gui.activate(CTE_SHADER_GUI_SLOT);
 	shader_ctes_dream.activate(CTE_SHADER_DREAM_SLOT);
+	shader_ctes_fog.activate(CTE_SHADER_FOG_SLOT);
 	activateZ(ZCFG_DEFAULT);
 	activateBlend(BLENDCFG_DEFAULT);
 	activateSamplerStates();
@@ -197,6 +201,7 @@ void drawUtilsDestroy() {
 	shader_ctes_blur.destroy();
 	shader_ctes_gui.destroy();
 	shader_ctes_dream.destroy();
+	shader_ctes_fog.destroy();
 }
 
 // Activo la camara en la pipeline de render

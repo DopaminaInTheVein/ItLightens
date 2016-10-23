@@ -273,6 +273,7 @@ namespace DirectX
 
 			// Assignment operators
 			Vector4& operator= (const Vector4& V) { x = V.x; y = V.y; z = V.z; w = V.w; return *this; }
+			Vector4& operator= (const Vector3& V) { x = V.x; y = V.y; z = V.z; return *this; }
 			Vector4& operator= (const XMFLOAT4& V) { x = V.x; y = V.y; z = V.z; w = V.w; return *this; }
 			Vector4& operator+= (const Vector4& V);
 			Vector4& operator-= (const Vector4& V);

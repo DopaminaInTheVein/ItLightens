@@ -641,12 +641,40 @@
    name="2"/>
 
 </entity>
+<entity
+   reload="no">
+<tags/>
+<sound
+   event="OnMoleSnore"
+   volume="0.5"/>
+<name
+   name="_mole_slept_sound"/>
+<transform
+   pos="-1.93588 52.5728 -20.103"
+   quat="0 -0.707107 0.707107 0"
+   scale="1.0"/>
+
+</entity>
+<entity
+   reload="no">
+<tags/>
+<sound
+   event="OnScientistSnore"
+   volume="0.5"/>
+<name
+   name="_scientist_1_sound"/>
+<transform
+   pos="-1.68249 52.8966 -30.7131"
+   quat="0 -0.707107 0.707107 0"
+   scale="1.0"/>
+
+</entity>
 <entity>
 <tags/>
 <name
    name="floor"/>
 <transform
-   pos="9.5408 50.6611 -25.4919"
+   pos="9.49696 50.6611 -25.4919"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
