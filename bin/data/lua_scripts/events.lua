@@ -94,7 +94,7 @@ end
 
 function OnGuardChaseEnd( volume )
 	p:print( "OnGuardChaseEnd: "..volume.."\n" )
-	p:play_music("event:/OnRoom1", volume)
+	p:play_music("event:/OnGameMusic", volume)
 end
 
 function OnGuardAttack( reaction_time )

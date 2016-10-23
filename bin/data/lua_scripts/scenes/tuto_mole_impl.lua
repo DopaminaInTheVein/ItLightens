@@ -57,6 +57,7 @@ function OnStart_tuto_mole( )
 	TXT_FALL_COLUMN = "::fall_column"
 	IntroTutoMole()
 	cam:fx(FX_DREAM_BORDER, 1) -- defined on fx.lua
+	p:play_music("event:/OnGameMusic", 0.2)
 end
 
 function OnPossess_tuto_mole( )
