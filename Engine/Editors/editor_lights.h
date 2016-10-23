@@ -86,6 +86,7 @@ public:
 
 private:
 	bool m_activated_editor;
+	bool m_activated_msg_editor;
 	bool m_show_axis = false;
 	bool multi_editing = false;
 	bool delete_lights;
@@ -106,7 +107,6 @@ public:
 	void SetLightEditorState(bool value) {
 		m_activated_editor = value;
 	}
-
 	void ToggleEditorState() {
 		m_activated_editor = !m_activated_editor;
 	}

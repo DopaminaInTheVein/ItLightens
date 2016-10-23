@@ -262,6 +262,9 @@ bool CInputWrapper::isTestSSAOButoonPressed() {
 bool CInputWrapper::isEditorLightsButtonPressed() {
 	return io->keys[VK_F9].becomesPressed();
 }
+bool CInputWrapper::isEditorMessagesButtonPressed() {
+	return io->keys[VK_F7].becomesPressed();
+}
 bool CInputWrapper::isParticleEditorActivationPressed() {
 	return io->keys[VK_F8].becomesPressed();
 }

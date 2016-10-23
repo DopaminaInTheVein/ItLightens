@@ -96,6 +96,7 @@ public:
 	DECL_INPUT_DEBUG(isDrawLineButtonPressed);
 	DECL_INPUT_DEBUG(isTestSSAOButoonPressed);
 	DECL_INPUT_DEBUG(isEditorLightsButtonPressed);
+	DECL_INPUT_DEBUG(isEditorMessagesButtonPressed);
 	DECL_INPUT_DEBUG(isParticleEditorButtonPressed);
 	DECL_INPUT_DEBUG(isParticleEditorActivationPressed);
 	DECL_INPUT_DEBUG(interruptGuardShotButtonPressed);

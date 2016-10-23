@@ -199,14 +199,15 @@ void CGuiModule::initTextConfig()
 	float default_space = 1.f - space_values["default"] / size;
 	for (int i = 0; i < 256; i++) letter_sizes[i] = default_space;
 	for (auto entry : space_values) {
-		if (entry.first.length() == 1) {
-			unsigned char letter_char = entry.first.at(0);
+		std::string entry_fixed = TextEncode::Utf8ToLatin1String(entry.first.c_str());
+		if (entry_fixed.length() == 1) {
+			unsigned char letter_char = entry_fixed.at(0);
 			letter_sizes[letter_char] = entry.second / size;
 		}
 	}
 	auto all_maps = readAllAtrMaps(FONT_JSON);
 	for (auto entry : all_maps) {
-		auto name = entry.first;
+		auto name = TextEncode::Utf8ToLatin1String(entry.first.c_str());
 		if (name != "general" && name != "space_right") {
 			int row = (int)entry.second["row"];
 			int col = (int)entry.second["col"];

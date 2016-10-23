@@ -4,15 +4,18 @@
 #include "app_modules/app_module.h"
 
 class CEditorLights;
+class CEditorMessages;
 
 class CImGuiModule : public IAppModule {
 	static ImGuiTextFilter filter;
 
 	//editor
 	CEditorLights* m_pLights_editor;
+	CEditorMessages* m_pMessages_editor;
 
 public:
 	void StartLightEditor();
+	void StartMessagesEditor();
 	bool start() override;
 	void stop() override;
 	void update(float dt) override;
