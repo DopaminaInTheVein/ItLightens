@@ -20,6 +20,8 @@ fn _parse_gui = (
 	local size = _parsingObject.max - _parsingObject.min
 	xml.addAttr "width" size.x
 	xml.addAttr "height" size.z
+	
+	parsePropAttribute xml "lang" "lang"
 )
 
 fn _parse_gui_button = (

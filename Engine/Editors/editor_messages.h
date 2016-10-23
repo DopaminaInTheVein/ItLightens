@@ -18,6 +18,7 @@ class CEditorMessages {
 	std::vector<std::string> all_sections;
 	std::vector<std::vector<std::string>> all_entries;
 	std::vector<bool> lang_chk;
+	std::vector<bool> lang_modif;
 	int cur_lang = 0;
 	std::vector<bool> section_chk;
 	int cur_section = 0;
@@ -40,6 +41,7 @@ class CEditorMessages {
 	void SetLang(int lang, bool actived);
 	bool CheckLanguage(int lang);
 	void ShowMessage(std::string text);
+	void SaveFile();
 	//char* GetEditingText();
 public:
 	bool* GetEditorState() { return &m_activated_editor; }

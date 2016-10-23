@@ -139,13 +139,7 @@ void CEditorMessages::RenderEditor()
 		ShowMessage(editing_fixed);
 	}
 	if (ImGui::Button("Save to file")) {
-		string editing_fixed = EditingText;
-		editing_fixed = TextEncode::Utf8ToLatin1String(editing_fixed.c_str());
-		lang_manager->ModifyEntry(all_langs[cur_lang], all_sections[cur_section], all_entries[cur_section][cur_entry], editing_fixed);
-		sprintf(original_text, "%s", EditingText);
-		all_texts[all_langs[cur_lang]][all_sections[cur_section]][all_entries[cur_section][cur_entry]] =
-			texts_by_lang[cur_lang][all_sections[cur_section]][all_entries[cur_section][cur_entry]] = editing_fixed;
-		modified[cur_lang][cur_section][cur_entry] = false;
+		SaveFile();
 	}
 	ImGui::SameLine();
 	if (ImGui::Button("Reload")) {
@@ -206,6 +200,8 @@ void CEditorMessages::RenderLanguages()
 	for (int l = 0; l < texts_by_lang.size(); l++) {
 		if (CheckLanguage(l)) {
 			bool actived = lang_chk[l];
+			std::string lang_txt = all_langs[l];
+			if (modified[l][cur_section][cur_entry]) lang_txt += "***";
 			if (ImGui::Checkbox(all_langs[l].c_str(), &actived)) {
 				changed_by_user = true;
 				SetLang(l, actived);
@@ -245,6 +241,17 @@ void CEditorMessages::SetLang(int lang, bool actived)
 	else {
 		lang_chk[lang] = true; // No dejamos desactivar
 	}
+}
+
+void CEditorMessages::SaveFile()
+{
+	string editing_fixed = EditingText;
+	editing_fixed = TextEncode::Utf8ToLatin1String(editing_fixed.c_str());
+	lang_manager->ModifyEntry(all_langs[cur_lang], all_sections[cur_section], all_entries[cur_section][cur_entry], editing_fixed);
+	sprintf(original_text, "%s", EditingText);
+	all_texts[all_langs[cur_lang]][all_sections[cur_section]][all_entries[cur_section][cur_entry]] =
+		texts_by_lang[cur_lang][all_sections[cur_section]][all_entries[cur_section][cur_entry]] = editing_fixed;
+	modified[cur_lang][cur_section][cur_entry] = false;
 }
 
 //char* CEditorMessages::GetEditingText()
