@@ -327,6 +327,17 @@ void CImGuiModule::update(float dt) {
 			ImGui::TreePop();
 		}
 
+		if (ImGui::TreeNode("Shadow options")) {
+			if (ImGui::DragFloat("Environment diffuse factor", &shader_ctes_globals.env_factor, 0.01f)) {
+				shader_ctes_globals.uploadToGPU();
+			}
+
+			if (ImGui::DragFloat("Shadow intensity", &shader_ctes_globals.shadow_intensity, 0.01f)) {
+				shader_ctes_globals.uploadToGPU();
+			}
+			ImGui::TreePop();
+		}
+
 		if (ImGui::TreeNode("Grafic options")) {
 			ImGui::Checkbox("polarize effects(disabled)", GameController->GetFxPolarizePointer());
 
@@ -347,6 +358,11 @@ void CImGuiModule::update(float dt) {
 			static bool use_ramp = shader_ctes_globals.use_ramp;
 			if (ImGui::Checkbox("use ramp", &use_ramp)) {
 				shader_ctes_globals.use_ramp = use_ramp;
+			}
+
+			static bool use_ramp_color = shader_ctes_globals.use_ramp_color;
+			if (ImGui::Checkbox("use ramp color", &use_ramp_color)) {
+				shader_ctes_globals.use_ramp_color = use_ramp_color;
 			}
 
 			ImGui::TreePop();

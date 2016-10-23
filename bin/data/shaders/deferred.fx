@@ -496,8 +496,8 @@ void PSLightDirShadows(
   
   
   //we reduce the shadow intesity, as the hatching will add more shadows effect
-  if(inv_shadows > 0.5f)
-	inv_shadows = 0.5;
+  if(inv_shadows > shadow_intensity)
+	inv_shadows = shadow_intensity;
 	
  if(inv_shadows < 0)
 	inv_shadows = 0;

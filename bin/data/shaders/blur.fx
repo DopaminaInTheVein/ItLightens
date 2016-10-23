@@ -130,7 +130,7 @@ float4 PSBlurWithDepthVision(
 
 
 //--------------------------------------------------------------------------------------
-float4 PSBlurWithDepth(
+float4 PSFogWithDepth(
   in float4 iPosition : SV_Position
   , in float2 iTex0 : TEXCOORD0
 ) : SV_Target
@@ -158,6 +158,11 @@ float factor_depth = 4;
   float2 offset = float2(factor/xres, factor/yres);
   //factor = 1;
   
+
+//fogFactor = clamp(fogFactor, 0.0, 1.0);
+//return fogFactor.xxxx;
+  
+  
   //return float4(offset.yyy, 1);
 	//factor = 0;
 
@@ -178,21 +183,12 @@ float factor_depth = 4;
  // float sinwt = sin(world_time*0.5f+length(iTex0))+1;
   
   float offset_h = 5;
-  //float h = (wPos.y-offset_h) - CameraWorldPos.y;//+base_depth*100;
-  float h = (wPos.y-offset_h) + 22;//+base_depth*100;
-  //h += sinwt;
   
-  //float4 camUp = float4(CameraUp.xyz,1);
-  //return camUp;
+  float h = (wPos.y-offset_h) ;
   
-  h = 2 - h;
-  
-  
- /* if(h > 20.f/100.f){
-	h = 0;
-  }*/
-  
-  //return float4(CameraWorldPos.yyy,1);
+  h = h-fog_floor;
+  h = fog_upper_limit - h;
+ 
   
   float4 fog = float4(1,1,1,1);
   
@@ -203,6 +199,7 @@ float factor_depth = 4;
   cn3 += fog;
   cn2 += fog;
   cn1 += fog;
+
   
   float4 cfinal =
     c0 * blur_w.x
@@ -211,21 +208,16 @@ float factor_depth = 4;
     + (cp3 + cn3) * blur_w.w
     ;
 	
-	//return float4(depth, depth, depth, 1);
 
-	float limit = 0.7;
-	//return float4(1, 1, 1, 0.0f);
-	float max_range = 0.1;
-	float range_vision = base_depth;
-	if(range_vision > max_range){
-		range_vision = max_range;
-	}
+	float depth_fog = base_depth - fog_distance;
+	float range_vision = depth_fog*fog_density;
 	float alpha = h*range_vision;
-	if(alpha > limit)
-		alpha = limit;
+	if(alpha > fog_max_intesity)
+		alpha = fog_max_intesity;
 		
-	return float4(0,0,0,0);
-	return float4(cfinal.rgb,alpha);
+	float fa = color_fog.a;
+	float3 fc = color_fog.rgb;
+	return float4(cfinal.rgb,alpha)*float4(fc.x,fc.y,fc.z,fa);
 
 }
 
