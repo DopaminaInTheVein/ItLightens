@@ -51,6 +51,7 @@ public:
 
 		OnGuardChase,
 		OnGuardChaseEnd,
+		OnGuardAttackPrep,
 		OnGuardAttack,
 		OnGuardAttackEnd,
 		OnGuardRemoveBox,

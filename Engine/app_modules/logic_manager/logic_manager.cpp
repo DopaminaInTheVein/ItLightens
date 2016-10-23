@@ -193,7 +193,10 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 		sprintf(lua_code, "OnGuardChaseEnd(%f);", volume);
 		break;
 	}
-
+	case (OnGuardAttackPrep): {
+		sprintf(lua_code, "OnGuardAttackPrep(%f);", 0.5f);
+		break;
+	}
 	case (OnGuardAttack): {
 		sprintf(lua_code, "OnGuardAttack(%f);", 0.5f);
 		break;

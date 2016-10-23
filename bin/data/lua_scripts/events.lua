@@ -103,6 +103,12 @@ function OnGuardAttack( reaction_time )
 	p:play_3d_sound("event:/OnGuardAttack", h:get_x(), h:get_y(), h:get_z(), 1.0, false, 1)
 end
 
+function OnGuardAttackPrep( reaction_time )
+	p:print( "OnGuardAttackPrep: "..reaction_time.."\n" )
+	h:getHandleCaller()	
+	p:play_3d_sound("event:/OnGuardAttackPrep", h:get_x(), h:get_y(), h:get_z(), 1.0, false, 1)
+end
+
 function OnGuardAttackEnd( reaction_time )
 	p:print( "OnGuardAttack: "..reaction_time.."\n" )
 	p:stop_sound("event:/OnGuardAttack")
@@ -305,6 +311,12 @@ end
 function OnDoubleJump( param )
 	p:print( "OnDoubleJump: "..param.."\n" )
 	p:play_sound("event:/OnDoubleJump", 1.0, false)
+end
+
+function OnJumpLand( param )
+	p:print( "OnJump: "..param.."\n" )
+	p:stop_sound("event:/OnJump")
+	p:stop_sound("event:/OnDoubleJump")
 end
 
 function OnMoleJump( param )
