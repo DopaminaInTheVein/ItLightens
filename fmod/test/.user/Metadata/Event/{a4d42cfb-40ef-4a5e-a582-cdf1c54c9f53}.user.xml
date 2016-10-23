@@ -1,13 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objects serializationModel="Studio.01.08.00">
-    <object class="Event" id="{a4d42cfb-40ef-4a5e-a582-cdf1c54c9f53}">
-        <relationship name="selectables">
-            <destination>{d6636503-0e4f-46f4-88cd-ecb8e4077c79}</destination>
-        </relationship>
-        <relationship name="uiLastParameterSelection">
-            <destination>{a16de25a-2569-42c2-9749-2518b8cc5d65}</destination>
-        </relationship>
-    </object>
+    <object class="Event" id="{a4d42cfb-40ef-4a5e-a582-cdf1c54c9f53}"/>
     <object class="MasterTrack" id="{54eb39e1-4d60-40ec-abb6-d3fcd7daca94}"/>
     <object class="MixerInput" id="{f1f4595d-9307-45c0-a878-9514bc0bb0db}"/>
     <object class="EventAutomatableProperties" id="{2c97d33f-bb75-4d1e-bc96-625aaa84b3fc}"/>
@@ -18,7 +11,7 @@
             <value>0</value>
         </property>
         <property name="uiLastRulerScaleRatio">
-            <value>0.11235955056179775</value>
+            <value>0.0086634563937934717</value>
         </property>
     </object>
     <object class="EventMixerMaster" id="{5cb1de31-d48b-4a95-9e45-8dfceb9ef765}">
