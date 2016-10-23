@@ -319,7 +319,9 @@ std::map<std::string, std::string> readIniAtrDataStr(const std::string route, st
 	std::map<std::string, std::string> atributes;
 
 	for (rapidjson::Value::ConstMemberIterator it = document[element.c_str()].MemberBegin(); it != document[element.c_str()].MemberEnd(); ++it) {
-		atributes[it->name.GetString()] = TextEncode::Utf8ToLatin1String(it->value.GetString());
+		std::string text = it->value.GetString();
+		std::string text_fixed = TextEncode::Utf8ToLatin1String(text.c_str());
+		atributes[it->name.GetString()] = text_fixed;
 	}
 
 	return atributes;
@@ -344,7 +346,8 @@ void writeIniAtrData(const std::string route, std::string element, std::map<std:
 void writeIniAtrDataStr(const std::string route, std::string element, std::map<std::string, std::string> element_values) {
 	Document document = readJSONAtrFile(route);
 	for (auto atribute : element_values) {
-		document[element.c_str()][atribute.first.c_str()].SetString(atribute.second.c_str(), document.GetAllocator());
+		std::string text = TextEncode::Latin1ToUtf8String(atribute.second.c_str());
+		document[element.c_str()][atribute.first.c_str()].SetString(text.c_str(), document.GetAllocator());
 	}
 
 	FILE* pFile = fopen(route.c_str(), "wb");
