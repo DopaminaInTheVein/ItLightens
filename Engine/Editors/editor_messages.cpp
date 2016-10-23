@@ -5,7 +5,7 @@
 #include <map>
 
 #define EditingText (editing_text[cur_lang][cur_section][cur_entry])
-
+#define TXT_MODIF " *** MODIFIED! ***"
 using namespace std;
 void CEditorMessages::update(float dt)
 {
@@ -84,9 +84,10 @@ void CEditorMessages::RenderSections()
 	ImGui::Text("SECTIONS");
 	ImGui::Indent();
 	for (int s = 0; s < all_sections.size(); s++) {
-		auto name = all_sections[s].c_str();
+		string name = all_sections[s].c_str();
 		bool actived = section_chk[s];
-		if (ImGui::Checkbox(name, &(actived)) && !changed_by_user) {
+		if (CheckSectionModified(s)) name += TXT_MODIF;
+		if (ImGui::Checkbox(name.c_str(), &(actived)) && !changed_by_user) {
 			changed_by_user = true;
 			SetSection(s, actived);
 		}
@@ -95,6 +96,14 @@ void CEditorMessages::RenderSections()
 		}
 	}
 	ImGui::Unindent();
+}
+
+bool CEditorMessages::CheckSectionModified(int s)
+{
+	for (int e = 0; e < MAX_ENTRIES; e++) {
+		if (CheckEntryModified(s, e)) return true;
+	}
+	return false;
 }
 
 void CEditorMessages::SetSection(int section, bool actived)
@@ -130,7 +139,7 @@ void CEditorMessages::RenderEditor()
 
 	ImGui::Text("EDIT TEXT");
 	if (ImGui::InputTextMultiline("Edit", EditingText, 2048, ImVec2(500, 0))) {
-		modified[cur_lang][cur_section][cur_entry] = (std::string(EditingText) == std::string(original_text));
+		modified[cur_lang][cur_section][cur_entry] = (std::string(EditingText) != std::string(original_text));
 	}
 
 	if (ImGui::Button("Show New")) {
@@ -166,8 +175,9 @@ void CEditorMessages::RenderEntries()
 	auto entries = &all_entries[section];
 	for (int e = 0; e < entries->size(); e++) {
 		bool actived = entry_chk[section][e];
-		auto name = ((*entries)[e]).c_str();
-		if (ImGui::Checkbox(name, &actived)) {
+		string name = ((*entries)[e]).c_str();
+		if (CheckEntryModified(cur_section, e)) name += TXT_MODIF;
+		if (ImGui::Checkbox(name.c_str(), &actived)) {
 			changed_by_user = true;
 			SetEntry(e, actived);
 		}
@@ -176,6 +186,13 @@ void CEditorMessages::RenderEntries()
 		}
 	}
 	ImGui::Unindent();
+}
+bool CEditorMessages::CheckEntryModified(int s, int e)
+{
+	for (int l = 0; l < MAX_LANG; l++) {
+		if (modified[l][s][e]) return true;
+	}
+	return false;
 }
 
 void CEditorMessages::SetEntry(int entry, bool actived)
@@ -199,16 +216,17 @@ void CEditorMessages::RenderLanguages()
 	ImGui::Text("LANGUAGE");
 	for (int l = 0; l < texts_by_lang.size(); l++) {
 		if (CheckLanguage(l)) {
+			bool available = CheckLanguage(l);
 			bool actived = lang_chk[l];
 			std::string lang_txt = all_langs[l];
-			if (modified[l][cur_section][cur_entry]) lang_txt += "***";
-			if (ImGui::Checkbox(all_langs[l].c_str(), &actived)) {
+			if (modified[l][cur_section][cur_entry]) lang_txt += TXT_MODIF;
+			if (ImGui::Checkbox(lang_txt.c_str(), &actived)) {
 				changed_by_user = true;
 				SetLang(l, actived);
 			}
 		}
 		else {
-			ImGui::Text("%s (Not Available)", all_langs[l]);
+			ImGui::Text("%s (Not Available)", all_langs[l].c_str());
 		}
 	}
 	ImGui::Unindent();
@@ -230,7 +248,7 @@ void CEditorMessages::SetLang(int lang, bool actived)
 			lang_chk[i] = (i == lang);
 		}
 		cur_lang = lang;
-		auto text = texts_by_lang[cur_lang][all_sections[cur_section]][all_entries[cur_section][cur_entry]];
+		auto text = GetOriginalText();
 		text = TextEncode::Latin1ToUtf8String(text.c_str());
 		sprintf(original_text, "%s", text.c_str());
 		std::string cur_val(EditingText);
@@ -243,6 +261,19 @@ void CEditorMessages::SetLang(int lang, bool actived)
 	}
 }
 
+std::string CEditorMessages::GetOriginalText()
+{
+	std::string res = "";
+	auto lmap = texts_by_lang[cur_lang];
+	if (lmap.find(all_sections[cur_section]) != lmap.end()) {
+		auto smap = lmap[all_sections[cur_section]];
+		if (smap.find(all_entries[cur_section][cur_entry]) != smap.end()) {
+			res = smap[all_entries[cur_section][cur_entry]];
+		}
+	}
+	return res;
+}
+
 void CEditorMessages::SaveFile()
 {
 	string editing_fixed = EditingText;
@@ -253,8 +284,3 @@ void CEditorMessages::SaveFile()
 		texts_by_lang[cur_lang][all_sections[cur_section]][all_entries[cur_section][cur_entry]] = editing_fixed;
 	modified[cur_lang][cur_section][cur_entry] = false;
 }
-
-//char* CEditorMessages::GetEditingText()
-//{
-//	return &(editing_text[cur_lang][cur_section][cur_entry]);
-//}

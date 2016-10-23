@@ -42,6 +42,9 @@ class CEditorMessages {
 	bool CheckLanguage(int lang);
 	void ShowMessage(std::string text);
 	void SaveFile();
+	std::string GetOriginalText();
+	bool CheckEntryModified(int s, int e);
+	bool CheckSectionModified(int s);
 	//char* GetEditingText();
 public:
 	bool* GetEditorState() { return &m_activated_editor; }
