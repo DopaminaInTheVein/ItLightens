@@ -229,23 +229,25 @@ end
 function openDoorPila( )
   cineDoor()
   p:exec_command( "openDoorPilaEffect();", 4)
-  p:play_sound("event:/OnDoorClosing", 1.0, false)
 end
 
 function closeDoorPila( )
   cineDoor()
   p:exec_command( "closeDoorPilaEffect();", 4)
-  p:play_sound("event:/OnDoorClosing", 1.0, false)
 end
 
 function openDoorPilaEffect( )
   h:get_handle_by_id(idDoor)
   h:setLocked(0)
+  p:play_sound("event:/OnDoorClosing", 1.0, false)
+  p:play_sound("event:/OnFinalAlarm", 0.1, true)
 end
 
 function closeDoorPilaEffect( )
   h:get_handle_by_id(idDoor)
   h:setLocked(1)
+  p:play_sound("event:/OnDoorClosing", 1.0, false)
+  p:stop_sound("event:/OnFinalAlarm")
 end
 
 function OnRemovePila_enchufe()
