@@ -1,5 +1,7 @@
 #include "mcv_platform.h"
 #include "text_encode.h"
+
+#define MAX_STRING_SIZE 1024
 int GetUtf8CharacterLength(unsigned char utf8Char)
 {
 	if (utf8Char < 0x80) return 1;
@@ -48,16 +50,37 @@ void TextEncode::Utf8ToLatin1String(char* s)
 		{
 			c = '_';
 		}
-
+		assert(writeIndex < MAX_STRING_SIZE);
 		s[writeIndex] = c;
 	}
 }
 
 std::string TextEncode::Utf8ToLatin1String(const char* text)
 {
-	char buffer[512];
+	char buffer[MAX_STRING_SIZE];
 	sprintf(buffer, "%s", text);
 	Utf8ToLatin1String(buffer);
 
 	return std::string(buffer);
+}
+
+std::string TextEncode::Latin1ToUtf8String(const char* text)
+{
+	char in[MAX_STRING_SIZE];
+	char out[MAX_STRING_SIZE * 2];
+	sprintf(in, "%s", text);
+	Latin1ToUtf8((unsigned char*)in, (unsigned char*)out);
+
+	return std::string(out);
+}
+
+void TextEncode::Latin1ToUtf8(unsigned char* in, unsigned char* out)
+{
+	int i = 0;
+	while (*in) {
+		assert(i++ < MAX_STRING_SIZE);
+		if ((*in) < 128) *out++ = *in++;
+		else *out++ = 0xc2 + (*in > 0xbf), *out++ = (*in++ & 0x3f) + 0x80;
+	}
+	*out = 0;
 }
