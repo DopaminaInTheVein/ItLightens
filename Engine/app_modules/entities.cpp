@@ -610,10 +610,6 @@ void CEntitiesModule::update(float dt) {
 		return;
 	}
 
-	//physx objects
-	getHandleManager<TCompCharacterController>()->updateAll(dt);
-	getHandleManager<TCompPhysics>()->updateAll(dt);
-
 	getHandleManager<TCompLightDir>()->updateAll(dt);
 	getHandleManager<TCompLightDirShadows>()->updateAll(dt);
 	getHandleManager<TCompLightDirShadowsDynamic>()->updateAll(dt);
@@ -655,6 +651,10 @@ void CEntitiesModule::update(float dt) {
 		//	//getHandleManager<TCompFadeScreen>()->updateAll(dt);
 		//	//getHandleManager<Tasklist>()->updateAll(dt);
 		//}
+
+		//physx objects
+		getHandleManager<TCompCharacterController>()->updateAll(dt);
+		getHandleManager<TCompPhysics>()->updateAll(dt);
 
 		getHandleManager<player_controller>()->updateAll(dt);
 		getHandleManager<player_controller_mole>()->updateAll(dt);

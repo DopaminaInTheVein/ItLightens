@@ -89,5 +89,8 @@ void TCompTransform::renderInMenu() {
 }
 
 void TCompTransform::setPosition(VEC3 new_pos) {
+	if (DEBUG_CODE) {
+		dbg("Me mueven!\n");
+	}
 	CTransform::setPosition(new_pos);
 }
