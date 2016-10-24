@@ -180,6 +180,7 @@ end
 
 function OnChangePolarity( param )
 	p:print( "OnChangePolarity: "..param.."\n" )
+	h:getHandleCaller()
 	p:play_3d_sound("event:/OnChangePolarity", h:get_x(), h:get_y(), h:get_z(), 1.0, false, 8)
 end
 
