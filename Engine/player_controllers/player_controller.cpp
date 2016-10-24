@@ -665,7 +665,7 @@ void player_controller::UpdateInputActions()
 	//Event onChangePolarity to LogicManager
 	if (pol_state != pol_state_prev) {
 		string pol_to_lua = polarize_name[pol_state];
-		logic_manager->throwEvent(logic_manager->OnChangePolarity, pol_to_lua);
+		logic_manager->throwEvent(logic_manager->OnChangePolarity, pol_to_lua, CHandle(this).getOwner());
 		pol_state_prev = pol_state;
 	}
 
