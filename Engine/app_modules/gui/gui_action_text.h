@@ -36,6 +36,7 @@ public:
 	CGuiActionText(float x, float y);
 
 	void setState(eAction action);
+	eAction getState();
 	void update(float dt);
 	void render();
 };

@@ -9,6 +9,7 @@
 class TTriggerLua : public TTrigger {
 protected:
 	bool mActionable;
+	eAction lastaction;
 	eAction mAction;
 	eAction mActionSci;
 	eAction mActionMole;

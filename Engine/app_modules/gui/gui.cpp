@@ -32,6 +32,9 @@ void CGuiModule::setActionAvailable(eAction action) {
 	assert(txtAction);
 	txtAction->setState(action);
 }
+eAction CGuiModule::getActionAvailable() {
+	return txtAction->getState();
+}
 bool CGuiModule::IsUiControl() const
 {
 	return ui_control;

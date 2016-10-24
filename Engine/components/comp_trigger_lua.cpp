@@ -12,6 +12,10 @@ void TTriggerLua::onTriggerEnter(const TMsgTriggerIn& msg) {
 
 void TTriggerLua::onTriggerExit(const TMsgTriggerOut& msg) {
 	executeTrigger(logic_manager->OnLeave);//, msg.other);
+	if (lastaction == eAction::ACTIVATE || lastaction == eAction::PUT || lastaction == eAction::EXAMINATE || lastaction == eAction::DESTROY || lastaction == eAction::DREAM || lastaction == eAction::LEAVE) {
+		lastaction == eAction::NONE;
+		Gui->setActionAvailable(eAction::NONE);
+	}
 }
 
 void TTriggerLua::onTriggerAction(PLAYER_TYPE playerType) {
@@ -69,6 +73,7 @@ eAction TTriggerLua::getActionAvailable() {
 			break;
 		}
 	}
+	lastaction = action;
 	return action;
 }
 

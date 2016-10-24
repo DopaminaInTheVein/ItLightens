@@ -137,9 +137,14 @@ void player_controller_cientifico::WorkBenchActions() {
 			Gui->setActionAvailable(eAction::REPAIR_DRONE);
 		}
 	}
+	else {
+		if (Gui->getActionAvailable() == eAction::REPAIR_DRONE) {
+			Gui->setActionAvailable(eAction::NONE);
+		}
+	}
 	//====================================================
 	// Create bomb
-	else if (obj == eObjSci::EMPTY || objs_amoung[obj] < MAX_BOMBS) {
+	if (obj == eObjSci::EMPTY || objs_amoung[obj] < MAX_BOMBS) {
 		// Find nearest workbench
 		VEC3 nearest_wb;
 		float dist_wb = FLT_MAX;
@@ -155,6 +160,7 @@ void player_controller_cientifico::WorkBenchActions() {
 		//----------------------------------------------------
 		if (dist_wb < 1.5f) {
 			if (controller->ActionButtonBecomesPessed()) {
+				Gui->setActionAvailable(eAction::NONE); 
 				obj = THROW_BOMB;
 				//TODO: Destruir bomba actual
 				logic_manager->throwEvent(logic_manager->OnUseWorkbench, "");
@@ -165,7 +171,13 @@ void player_controller_cientifico::WorkBenchActions() {
 				Gui->setActionAvailable(eAction::CREATE_MAGNETIC_BOMB);
 			}
 		}
+		else {
+			if (Gui->getActionAvailable() == eAction::CREATE_MAGNETIC_BOMB) {
+				Gui->setActionAvailable(eAction::NONE);
+			}
+		}
 	}
+	
 	//====================================================
 }
 
@@ -248,6 +260,7 @@ void player_controller_cientifico::CreateBomb()
 		spawnBomb(bomb_offset_1);
 		logic_manager->throwEvent(logic_manager->OnCreateBomb, "");
 		ChangeState("idle");
+		Gui->setActionAvailable(eAction::NONE);
 	}
 	else {
 		Gui->setActionAvailable(eAction::CREATING);

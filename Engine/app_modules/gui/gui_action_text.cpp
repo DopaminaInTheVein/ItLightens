@@ -21,6 +21,9 @@ CGuiActionText::CGuiActionText(float x, float y) {
 void CGuiActionText::setState(eAction new_action) {
 	action = new_action;
 }
+eAction CGuiActionText::getState() {
+	return action;
+}
 
 void CGuiActionText::update(float dt) {
 	// Nothing animated at the moment

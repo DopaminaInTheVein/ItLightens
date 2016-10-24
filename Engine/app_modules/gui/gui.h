@@ -55,6 +55,7 @@ public:
 
 	//Text Actions
 	void setActionAvailable(eAction action);
+	eAction getActionAvailable();
 
 	//Font
 	float getCharSize(unsigned char c) {

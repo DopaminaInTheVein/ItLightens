@@ -300,7 +300,7 @@ void player_controller::Jump()
 			clamp(jimpulse - sqrtf(curSpeed.Length())*SPEED_JUMP_PENALIZE, 0.f, jimpulse),//, //0.8f * jimpulse, jimpulse),
 			//jimpulse,
 			-curSpeed.z * 0.1f
-		);
+			);
 		//--------------------------------------
 	}
 	else {
@@ -719,6 +719,12 @@ void player_controller::UpdateActionsTrigger() {
 			Gui->setActionAvailable(eAction::RECHARGE_DRONE);
 		}
 	}
+	else {
+		eAction lastAction = Gui->getActionAvailable();
+		if (lastAction == eAction::RECHARGE || lastAction == eAction::RECHARGE_DRONE) {
+			Gui->setActionAvailable(eAction::NONE);
+		}
+	}
 }
 
 float CPlayerBase::possessionCooldown;
@@ -900,6 +906,12 @@ void player_controller::UpdateOverCharge() {
 			}
 		}
 	}
+	else {
+		eAction lastAction = Gui->getActionAvailable();
+		if (lastAction == eAction::OVERCHARGE) {
+			Gui->setActionAvailable(eAction::NONE);
+		}
+	}
 }
 
 void player_controller::startOverCharge()
@@ -982,9 +994,9 @@ void player_controller::onPolarize(const TMsgPolarize & msg)
 				polarityForces.begin(),
 				polarityForces.end(),
 				msg.handle
-			),
+				),
 			polarityForces.end()
-		);
+			);
 		//TForcePoint fp_remove = TForcePoint(msg.origin, msg.pol);
 		//force_points.erase(std::remove(force_points.begin(), force_points.end(), fp_remove), force_points.end());
 	}
