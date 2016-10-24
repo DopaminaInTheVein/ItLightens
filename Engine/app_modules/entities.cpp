@@ -818,6 +818,7 @@ void CEntitiesModule::renderInMenu() {
 
 void CEntitiesModule::fixedUpdate(float elapsed)
 {
+	PROFILE_FUNCTION("Fixed Update");
 	getHandleManager<TCompDrone>()->fixedUpdateAll(elapsed);
 }
 

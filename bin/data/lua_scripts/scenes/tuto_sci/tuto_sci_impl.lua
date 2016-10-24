@@ -39,6 +39,7 @@ function OnStart_tuto_sci( )
 	p:ai_start()
 	cam:fx(FX_DREAM_BORDER, 1)
 	tutosci_help_possess();
+	p:play_music("event:/OnGameMusic", 0.2)
 end
 
 function OnUseGenerator_gen_tuto_sci( )

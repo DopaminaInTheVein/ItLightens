@@ -1,6 +1,7 @@
 #ifndef INC_CTES_PLATFORM_H_
 #define INC_CTES_PLATFORM_H_
 
+//Shader constants
 #define CTE_SHADER_OBJECT_SLOT			0
 #define CTE_SHADER_CAMERA_SLOT			1
 #define CTE_SHADER_BONES_SLOT			2
@@ -10,6 +11,7 @@
 #define CTE_SHADER_HATCHING_SLOT		6
 #define CTE_SHADER_GUI_SLOT				7
 #define CTE_SHADER_DREAM_SLOT			8
+#define CTE_SHADER_FOG_SLOT				9
 
 //textures object, 0-19
 #define TEXTURE_SLOT_DIFFUSE			0

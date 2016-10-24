@@ -136,6 +136,9 @@ public:
 	void skipCinematic();
 	void fadeIn(float speed = 0.f);
 	void fadeOut(float speed = 0.f);
+	void setFogHeight(float h);
+	void fogFade(float x, float y, float z);
+	void fogUnfade();
 	void orbit(bool);
 	void resetCamera();
 	void fx(const char * name, int enabled);
@@ -186,6 +189,7 @@ public:
 	void cancelWaitEscape();
 	void completeTasklist(int i);
 	void print(const char* to_print);
+	void breakpoint(int n);
 	void setupGame();
 	void setLanguage(const char*);
 	void setControlEnabled(int);

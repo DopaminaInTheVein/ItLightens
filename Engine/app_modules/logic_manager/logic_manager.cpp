@@ -109,6 +109,7 @@ void CLogicManagerModule::resetTimers() {
 }
 
 void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle handle) {//, uint32_t handle_id) {
+	PROFILE_FUNCTION("LM: Throw Event");
 	char lua_code[64];
 	caller_handle = handle;
 
@@ -193,7 +194,10 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 		sprintf(lua_code, "OnGuardChaseEnd(%f);", volume);
 		break;
 	}
-
+	case (OnGuardAttackPrep): {
+		sprintf(lua_code, "OnGuardAttackPrep(%f);", 0.5f);
+		break;
+	}
 	case (OnGuardAttack): {
 		sprintf(lua_code, "OnGuardAttack(%f);", 0.5f);
 		break;
@@ -577,12 +581,15 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 
 	try {
 		// execute the string generated
-		slb_script.doString(lua_code);
+		PROFILE_FUNCTION("doString");
+		{
+			slb_script.doString(lua_code);
+		}
 	}
 	catch (int e) {
 		dbg("Exception %d occurred!", e);
 	}
-	Gui->setActionAvailable(eAction::NONE);
+	//Gui->setActionAvailable(eAction::NONE); <-- Bizarradas no!
 }
 
 void CLogicManagerModule::throwUserEvent(std::string evt, std::string params, CHandle handle) {//, uint32_t handle_id) {
@@ -873,6 +880,19 @@ void CLogicManagerModule::bindCamera(SLB::Manager& m) {
 		.comment("Enable or disable an fx shader")
 		.param("string: name FX")
 		.param("int: 0 disabled, 1 enabled")
+		// Set fog height
+		.set("fog_y", &SLBCamera::setFogHeight)
+		.comment("Set fog height")
+		.param("float: height")
+		// Fading Fog
+		.set("fog_fade", &SLBCamera::fogFade)
+		.comment("Fade the fog depending of the distance to a specified point")
+		.param("float: x")
+		.param("float: y")
+		.param("float: z")
+		// Unfade Fog
+		.set("fog_unfade", &SLBCamera::fogUnfade)
+		.comment("Disable fog fade")
 		// start vibration
 		.set("start_vibration", &SLBCamera::startVibration)
 		.comment("starts the cambera vibration")
@@ -968,6 +988,10 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		.set("print", &SLBPublicFunctions::print)
 		.comment("Prints via VS console")
 		.param("Text to print")
+		// debug
+		.set("breakpoint", &SLBPublicFunctions::breakpoint)
+		.comment("For breakpoints and profilings")
+		.param("int: number of profiling")
 		// Setup game
 		.set("setup_game", &SLBPublicFunctions::setupGame)
 		.comment("Setup for a new game")

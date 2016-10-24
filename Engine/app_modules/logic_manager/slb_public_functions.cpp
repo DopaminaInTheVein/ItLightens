@@ -16,6 +16,7 @@
 #include "app_modules/render/module_render_postprocess.h"
 #include "app_modules/entities.h"
 #include "render/fx/fx_fade_screen.h"
+#include "render/fx/fx_depth_fog.h"
 
 using namespace IdEntities;
 
@@ -636,6 +637,23 @@ void SLBCamera::fadeOut(float speed) {
 	fx->FadeOut();
 }
 
+void SLBCamera::setFogHeight(float h)
+{
+	GET_FX(fx, TRenderDepthFog, FX_FOG_DEPTH);
+	fx->SetFloorHeight(h);
+}
+
+void SLBCamera::fogFade(float x, float y, float z)
+{
+	GET_FX(fx, TRenderDepthFog, FX_FOG_DEPTH);
+	fx->SetPosition(VEC3(x, y, z));
+	fx->EnableDistanceCalculation();
+}
+void SLBCamera::fogUnfade()
+{
+	GET_FX(fx, TRenderDepthFog, FX_FOG_DEPTH);
+	fx->DisableDistanceCalculation();
+}
 void SLBCamera::orbit(bool new_orbit) {
 	if (!checkCamera()) return;
 	GET_COMP(cam_control, camera_h, TCompController3rdPerson);
@@ -785,9 +803,29 @@ void SLBPublicFunctions::cancelWaitEscape() {
 }
 
 void SLBPublicFunctions::print(const char* to_print) {
+#ifndef NDEBUG
+	PROFILE_FUNCTION("LUA Print");
 	Debug->LogWithTag("LUA", "%s\n", to_print);
+#endif
 }
-
+#define LUA_BREAKPOINT(i) case i:{ PROFILE_FUNCTION(STRING(i));} break
+void SLBPublicFunctions::breakpoint(int n) {
+#ifndef NDEBUG
+	PROFILE_FUNCTION("LUA Print");
+	switch (n) {
+		LUA_BREAKPOINT(0);
+		LUA_BREAKPOINT(1);
+		LUA_BREAKPOINT(2);
+		LUA_BREAKPOINT(3);
+		LUA_BREAKPOINT(4);
+		LUA_BREAKPOINT(5);
+		LUA_BREAKPOINT(6);
+		LUA_BREAKPOINT(7);
+		LUA_BREAKPOINT(8);
+		LUA_BREAKPOINT(9);
+	}
+#endif
+}
 void SLBPublicFunctions::setupGame() {
 	GameController->Setup();
 }

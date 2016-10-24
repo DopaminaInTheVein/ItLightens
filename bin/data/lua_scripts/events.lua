@@ -10,22 +10,30 @@ cam = Camera()
 ui_cam = UiCamera()
 
 function CallFunction(func)
-	called = true
-	if _G[func] then _G[func]()
-	else
+	p:print("Call Function"..func)
+	p:breakpoint(2)
+	local called = pcall(func)
+	if not called then
 		p:print("function "..func.." does not exist!\n")
-		called = false
 	end
 	return called
+	-- called = true
+	-- if _G[func] then _G[func]()
+	-- else
+		-- p:print("function "..func.." does not exist!\n")
+		-- called = false
+	-- end
+	-- return called
 end
 
 function CallFunctionParam(func, param)
-	called = true
-	if _G[func] then _G[func](param)
-	else
-		p:print("function "..func.." does not exist!\n")
-		called = false
-	end
+	-- called = true
+	-- if _G[func] then _G[func](param)
+	-- else
+		-- p:print("function "..func.." does not exist!\n")
+		-- called = false
+	-- end
+	local called = pcall(func, param)
 	return called
 end
 
@@ -58,7 +66,8 @@ function OnActionMole( param )
 end
 
 function OnEnter( param )
-	p:print( "OnEnter: "..param.."\n" ) 
+	p:print( "OnEnter: "..param.."\n" )
+	p:breakpoint(1)
 	CallFunction("OnEnter_"..param)
 	--if _G["OnEnter_"..param] then _G["OnEnter_"..param](handle) 
 	--else
@@ -73,6 +82,7 @@ end
 
 function OnGameStart( param )
 	p:print( "OnGameStart: "..param.."\n" )
+	cam:fx(FX_FOG, 0)
 	p:load_entities("init")
 	ui_cam:fade_out(0)
 	p:exec_command("LoadLevel(\"level_0\")", 2)
@@ -94,13 +104,19 @@ end
 
 function OnGuardChaseEnd( volume )
 	p:print( "OnGuardChaseEnd: "..volume.."\n" )
-	p:play_music("event:/OnRoom1", volume)
+	p:play_music("event:/OnGameMusic", volume)
 end
 
 function OnGuardAttack( reaction_time )
 	p:print( "OnGuardAttack: "..reaction_time.."\n" )
 	h:getHandleCaller()	
 	p:play_3d_sound("event:/OnGuardAttack", h:get_x(), h:get_y(), h:get_z(), 1.0, false, 1)
+end
+
+function OnGuardAttackPrep( reaction_time )
+	p:print( "OnGuardAttackPrep: "..reaction_time.."\n" )
+	h:getHandleCaller()	
+	p:play_3d_sound("event:/OnGuardAttackPrep", h:get_x(), h:get_y(), h:get_z(), 1.0, false, 1)
 end
 
 function OnGuardAttackEnd( reaction_time )
@@ -305,6 +321,12 @@ end
 function OnDoubleJump( param )
 	p:print( "OnDoubleJump: "..param.."\n" )
 	p:play_sound("event:/OnDoubleJump", 1.0, false)
+end
+
+function OnJumpLand( param )
+	p:print( "OnJump: "..param.."\n" )
+	p:stop_sound("event:/OnJump")
+	p:stop_sound("event:/OnDoubleJump")
 end
 
 function OnMoleJump( param )

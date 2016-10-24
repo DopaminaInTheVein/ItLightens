@@ -57,6 +57,22 @@ void CLangManagerModule::stop() {
 }
 
 void CLangManagerModule::readLanguageMap() {
+	GetLanguageMap(language_map, lang_file);
+	//auto scenes = CApp::get().GetNameScenes();
+	////std::map<std::string, std::string> scenes = readIniAtrDataStr(CApp::get().file_options_json, "scenes");
+
+	//typedef std::map<std::string, std::string>::iterator it_type;
+
+	//// Read map texts
+	//for (it_type iterator = scenes.begin(); iterator != scenes.end(); iterator++) {
+	//	language_map[iterator->second] = readIniAtrDataStr(lang_file, iterator->second);
+	//}
+
+	//// Read action texts
+	//language_map["actions"] = readIniAtrDataStr(lang_file, "actions");
+}
+void CLangManagerModule::GetLanguageMap(LangMap& lmap, std::string lang_file) {
+	lmap.clear();
 	auto scenes = CApp::get().GetNameScenes();
 	//std::map<std::string, std::string> scenes = readIniAtrDataStr(CApp::get().file_options_json, "scenes");
 
@@ -64,11 +80,11 @@ void CLangManagerModule::readLanguageMap() {
 
 	// Read map texts
 	for (it_type iterator = scenes.begin(); iterator != scenes.end(); iterator++) {
-		language_map[iterator->second] = readIniAtrDataStr(lang_file, iterator->second);
+		lmap[iterator->second] = readIniAtrDataStr(lang_file, iterator->second);
 	}
 
 	// Read action texts
-	language_map["actions"] = readIniAtrDataStr(lang_file, "actions");
+	lmap["actions"] = readIniAtrDataStr(lang_file, "actions");
 }
 
 std::string CLangManagerModule::getText(std::string entry, std::string scene) {
@@ -122,4 +138,15 @@ void CLangManagerModule::GetAllTexts(MultiLangMap* all_texts) {
 		lmap["actions"] = readIniAtrDataStr(file, "actions");
 		(*all_texts)[lang] = lmap;
 	}
+}
+
+bool CLangManagerModule::ModifyEntry(std::string lang, std::string section, std::string entry, std::string new_text)
+{
+	//void writeIniAtrDataStr(const std::string route, std::string element, std::map<std::string, std::string> element_values)
+	LangMap lmap;
+	std::string route = lang_folder + "lang_" + lang + ".json";
+	GetLanguageMap(lmap, route);
+	lmap[section][entry] = new_text;
+	writeIniAtrDataStr(route, section, lmap[section]);
+	return true;
 }

@@ -149,6 +149,8 @@ bool CRenderDeferredModule::start() {
 	shader_ctes_globals.world_time = 0.f;
 	shader_ctes_globals.xres = xres;
 	shader_ctes_globals.yres = yres;
+	shader_ctes_globals.env_factor = 0.2f;
+	shader_ctes_globals.shadow_intensity = 0.5f;
 
 	shader_ctes_blur.ssao_intensity = 1.0f;
 	shader_ctes_blur.ssao_iterations = 30.f;
@@ -966,6 +968,8 @@ void CRenderDeferredModule::render() {
 	CTexture::deactivate(TEXTURE_SLOT_DEPTHS);
 	CTexture::deactivate(TEXTURE_SLOT_NORMALS);
 	CTexture::deactivate(TEXTURE_SLOT_DIFFUSE);
+	CTexture::deactivate(TEXTURE_SLOT_DATA1);
+	CTexture::deactivate(TEXTURE_SLOT_DATA2);
 	//delete blurred_shadows;
 }
 

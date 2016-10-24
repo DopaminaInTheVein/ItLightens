@@ -416,8 +416,7 @@ bool CSoundManagerModule::updateFixed3dSound(std::string sound_name, VEC3 sound_
 bool CSoundManagerModule::playMusic(std::string route, float volume = 0.3f) {
 	//if there was a music playing, we pause it
 	if (music_instance) {
-		result = music_instance->setPaused(true);
-		if (result != FMOD_OK) return false;
+		music_instance->setPaused(true);
 	}
 
 	//if the music instance didnt exist yet, we create it

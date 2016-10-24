@@ -58,7 +58,8 @@ bool CRenderPostProcessModule::start()
 	//###### should go on lua scripts ############
 
 	//NEEDED RENDER SHADERS ON ALL SCENES
-	ActivateFXBeforeUI(FX_OUTLINE, 90);
+	ActivateFXBeforeUI(FX_FOG_DEPTH, 90);
+	ActivateFXBeforeUI(FX_OUTLINE, 80);
 	ActivateFXBeforeUI(FX_HATCHING, 100);	//default priority is 0, but hatching should go the last one
 	ActivateFXBeforeUI(FX_ANTI_ALIASING, 300);
 

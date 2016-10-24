@@ -988,26 +988,6 @@
 <rigidbody
    type_collision="trigger"
    type_shape="box"
-   size="3.0 4.0 0.1"/>
-<tags
-   tags="trigger room_switcher"/>
-<room_switcher
-   front_room="1"
-   back_room="2"/>
-<name
-   name="Trigger_Cambio_Sala"/>
-<transform
-   pos="-54.4765 0.753134 -5.47724"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity
-   reload="yes">
-<tags/>
-<rigidbody
-   type_collision="trigger"
-   type_shape="box"
    size="0.1 4.0 12.0"/>
 <tags
    tags="trigger limit"/>
@@ -1226,24 +1206,6 @@
    scale="1.0"/>
 <room
    name="2"/>
-
-</entity>
-<entity
-   reload="yes">
-<tags/>
-<rigidbody
-   type_collision="trigger"
-   type_shape="box"
-   size="0.21 4.0 4.5"/>
-<tags
-   tags="trigger"/>
-<trigger_lua/>
-<name
-   name="tSave02"/>
-<transform
-   pos="-49.9032 0.753134 -0.840155"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
 
 </entity>
 <entity
@@ -1964,6 +1926,82 @@
 <transform
    pos="-8.61765 -18.0453 -31.3595"
    quat="0 0.0436194 0 0.999048"
+   scale="1.0"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags
+   tags="fog"/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="0.17 3.64 3.0636"/>
+<tags
+   tags="fog trigger"/>
+<trigger_lua/>
+<name
+   name="_tFogOut1"/>
+<transform
+   pos="-44.8851 0.753554 -0.871718"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags
+   tags="fog"/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="0.21 4.0 4.5"/>
+<tags
+   tags="fog trigger"/>
+<trigger_lua/>
+<name
+   name="_tFogOut2"/>
+<transform
+   pos="-59.4654 0.753134 -8.16913"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags
+   tags="fog"/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="0.21 4.0 4.5"/>
+<tags
+   tags="fog trigger"/>
+<trigger_lua/>
+<name
+   name="_tFogIn"/>
+<transform
+   pos="-58.0349 0.753134 -8.16913"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags
+   tags="fog"/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="0.21 4.0 4.5"/>
+<tags
+   tags="fog trigger"/>
+<trigger_lua/>
+<name
+   name="_tFogIn"/>
+<transform
+   pos="-46.1595 0.753134 -0.840155"
+   quat="0 0 0 1.0"
    scale="1.0"/>
 
 </entity>

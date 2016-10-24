@@ -128,6 +128,7 @@ class bt_guard : public npc, public TCompBase
 	float removing_box_animation_time = 0.f;
 	float looking_around_time = 0.f;
 	// shoot parameters
+	bool shoot_prepared = false;
 	float shoot_preparation_time = 0.f;
 
 	//Toggles

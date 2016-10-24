@@ -6,39 +6,9 @@
 #include <vector>
 #include "app_modules/lang_manager/lang_manager.h"
 
-namespace MessageEditor {
-	//class VSections;
-	//class Section;
-	//class TextEntry;
-	//struct LangEntry {
-	//	std::string name;
-	//	std::string text;
-	//	bool keyboard;
-	//	bool gamepad;
-	//	TextEntry* parent = nullptr;
-	//};
-
-	//class Section;
-	//struct TextEntry {
-	//	std::string name;
-	//	std::map<std::map<std::string, std::string>, LangEntry> langs;
-	//	LangEntry* cur_lang;
-	//	Section* parent = nullptr;
-	//	TextEntry(std::string lang, std::string new_name, std::string text);
-	//};
-	//struct Section {
-	//	std::string name;
-	//	std::map<std::map<std::string, std::string>, TextEntry> entries;
-	//	TextEntry* cur_entry = nullptr;
-	//	Section(std::string lang, std::string name, std::map<std::string, std::string>);
-	//};
-	//struct VSection {
-	//	MultiLangMap all_texts;
-	//	std::map<std::map<std::string, std::string>, Section> sections;
-	//	Section* cur_section = nullptr;
-	//	void reload();
-	//};
-};
+#define MAX_LANG 4
+#define MAX_SECTIONS 10
+#define MAX_ENTRIES 100
 
 class CEditorMessages {
 	bool m_activated_editor = false;
@@ -48,15 +18,16 @@ class CEditorMessages {
 	std::vector<std::string> all_sections;
 	std::vector<std::vector<std::string>> all_entries;
 	std::vector<bool> lang_chk;
+	std::vector<bool> lang_modif;
 	int cur_lang = 0;
 	std::vector<bool> section_chk;
 	int cur_section = 0;
 	std::vector<std::vector<bool>> entry_chk;
 	int cur_entry = 0;
 	bool keyboard = true;
-	bool gamepad;
 	char original_text[2048] = "";
-	char editing_text[2048] = "";
+	char editing_text[MAX_LANG][MAX_SECTIONS][MAX_ENTRIES][255] = { "" };
+	bool modified[MAX_LANG][MAX_SECTIONS][MAX_ENTRIES] = { false };
 	bool changed_by_user = false;
 
 	void RenderMessageList();
@@ -70,6 +41,11 @@ class CEditorMessages {
 	void SetLang(int lang, bool actived);
 	bool CheckLanguage(int lang);
 	void ShowMessage(std::string text);
+	void SaveFile();
+	std::string GetOriginalText();
+	bool CheckEntryModified(int s, int e);
+	bool CheckSectionModified(int s);
+	//char* GetEditingText();
 public:
 	bool* GetEditorState() { return &m_activated_editor; }
 	void SetEditorState(bool value) {

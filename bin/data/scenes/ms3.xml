@@ -5972,5 +5972,27 @@
    scale="1.0"/>
 
 </entity>
+<entity>
+<tags
+   tags="fog"/>
+<name
+   name="_Fog1"/>
+<transform
+   pos="35.7096 -22.0937 23.7578"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags
+   tags="fog"/>
+<name
+   name="_Fog2"/>
+<transform
+   pos="-58.8493 -1.0 -7.99588"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
 
 </entities>

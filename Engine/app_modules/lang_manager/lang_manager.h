@@ -17,6 +17,7 @@ class CLangManagerModule : public IAppModule
 	std::vector<std::string> all_lang_sufixes;
 	LangMap language_map;
 	bool HasEntryFormat(std::string entry);
+	void CLangManagerModule::GetLanguageMap(LangMap& lmap, std::string lang_file);
 public:
 
 	CLangManagerModule();
@@ -39,6 +40,7 @@ public:
 	static inline std::string toEntry(std::string text) { return "::" + text; }
 	void GetAllTexts(MultiLangMap* all_texts);
 	std::vector<std::string> GetAllLanguagesSufixes() { return all_lang_sufixes; }
+	bool ModifyEntry(std::string lang, std::string section, std::string entry, std::string new_text);
 };
 
 extern CLangManagerModule* lang_manager;

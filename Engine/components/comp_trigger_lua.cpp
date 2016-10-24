@@ -6,6 +6,7 @@
 using namespace std;
 
 void TTriggerLua::onTriggerEnter(const TMsgTriggerIn& msg) {
+	PROFILE_FUNCTION("OnTriggerEnter LUA");
 	executeTrigger(logic_manager->OnEnter);//, msg.other);
 }
 

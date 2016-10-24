@@ -5,17 +5,30 @@
 
 // ------------------------------------
 struct TRenderDepthFog : public TCompBasicFX {
+	bool enabled;
+	bool enabled_dist_calc;
+	void init();
+	void renderInMenu();
 
-  bool enabled;
-  void init();
-  void renderInMenu();
+	void ApplyFX();
 
-  void ApplyFX();
+	void update(float dt);
 
-  const char* getName() const {
-	  return "fog depth";
-  }
+	VEC3 m_position_point_distance;
+	CHandle h_player;
 
+	float alpha_orig;
+
+	void SetPosition(VEC3 new_position);
+	VEC3 GetPosition() const;
+	void SetFloorHeight(float);
+
+	void EnableDistanceCalculation();
+	void DisableDistanceCalculation();
+
+	const char* getName() const {
+		return "fog_depth";
+	}
 };
 
 #endif

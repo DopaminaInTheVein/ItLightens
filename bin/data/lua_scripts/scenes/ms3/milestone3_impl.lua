@@ -17,17 +17,19 @@ player = Player()
 
 ---------------------------- LEVEL Init, Load, Save ---------------------------------------------------
 function auxiliarMusic()
-	p:play_music("event:/OnRoom1", 0.2)
+	p:play_music("event:/OnGameMusic", 0.2)
 end
 
 function OnStart_ms3()
   p:print("OnStarted Scene MS3")
+  InitFogMs3()
+  
   isDoorOpen = false
   alert = false
   stateElevator = 1 -- 1= up , 0 = down
   cp_elevator = false
   cp_door_opened = false
-  p:play_music("event:/OnRoom1", 0.2)
+  p:play_music("event:/OnGameMusic", 0.2)
   --p:exec_command("auxiliarMusic();",14)
   --triggerGuardFormation();
   --p:exec_command( "triggerGuardFormation();", 15 )
@@ -43,18 +45,20 @@ function OnSave_ms3()
 	d:put_bool("alert", alert)
 	d:put_bool("cp_elevator", cp_elevator)
 	d:put_bool("cp_door_opened", cp_door_opened)
+	SaveFogMs3(d)
 	d:write()
 end
 
 function OnLoad_ms3()
   p:print("OnLoaded Scene MS3")
   d = Data()
+  LoadFogMs3()
   isDoorOpen = d:get_bool("door_open")
   alert = d:get_bool("alert")
   stateElevator = d:get_float("elevator_state")
   cp_elevator = d:get_bool("cp_elevator")
   cp_door_opened = d:get_bool("cp_door_opened")
-  p:play_music("event:/OnRoom1", 0.2)
+  p:play_music("event:/OnGameMusic", 0.2)
   p:ai_start()
   --triggerGuardFormation();
   --p:exec_command( "triggerGuardFormation();", 15 )
@@ -229,23 +233,25 @@ end
 function openDoorPila( )
   cineDoor()
   p:exec_command( "openDoorPilaEffect();", 4)
-  p:play_sound("event:/OnDoorClosing", 1.0, false)
 end
 
 function closeDoorPila( )
   cineDoor()
   p:exec_command( "closeDoorPilaEffect();", 4)
-  p:play_sound("event:/OnDoorClosing", 1.0, false)
 end
 
 function openDoorPilaEffect( )
   h:get_handle_by_id(idDoor)
   h:setLocked(0)
+  p:play_sound("event:/OnDoorClosing", 1.0, false)
+  p:play_sound("event:/OnFinalAlarm", 0.1, true)
 end
 
 function closeDoorPilaEffect( )
   h:get_handle_by_id(idDoor)
   h:setLocked(1)
+  p:play_sound("event:/OnDoorClosing", 1.0, false)
+  p:stop_sound("event:/OnFinalAlarm")
 end
 
 function OnRemovePila_enchufe()

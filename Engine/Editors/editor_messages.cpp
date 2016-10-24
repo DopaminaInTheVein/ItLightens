@@ -4,7 +4,8 @@
 #include "components/comp_fading_message.h"
 #include <map>
 
-using namespace MessageEditor;
+#define EditingText (editing_text[cur_lang][cur_section][cur_entry])
+#define TXT_MODIF " *** MODIFIED! ***"
 using namespace std;
 void CEditorMessages::update(float dt)
 {
@@ -21,7 +22,7 @@ void CEditorMessages::LoadTexts()
 	cur_lang = 0;
 	cur_section = 0;
 	cur_entry = 0;
-	editing_text[0] = 0;
+
 	lang_chk.clear();
 	texts_by_lang.clear();
 	all_langs.clear();
@@ -83,9 +84,10 @@ void CEditorMessages::RenderSections()
 	ImGui::Text("SECTIONS");
 	ImGui::Indent();
 	for (int s = 0; s < all_sections.size(); s++) {
-		auto name = all_sections[s].c_str();
+		string name = all_sections[s].c_str();
 		bool actived = section_chk[s];
-		if (ImGui::Checkbox(name, &(actived)) && !changed_by_user) {
+		if (CheckSectionModified(s)) name += TXT_MODIF;
+		if (ImGui::Checkbox(name.c_str(), &(actived)) && !changed_by_user) {
 			changed_by_user = true;
 			SetSection(s, actived);
 		}
@@ -96,6 +98,14 @@ void CEditorMessages::RenderSections()
 	ImGui::Unindent();
 }
 
+bool CEditorMessages::CheckSectionModified(int s)
+{
+	for (int e = 0; e < MAX_ENTRIES; e++) {
+		if (CheckEntryModified(s, e)) return true;
+	}
+	return false;
+}
+
 void CEditorMessages::SetSection(int section, bool actived)
 {
 	if (actived) {
@@ -103,8 +113,7 @@ void CEditorMessages::SetSection(int section, bool actived)
 			section_chk[i] = (i == section);
 		}
 		cur_section = section;
-		cur_entry = 0;
-		cur_lang = 0;
+		SetEntry(0, true);
 	}
 	else {
 		section_chk[section] = true; // No dejamos desactivar
@@ -129,12 +138,21 @@ void CEditorMessages::RenderEditor()
 	ImGui::Separator();
 
 	ImGui::Text("EDIT TEXT");
-	ImGui::InputTextMultiline("Edit", editing_text, 2048, ImVec2(500, 0));
+	if (ImGui::InputTextMultiline("Edit", EditingText, 2048, ImVec2(500, 0))) {
+		modified[cur_lang][cur_section][cur_entry] = (std::string(EditingText) != std::string(original_text));
+	}
 
 	if (ImGui::Button("Show New")) {
-		string editing_fixed = editing_text;
+		string editing_fixed = EditingText;
 		editing_fixed = TextEncode::Utf8ToLatin1String(editing_fixed.c_str());
 		ShowMessage(editing_fixed);
+	}
+	if (ImGui::Button("Save to file")) {
+		SaveFile();
+	}
+	ImGui::SameLine();
+	if (ImGui::Button("Reload")) {
+		sprintf(EditingText, "%s", original_text);
 	}
 	ImGui::End();
 }
@@ -157,8 +175,9 @@ void CEditorMessages::RenderEntries()
 	auto entries = &all_entries[section];
 	for (int e = 0; e < entries->size(); e++) {
 		bool actived = entry_chk[section][e];
-		auto name = ((*entries)[e]).c_str();
-		if (ImGui::Checkbox(name, &actived)) {
+		string name = ((*entries)[e]).c_str();
+		if (CheckEntryModified(cur_section, e)) name += TXT_MODIF;
+		if (ImGui::Checkbox(name.c_str(), &actived)) {
 			changed_by_user = true;
 			SetEntry(e, actived);
 		}
@@ -167,6 +186,13 @@ void CEditorMessages::RenderEntries()
 		}
 	}
 	ImGui::Unindent();
+}
+bool CEditorMessages::CheckEntryModified(int s, int e)
+{
+	for (int l = 0; l < MAX_LANG; l++) {
+		if (modified[l][s][e]) return true;
+	}
+	return false;
 }
 
 void CEditorMessages::SetEntry(int entry, bool actived)
@@ -177,7 +203,7 @@ void CEditorMessages::SetEntry(int entry, bool actived)
 			entry_chk[cur_section][e] = (e == entry);
 		}
 		cur_entry = entry;
-		cur_lang = 0;
+		SetLang(0, true);
 	}
 	else {
 		entry_chk[cur_section][entry] = true; // No dejamos desactivar
@@ -190,14 +216,17 @@ void CEditorMessages::RenderLanguages()
 	ImGui::Text("LANGUAGE");
 	for (int l = 0; l < texts_by_lang.size(); l++) {
 		if (CheckLanguage(l)) {
+			bool available = CheckLanguage(l);
 			bool actived = lang_chk[l];
-			if (ImGui::Checkbox(all_langs[l].c_str(), &actived)) {
+			std::string lang_txt = all_langs[l];
+			if (modified[l][cur_section][cur_entry]) lang_txt += TXT_MODIF;
+			if (ImGui::Checkbox(lang_txt.c_str(), &actived)) {
 				changed_by_user = true;
 				SetLang(l, actived);
 			}
 		}
 		else {
-			ImGui::Text("%s (Not Available)", all_langs[l]);
+			ImGui::Text("%s (Not Available)", all_langs[l].c_str());
 		}
 	}
 	ImGui::Unindent();
@@ -219,21 +248,39 @@ void CEditorMessages::SetLang(int lang, bool actived)
 			lang_chk[i] = (i == lang);
 		}
 		cur_lang = lang;
-		auto text = texts_by_lang[cur_lang][all_sections[cur_section]][all_entries[cur_section][cur_entry]];
-		char in[2048];
-		sprintf(in, text.c_str());
-		unsigned char out[4096];
-		unsigned char* in2 = (unsigned char*)in;
-		unsigned char* out2 = out;
-		while (*in2) {
-			if ((*in2) < 128) *out2++ = *in2++;
-			else *out2++ = 0xc2 + (*in2 > 0xbf), *out2++ = (*in2++ & 0x3f) + 0x80;
+		auto text = GetOriginalText();
+		text = TextEncode::Latin1ToUtf8String(text.c_str());
+		sprintf(original_text, "%s", text.c_str());
+		std::string cur_val(EditingText);
+		if (cur_val == "") {
+			sprintf(EditingText, "%s", text.c_str());
 		}
-		*out2 = 0;
-		sprintf(original_text, "%s", out);
-		sprintf(editing_text, "%s", out);
 	}
 	else {
 		lang_chk[lang] = true; // No dejamos desactivar
 	}
+}
+
+std::string CEditorMessages::GetOriginalText()
+{
+	std::string res = "";
+	auto lmap = texts_by_lang[cur_lang];
+	if (lmap.find(all_sections[cur_section]) != lmap.end()) {
+		auto smap = lmap[all_sections[cur_section]];
+		if (smap.find(all_entries[cur_section][cur_entry]) != smap.end()) {
+			res = smap[all_entries[cur_section][cur_entry]];
+		}
+	}
+	return res;
+}
+
+void CEditorMessages::SaveFile()
+{
+	string editing_fixed = EditingText;
+	editing_fixed = TextEncode::Utf8ToLatin1String(editing_fixed.c_str());
+	lang_manager->ModifyEntry(all_langs[cur_lang], all_sections[cur_section], all_entries[cur_section][cur_entry], editing_fixed);
+	sprintf(original_text, "%s", EditingText);
+	all_texts[all_langs[cur_lang]][all_sections[cur_section]][all_entries[cur_section][cur_entry]] =
+		texts_by_lang[cur_lang][all_sections[cur_section]][all_entries[cur_section][cur_entry]] = editing_fixed;
+	modified[cur_lang][cur_section][cur_entry] = false;
 }

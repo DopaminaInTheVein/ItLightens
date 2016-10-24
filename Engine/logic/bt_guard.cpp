@@ -404,8 +404,13 @@ int bt_guard::actionPrepareToAbsorb() {
 	logic_manager->throwEvent(logic_manager->OnGuardMovingStop, "");
 	shoot_preparation_time += getDeltaTime();
 	dbg("PREPARING TO SHOOT!\n");
+	if (!shoot_prepared) {
+		shoot_prepared = true;
+		logic_manager->throwEvent(logic_manager->OnGuardAttackPrep, "", CHandle(this).getOwner());
+	}
 	if (shoot_preparation_time > SHOOT_PREP_TIME) {
 		shoot_preparation_time = 0.f;
+		shoot_prepared = false;
 		return OK;
 	}
 	else {

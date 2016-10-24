@@ -6,6 +6,7 @@ function OnCreateGui_btn_resume( )
 end
 
 function OnClicked_btn_resume( )
+	p:play_sound("event:/OnMenuAccept", 1.0, false)
 	p:wait_escape_cancel()
 	p:set_cursor_enabled(false)
 	destroyMenu()
@@ -14,6 +15,7 @@ end
 
 function OnClicked_btn_restart( )
 	-- (Fadeout)
+	p:play_sound("event:/OnMenuAccept", 1.0, false)
 	p:wait_escape_cancel()
 	p:set_cursor_enabled(false)
 	p:exec_command("destroyMenu();", 1)
@@ -22,6 +24,7 @@ end
 
 function OnClicked_btn_back_title( )
 	-- (Fadeout)
+	p:play_sound("event:/OnMenuCancel", 1.0, false)
 	p:wait_escape_cancel()
 	p:set_cursor_enabled(false)
 	p:exec_command("destroyMenu();", 1)
@@ -29,12 +32,14 @@ function OnClicked_btn_back_title( )
 end
 
 function OnClicked_btn_opt_menu( )
+	p:play_sound("event:/OnMenuAccept", 1.0, false)
 	options_from = "pause"
 	p:wait_escape_cancel()
 	p:load_entities("options")
 end
 
 function OnClicked_btn_exit_pause( )
+	p:play_sound("event:/OnMenuCancel", 1.0, false)
 	p:wait_escape_cancel()
 	p:print("exit..")
 	p:exit_game()

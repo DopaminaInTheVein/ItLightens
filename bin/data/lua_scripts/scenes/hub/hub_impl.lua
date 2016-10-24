@@ -28,7 +28,7 @@ function OnStart_hub( )
 	p:player_talks("::start_hub")
 	p:exec_command("p:player_talks(\"::sense\")",4.0)
 	sense_first_pressed = true
-
+	p:play_music("event:/OnGameMusic", 0.2)
 	
 	p:setOnlySense(1)
 end
@@ -41,6 +41,7 @@ idMoleSlept = 5
 idSciSlept = 6
 function OnLoad_hub()
 	cam:fx(FX_DREAM_BORDER, 0)
+	p:play_music("event:/OnGameMusic", 0.2)
 	if dead_on_dream then
 		p:player_talks(TXT_DEAD_ON_DREAM)
 	else

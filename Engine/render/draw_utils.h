@@ -42,6 +42,8 @@ extern CShaderCte< TCteHatching > shader_ctes_hatching;
 extern CShaderCte< TCteGui > shader_ctes_gui;
 #include "constants/ctes_dream.h"
 extern CShaderCte< TCteDream > shader_ctes_dream;
+#include "constants/ctes_fog.h"
+extern CShaderCte< TCteFog > shader_ctes_fog;
 
 extern const CTexture* all_black;
 
