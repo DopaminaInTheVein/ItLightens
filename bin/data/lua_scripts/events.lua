@@ -10,30 +10,30 @@ cam = Camera()
 ui_cam = UiCamera()
 
 function CallFunction(func)
-	p:print("Call Function"..func)
-	p:breakpoint(2)
-	local called = pcall(func)
-	if not called then
+	--p:print("Call Function"..func)
+	--p:breakpoint(2)
+	--local called = pcall(func)
+	--if not called then
+	--	p:print("function "..func.." does not exist!\n")
+	--end
+	--return called
+	 called = true
+	if _G[func] then _G[func]()
+	else
 		p:print("function "..func.." does not exist!\n")
+		called = false
 	end
 	return called
-	-- called = true
-	-- if _G[func] then _G[func]()
-	-- else
-		-- p:print("function "..func.." does not exist!\n")
-		-- called = false
-	-- end
-	-- return called
 end
 
 function CallFunctionParam(func, param)
-	-- called = true
-	-- if _G[func] then _G[func](param)
-	-- else
-		-- p:print("function "..func.." does not exist!\n")
-		-- called = false
-	-- end
-	local called = pcall(func, param)
+	called = true
+	if _G[func] then _G[func](param)
+	else
+		p:print("function "..func.." does not exist!\n")
+		called = false
+	end
+	--local called = pcall(func, param)
 	return called
 end
 
@@ -67,7 +67,7 @@ end
 
 function OnEnter( param )
 	p:print( "OnEnter: "..param.."\n" )
-	p:breakpoint(1)
+	--p:breakpoint(1)
 	CallFunction("OnEnter_"..param)
 	--if _G["OnEnter_"..param] then _G["OnEnter_"..param](handle) 
 	--else
@@ -257,7 +257,6 @@ function OnRepairDrone( level, drone )
 	p:play_sound("event:/OnUseGenerator", 1.0, false)
 	CallFunction("OnRepairDrone_"..level)
 	CallFunction("OnRepairDrone_"..drone)
-	--p:player_talks("I just repaired that useful thing to make a full working one...\nbut battery may fail as well, that is unreparable....")
 end
 
 function OnCreateBomb( level )
