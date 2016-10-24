@@ -119,6 +119,9 @@ public:
 	}
 	void myUpdate() override;
 	//void UpdateAnimation() override { animController.update(); }
+	TCompTransform * getEntityTransform() {
+		return transform;
+	}
 
 	//void update_msgs() override;
 

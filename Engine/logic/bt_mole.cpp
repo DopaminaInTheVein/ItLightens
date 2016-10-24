@@ -236,7 +236,7 @@ bool bt_mole::aimToTarget(VEC3 target) {
 
 void bt_mole::moveFront(float movement_speed) {
 	VEC3 front = transform->getFront();
-	VEC3 position = transform->getPosition();
+	//VEC3 position = transform->getPosition();
 	TCompCharacterController *cc = myEntity->get<TCompCharacterController>();
 	float dt = getDeltaTime();
 	cc->AddMovement(VEC3(front.x*movement_speed*dt, 0.0f, front.z*movement_speed*dt));

@@ -121,14 +121,6 @@ public:
 
 	int step_counter = 0;
 
-	//Cambio Malla
-	//TCompRenderStaticMesh* mesh;
-	//string pose_idle_route;
-	//string pose_run_route;
-	//string pose_jump_route;
-	//string pose_box_route;
-	//string pose_wall_route;
-
 	void UpdateInputActions();
 	void UpdateMovingWithOther();
 	void UpdateUnpossess();

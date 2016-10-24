@@ -5,6 +5,7 @@
 #include "entity.h"
 #include "entity_tags.h"
 #include "comp_msgs.h"
+#include "components/comp_charactercontroller.h"
 #include "player_controllers/player_controller_mole.h"
 #include "player_controllers/player_controller_cientifico.h"
 #include "app_modules/logic_manager/logic_manager.h"
@@ -25,6 +26,11 @@ void TCompRoomLimit::onTriggerEnter(const TMsgTriggerIn & msg)
 	if (h_out != CPlayerBase::handle_player) { return; }
 	if (h_out.hasTag("raijin")) { return; }
 	CEntity * pe = h_out;
+
+	CEntity * player = tags_manager.getFirstHavingTag(getID("player"));
+
+	TCompCharacterController *cc = player->get<TCompCharacterController>();
+	cc->AddMovement(VEC3(-1.0f, 0.0f, 0.0f));
 
 	TMsgAISetPossessed msg2;
 	msg2.possessed = false;

@@ -174,7 +174,7 @@ bool CEntitiesModule::start() {
 	getHandleManager<TCompName>()->init(MAX_ENTITIES);
 	getHandleManager<TCompRoom>()->init(MAX_ENTITIES);
 	getHandleManager<TCompRoomSwitch>()->init(4);
-	getHandleManager<TCompRoomLimit>()->init(MAX_ENTITIES);
+	getHandleManager<TCompRoomLimit>()->init(4);
 	getHandleManager<TCompTransform>()->init(MAX_ENTITIES);
 	getHandleManager<TCompTransformAnimator>()->init(MAX_ENTITIES);
 	getHandleManager<TCompSnoozer>()->init(MAX_ENTITIES);
