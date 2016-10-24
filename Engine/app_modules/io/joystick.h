@@ -56,7 +56,7 @@ public:
 	const int max_stick_value = 32768;
 	const int min_trigger_value = 0;
 	const int max_trigger_value = 255;
-	int joystick_umbral = 5000; // 32768 - 15.26% Aprox
+	int joystick_umbral = 10000; // 32768 - 30.52% Aprox
 
 	// Config values
 	const int right_stick_x_sensibility = 150;

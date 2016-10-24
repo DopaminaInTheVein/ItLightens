@@ -56,7 +56,7 @@ float CInputWrapper::MoveYNormalized() {
 	else if (io->keys['S'].isPressed()) {
 		return -1.0f;
 	}
-	else if (io->joystick.getLY() != 0.f) {
+	else if (io->joystick.getLY() != 0) {
 		return io->joystick.ly / (float)io->joystick.max_stick_value;
 	}
 	return 0.0f;
@@ -68,7 +68,7 @@ float CInputWrapper::MoveXNormalized() {
 	else if (io->keys['A'].isPressed()) {
 		return 1.0f;
 	}
-	else if (io->joystick.getLX() != 0.f) {
+	else if (io->joystick.getLX() != 0) {
 		return (-io->joystick.lx / (float)io->joystick.max_stick_value);
 	}
 	return 0.0f;
@@ -104,7 +104,7 @@ float CInputWrapper::RYNormalized() {
 	if (io->mouse.dy != 0) {
 		return io->mouse.dy;
 	}
-	else if (io->joystick.getRY() != 0.f) {
+	else if (io->joystick.getRY() != 0) {
 		return io->joystick.getRY() * 8 / (float)io->joystick.max_stick_value;
 	}
 	return 0.0f;
@@ -113,7 +113,7 @@ float CInputWrapper::RXNormalized() {
 	if (io->mouse.dx != 0) {
 		return io->mouse.dx;
 	}
-	else if (io->joystick.getRX() != 0.f) {
+	else if (io->joystick.getRX() != 0) {
 		return io->joystick.rx * 8 / (float)io->joystick.max_stick_value;
 	}
 	return 0.0f;
