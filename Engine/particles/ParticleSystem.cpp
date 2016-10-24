@@ -930,7 +930,7 @@ bool CParticleSystem::loadFromFile(std::string filename)
 
 void CParticleSystem::renderInMenu()
 {
-	ImGui::Text("ID: %d\n", id_particle_system);
+	//ImGui::Text("ID: %d\n", id_particle_system);
 	ImGui::Text("num particles: %d\n", m_numParticles);
 
 	ImGui::Separator();
