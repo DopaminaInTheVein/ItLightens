@@ -80,7 +80,7 @@ bool TCompFadingMessage::load(MKeyValue& atts)
 	return true;
 }
 
-bool TCompFadingMessage::reload(const ReloadInfo& atts)
+bool TCompFadingMessage::reload(const ReloadInfo& atts, float reloadAll)
 {
 	if (!initialized) {
 		Init();
@@ -96,9 +96,6 @@ bool TCompFadingMessage::reload(const ReloadInfo& atts)
 	permanent = atts.permanent;
 	std::string who = atts.icon;
 	ttl = timeForLetter * text.size() + 4.0f;
-	numchars = 0;
-	shown_chars = 0;
-	accumSpacing = 0.f;
 
 	VEC3 new_pos2 = min_ortho + orthorect * VEC3(0.5f, 0.02f, 0.3f);
 	//new_pos2.z = 0.3f;
@@ -121,17 +118,26 @@ bool TCompFadingMessage::reload(const ReloadInfo& atts)
 
 	enabled = true;
 	shown_chars = 0;
-	numchars = 0;
-	accumTime = 0.0f;
-
 	cur_line = cur_char_line = 0;
+	partialReload = true;
+	accumSpacing = 0.f;
+	if (reloadAll) {
+		numchars = 0;
+		accumTime = 0.0f;
+		partialReload = false;
+	}
 	return true;
 }
 
 void TCompFadingMessage::update(float dt) {
 	if (!enabled) return;
 
-	shown_chars = numchars;
+	if (!partialReload) {
+		shown_chars = numchars;
+	}
+	else {
+		partialReload = false;
+	}
 
 	accumTime += dt;
 	while (accumTime > timeForLetter) {
@@ -203,11 +209,11 @@ void TCompFadingMessage::printLetters() {
 
 void TCompFadingMessage::onLanguageChanged(const TMsgLanguageChanged &msg)
 {
-	reload(atts);
+	reload(atts, false);
 }
 
 void TCompFadingMessage::onControlsChanged(const TMsgControlsChanged &msg)
 {
 	if (lang_manager->isControllerMessage(atts.text))
-		reload(atts);
+		reload(atts, false);
 }

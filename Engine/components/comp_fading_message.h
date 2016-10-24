@@ -33,6 +33,7 @@ private:
 	float letterBoxSize = 1.0f / 16.0f;
 	float letterSpacer = 0.3f / 16.0f;
 	float letterSpacerHigh = scale * 1.25f;
+	bool partialReload;
 
 	Font::VCharacter text;
 	float  ttl;
@@ -53,7 +54,7 @@ public:
 	void printLetters();
 	void Init();
 	bool load(MKeyValue& atts);
-	bool reload(const ReloadInfo& atts);
+	bool reload(const ReloadInfo& atts, float reloadAll = true);
 	void hideAll();
 	void kill() { ttl = -1.f; }
 
