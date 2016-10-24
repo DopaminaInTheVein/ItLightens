@@ -281,7 +281,7 @@ end
 function OnUseGenerator( param )
 	p:print( "OnUseGenerator: "..param.."\n" )
 	CallFunction("OnUseGenerator_"..param)
-	p:play_sound("event:/OnUseGenerator", 1.0, false)
+	p:play_sound("event:/OnRaijinRecharge", 1.0, false)
 end
 
 function OnStun( param )

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.01.08.00">
+    <object class="AudioFile" id="{739cc3c7-e528-4cdd-87d0-f03e95963d50}">
+        <property name="assetPath">
+            <value>ATURDIDO.mp3</value>
+        </property>
+        <property name="frequencyInKHz">
+            <value>48</value>
+        </property>
+        <property name="channelCount">
+            <value>2</value>
+        </property>
+        <property name="length">
+            <value>4.6319999999999997</value>
+        </property>
+        <relationship name="masterAssetFolder">
+            <destination>{27c9e485-159e-4d91-9702-b6efb99fec5b}</destination>
+        </relationship>
+    </object>
+</objects>

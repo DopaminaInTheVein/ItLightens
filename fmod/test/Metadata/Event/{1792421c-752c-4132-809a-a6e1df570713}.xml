@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.01.08.00">
     <object class="Event" id="{1792421c-752c-4132-809a-a6e1df570713}">
         <property name="name">
-            <value>OnRaijinMoving</value>
+            <value>OnRaijinRunning</value>
         </property>
         <property name="outputFormat">
             <value>2</value>

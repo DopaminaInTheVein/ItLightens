@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.01.08.00">
     <object class="Event" id="{5c07b57a-3395-422d-bba9-5f40b42e33fe}">
         <property name="name">
-            <value>OnChargePila</value>
+            <value>OnRaijinRecharge</value>
         </property>
         <property name="outputFormat">
             <value>2</value>
@@ -93,7 +93,7 @@
             <value>0</value>
         </property>
         <property name="length">
-            <value>30.432653061224489</value>
+            <value>3</value>
         </property>
         <relationship name="audioFile">
             <destination>{960374e6-ec9d-43d1-a201-88eef8c91bed}</destination>

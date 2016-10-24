@@ -221,20 +221,24 @@ void player_controller::myUpdate() {
 		if (player_curr_speed >= player_max_speed - 0.1f)
 		{
 			SET_ANIM_PLAYER(AST_RUN);
-			sound_manager->playSound("event:/OnRaijinMoving", 0.5f, false);
+			sound_manager->stopSound("event:/OnRaijinWalking");
+			sound_manager->playSound("event:/OnRaijinRunning", 0.5f, false);
 		}
 		else if (player_curr_speed > 0.f)
 		{
-			sound_manager->stopSound("event:/OnRaijinMoving");
 			SET_ANIM_PLAYER(AST_MOVE);
+			sound_manager->stopSound("event:/OnRaijinRunning");
+			sound_manager->playSound("event:/OnRaijinWalking", 1.f, false);		
 		}
 		else {
-			sound_manager->stopSound("event:/OnRaijinMoving");
+			sound_manager->stopSound("event:/OnRaijinWalking");
+			sound_manager->stopSound("event:/OnRaijinRunning");
 			SET_ANIM_PLAYER(AST_IDLE);
 		}
 	}
 	else {
-		sound_manager->stopSound("event:/OnRaijinMoving");
+		sound_manager->stopSound("event:/OnRaijinWalking");
+		sound_manager->stopSound("event:/OnRaijinRunning");
 	}
 }
 
