@@ -105,7 +105,7 @@
         "cargador_sci_1": "La pila tiene energía y funciona!",
         "cargador_sci_2": "Vamos allá!",
         "cargador_sci_3": "No ha y nada que cargar.",
-        "recharge_pila": "La pila esta cargada a tope!",
+        "recharge_cell": "La pila esta cargada a tope!",
         "enchufe_player_1": "Lo hice! La puerta está abierta!",
         "enchufe_player_2": "La pila de aquí no tiene energía...",
         "enchufe_player_3": "Necesita energía para funcionar.",
