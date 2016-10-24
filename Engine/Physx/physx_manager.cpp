@@ -180,9 +180,14 @@ void CPhysxManager::update(float dt)
 		CEntitiesModule::fixedUpdate(t_to_update);
 
 		//m_pScene->simulate(t_to_update);
-		m_pScene->simulate(t_max_update);
-		m_pScene->fetchResults(true);
-
+		{
+			PROFILE_FUNCTION("Simulate");
+			m_pScene->simulate(t_max_update);
+		}
+		{
+			PROFILE_FUNCTION("Fetch Results");
+			m_pScene->fetchResults(true);
+		}
 		//getHandleManager<TCompPhysics>()->updateAll(t_max_update);
 		//getHandleManager<TCompCharacterController>()->updateAll(t_max_update);
 

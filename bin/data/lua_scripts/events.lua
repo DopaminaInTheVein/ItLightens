@@ -10,22 +10,30 @@ cam = Camera()
 ui_cam = UiCamera()
 
 function CallFunction(func)
-	called = true
-	if _G[func] then _G[func]()
-	else
+	p:print("Call Function"..func)
+	p:breakpoint(2)
+	local called = pcall(func)
+	if not called then
 		p:print("function "..func.." does not exist!\n")
-		called = false
 	end
 	return called
+	-- called = true
+	-- if _G[func] then _G[func]()
+	-- else
+		-- p:print("function "..func.." does not exist!\n")
+		-- called = false
+	-- end
+	-- return called
 end
 
 function CallFunctionParam(func, param)
-	called = true
-	if _G[func] then _G[func](param)
-	else
-		p:print("function "..func.." does not exist!\n")
-		called = false
-	end
+	-- called = true
+	-- if _G[func] then _G[func](param)
+	-- else
+		-- p:print("function "..func.." does not exist!\n")
+		-- called = false
+	-- end
+	local called = pcall(func, param)
 	return called
 end
 
@@ -58,7 +66,8 @@ function OnActionMole( param )
 end
 
 function OnEnter( param )
-	p:print( "OnEnter: "..param.."\n" ) 
+	p:print( "OnEnter: "..param.."\n" )
+	p:breakpoint(1)
 	CallFunction("OnEnter_"..param)
 	--if _G["OnEnter_"..param] then _G["OnEnter_"..param](handle) 
 	--else
@@ -73,6 +82,7 @@ end
 
 function OnGameStart( param )
 	p:print( "OnGameStart: "..param.."\n" )
+	cam:fx(FX_FOG, 0)
 	p:load_entities("init")
 	ui_cam:fade_out(0)
 	p:exec_command("LoadLevel(\"level_0\")", 2)

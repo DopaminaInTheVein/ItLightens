@@ -10,9 +10,8 @@ extern CRenderDeferredModule * render_deferred;
 
 // ---------------------
 void TRenderDepthFog::renderInMenu() {
-	
 	VEC3 color_fog = shader_ctes_fog.color_fog;
-	if(ImGui::DragFloat3("color fog", &color_fog.x, 0.1f)) {
+	if (ImGui::DragFloat3("color fog", &color_fog.x, 0.1f)) {
 		shader_ctes_fog.color_fog = color_fog;
 		shader_ctes_fog.uploadToGPU();
 	}
@@ -43,6 +42,7 @@ void TRenderDepthFog::renderInMenu() {
 	if (ImGui::DragFloat("Fog floor", &shader_ctes_fog.fog_floor, 0.1)) {
 		shader_ctes_fog.uploadToGPU();
 	}
+	TCompBasicFX::renderInMenu();
 }
 
 void TRenderDepthFog::ApplyFX() {
@@ -78,6 +78,12 @@ void TRenderDepthFog::SetPosition(VEC3 new_position)
 VEC3 TRenderDepthFog::GetPosition() const
 {
 	return m_position_point_distance;
+}
+
+void TRenderDepthFog::SetFloorHeight(float h)
+{
+	shader_ctes_fog.fog_floor = h;
+	shader_ctes_fog.uploadToGPU();
 }
 
 void TRenderDepthFog::EnableDistanceCalculation()

@@ -54,10 +54,6 @@ function OnEnter_tSave01( )
 SaveLevel()
 end
 
-function OnEnter_tSave02( )
-SaveLevel()
-end
-
 function OnEnter___ttablon1( )
 ms3_onTablon1()
 end
@@ -104,5 +100,21 @@ end
 
 function OnLeave___ttablon006( )
 ms3_outTablon()
+end
+
+function OnEnter__tFogOut1( )
+SaveLevel()
+end
+
+function OnEnter__tFogOut2( )
+SaveLevel()
+end
+
+function OnEnter__tFogIn( )
+SaveLevel()
+end
+
+function OnEnter__tFogIn( )
+SaveLevel()
 end
 

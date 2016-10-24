@@ -22,6 +22,8 @@ end
 
 function OnStart_ms3()
   p:print("OnStarted Scene MS3")
+  InitFogMs3()
+  
   isDoorOpen = false
   alert = false
   stateElevator = 1 -- 1= up , 0 = down
@@ -43,12 +45,14 @@ function OnSave_ms3()
 	d:put_bool("alert", alert)
 	d:put_bool("cp_elevator", cp_elevator)
 	d:put_bool("cp_door_opened", cp_door_opened)
+	SaveFogMs3(d)
 	d:write()
 end
 
 function OnLoad_ms3()
   p:print("OnLoaded Scene MS3")
   d = Data()
+  LoadFogMs3()
   isDoorOpen = d:get_bool("door_open")
   alert = d:get_bool("alert")
   stateElevator = d:get_float("elevator_state")

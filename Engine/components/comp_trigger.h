@@ -14,6 +14,7 @@ struct TTrigger : public TCompBase {
 	}
 
 	void onTriggerEnterCall(const TMsgTriggerIn& msg) {
+		PROFILE_FUNCTION("Trigger Enter Call");
 		CHandle hEnter = msg.other;
 		if (hEnter.isValid()) {
 			dbg("Entro en trigger!\n");
@@ -27,6 +28,7 @@ struct TTrigger : public TCompBase {
 	}
 
 	void onTriggerExitCall(const TMsgTriggerOut& msg) {
+		PROFILE_FUNCTION("Trigger Exit Call");
 		CHandle hExit = msg.other;
 		if (hExit.isValid()) {
 			dbg("Salgo de trigger!\n");
