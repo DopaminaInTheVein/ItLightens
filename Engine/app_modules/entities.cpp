@@ -785,11 +785,13 @@ void CEntitiesModule::render() {
 		getHandleManager<TCompFadingMessage>()->onAll(&TCompFadingMessage::render);
 		getHandleManager<TCompFadingGlobe>()->onAll(&TCompFadingGlobe::render);
 
-#ifndef NDEBUG
+#ifndef FINAL_BUILD
 		getHandleManager<TCompLightPoint>()->onAll(&TCompLightPoint::render);
 		getHandleManager<TCompLightDir>()->onAll(&TCompLightDir::render);
 		getHandleManager<TCompLightDirShadows>()->onAll(&TCompLightDirShadows::render);
+#ifndef NDEBUG
 		getHandleManager<TCompBox>()->onAll(&TCompBox::render);
+#endif
 #endif
 	}
 
