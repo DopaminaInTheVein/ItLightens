@@ -1,0 +1,3 @@
+<static_mesh>
+  <slot mesh="meshes/ui/loading/Plane001.mesh" material="materials/ui/loading/logoload_tech_ui.material"/>
+</static_mesh>

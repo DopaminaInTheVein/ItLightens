@@ -1,0 +1,4 @@
+<material tech="transparent.tech">
+<texture slot="diffuse" name="textures/cristalera_arriba_difuso.dds"/>
+<texture slot="normalmap" name="textures/rejasversion1.dds"/>
+</material>

@@ -1,0 +1,3 @@
+<static_mesh>
+  <slot mesh="meshes/ui/options/Plane006.mesh" material="materials/ui/options/optionbars_tech_ui.material"/>
+</static_mesh>

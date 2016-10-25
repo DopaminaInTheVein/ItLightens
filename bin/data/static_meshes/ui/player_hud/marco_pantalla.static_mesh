@@ -1,0 +1,3 @@
+<static_mesh>
+  <slot mesh="meshes/ui/player_hud/marco_pantalla.mesh" material="materials/ui/player_hud/marcopantalla_tech_ui.material"/>
+</static_mesh>

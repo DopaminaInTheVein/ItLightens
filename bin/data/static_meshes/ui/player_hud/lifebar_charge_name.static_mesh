@@ -1,0 +1,3 @@
+<static_mesh>
+  <slot mesh="meshes/ui/player_hud/lifebar_charge_name.mesh" material="materials/ui/player_hud/lifebarchargename_tech_ui_button.material"/>
+</static_mesh>

@@ -6,19 +6,18 @@
    menu_name="title"
    row="0"
    col="0"
-   width="0.477473"
-   height="0.470192"/>
-<gui_button
-   width="0.477473"
-   height="0.470192"/>
+   width="1.97421"
+   height="1.94409"/>
+<gui_button/>
 <name
    name="btn_start"/>
 <transform
-   pos="5.00018 -96.268 4.71109"
+   pos="2.5 -96.9667 5.33711"
    quat="0 0 0 1.0"
-   scale="1.04135"/>
+   scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ui/title/btn_start.static_mesh"/>
+   name="static_meshes/ui/title/btn_start.static_mesh"
+   static="false"/>
 <abs_aabb/>
 
 </entity>
@@ -27,11 +26,12 @@
 <name
    name="background"/>
 <transform
-   pos="5.0 -95.0 4.61109"
+   pos="5.0 -95.0 3.56559"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ui/title/background.static_mesh"/>
+   name="static_meshes/ui/title/background.static_mesh"
+   static="true"/>
 <abs_aabb/>
 
 </entity>
@@ -40,21 +40,20 @@
    tags="gui gui_button clickable"/>
 <gui
    menu_name="title"
-   row="1"
-   col="0"
-   width="0.477473"
-   height="0.470192"/>
-<gui_button
-   width="0.477473"
-   height="0.470192"/>
+   row="0"
+   col="1"
+   width="1.97421"
+   height="1.94409"/>
+<gui_button/>
 <name
    name="btn_options"/>
 <transform
-   pos="5.00018 -96.7906 4.71109"
+   pos="5.00018 -96.9663 5.31711"
    quat="0 0 0 1.0"
-   scale="1.04135"/>
+   scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ui/title/btn_options.static_mesh"/>
+   name="static_meshes/ui/title/btn_options.static_mesh"
+   static="false"/>
 <abs_aabb/>
 
 </entity>
@@ -63,27 +62,26 @@
    tags="gui gui_button clickable"/>
 <gui
    menu_name="title"
-   row="2"
-   col="0"
-   width="0.477473"
-   height="0.470192"/>
-<gui_button
-   width="0.477473"
-   height="0.470192"/>
+   row="0"
+   col="2"
+   width="1.97421"
+   height="1.94409"/>
+<gui_button/>
 <name
    name="btn_exit"/>
 <transform
-   pos="5.00018 -97.3131 4.71109"
+   pos="7.5 -96.9667 5.31711"
    quat="0 0 0 1.0"
-   scale="1.04135"/>
+   scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ui/title/btn_exit.static_mesh"/>
+   name="static_meshes/ui/title/btn_exit.static_mesh"
+   static="false"/>
 <abs_aabb/>
 
 </entity>
 <entity>
 <tags
-   tags="menu gui gui_cursor"/>
+   tags="title gui gui_cursor"/>
 <gui
    menu_name="title"
    width="0.2"
@@ -93,11 +91,40 @@
 <name
    name="cursor_title"/>
 <transform
-   pos="5.42145 -95.7802 4.77161"
-   quat="0.707107 0 0 0.707107"
+   pos="5.42145 -95.7802 5.51837"
+   quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ui//cursor.static_mesh"/>
+   name="static_meshes/ui/components_ui/cursor.static_mesh"
+   static="false"/>
+<abs_aabb/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="Plane001"/>
+<transform
+   pos="4.95577 -94.5204 4.89066"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ui/title/Plane001.static_mesh"
+   static="true"/>
+<abs_aabb/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="background001"/>
+<transform
+   pos="5.0 -95.0 3.42832"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ui/title/background001.static_mesh"
+   static="true"/>
 <abs_aabb/>
 
 </entity>

@@ -1,0 +1,3 @@
+<static_mesh>
+  <slot mesh="meshes/ui/menu/btn_salir.mesh" material="materials/ui/menu/exit_game_tech_ui_button.material"/>
+</static_mesh>

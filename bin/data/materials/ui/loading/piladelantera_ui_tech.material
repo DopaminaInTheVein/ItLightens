@@ -1,0 +1,3 @@
+<material tech="transparent.tech">
+<texture slot="diffuse" name="textures/pilaparteexterna.dds"/>
+</material>

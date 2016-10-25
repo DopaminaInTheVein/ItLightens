@@ -1,0 +1,3 @@
+<material tech="ui_polarity_e.tech">
+<texture slot="diffuse" name="textures/e.dds"/>
+</material>

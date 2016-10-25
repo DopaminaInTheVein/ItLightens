@@ -1,3 +1,1 @@
 <material tech="ui_button.tech">
-<texture slot="diffuse" name="textures/ui/menu/back_title.dds"/>
-</material>

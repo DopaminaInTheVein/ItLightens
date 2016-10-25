@@ -1,122 +1,16 @@
 <entities>
 <entity>
 <tags
-   tags="options gui gui_button clickable"/>
-<gui
-   menu_name="options"
-   row="10"
-   col="0"
-   width="0.652746"
-   height="0.367172"/>
-<gui_button
-   width="0.652746"
-   height="0.367172"/>
-<name
-   name="btn_opt_back"/>
-<transform
-   pos="0.612932 -97.1539 6.1"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ui/options/btn_opt_back.static_mesh"/>
-<abs_aabb/>
-
-</entity>
-<entity>
-<tags
    tags="options"/>
 <name
-   name="background"/>
+   name="background_options"/>
 <transform
    pos="5.0 -95.0 6.0"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ui/options/background.static_mesh"/>
-<abs_aabb/>
-
-</entity>
-<entity>
-<tags
-   tags="options gui gui_selector"/>
-<gui
-   menu_name="options"
-   row="5"
-   col="0"
-   width="3.11336"
-   height="0.277176"/>
-<gui_selector/>
-<name
-   name="opt_axisY"/>
-<transform
-   pos="4.9329 -96.9793 6.1"
-   quat="0.707107 0 0 0.707107"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ui/options/opt_axisY.static_mesh"/>
-<abs_aabb/>
-
-</entity>
-<entity>
-<tags
-   tags="options gui gui_selector"/>
-<gui
-   menu_name="options"
-   row="4"
-   col="0"
-   width="3.11336"
-   height="0.277176"/>
-<gui_selector/>
-<name
-   name="opt_axisX"/>
-<transform
-   pos="4.9329 -96.3355 6.1"
-   quat="0.707107 0 0 0.707107"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ui/options/opt_axisX.static_mesh"/>
-<abs_aabb/>
-
-</entity>
-<entity>
-<tags
-   tags="options gui gui_selector"/>
-<gui
-   menu_name="options"
-   row="0"
-   col="0"
-   width="3.11336"
-   height="0.277176"/>
-<gui_selector/>
-<name
-   name="opt_lang"/>
-<transform
-   pos="4.9329 -92.9878 6.1"
-   quat="0.707107 0 0 0.707107"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ui/options/opt_lang.static_mesh"/>
-<abs_aabb/>
-
-</entity>
-<entity>
-<tags
-   tags="options gui gui_selector"/>
-<gui
-   menu_name="options"
-   row="1"
-   col="0"
-   width="3.11336"
-   height="0.277176"/>
-<gui_selector/>
-<name
-   name="opt_diff"/>
-<transform
-   pos="4.9329 -93.5705 6.1"
-   quat="0.707107 0 0 0.707107"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ui/options/opt_diff.static_mesh"/>
+   name="static_meshes/ui/options/background_options.static_mesh"
+   static="true"/>
 <abs_aabb/>
 
 </entity>
@@ -132,11 +26,56 @@
 <name
    name="cursor_opt"/>
 <transform
-   pos="5.00626 -94.9994 6.2"
-   quat="0.707107 0 0 0.707107"
+   pos="6.99314 -94.9994 6.26128"
+   quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ui/cursor.static_mesh"/>
+   name="static_meshes/ui/components_ui/cursor.static_mesh"
+   static="false"/>
+<abs_aabb/>
+
+</entity>
+<entity>
+<tags
+   tags="options gui gui_selector"/>
+<gui
+   menu_name="options"
+   row="0"
+   col="0"
+   width="3.13228"
+   height="0.154205"/>
+<gui_selector/>
+<name
+   name="opt_lang"/>
+<transform
+   pos="4.92146 -92.9774 6.08875"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ui/options/opt_lang.static_mesh"
+   static="false"/>
+<abs_aabb/>
+
+</entity>
+<entity>
+<tags
+   tags="options gui gui_selector"/>
+<gui
+   menu_name="options"
+   row="1"
+   col="0"
+   width="3.13228"
+   height="0.154205"/>
+<gui_selector/>
+<name
+   name="opt_diff"/>
+<transform
+   pos="4.92146 -93.572 6.08875"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ui/options/opt_diff.static_mesh"
+   static="false"/>
 <abs_aabb/>
 
 </entity>
@@ -147,17 +86,18 @@
    menu_name="options"
    row="2"
    col="0"
-   width="3.11336"
-   height="0.277176"/>
+   width="3.13228"
+   height="0.154205"/>
 <gui_drag/>
 <name
    name="opt_music"/>
 <transform
-   pos="4.9329 -94.6319 6.1"
-   quat="0.707107 0 0 0.707107"
+   pos="4.92146 -94.6352 6.08875"
+   quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ui/options/opt_music.static_mesh"/>
+   name="static_meshes/ui/options/opt_music.static_mesh"
+   static="false"/>
 <abs_aabb/>
 
 </entity>
@@ -168,17 +108,77 @@
    menu_name="options"
    row="3"
    col="0"
-   width="3.11336"
-   height="0.277176"/>
+   width="3.13228"
+   height="0.154205"/>
 <gui_drag/>
 <name
    name="opt_sfx"/>
 <transform
-   pos="4.9329 -95.1094 6.1"
-   quat="0.707107 0 0 0.707107"
+   pos="4.92146 -95.0957 6.08875"
+   quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ui/options/opt_music.static_mesh"/>
+   name="static_meshes/ui/options/opt_sfx.static_mesh"
+   static="false"/>
+<abs_aabb/>
+
+</entity>
+<entity>
+<tags
+   tags="options gui gui_selector"/>
+<gui
+   menu_name="options"
+   row="4"
+   col="0"
+   width="3.13228"
+   height="0.154205"/>
+<gui_selector/>
+<name
+   name="opt_axisX"/>
+<transform
+   pos="4.92146 -96.33 6.08875"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ui/options/opt_axysX.static_mesh"
+   static="false"/>
+<abs_aabb/>
+
+</entity>
+<entity>
+<tags
+   tags="options gui gui_selector"/>
+<gui
+   menu_name="options"
+   row="5"
+   col="0"
+   width="3.13228"
+   height="0.154205"/>
+<gui_selector/>
+<name
+   name="opt_axisY"/>
+<transform
+   pos="4.92146 -96.9728 6.08875"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ui/options/opt_axysY.static_mesh"
+   static="false"/>
+<abs_aabb/>
+
+</entity>
+<entity>
+<tags
+   tags="options"/>
+<name
+   name="background_optioooons"/>
+<transform
+   pos="5.0 -95.0 5.90993"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ui/options/background_optioooons.static_mesh"
+   static="true"/>
 <abs_aabb/>
 
 </entity>

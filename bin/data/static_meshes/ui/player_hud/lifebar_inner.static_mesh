@@ -1,0 +1,3 @@
+<static_mesh>
+  <slot mesh="meshes/ui/player_hud/lifebar_inner.mesh" material="materials/ui/player_hud/lifebarinner_tech_ui.material"/>
+</static_mesh>

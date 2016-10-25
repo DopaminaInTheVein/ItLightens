@@ -1,31 +1,131 @@
 <entities>
 <entity>
-<gui/>
 <tags
    tags="loading"/>
 <name
    name="loading_background"/>
 <transform
-   pos="5.0 -95.0 5.0"
+   pos="5.0 -95.0 8.91144"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ui/loading/loading_background.static_mesh"/>
+   name="static_meshes/ui/loading/loading_background.static_mesh"
+   static="true"/>
 <abs_aabb/>
 
 </entity>
 <entity>
-<gui/>
 <tags
    tags="loading"/>
 <name
-   name="loading_bar"/>
+   name="loading_backgroundwhite"/>
 <transform
-   pos="4.99603 -97.2179 9.54736"
-   quat="0.707107 0 0 0.707107"
+   pos="5.0 -95.0 8.61583"
+   quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ui/loading/loading_bar.static_mesh"/>
+   name="static_meshes/ui/loading/loading_backgroundwhite.static_mesh"
+   static="true"/>
+<abs_aabb/>
+
+</entity>
+<entity>
+<tags
+   tags="loading"/>
+<name
+   name="Plane001"/>
+<transform
+   pos="6.87576 -94.165 9.45184"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ui/loading/Plane001.static_mesh"
+   static="true"/>
+<abs_aabb/>
+
+</entity>
+<entity>
+<tags
+   tags="loading gui"/>
+<gui
+   menu_name="loading"
+   width="5.08134"
+   height="5.08134"
+   lang="yes"/>
+<name
+   name="controlesmandos1"/>
+<transform
+   pos="2.31984 -95.0953 9.61758"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ui/loading/controlesmandos1.static_mesh"
+   static="false"/>
+<abs_aabb/>
+
+</entity>
+<entity>
+<tags
+   tags="loading"/>
+<name
+   name="pila"/>
+<transform
+   pos="9.02195 -97.2587 9.69503"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ui/loading/pila.static_mesh"
+   static="true"/>
+<abs_aabb/>
+
+</entity>
+<entity>
+<tags
+   tags="loading"/>
+<name
+   name="piladelante"/>
+<transform
+   pos="9.02195 -97.2587 9.75655"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ui/loading/piladelante.static_mesh"
+   static="true"/>
+<abs_aabb/>
+
+</entity>
+<entity>
+<tags
+   tags="loading gui"/>
+<gui
+   menu_name="loading"
+   width="0.737976"
+   height="0.737976"
+   lang="yes"/>
+<name
+   name="loadingpalabra"/>
+<transform
+   pos="8.76893 -97.5784 9.84626"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ui/loading/loadingpalabra.static_mesh"
+   static="false"/>
+<abs_aabb/>
+
+</entity>
+<entity>
+<tags
+   tags="loading"/>
+<name
+   name="Plane002"/>
+<transform
+   pos="9.00901 -97.2902 9.57935"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ui/loading/Plane002.static_mesh"
+   static="true"/>
 <abs_aabb/>
 
 </entity>

@@ -1,0 +1,3 @@
+<static_mesh>
+  <slot mesh="meshes/ui/loading/piladelante.mesh" material="materials/ui/loading/piladelantera_tech_ui.material"/>
+</static_mesh>

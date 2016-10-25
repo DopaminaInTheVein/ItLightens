@@ -1,0 +1,3 @@
+<static_mesh>
+  <slot mesh="meshes/ui/options/background_optioooons.mesh" material="materials/ui/options/fondowhite_tech_ui.material"/>
+</static_mesh>

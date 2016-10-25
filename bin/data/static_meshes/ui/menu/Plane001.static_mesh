@@ -1,0 +1,3 @@
+<static_mesh>
+  <slot mesh="meshes/ui/menu/Plane001.mesh" material="materials/ui/menu/pause_tech_ui_button.material"/>
+</static_mesh>

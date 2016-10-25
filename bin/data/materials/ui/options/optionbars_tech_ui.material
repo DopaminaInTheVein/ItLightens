@@ -1,0 +1,3 @@
+<material tech="ui.tech">
+<texture slot="diffuse" name="textures/optionsbar.dds"/>
+</material>

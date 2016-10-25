@@ -1,0 +1,3 @@
+<static_mesh>
+  <slot mesh="meshes/ui/player_hud/health_bar_out.mesh" material="materials/ui/player_hud/health_tech_ui.material"/>
+</static_mesh>
