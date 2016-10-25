@@ -988,6 +988,26 @@
 <rigidbody
    type_collision="trigger"
    type_shape="box"
+   size="3.0 4.0 0.1"/>
+<tags
+   tags="trigger room_switcher"/>
+<room_switcher
+   front_room="1"
+   back_room="2"/>
+<name
+   name="Trigger_Cambio_Sala"/>
+<transform
+   pos="-54.4765 0.753134 -5.47724"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
    size="0.1 4.0 12.0"/>
 <tags
    tags="trigger limit"/>
