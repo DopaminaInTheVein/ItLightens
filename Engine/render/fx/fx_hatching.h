@@ -6,7 +6,6 @@
 // ------------------------------------
 struct TRenderHatching : public TCompBasicFX {
 
-  bool enabled;
   void init();
   void renderInMenu();
 

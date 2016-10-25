@@ -6,6 +6,17 @@ class CRenderTechnique;
 
 class TCompBasicFX {
 public:
+
+	bool enabled;
+
+	virtual void enableFX() {
+		enabled = true;
+	}
+
+	virtual void disabledFX() {
+		enabled = false;
+	}
+
 	virtual void ApplyFX() = 0;
 
 	const CRenderTechnique *tech;

@@ -1,0 +1,4 @@
+<tech>
+  <vs fx="ssao" main="VSTextureScreen" decl="positions_uv" />
+  <ps fx="ssao" main="PSInv" />
+</tech>

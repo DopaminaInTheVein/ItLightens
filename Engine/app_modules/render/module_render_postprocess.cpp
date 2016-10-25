@@ -13,6 +13,7 @@
 #include "render\fx\fx_outline.h"
 #include "render\fx\fx_depth_fog.h"
 #include "render\fx\fx_dream.h"
+#include "render\fx\fx_ssao.h"
 
 //Initialize fx and add it to the list of fx for the engine
 #define INIT_FX( fx_name, fx_object ) \
@@ -54,6 +55,10 @@ bool CRenderPostProcessModule::start()
 	//antialiasing
 	TRenderAntiAliasing * aa = new TRenderAntiAliasing;
 	INIT_FX(FX_ANTI_ALIASING, aa);
+
+	//ssao
+	TRenderSSAO * ssao = new TRenderSSAO;
+	INIT_FX(FX_SSAO, ssao);
 
 	//###### should go on lua scripts ############
 

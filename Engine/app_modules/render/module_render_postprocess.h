@@ -13,6 +13,7 @@
 #define FX_MOTION_BLUR		"motion_blur"
 #define FX_FOG_DEPTH		"fog_depth"
 #define FX_ANTI_ALIASING	"anti_aliasing"
+#define FX_SSAO				"ssao"
 
 class TCompBasicFX;
 class TRenderGlow;

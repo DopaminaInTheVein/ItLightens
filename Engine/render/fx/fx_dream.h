@@ -6,7 +6,6 @@
 // ------------------------------------
 struct TRenderDream : public TCompBasicFX {
 
-  bool enabled;
   void init();
   void renderInMenu();
 

@@ -5,7 +5,6 @@
 
 // ------------------------------------
 struct TRenderDepthFog : public TCompBasicFX {
-	bool enabled;
 	bool enabled_dist_calc;
 	void init();
 	void renderInMenu();
