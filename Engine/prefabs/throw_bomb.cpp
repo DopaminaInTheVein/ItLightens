@@ -18,7 +18,7 @@ float CThrowBomb::speed_st = 6.f;
 float CThrowBomb::timer_st = 2.5;
 float CThrowBomb::radius_st = 2.f;
 #endif
-VEC3 CThrowBomb::offset_init_throw = VEC3(0.2f, 0.1f, 0.2f);
+VEC3 CThrowBomb::offset_init_throw = VEC3(0.25f, 0.3f, 0.25f);
 
 bool CThrowBomb::getUpdateInfo() {
 	transform = GETH_MY(TCompTransform);
@@ -117,7 +117,8 @@ void CThrowBomb::Throwed() {
 		fd.word1 = PXM_NO_PLAYER;
 	}
 
-	if (checkNextState("impacted")) {
+	float dist = simpleDist(initial_pos, transform->getPosition());
+	if (dist > 0.5f && checkNextState("impacted")) {
 		rd->setActorFlag(PxActorFlag::eDISABLE_GRAVITY, false);
 	}
 	else {
@@ -173,6 +174,7 @@ void CThrowBomb::throwMovement() {
 		rd->addForce(PhysxConversion::Vec3ToPxVec3(dir_throw * speed_real * 100.f));
 		return;
 	}
+	nextState = false;
 	dbg("Lcur = %f, Hcur = %f\n", lcurrent, hcurrent);
 	tmx = PxTransform(
 		PhysxConversion::Vec3ToPxVec3(initial_pos + lcurrent * dir_throw + hcurrent * VEC3_UP),
