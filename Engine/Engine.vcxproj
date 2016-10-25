@@ -305,6 +305,7 @@
     <ClCompile Include="render\fx\fx_hatching.cpp" />
     <ClCompile Include="render\fx\fx_motion_blur.cpp" />
     <ClCompile Include="render\fx\fx_outline.cpp" />
+    <ClCompile Include="render\fx\fx_ssao.cpp" />
     <ClCompile Include="render\fx\GuardShots.cpp" />
     <ClCompile Include="render\material.cpp" />
     <ClCompile Include="render\mesh.cpp" />
@@ -557,6 +558,7 @@
     <ClInclude Include="render\fx\fx_hatching.h" />
     <ClInclude Include="render\fx\fx_motion_blur.h" />
     <ClInclude Include="render\fx\fx_outline.h" />
+    <ClInclude Include="render\fx\fx_ssao.h" />
     <ClInclude Include="render\fx\GuardShots.h" />
     <ClInclude Include="render\gpu_trace.h" />
     <ClInclude Include="render\material.h" />

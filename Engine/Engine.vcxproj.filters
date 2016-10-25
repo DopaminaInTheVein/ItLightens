@@ -605,6 +605,9 @@
     <ClCompile Include="Editors\editor_messages.cpp">
       <Filter>Editors</Filter>
     </ClCompile>
+    <ClCompile Include="render\fx\fx_ssao.cpp">
+      <Filter>render\fx</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -1562,6 +1565,9 @@
     </ClInclude>
     <ClInclude Include="Editors\editor_messages.h">
       <Filter>Editors</Filter>
+    </ClInclude>
+    <ClInclude Include="render\fx\fx_ssao.h">
+      <Filter>render\fx</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

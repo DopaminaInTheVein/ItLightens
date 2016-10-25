@@ -227,7 +227,7 @@ void CRenderDeferredModule::renderGBuffer() {
 	Render.ctx->OMSetRenderTargets(6, rts, Render.depth_stencil_view);
 	rt_albedos->activateViewport();
 	// Clear de los render targets y el ZBuffer
-	rt_albedos->clear(VEC4(1, 0, 0, 1));
+	rt_albedos->clear(VEC4(0.05, 0.0588, 0.169, 1));
 	rt_normals->clear(VEC4(0, 1, 0, 1));
 	rt_selfIlum->clear(VEC4(0, 0, 0, 1));
 	rt_depths->clear(VEC4(1, 1, 1, 1));
