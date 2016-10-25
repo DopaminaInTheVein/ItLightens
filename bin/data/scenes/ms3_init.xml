@@ -16,7 +16,8 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3/__Door.static_mesh"/>
+   name="static_meshes/ms3/__Door.static_mesh"
+   static="false"/>
 <abs_aabb/>
 <rigidbody
    type_collision="dynamic"
@@ -42,7 +43,8 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3/__pila.static_mesh"/>
+   name="static_meshes/ms3/__pila.static_mesh"
+   static="false"/>
 <abs_aabb/>
 <rigidbody
    type_collision="dynamic"
@@ -70,7 +72,8 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3/elevator.static_mesh"/>
+   name="static_meshes/ms3/elevator.static_mesh"
+   static="false"/>
 <abs_aabb/>
 <rigidbody
    type_collision="dynamic"
@@ -96,7 +99,8 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3/enchufe.static_mesh"/>
+   name="static_meshes/ms3/enchufe.static_mesh"
+   static="true"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
@@ -117,7 +121,8 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3/mesa_cientifico_up_mapeado.static_mesh"/>
+   name="static_meshes/ms3/mesa_cientifico_up_mapeado.static_mesh"
+   static="true"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
@@ -138,7 +143,8 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3/mesa_cientifico_up_mapeado001.static_mesh"/>
+   name="static_meshes/ms3/mesa_cientifico_up_mapeado001.static_mesh"
+   static="true"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
@@ -159,7 +165,8 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3/pared_rompible.static_mesh"/>
+   name="static_meshes/ms3/pared_rompible.static_mesh"
+   static="true"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
@@ -185,7 +192,8 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3/puerta_Ascensor_derecha.static_mesh"/>
+   name="static_meshes/ms3/puerta_Ascensor_derecha.static_mesh"
+   static="false"/>
 <abs_aabb/>
 <rigidbody
    type_collision="dynamic"
@@ -215,7 +223,8 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3/puerta_Ascensor_derecha_arriba.static_mesh"/>
+   name="static_meshes/ms3/puerta_Ascensor_derecha_arriba.static_mesh"
+   static="false"/>
 <abs_aabb/>
 <rigidbody
    type_collision="dynamic"
@@ -245,7 +254,8 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3/puerta_Ascensor_izquierda.static_mesh"/>
+   name="static_meshes/ms3/puerta_Ascensor_izquierda.static_mesh"
+   static="false"/>
 <abs_aabb/>
 <rigidbody
    type_collision="dynamic"
@@ -275,7 +285,8 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3/puerta_Ascensor_izquierda_arriba.static_mesh"/>
+   name="static_meshes/ms3/puerta_Ascensor_izquierda_arriba.static_mesh"
+   static="false"/>
 <abs_aabb/>
 <rigidbody
    type_collision="dynamic"
@@ -300,7 +311,8 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3/trozo_destruible_abajo.static_mesh"/>
+   name="static_meshes/ms3/trozo_destruible_abajo.static_mesh"
+   static="true"/>
 <abs_aabb/>
 <rigidbody
    type_collision="dynamic"
@@ -323,7 +335,8 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3/trozo_destruible_arriba.static_mesh"/>
+   name="static_meshes/ms3/trozo_destruible_arriba.static_mesh"
+   static="true"/>
 <abs_aabb/>
 <rigidbody
    type_collision="dynamic"
@@ -346,7 +359,8 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3/trozo_destruible_derec.static_mesh"/>
+   name="static_meshes/ms3/trozo_destruible_derec.static_mesh"
+   static="true"/>
 <abs_aabb/>
 <rigidbody
    type_collision="dynamic"
@@ -369,7 +383,8 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3/trozo_destruible_iz.static_mesh"/>
+   name="static_meshes/ms3/trozo_destruible_iz.static_mesh"
+   static="true"/>
 <abs_aabb/>
 <rigidbody
    type_collision="dynamic"
@@ -398,7 +413,8 @@
 <skeleton
    model="skeletons/player/player.skeleton"/>
 <render_static_mesh
-   name="skeletons/player/player.static_mesh"/>
+   name="skeletons/player/player.static_mesh"
+   static="false"/>
 <skeleton_ik/>
 <abs_aabb/>
 <local_aabb/>
@@ -472,7 +488,8 @@
 <skeleton
    model="skeletons/mole/mole.skeleton"/>
 <render_static_mesh
-   name="skeletons/mole/mole.static_mesh"/>
+   name="skeletons/mole/mole.static_mesh"
+   static="false"/>
 <skeleton_ik/>
 <abs_aabb/>
 <local_aabb/>
@@ -497,7 +514,8 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/obj/box2.static_mesh"/>
+   name="static_meshes/obj/box2.static_mesh"
+   static="false"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
@@ -525,7 +543,8 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/obj/box2.static_mesh"/>
+   name="static_meshes/obj/box2.static_mesh"
+   static="false"/>
 <abs_aabb/>
 <rigidbody
    type_collision="dynamic"
@@ -568,7 +587,8 @@
 <skeleton
    model="skeletons/mole/mole.skeleton"/>
 <render_static_mesh
-   name="skeletons/mole/mole.static_mesh"/>
+   name="skeletons/mole/mole.static_mesh"
+   static="false"/>
 <skeleton_ik/>
 <abs_aabb/>
 <local_aabb/>
@@ -757,7 +777,8 @@
 <skeleton
    model="skeletons/scientist/scientist.skeleton"/>
 <render_static_mesh
-   name="skeletons/scientist/scientist.static_mesh"/>
+   name="skeletons/scientist/scientist.static_mesh"
+   static="false"/>
 <skeleton_ik/>
 <abs_aabb/>
 <local_aabb/>
@@ -1141,8 +1162,8 @@
    velocity="2.0"
    default_dirs="0"
    points_size="9"
-   wpt1="-33.0173 -19.5413 -8.31356"
-   wpt2="-7.92353 -19.5413 -12.672"
+   wpt1="-23.5586 -18.138 4.83162"
+   wpt2="-1.37153 -18.1442 -12.672"
    wpt3="21.7366 -15.7475 -0.261352"
    wpt4="-4.15518 -18.1477 -2.25061"
    wpt5="-3.77384 -7.01166 -15.7786"
@@ -1150,7 +1171,7 @@
    wpt7="6.24339 -11.2487 14.2075"
    wpt8="-16.0139 -0.0888821 7.55574"
    wpt9="-28.1465 1.84666 4.3329"
-   lpt1="-32.9466 -18.6978 3.69036"
+   lpt1="-32.9466 -20.5599 3.69036"
    lpt2="13.2632 -18.6978 -13.4743"
    lpt3="22.7177 -21.8889 -14.9584"
    lpt4="-3.46631 -15.3218 -13.8163"
@@ -1220,7 +1241,7 @@
 <name
    name="tSave02"/>
 <transform
-   pos="-49.9032 0.753134 -0.840155"
+   pos="-44.1857 0.753134 -0.840155"
    quat="0 0 0 1.0"
    scale="1.0"/>
 
@@ -1290,7 +1311,8 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/obj/drone.static_mesh"/>
+   name="static_meshes/obj/drone.static_mesh"
+   static="false"/>
 <abs_aabb/>
 <rigidbody
    type_collision="dynamic"
@@ -1323,7 +1345,8 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/obj/drone.static_mesh"/>
+   name="static_meshes/obj/drone.static_mesh"
+   static="false"/>
 <abs_aabb/>
 <rigidbody
    type_collision="dynamic"
@@ -1356,7 +1379,8 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/obj/drone.static_mesh"/>
+   name="static_meshes/obj/drone.static_mesh"
+   static="false"/>
 <abs_aabb/>
 <rigidbody
    type_collision="dynamic"
@@ -1389,7 +1413,8 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/obj/drone.static_mesh"/>
+   name="static_meshes/obj/drone.static_mesh"
+   static="false"/>
 <abs_aabb/>
 <rigidbody
    type_collision="dynamic"
@@ -1435,7 +1460,8 @@
 <skeleton
    model="skeletons/guard/guard.skeleton"/>
 <render_static_mesh
-   name="skeletons/guard/guard.static_mesh"/>
+   name="skeletons/guard/guard.static_mesh"
+   static="false"/>
 <skeleton_ik/>
 <abs_aabb/>
 <local_aabb/>
@@ -1485,7 +1511,8 @@
 <skeleton
    model="skeletons/guard/guard.skeleton"/>
 <render_static_mesh
-   name="skeletons/guard/guard.static_mesh"/>
+   name="skeletons/guard/guard.static_mesh"
+   static="false"/>
 <skeleton_ik/>
 <abs_aabb/>
 <local_aabb/>
@@ -1523,7 +1550,8 @@
 <skeleton
    model="skeletons/guard/guard.skeleton"/>
 <render_static_mesh
-   name="skeletons/guard/guard.static_mesh"/>
+   name="skeletons/guard/guard.static_mesh"
+   static="false"/>
 <skeleton_ik/>
 <abs_aabb/>
 <local_aabb/>
@@ -1561,7 +1589,8 @@
 <skeleton
    model="skeletons/guard/guard.skeleton"/>
 <render_static_mesh
-   name="skeletons/guard/guard.static_mesh"/>
+   name="skeletons/guard/guard.static_mesh"
+   static="false"/>
 <skeleton_ik/>
 <abs_aabb/>
 <local_aabb/>
@@ -1614,7 +1643,8 @@
 <skeleton
    model="skeletons/guard/guard.skeleton"/>
 <render_static_mesh
-   name="skeletons/guard/guard.static_mesh"/>
+   name="skeletons/guard/guard.static_mesh"
+   static="false"/>
 <skeleton_ik/>
 <abs_aabb/>
 <local_aabb/>
@@ -1664,7 +1694,8 @@
 <skeleton
    model="skeletons/guard/guard.skeleton"/>
 <render_static_mesh
-   name="skeletons/guard/guard.static_mesh"/>
+   name="skeletons/guard/guard.static_mesh"
+   static="false"/>
 <skeleton_ik/>
 <abs_aabb/>
 <local_aabb/>
@@ -1684,11 +1715,12 @@
 <name
    name="cargador_bateria"/>
 <transform
-   pos="0 0 0"
+   pos="-90.841 -0.915813 14.459"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3/cargador_bateria.static_mesh"/>
+   name="static_meshes/ms3/cargador_bateria.static_mesh"
+   static="true"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
@@ -1825,8 +1857,8 @@
    points_size="1"
    skippable="no"
    stop_final="yes"
-   wpt1="0.0969548 -18.9482 -18.9551"
-   lpt1="-6.46518 -16.4432 -18.2734"/>
+   wpt1="-3.8 -16.0938 -11.6"
+   lpt1="-4.5 -17.6154 -18.0"/>
 <name
    name="CineTablon1"/>
 <transform
@@ -1845,8 +1877,8 @@
    points_size="1"
    skippable="no"
    stop_final="yes"
-   wpt1="-8.77077 -16.6452 -17.587"
-   lpt1="-2.23728 -14.5072 -19.8532"/>
+   wpt1="-3.8 -14.0191 -11.6"
+   lpt1="-4.5 -15.8232 -18.0"/>
 <name
    name="CineTablon2"/>
 <transform
@@ -1865,8 +1897,8 @@
    points_size="1"
    skippable="no"
    stop_final="yes"
-   wpt1="1.36599 -14.5072 -18.7102"
-   lpt1="-6.3729 -12.3717 -18.2988"/>
+   wpt1="-3.8 -10.8832 -11.6"
+   lpt1="-4.5 -13.401 -18.0"/>
 <name
    name="CineTablon3"/>
 <transform
@@ -1885,8 +1917,8 @@
    points_size="1"
    skippable="no"
    stop_final="yes"
-   wpt1="-8.64099 -12.8981 -17.7905"
-   lpt1="-4.34012 -11.0318 -18.6665"/>
+   wpt1="-3.8 -9.81983 -11.6"
+   lpt1="-4.5 -11.3983 -18.0"/>
 <name
    name="CineTablon4"/>
 <transform
@@ -1905,7 +1937,7 @@
    points_size="1"
    skippable="no"
    stop_final="yes"
-   wpt1="-7.08201 -4.01793 -17.6389"
+   wpt1="-3.8 -7.09407 -11.6"
    lpt1="-3.15616 -10.2888 -18.3613"/>
 <name
    name="CineTablon5"/>
@@ -1932,6 +1964,82 @@
 <transform
    pos="-8.61765 -18.0453 -31.3595"
    quat="0 0.0436194 0 0.999048"
+   scale="1.0"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags
+   tags="fog"/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="0.17 3.64 3.0636"/>
+<tags
+   tags="fog trigger"/>
+<trigger_lua/>
+<name
+   name="_tFogOut1"/>
+<transform
+   pos="-44.8851 0.753554 -0.871718"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags
+   tags="fog"/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="0.21 4.0 4.5"/>
+<tags
+   tags="fog trigger"/>
+<trigger_lua/>
+<name
+   name="_tFogOut2"/>
+<transform
+   pos="-59.4654 0.753134 -8.16913"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags
+   tags="fog"/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="0.21 4.0 4.5"/>
+<tags
+   tags="fog trigger"/>
+<trigger_lua/>
+<name
+   name="_tFogIn"/>
+<transform
+   pos="-58.0349 0.753134 -8.16913"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags
+   tags="fog"/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="0.21 4.0 4.5"/>
+<tags
+   tags="fog trigger"/>
+<trigger_lua/>
+<name
+   name="_tFogIn"/>
+<transform
+   pos="-46.1595 0.753134 -0.840155"
+   quat="0 0 0 1.0"
    scale="1.0"/>
 
 </entity>
