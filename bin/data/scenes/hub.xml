@@ -721,5 +721,22 @@
    mesh_name="tuto_sci/generator"/>
 
 </entity>
+<entity>
+<tags/>
+<name
+   name="Plane001"/>
+<transform
+   pos="2.56953 181.352 -24.604"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/hub/Plane001.static_mesh"
+   static="true"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"
+   mesh_name="hub/Plane001"/>
+
+</entity>
 
 </entities>

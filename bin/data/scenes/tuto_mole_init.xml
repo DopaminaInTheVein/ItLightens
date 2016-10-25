@@ -17,8 +17,7 @@
 <skeleton
    model="skeletons/player/player.skeleton"/>
 <render_static_mesh
-   name="skeletons/player/player.static_mesh"
-   static="false"/>
+   name="skeletons/player/player.static_mesh"/>
 <skeleton_ik/>
 <abs_aabb/>
 <local_aabb/>
@@ -50,8 +49,7 @@
 <skeleton
    model="skeletons/mole/mole.skeleton"/>
 <render_static_mesh
-   name="skeletons/mole/mole.static_mesh"
-   static="false"/>
+   name="skeletons/mole/mole.static_mesh"/>
 <skeleton_ik/>
 <abs_aabb/>
 <local_aabb/>
@@ -92,8 +90,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_mole/_wall_down.static_mesh"
-   static="true"/>
+   name="static_meshes/tuto_mole/_wall_down.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="dynamic"
@@ -114,8 +111,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_mole/_wall_up.static_mesh"
-   static="true"/>
+   name="static_meshes/tuto_mole/_wall_up.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="dynamic"
@@ -136,8 +132,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_mole/_wall_right.static_mesh"
-   static="true"/>
+   name="static_meshes/tuto_mole/_wall_right.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="dynamic"
@@ -158,8 +153,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_mole/_wall_left.static_mesh"
-   static="true"/>
+   name="static_meshes/tuto_mole/_wall_left.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="dynamic"
@@ -182,8 +176,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/obj/box2.static_mesh"
-   static="false"/>
+   name="static_meshes/obj/box2.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="dynamic"
@@ -253,8 +246,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_mole/pared_rompible.static_mesh"
-   static="true"/>
+   name="static_meshes/tuto_mole/pared_rompible.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
@@ -272,8 +264,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_mole/pared_rota_jaula.static_mesh"
-   static="true"/>
+   name="static_meshes/tuto_mole/pared_rota_jaula.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"

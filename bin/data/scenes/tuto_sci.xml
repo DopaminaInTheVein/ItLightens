@@ -8,8 +8,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_sci/paredes.static_mesh"
-   static="true"/>
+   name="static_meshes/tuto_sci/paredes.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
@@ -26,8 +25,7 @@
    quat="0 0.906308 0 -0.422618"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_sci/generator.static_mesh"
-   static="true"/>
+   name="static_meshes/tuto_sci/generator.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
@@ -55,8 +53,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_sci/papelera.static_mesh"
-   static="true"/>
+   name="static_meshes/tuto_sci/papelera.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
@@ -72,8 +69,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_sci/rejillapequenhamapeadabaajo.static_mesh"
-   static="true"/>
+   name="static_meshes/tuto_sci/rejillapequenhamapeadabaajo.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
@@ -89,8 +85,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_sci/soporte_balcon_mapeado001.static_mesh"
-   static="true"/>
+   name="static_meshes/tuto_sci/soporte_balcon_mapeado001.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
@@ -106,8 +101,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_sci/sillas.static_mesh"
-   static="true"/>
+   name="static_meshes/tuto_sci/sillas.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
@@ -123,8 +117,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_sci/plafones.static_mesh"
-   static="true"/>
+   name="static_meshes/tuto_sci/plafones.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
@@ -140,8 +133,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_sci/marco_puerta_abajo.static_mesh"
-   static="true"/>
+   name="static_meshes/tuto_sci/marco_puerta_abajo.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
@@ -157,8 +149,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_sci/banners.static_mesh"
-   static="true"/>
+   name="static_meshes/tuto_sci/banners.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
@@ -174,8 +165,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_sci/puerta_gigante.static_mesh"
-   static="true"/>
+   name="static_meshes/tuto_sci/puerta_gigante.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
@@ -191,8 +181,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_sci/extintor_mapeado.static_mesh"
-   static="true"/>
+   name="static_meshes/tuto_sci/extintor_mapeado.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
@@ -208,8 +197,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_sci/taquilla.static_mesh"
-   static="true"/>
+   name="static_meshes/tuto_sci/taquilla.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
@@ -225,8 +213,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_sci/estanteria_2.static_mesh"
-   static="true"/>
+   name="static_meshes/tuto_sci/estanteria_2.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
@@ -242,8 +229,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_sci/panel_mapeado.static_mesh"
-   static="true"/>
+   name="static_meshes/tuto_sci/panel_mapeado.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
@@ -259,8 +245,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_sci/barandilla_mapeaaado001.static_mesh"
-   static="true"/>
+   name="static_meshes/tuto_sci/barandilla_mapeaaado001.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
@@ -276,8 +261,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_sci/fuente_agua_mapeada.static_mesh"
-   static="true"/>
+   name="static_meshes/tuto_sci/fuente_agua_mapeada.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
@@ -293,8 +277,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_sci/escritorio.static_mesh"
-   static="true"/>
+   name="static_meshes/tuto_sci/escritorio.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
@@ -310,8 +293,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_sci/pizarra.static_mesh"
-   static="true"/>
+   name="static_meshes/tuto_sci/pizarra.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
@@ -327,8 +309,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_sci/libro_modelo3.static_mesh"
-   static="true"/>
+   name="static_meshes/tuto_sci/libro_modelo3.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
@@ -344,8 +325,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_sci/libro_modelo2.static_mesh"
-   static="true"/>
+   name="static_meshes/tuto_sci/libro_modelo2.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
@@ -361,8 +341,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_sci/libro_modelo1.static_mesh"
-   static="true"/>
+   name="static_meshes/tuto_sci/libro_modelo1.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
@@ -378,8 +357,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_sci/alarma_mapeada.static_mesh"
-   static="true"/>
+   name="static_meshes/tuto_sci/alarma_mapeada.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
@@ -395,8 +373,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_sci/cubo_mapeado_verdad.static_mesh"
-   static="true"/>
+   name="static_meshes/tuto_sci/cubo_mapeado_verdad.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
@@ -412,8 +389,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_sci/rejillapequenhamapeadabaajo001.static_mesh"
-   static="true"/>
+   name="static_meshes/tuto_sci/rejillapequenhamapeadabaajo001.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
@@ -429,8 +405,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_sci/rejilla_grande_mapeada001.static_mesh"
-   static="true"/>
+   name="static_meshes/tuto_sci/rejilla_grande_mapeada001.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
@@ -446,8 +421,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_sci/andamio_usable.static_mesh"
-   static="true"/>
+   name="static_meshes/tuto_sci/andamio_usable.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
@@ -463,8 +437,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_sci/columnas_abajo.static_mesh"
-   static="true"/>
+   name="static_meshes/tuto_sci/columnas_abajo.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
@@ -480,8 +453,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_sci/suelo001.static_mesh"
-   static="true"/>
+   name="static_meshes/tuto_sci/suelo001.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
@@ -497,8 +469,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_sci/rodapie.static_mesh"
-   static="true"/>
+   name="static_meshes/tuto_sci/rodapie.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
@@ -514,8 +485,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_sci/pasillo.static_mesh"
-   static="true"/>
+   name="static_meshes/tuto_sci/pasillo.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
@@ -531,8 +501,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_sci/labo.static_mesh"
-   static="true"/>
+   name="static_meshes/tuto_sci/labo.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
@@ -548,8 +517,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_sci/puerta_se_abre.static_mesh"
-   static="true"/>
+   name="static_meshes/tuto_sci/puerta_se_abre.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
@@ -565,8 +533,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_sci/balcon.static_mesh"
-   static="true"/>
+   name="static_meshes/tuto_sci/balcon.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
@@ -582,8 +549,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_sci/suelo_2.static_mesh"
-   static="true"/>
+   name="static_meshes/tuto_sci/suelo_2.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
@@ -599,8 +565,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_sci/techotutosci.static_mesh"
-   static="true"/>
+   name="static_meshes/tuto_sci/techotutosci.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
@@ -616,8 +581,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_sci/puerta_cerrada_mapeada.static_mesh"
-   static="true"/>
+   name="static_meshes/tuto_sci/puerta_cerrada_mapeada.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
@@ -843,8 +807,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_sci/farolillos002.static_mesh"
-   static="true"/>
+   name="static_meshes/tuto_sci/farolillos002.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
@@ -860,8 +823,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_sci/farolillos003.static_mesh"
-   static="true"/>
+   name="static_meshes/tuto_sci/farolillos003.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
@@ -877,8 +839,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_sci/farolillos004.static_mesh"
-   static="true"/>
+   name="static_meshes/tuto_sci/farolillos004.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
@@ -894,8 +855,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_sci/farolillos005.static_mesh"
-   static="true"/>
+   name="static_meshes/tuto_sci/farolillos005.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
@@ -911,8 +871,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_sci/farolillos006.static_mesh"
-   static="true"/>
+   name="static_meshes/tuto_sci/farolillos006.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
@@ -928,8 +887,7 @@
    quat="0 0.266244 0 0.963906"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_sci/farolillos_columnas.static_mesh"
-   static="true"/>
+   name="static_meshes/tuto_sci/farolillos_columnas.static_mesh"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"

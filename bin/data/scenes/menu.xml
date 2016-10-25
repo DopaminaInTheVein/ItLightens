@@ -46,7 +46,9 @@
    width="1.47957"
    height="1.47957"
    lang="yes"/>
-<gui_button/>
+<gui_button
+   width="1.47957"
+   height="1.47957"/>
 <name
    name="btn_resume"/>
 <transform
@@ -70,7 +72,9 @@
    width="1.47957"
    height="1.47957"
    lang="yes"/>
-<gui_button/>
+<gui_button
+   width="1.47957"
+   height="1.47957"/>
 <name
    name="btn_restart"/>
 <transform
@@ -94,7 +98,9 @@
    width="1.47957"
    height="1.47957"
    lang="yes"/>
-<gui_button/>
+<gui_button
+   width="1.47957"
+   height="1.47957"/>
 <name
    name="btn_opt_menu"/>
 <transform
@@ -118,7 +124,9 @@
    width="1.33454"
    height="1.33453"
    lang="yes"/>
-<gui_button/>
+<gui_button
+   width="1.33454"
+   height="1.33453"/>
 <name
    name="btn_exit_pause"/>
 <transform

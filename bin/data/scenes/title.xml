@@ -8,7 +8,9 @@
    col="0"
    width="1.97421"
    height="1.94409"/>
-<gui_button/>
+<gui_button
+   width="1.97421"
+   height="1.94409"/>
 <name
    name="btn_start"/>
 <transform
@@ -42,9 +44,11 @@
    menu_name="title"
    row="0"
    col="1"
-   width="1.97421"
-   height="1.94409"/>
-<gui_button/>
+   width="2.06971"
+   height="2.03815"/>
+<gui_button
+   width="2.06971"
+   height="2.03815"/>
 <name
    name="btn_options"/>
 <transform
@@ -64,9 +68,11 @@
    menu_name="title"
    row="0"
    col="2"
-   width="1.97421"
-   height="1.94409"/>
-<gui_button/>
+   width="1.88311"
+   height="1.85439"/>
+<gui_button
+   width="1.88311"
+   height="1.85439"/>
 <name
    name="btn_exit"/>
 <transform
