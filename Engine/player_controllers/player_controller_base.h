@@ -50,11 +50,12 @@ protected:
 	float left_stick_sensibility;
 	float camera_max_height;
 	float camera_min_height;
-
 	bool onGround = true;
 	bool moving = false;
 	float player_curr_speed = 0.0f;
 	float jspeed = 0.0f;
+	float time_start_falling = 0.f;
+	float max_time_start_falling = 0.2f; //TODO JSON
 
 	//CObjectManager<CPlayerBase> * om = nullptr;
 	CHandle myHandle;
@@ -101,7 +102,7 @@ protected:
 	bool checkDead();
 	void orbitCameraDeath();
 	bool getUpdateInfo() override;
-	void checkFalling();
+	bool checkFalling();
 	float getLife();
 	void setLife(float new_life);
 
@@ -133,6 +134,8 @@ public:
 
 	void Jumping();
 	virtual void Falling();
+	virtual void StartFalling();
+	virtual void updateFalling();
 	virtual void Moving();
 
 	virtual void update_msgs() {}

@@ -173,7 +173,8 @@ public:
 	void Jump() override;
 	void Jumping();
 	void DoubleJump();
-	void Falling();
+	//void Falling() override;
+	void updateFalling() override;
 	void DoubleFalling();
 
 	//input Messages

@@ -30,6 +30,7 @@ CPlayerBase::CPlayerBase() {
 void CPlayerBase::addBasicStates() {
 	AddState("idle", (statehandler)&CPlayerBase::Idle);
 	AddState("moving", (statehandler)&CPlayerBase::Moving);
+	AddState("start_falling", (statehandler)&CPlayerBase::StartFalling);
 	AddState("falling", (statehandler)&CPlayerBase::Falling);
 	AddState("jumping", (statehandler)&CPlayerBase::Jumping);
 	AddState("die", (statehandler)&CPlayerBase::Die);
@@ -409,6 +410,7 @@ void CPlayerBase::Jump()
 	cc->AddImpulse(VEC3(0.0f, jimpulse, 0.0f));
 	ChangeState("jumping");
 	ChangeCommonState("jumping");
+	time_start_falling = 0.f;
 }
 
 void CPlayerBase::Die()
@@ -442,13 +444,20 @@ void CPlayerBase::Win()
 void CPlayerBase::Falling()
 {
 	PROFILE_FUNCTION("falling base");
-	UpdateDirection();
-	UpdateMovDirection();
+	updateFalling();
+}
 
-	if (cc->OnGround()) {
-		jspeed = 0.0f;
-		ChangeState("idle");
-		ChangeCommonState("idle");
+void CPlayerBase::StartFalling()
+{
+	PROFILE_FUNCTION("start falling base");
+	updateFalling();
+	if (time_start_falling > max_time_start_falling) {
+		time_start_falling = 0.f;
+		ChangeState("falling");
+	}
+	else {
+		time_start_falling += getDeltaTime();
+		UpdateJumpState();
 	}
 }
 
@@ -464,10 +473,26 @@ void CPlayerBase::Jumping()
 	}
 }
 
+void CPlayerBase::updateFalling()
+{
+	UpdateDirection();
+	UpdateMovDirection();
+
+	if (cc->OnGround()) {
+		jspeed = 0.0f;
+		ChangeState("idle");
+		ChangeCommonState("idle");
+	}
+}
+
 void CPlayerBase::Moving()
 {
 	PROFILE_FUNCTION("moving base");
-	checkFalling();
+	if (checkFalling()) {
+		time_start_falling = 0;
+		ChangeState("start_falling");
+		ChangeCommonState("start_falling");
+	}
 	UpdateDirection();
 	UpdateJumpState();
 	if (!UpdateMovDirection()) {
@@ -476,11 +501,13 @@ void CPlayerBase::Moving()
 	}
 }
 
-void CPlayerBase::checkFalling() {
+bool CPlayerBase::checkFalling() {
 	if (!cc->OnGround() && cc->GetYAxisSpeed() < -.5f) {
-		ChangeState("falling");
-		ChangeCommonState("falling");
+		return true;
+		//ChangeState("falling");
+		//ChangeCommonState("falling");
 	}
+	return false;
 }
 
 #pragma endregion
@@ -501,6 +528,8 @@ void CPlayerBase::renderInMenu()
 	ImGui::Text("position: %.4f, %.4f, %.4f\n", player_position.x, player_position.y, player_position.z);
 	ImGui::Text("direction: %.4f, %.4f, %.4f", direction.x, direction.y, direction.z);
 	ImGui::Text("jump: %.5f", jspeed);
+	ImGui::DragFloat("time_start_falling", &time_start_falling);
+	ImGui::DragFloat("max_time_start_falling", &max_time_start_falling);
 }
 
 void CPlayerBase::orbitCameraDeath() {
