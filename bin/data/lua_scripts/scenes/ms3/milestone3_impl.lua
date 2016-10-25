@@ -601,27 +601,51 @@ function wireParticlesUp( )
 end
 
 ---------------- Andamio ----------------------------------------
+ontablon1 = false
+ontablon2 = false
+ontablon3 = false
+ontablon4 = false
+ontablon5 = false
+ontablon6 = false
+
+function noTablon()
+	if not ontablon1 and not ontablon2 and not ontablon3 and not ontablon4 and not ontablon5 and not ontablon6 then
+		cam:skip_cinematic();
+	end
+end
+
 function ms3_outTablon()
-	p:exec_command("cam:skip_cinematic();", 0.2)
+	ontablon1 = false
+	ontablon2 = false
+	ontablon3 = false
+	ontablon4 = false
+	ontablon5 = false
+	ontablon6 = false
+	p:exec_command("noTablon();", 1.5)
 end
 
 function ms3_onTablon1()
-	p:exec_command("cam:run_cinematic(\"CineTablon1\", 2)", 0.2)
+	ontablon1 = true
+	cam:run_cinematic("CineTablon1", 5)
 end
 
 function ms3_onTablon2()
+	ontablon2 = true
 	cam:run_cinematic("CineTablon2", 5)
 end
 
 function ms3_onTablon3()
+	ontablon3 = true
 	cam:run_cinematic("CineTablon3", 5)
 end
 
 function ms3_onTablon4()
+	ontablon4 = true
 	cam:run_cinematic("CineTablon4", 5)
 end
 
 function ms3_onTablon5()
+	ontablon5 = true
 	cam:run_cinematic("CineTablon5", 5)
 end
 
