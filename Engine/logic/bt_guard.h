@@ -295,7 +295,7 @@ public:
 
 		updateLookAt();
 		//animController.update();
-		updateTalk("Guard");
+		updateTalk("Guard", CHandle(this).getOwner());
 	}
 
 	void updateLookAt();

@@ -393,7 +393,7 @@ void npc::goForward(float stepForward) {
 	getCC()->AddMovement(getTransform()->getFront() * stepForward*dt);
 }
 
-void npc::updateTalk(string npc_name) {
+void npc::updateTalk(string npc_name, CHandle handle) {
 	talk_time += getDeltaTime();
 	if (talk_time > MAX_TIME_TALK) {
 		// reset the timers and compute new time
@@ -405,19 +405,19 @@ void npc::updateTalk(string npc_name) {
 
 		switch (speech) {
 		case 1:
-			logic_manager->throwEvent(logic_manager->OnVoice, "On" + npc_name + "Voice1", CHandle(this).getOwner());
+			logic_manager->throwEvent(logic_manager->OnVoice, "On" + npc_name + "Voice1", handle);
 			break;
 		case 2:
-			logic_manager->throwEvent(logic_manager->OnVoice, "On" + npc_name + "Voice2", CHandle(this).getOwner());
+			logic_manager->throwEvent(logic_manager->OnVoice, "On" + npc_name + "Voice2", handle);
 			break;
 		case 3:
-			logic_manager->throwEvent(logic_manager->OnVoice, "On" + npc_name + "Voice3", CHandle(this).getOwner());
+			logic_manager->throwEvent(logic_manager->OnVoice, "On" + npc_name + "Voice3", handle);
 			break;
 		case 4:
-			logic_manager->throwEvent(logic_manager->OnVoice, "On" + npc_name + "Voice4", CHandle(this).getOwner());
+			logic_manager->throwEvent(logic_manager->OnVoice, "On" + npc_name + "Voice4", handle);
 			break;
 		default:
-			logic_manager->throwEvent(logic_manager->OnVoice, "On" + npc_name + "Voice1", CHandle(this).getOwner());
+			logic_manager->throwEvent(logic_manager->OnVoice, "On" + npc_name + "Voice1", handle);
 		}
 	}
 }

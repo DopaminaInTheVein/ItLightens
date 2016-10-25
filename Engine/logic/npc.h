@@ -79,7 +79,7 @@ public:
 	int actionUnstuckMove();
 
 	//Talk
-	void updateTalk(string npc_name);
+	void updateTalk(string npc_name, CHandle handle);
 
 	//Prueba
 	int getPathDebug(const VEC3& startPoint, const VEC3& endPoint) {
