@@ -25,6 +25,7 @@ struct TCompRenderStaticMesh : public TCompBase {
 	bool isDynamic() { return dynamic; }
 	bool isCastShadows() { return cast_shadows; }
 	bool isCastShadowsDynamic() { return cast_shadows_dyn; }
+	void renderInMenu();
 };
 
 #endif

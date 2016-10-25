@@ -55,3 +55,7 @@ void TCompRenderStaticMesh::onGetLocalAABB(const TMsgGetLocalAABB& msg) {
 	if (GETH_MY(TCompCharacterController).isValid()) return;
 	AABB::CreateMerged(*msg.aabb, *msg.aabb, static_mesh->getAABB());
 }
+void TCompRenderStaticMesh::renderInMenu()
+{
+	ImGui::Text(res_name.c_str());
+}

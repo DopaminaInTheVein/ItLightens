@@ -30,7 +30,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ui/cursor.static_mesh"
+   name="static_meshes/ui/components_ui/cursor.static_mesh"
    static="false"/>
 <abs_aabb/>
 
@@ -46,11 +46,9 @@
    width="1.47957"
    height="1.47957"
    lang="yes"/>
-<gui_button
-   width="1.47957"
-   height="1.47957"/>
+<gui_button/>
 <name
-   name="btn_resumir"/>
+   name="btn_resume"/>
 <transform
    pos="6.22177 -92.8304 5.0393"
    quat="0 0 0 1.0"
@@ -72,11 +70,9 @@
    width="1.47957"
    height="1.47957"
    lang="yes"/>
-<gui_button
-   width="1.47957"
-   height="1.47957"/>
+<gui_button/>
 <name
-   name="btn_reempezar"/>
+   name="btn_restart"/>
 <transform
    pos="6.22177 -94.3087 5.0393"
    quat="0 0 0 1.0"
@@ -98,11 +94,9 @@
    width="1.47957"
    height="1.47957"
    lang="yes"/>
-<gui_button
-   width="1.47957"
-   height="1.47957"/>
+<gui_button/>
 <name
-   name="btn_opciones"/>
+   name="btn_opt_menu"/>
 <transform
    pos="6.22177 -95.7939 5.0393"
    quat="0 0 0 1.0"
@@ -124,11 +118,9 @@
    width="1.33454"
    height="1.33453"
    lang="yes"/>
-<gui_button
-   width="1.33454"
-   height="1.33453"/>
+<gui_button/>
 <name
-   name="btn_salir"/>
+   name="btn_exit_pause"/>
 <transform
    pos="6.22177 -97.1859 5.0393"
    quat="0 0 0 1.0"
@@ -141,7 +133,7 @@
 </entity>
 <entity>
 <tags
-   tags="gui"/>
+   tags="menu gui"/>
 <gui
    menu_name="menu"
    width="2.0"
