@@ -1,3 +1,3 @@
 <static_mesh>
-  <slot mesh="meshes/ui/options/opt_axisY.mesh" material="materials/ui/options/selector_tech_ui.material"/>
+  <slot mesh="meshes/ui/options/opt_axisY.mesh" material="materials/ui/options/optionbars_tech_ui.material"/>
 </static_mesh>

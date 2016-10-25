@@ -1,16 +1,20 @@
 -- -- LIGHTS -- --
 
 --Common
-fn _parse_light_common xml = (
+fn _parse_light_common xml is_ldir = (
 	--Color attribute
 	local col = _parsingObject.rgb/255
 	local colorValue = getAsXmlValues #(col.r, col.g, col.b, _parsingObject.multiplier)
 	xml.addAttr "color" colorValue
 	
 	--In_radius
-	xml.addAttr "in_radius" _parsingObject.farAttenStart
+	local near = "in_radius"
+	if is_ldir then ( near = "znear")
+	xml.addAttr  near _parsingObject.farAttenStart
 	
 	--Out_radius
+	local far = "out_radius"
+	if is_ldir then ( far = "zfar" )
 	xml.addAttr "out_radius" _parsingObject.farAttenEnd
 	
 	--Use ramp color?
@@ -36,7 +40,7 @@ fn _parse_light_mask xml = (
 fn _parse_lightpoint = (
 	local xml = XML_PARSING.addChild "light_point"
 	--Light Common
-	_parse_light_common xml
+	_parse_light_common xml false
 )
 
 --Light Dir & Light Dir Shadows
@@ -53,6 +57,7 @@ fn _parse_lightDir = (
 			gen_shadows = "no"
 		)
 		xml.addAttr "gen_shadow" gen_shadow
+		XML_PARSING.addChild "culling"
 	)
 		
 	--) else (
@@ -60,11 +65,14 @@ fn _parse_lightDir = (
 	--
 	
 	--Light Common
-	_parse_light_common xml
+	_parse_light_common xml true
 	
 	--Parse light resolution
 	_parse_light_resolution xml
 	
 	--Parse light mask
 	_parse_light_mask xml
+	
+	--Parse light fov
+	xml.addAttr "fov" _parsingObject.falloff
 )
