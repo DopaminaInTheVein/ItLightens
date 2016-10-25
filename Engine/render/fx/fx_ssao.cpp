@@ -93,7 +93,7 @@ void TRenderSSAO::init() {
 	shader_ctes_blur.ssao_test_intensity = 1.0f;
 	shader_ctes_blur.ssao_scale = 1.0f;
 	shader_ctes_blur.ssao_sample_rad = 0.4f;
-	shader_ctes_blur.ssao_bias = 0.760;
+	shader_ctes_blur.ssao_bias = 0.560;
 
 	shader_ctes_blur.uploadToGPU();
 }
