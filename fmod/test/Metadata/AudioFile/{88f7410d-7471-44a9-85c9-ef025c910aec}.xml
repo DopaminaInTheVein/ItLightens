@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.01.08.00">
+    <object class="AudioFile" id="{88f7410d-7471-44a9-85c9-ef025c910aec}">
+        <property name="assetPath">
+            <value>SONIDO-PERSONAJE-correv7.mp3</value>
+        </property>
+        <property name="isStreaming">
+            <value>true</value>
+        </property>
+        <property name="frequencyInKHz">
+            <value>44.0999985</value>
+        </property>
+        <property name="channelCount">
+            <value>2</value>
+        </property>
+        <property name="length">
+            <value>11.075918367346938</value>
+        </property>
+        <relationship name="masterAssetFolder">
+            <destination>{27c9e485-159e-4d91-9702-b6efb99fec5b}</destination>
+        </relationship>
+    </object>
+</objects>
