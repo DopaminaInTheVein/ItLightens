@@ -6,7 +6,6 @@
 // ------------------------------------
 struct TRenderOutline : public TCompBasicFX {
 
-  bool enabled;
   void init();
   void renderInMenu();
 

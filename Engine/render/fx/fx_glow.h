@@ -9,7 +9,6 @@ struct TBlurStep;
 // ------------------------------------
 struct TRenderGlow : public TCompBasicFX {
 public:
-  bool enabled;
   void init();
   void renderInMenu();
 

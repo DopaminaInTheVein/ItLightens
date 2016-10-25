@@ -6,7 +6,6 @@
 // ------------------------------------
 struct TRenderAntiAliasing : public TCompBasicFX {
 
-  bool enabled;
   void init();
   void renderInMenu();
 

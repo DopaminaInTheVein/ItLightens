@@ -36,6 +36,9 @@
 #include "components\comp_life.h"
 #include "player_controllers\player_controller.h"
 
+
+#include "render\fx\fx_ssao.h"
+
 //for test
 #include "test_module_fx.h"
 #include "app_modules\io\io.h"
@@ -152,11 +155,6 @@ bool CRenderDeferredModule::start() {
 	shader_ctes_globals.env_factor = 0.2f;
 	shader_ctes_globals.shadow_intensity = 0.5f;
 
-	shader_ctes_blur.ssao_intensity = 1.0f;
-	shader_ctes_blur.ssao_iterations = 30.f;
-
-	shader_ctes_blur.uploadToGPU();
-
 	return true;
 }
 
@@ -229,7 +227,7 @@ void CRenderDeferredModule::renderGBuffer() {
 	Render.ctx->OMSetRenderTargets(6, rts, Render.depth_stencil_view);
 	rt_albedos->activateViewport();
 	// Clear de los render targets y el ZBuffer
-	rt_albedos->clear(VEC4(1, 0, 0, 1));
+	rt_albedos->clear(VEC4(0.05, 0.0588, 0.169, 1));
 	rt_normals->clear(VEC4(0, 1, 0, 1));
 	rt_selfIlum->clear(VEC4(0, 0, 0, 1));
 	rt_depths->clear(VEC4(1, 1, 1, 1));
@@ -648,6 +646,10 @@ void CRenderDeferredModule::ApplySSAO() {
 
 	rt_ssao->clear(VEC4(0, 0, 0, 0));
 
+	rt_normals->activate(TEXTURE_SLOT_NORMALS);
+	rt_depths->activate(TEXTURE_SLOT_DEPTHS);
+
+/*
 	ID3D11RenderTargetView* rts[3] = {
 		//Render.render_target_view
 		rt_ssao->getRenderTargetView()
@@ -690,14 +692,18 @@ void CRenderDeferredModule::ApplySSAO() {
 		auto tech = Resources.get("solid_textured_multiple_outputs.tech")->as<CRenderTechnique>();
 
 		activateBlend(BLENDCFG_SUBSTRACT);
+		//activateBlend(BLENDCFG_DEFAULT);	//for testing only
 		drawFullScreen(blurred_ssao, tech);
 	}
 	activateBlend(BLENDCFG_DEFAULT);
 	//Render.activateBackBuffer();
-	SetOutputDeferred();
+	SetOutputDeferred();*/
 
 	/*CTexture::deactivate(TEXTURE_SLOT_DEPTHS);
 	CTexture::deactivate(TEXTURE_SLOT_NORMALS);*/
+	
+	TRenderSSAO* ssao_fx = render_fx->GetFX<TRenderSSAO>("ssao");
+	ssao_fx->GetOcclusionTextue(h_camera, rt_ssao, rt_acc_light, rt_shadows_gl);
 }
 
 void CRenderDeferredModule::MarkInteractives(const VEC4& color, std::string tag, int slot) {

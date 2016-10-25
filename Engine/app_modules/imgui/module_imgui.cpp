@@ -335,6 +335,37 @@ void CImGuiModule::update(float dt) {
 			if (ImGui::DragFloat("Shadow intensity", &shader_ctes_globals.shadow_intensity, 0.01f)) {
 				shader_ctes_globals.uploadToGPU();
 			}
+
+			if (ImGui::TreeNode("ssao")) {
+				if (ImGui::DragFloat("ssao intensity", &shader_ctes_blur.ssao_intensity)) {
+					shader_ctes_blur.uploadToGPU();
+				}
+
+				if (ImGui::DragFloat("ssao iterations", &shader_ctes_blur.ssao_iterations)) {
+					shader_ctes_blur.uploadToGPU();
+				}
+
+				ImGui::Separator();
+
+				if (ImGui::DragFloat("ssao intensity test", &shader_ctes_blur.ssao_test_intensity, 0.01f)) {
+					shader_ctes_blur.uploadToGPU();
+				}
+
+				if (ImGui::DragFloat("ssao bias test", &shader_ctes_blur.ssao_bias, 0.01f)) {
+					shader_ctes_blur.uploadToGPU();
+				}
+
+				if (ImGui::DragFloat("ssao scale test", &shader_ctes_blur.ssao_scale, 0.01f)) {
+					shader_ctes_blur.uploadToGPU();
+				}
+
+				if (ImGui::DragFloat("ssao rad test", &shader_ctes_blur.ssao_sample_rad, 0.01f)) {
+					shader_ctes_blur.uploadToGPU();
+				}
+
+				ImGui::TreePop();
+			}
+
 			ImGui::TreePop();
 		}
 
@@ -342,14 +373,6 @@ void CImGuiModule::update(float dt) {
 			ImGui::Checkbox("polarize effects(disabled)", GameController->GetFxPolarizePointer());
 
 			ImGui::Checkbox("glow effect(disabled)", GameController->GetFxGlowPointer());
-
-			if (ImGui::DragFloat("ssao intensity", &shader_ctes_blur.ssao_intensity)) {
-				shader_ctes_blur.uploadToGPU();
-			}
-
-			if (ImGui::DragFloat("ssao iterations", &shader_ctes_blur.ssao_iterations)) {
-				shader_ctes_blur.uploadToGPU();
-			}
 
 			if (ImGui::DragFloat("Specular force", &shader_ctes_hatching.specular_force)) {
 				shader_ctes_hatching.uploadToGPU();
