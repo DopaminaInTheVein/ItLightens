@@ -541,7 +541,11 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 		sprintf(lua_code, "OnStopVibration(\"%s\");", params.c_str());
 		break;
 	}
-							//GUI
+	case (OnVoice): {
+		sprintf(lua_code, "%s();", params.c_str());
+		break;
+	}
+    //GUI
 	case (OnCreateGui): {
 		sprintf(lua_code, "OnCreateGui(\"%s\");", params.c_str());
 		break;

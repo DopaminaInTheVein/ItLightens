@@ -130,6 +130,7 @@ public:
 		OnSenseVision,
 		OnStartVibration,
 		OnStopVibration,
+		OnVoice,
 
 		//GUI
 		OnButtonPressed,

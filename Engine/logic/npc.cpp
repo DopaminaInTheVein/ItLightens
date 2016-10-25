@@ -392,3 +392,32 @@ void npc::goForward(float stepForward) {
 	float dt = getDeltaTime();
 	getCC()->AddMovement(getTransform()->getFront() * stepForward*dt);
 }
+
+void npc::updateTalk(string npc_name) {
+	talk_time += getDeltaTime();
+	if (talk_time > MAX_TIME_TALK) {
+		// reset the timers and compute new time
+		talk_time = 0.f;
+		MAX_TIME_TALK = rand() % 60;
+		// chose a speech randomly
+		int speech = rand() % 4;
+		speech++;
+
+		switch (speech) {
+		case 1:
+			logic_manager->throwEvent(logic_manager->OnVoice, "On" + npc_name + "Voice1", CHandle(this).getOwner());
+			break;
+		case 2:
+			logic_manager->throwEvent(logic_manager->OnVoice, "On" + npc_name + "Voice2", CHandle(this).getOwner());
+			break;
+		case 3:
+			logic_manager->throwEvent(logic_manager->OnVoice, "On" + npc_name + "Voice3", CHandle(this).getOwner());
+			break;
+		case 4:
+			logic_manager->throwEvent(logic_manager->OnVoice, "On" + npc_name + "Voice4", CHandle(this).getOwner());
+			break;
+		default:
+			logic_manager->throwEvent(logic_manager->OnVoice, "On" + npc_name + "Voice1", CHandle(this).getOwner());
+		}
+	}
+}

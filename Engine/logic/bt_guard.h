@@ -295,6 +295,7 @@ public:
 
 		updateLookAt();
 		//animController.update();
+		updateTalk("Guard");
 	}
 
 	void updateLookAt();

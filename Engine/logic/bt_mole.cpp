@@ -116,6 +116,7 @@ void bt_mole::update(float elapsed) {
 	if (stunned)
 		SET_ANIM_MOLE_BT(AST_STUNNED);
 	updateStuck();
+	updateTalk("Mole");
 	Recalc();
 }
 

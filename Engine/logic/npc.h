@@ -24,6 +24,10 @@ protected:
 	float SPEED_ROT;
 	float DIST_REACH_PNT;
 
+	// talk management
+	float talk_time = 0.f;
+	float MAX_TIME_TALK = rand() % 60;
+
 	// stuck management
 	float MAX_STUCK_TIME;
 	float UNSTUCK_DISTANCE;
@@ -73,6 +77,9 @@ public:
 	//Actions
 	int actionUnstuckTurn();
 	int actionUnstuckMove();
+
+	//Talk
+	void updateTalk(string npc_name);
 
 	//Prueba
 	int getPathDebug(const VEC3& startPoint, const VEC3& endPoint) {

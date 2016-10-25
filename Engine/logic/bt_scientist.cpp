@@ -127,6 +127,7 @@ void bt_scientist::update(float elapsed) {
 	if (stunned)
 		SET_ANIM_SCI_BT(AST_STUNNED);
 	updateStuck();
+	updateTalk("Scientist");
 	Recalc();
 }
 
