@@ -6,8 +6,11 @@
 #include "components\comp_render_glow.h"
 #include "handle\handle.h"
 #include "components\entity.h"
+#include "app_modules\render\module_render_postprocess.h"
+#include "render\fx\fx_glow.h"
 
 extern CRenderDeferredModule * render_deferred;
+extern CRenderPostProcessModule * render_fx;
 
 // ---------------------
 void TRenderSSAO::renderInMenu() {
@@ -48,10 +51,11 @@ void TRenderSSAO::GetTexture(CHandle h_camera, CRenderToTexture* rt_ssao, CRende
 	render_deferred->SetOutputDeferred();
 	//blur shadows
 	CTexture *blurred_ssao = rt_ssao;
-	GET_COMP(glow, h_camera, TCompRenderGlow);
+	CTexture *output;
+	TRenderGlow* glow = render_fx->GetFX<TRenderGlow>("blur");
 	//glow->
 	if (glow)
-		blurred_ssao = glow->apply(blurred_ssao);
+		output = glow->apply(blurred_ssao);
 
 	//reset size viewport
 	render_deferred->SetOutputDeferred();
@@ -69,7 +73,7 @@ void TRenderSSAO::GetTexture(CHandle h_camera, CRenderToTexture* rt_ssao, CRende
 
 		activateBlend(BLENDCFG_SUBSTRACT);
 		//activateBlend(BLENDCFG_DEFAULT);	//for testing only
-		drawFullScreen(blurred_ssao, tech);
+		drawFullScreen(output, tech);
 	}
 	activateBlend(BLENDCFG_DEFAULT);
 	//Render.activateBackBuffer();
@@ -93,7 +97,7 @@ void TRenderSSAO::init() {
 	shader_ctes_blur.ssao_test_intensity = 1.0f;
 	shader_ctes_blur.ssao_scale = 1.0f;
 	shader_ctes_blur.ssao_sample_rad = 0.4f;
-	shader_ctes_blur.ssao_bias = 0.560;
+	shader_ctes_blur.ssao_bias = 0.220;
 
 	shader_ctes_blur.uploadToGPU();
 }

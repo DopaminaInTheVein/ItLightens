@@ -166,6 +166,7 @@ float3 getPosition(in float2 uv)
 	float  z = txDepths.Load(ss_load_coords).x;
 	float3 position = getWorldCoords(uv.xy, z);
 	return position;
+	return mul(position, InvViewProjection);
 }
 
 float3 getNormal(in float2 uv)
@@ -176,15 +177,20 @@ float3 getNormal(in float2 uv)
 
 float2 getRandom(in float2 uv)
 {
-	return txNoise.Sample(samLinear, uv).xy;
+	float4 rnd = txNoise.Sample(samLinear, uv);
+	return rnd.xy;
+	return (rnd.xy/rnd.wz);
 }
 
 float doAmbientOcclusion(in float2 tcoord,in float2 uv, in float3 p, in float3 cnorm)
 {
 	float3 diff = getPosition(tcoord + uv) - p;
 	const float3 v = normalize(diff);
-	const float d = length(diff)*g_scale;
-	return max(0.0,dot(2*cnorm,v)-g_bias)*(1.0/(1.0+d))*g_intensity;
+	float d = length(diff)*g_scale ;
+
+	
+	//return v;
+	return max(0.0,dot(cnorm,v)-g_bias)*(1.0/(1.0+d))*g_intensity;
 }
 
 float4 PSInv(float4 Pos : SV_POSITION
@@ -208,6 +214,7 @@ float4 PSInv(float4 Pos : SV_POSITION
 	
 	//return float4(rad.xxx/500,1);
 	
+	//return doAmbientOcclusion(Pos.xy, Pos.xy, p, n);
 
 //o_color = float4(rand.xxx,1);
 	int iterations = ssao_iterations;
@@ -251,9 +258,11 @@ float4 PS(float4 Pos : SV_POSITION
 	
 	//return float4(rad.xxx/500,1);
 	
-
+	//return doAmbientOcclusion(Pos.xy, Pos.xy, p, n);
+	
 //o_color = float4(rand.xxx,1);
-	int iterations = ssao_iterations;
+	int iterations = lerp(6.0,2.0,z/ssao_iterations); 
+	//int iterations = ssao_iterations;
 	for (int j = 0; j < iterations; ++j)
 	{
 		  float2 coord1 = reflect(vec[j],rand)*rad;
@@ -270,5 +279,6 @@ float4 PS(float4 Pos : SV_POSITION
 	float4 o_color = float4(ao, ao, ao, ao);
 	//o_color = float4(1,1,1,1);
 	o_color.a = 1;
+	//o_color = 1-o_color;
 	return o_color;
 }

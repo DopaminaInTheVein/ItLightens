@@ -40,6 +40,30 @@ void TCompLightDirShadows::update(float dt) {
 	updateFromEntityTransform(owner);
 }
 
+void TCompLightDirShadows::uploadShaderCtes(CEntity* e) {
+	TCompTransform* trans = e->get<TCompTransform>();
+	VEC3 lpos = trans->getPosition();
+	shader_ctes_lights.LightWorldPos = VEC4(lpos);
+	shader_ctes_lights.LightWorldFront = VEC4(trans->getFront());
+	shader_ctes_lights.LightColor = this->color;
+	shader_ctes_lights.LightViewProjection = this->getViewProjection();
+
+	MAT44 offset = MAT44::CreateTranslation(0.5f, 0.5f, 0.f);
+	MAT44 scale = MAT44::CreateScale(0.5f, -0.5f, 1.f);
+	MAT44 tmx = scale * offset;
+	shader_ctes_lights.LightViewProjectionOffset = shader_ctes_lights.LightViewProjection * tmx;
+	shader_ctes_lights.LightOutRadius = this->getZFar();
+	shader_ctes_lights.LightInRadius = this->getZNear();
+	shader_ctes_lights.LightAspectRatio = this->getAspectRatio();
+	shader_ctes_lights.LightCosFov = cosf(this->getFov());
+
+	shader_ctes_lights.generate_shadows = generate_shadow;
+	shader_ctes_lights.uploadToGPU();
+
+	light_mask->activate(TEXTURE_SLOT_LIGHT_MASK);
+}
+
+
 void TCompLightDirShadows::activate() {
 	PROFILE_FUNCTION("shadows: activate");
 	if (!enabled) return;

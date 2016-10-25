@@ -19,6 +19,7 @@ struct TCompLightDirShadows : public TCompLightDir {
 	void activate();
 	void generateStaticShadowMap();
 	void update(float dt);
+	void uploadShaderCtes(CEntity * e);
 	void generateShadowMap();
 	void destroy();
 

@@ -475,7 +475,8 @@ void PSLightDirShadows(
   //att_factor *= NLWarped * light_mask;
   //att_factor = 1-NLWarped;
   
-  
+  //o_color = float4(wPos,1);
+  //o_color = att_factor.xxxx;
   
   //o_shadows = att_factor/10.0f;
   //o_shadows = float4(0.0f,0.0f,.0f,1.0f);
@@ -487,10 +488,10 @@ void PSLightDirShadows(
  float inv_shadows = att_factor;
  o_inv_shadows = float4(inv_shadows, inv_shadows, inv_shadows, inv_shadows);
   
-  float4 final_color = light_mask * att_factor;
+  float4 final_color = light_mask * att_factor * LightColor;
 
-  //inv_shadows = 1-att_factor;
-  inv_shadows = 1-att_factor*NLWarped;
+  inv_shadows = 1-att_factor;
+ // inv_shadows = 1-att_factor*NLWarped;
   inv_shadows *= (light_mask);
   //inv_shadows *= (light_mask*light_mask);
   
@@ -502,7 +503,8 @@ void PSLightDirShadows(
  if(inv_shadows < 0)
 	inv_shadows = 0;
 	
-  o_inv_shadows = float4(inv_shadows, inv_shadows, inv_shadows, inv_shadows);
+	//inv_shadows = 0;
+  o_inv_shadows = float4(inv_shadows, inv_shadows, inv_shadows, 1);
   //o_color = float4(att_factor, att_factor, att_factor, att_factor);
 
   
@@ -544,12 +546,12 @@ void PSLightDirShadows(
  //final_color = float4(1,1,1,1);
 
  //inv_shadows *= 10;
- //o_color = (NL * final_color * albedo + o_specular);
+ o_color = (NLWarped * final_color * albedo + o_specular);
   //o_color = albedo*final_color + o_specular;
   //o_color = txWarpLight.Sample(samClampLinear, float2(att_factor, 1.0f))*2.0f;
   
  // o_inv_shadows = float4(0.5,0.5,0.5,1);
-  o_color = float4(0,0,0,0);
+  //o_color = float4(0,0,0,0);
  //o_color = float4(1,1,1,1);
   //o_color = light_mask;
   //o_inv_shadows = o_color;

@@ -14,6 +14,11 @@ ShaderBuffer(TCteLight, CTE_SHADER_LIGHT)
   float  LightOutRadius;
   float  LightAspectRatio;  // only directionals
   float  LightCosFov;
+
+  float generate_shadows;
+  float light_dummy1;
+  float light_dummy2;
+  float light_dummy3;
 };
 
 #endif
