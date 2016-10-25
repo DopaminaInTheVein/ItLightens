@@ -228,7 +228,7 @@ void player_controller::myUpdate() {
 		{
 			SET_ANIM_PLAYER(AST_MOVE);
 			sound_manager->stopSound("event:/OnRaijinRunning");
-			sound_manager->playSound("event:/OnRaijinWalking", 1.f, false);		
+			sound_manager->playSound("event:/OnRaijinWalking", 1.f, false);
 		}
 		else {
 			sound_manager->stopSound("event:/OnRaijinWalking");
@@ -304,7 +304,7 @@ void player_controller::Jump()
 			clamp(jimpulse - sqrtf(curSpeed.Length())*SPEED_JUMP_PENALIZE, 0.f, jimpulse),//, //0.8f * jimpulse, jimpulse),
 			//jimpulse,
 			-curSpeed.z * 0.1f
-			);
+		);
 		//--------------------------------------
 	}
 	else {
@@ -348,7 +348,7 @@ void player_controller::Jumping()
 	}
 }
 
-void player_controller::Falling()
+void player_controller::updateFalling()
 {
 	PROFILE_FUNCTION("player controller: falling");
 	UpdateDirection();
@@ -998,9 +998,9 @@ void player_controller::onPolarize(const TMsgPolarize & msg)
 				polarityForces.begin(),
 				polarityForces.end(),
 				msg.handle
-				),
+			),
 			polarityForces.end()
-			);
+		);
 		//TForcePoint fp_remove = TForcePoint(msg.origin, msg.pol);
 		//force_points.erase(std::remove(force_points.begin(), force_points.end(), fp_remove), force_points.end());
 	}
@@ -1142,7 +1142,7 @@ void player_controller::renderInMenu() {
 	ImGui::Separator();
 	if (cc) IMGUI_SHOW_FLOAT(cc->GetLastSpeed().Length());
 	ImGui::DragFloat("Jump speed penalize", &SPEED_JUMP_PENALIZE, 0.01f, 0.f, 1.f);
-
+	CPlayerBase::renderInMenu();
 	//ImGui::SliderFloat3("movement", &m_toMove.x, -1.0f, 1.0f,"%.5f");	//will be 0, cleaned each frame
 }
 
