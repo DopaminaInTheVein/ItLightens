@@ -222,7 +222,7 @@ void player_controller::myUpdate() {
 		{
 			SET_ANIM_PLAYER(AST_RUN);
 			sound_manager->stopSound("event:/OnRaijinWalking");
-			sound_manager->playSound("event:/OnRaijinRunning", 0.5f, false);
+			sound_manager->playSound("event:/OnRaijinRunning", 1.0f, false);
 		}
 		else if (player_curr_speed > 0.f)
 		{
