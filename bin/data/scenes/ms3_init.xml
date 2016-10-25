@@ -1210,6 +1210,24 @@
 </entity>
 <entity
    reload="yes">
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="0.21 4.0 4.5"/>
+<tags
+   tags="trigger"/>
+<trigger_lua/>
+<name
+   name="tSave02"/>
+<transform
+   pos="-44.1857 0.753134 -0.840155"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity
+   reload="yes">
 <tags
    tags="tasklist"/>
 <render_static_mesh

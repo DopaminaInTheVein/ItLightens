@@ -137,7 +137,7 @@ public:
 	void fadeIn(float speed = 0.f);
 	void fadeOut(float speed = 0.f);
 	void setFogHeight(float h);
-	void fogFade(float x, float y, float z);
+	void fogFade(float x, float y, float z, float hprev, float hnext, float rmin, float rmax);
 	void fogUnfade();
 	void orbit(bool);
 	void resetCamera();

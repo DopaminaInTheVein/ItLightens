@@ -24,14 +24,14 @@ bool TCompLightDirShadows::load(MKeyValue& atts) {
 	assert(is_ok);
 
 	enabled = atts.getBool("enabled", true);
-
+	generate_shadow = atts.getBool("gen_shadow", true);
 	
-
 	return is_ok;
 }
 bool TCompLightDirShadows::save(std::ofstream& os, MKeyValue& atts) {
 	TCompLightDir::save(os, atts);
 	atts.put("resolution", res);
+	atts.put("gen_shadow", generate_shadow);
 	return true;
 }
 void TCompLightDirShadows::update(float dt) {
@@ -121,6 +121,11 @@ void TCompLightDirShadows::setNewFov(float fov_in_rads) {
 	float fov_in_degs = rad2deg(fov_in_rads);
 	setProjection(fov_in_rads, getZNear(), getZFar());
 }
+void TCompLightDirShadows::renderInMenu()
+{
+	TCompLightDir::renderInMenu();
+	ImGui::Checkbox("Cast shadows", &generate_shadow);
+ }
 
 void TCompLightDirShadows::start_editing() {
 	if (original) delete original;

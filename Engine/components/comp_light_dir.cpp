@@ -35,7 +35,8 @@ void TCompLightDir::render() const {
 
 void TCompLightDir::renderInMenu() {
 	TCompCamera::renderInMenu();
-	ImGui::ColorEdit4("Color", &color.x, true);
+	ImGui::ColorEdit3("Color", &color.x);
+	ImGui::DragFloat("Intensity", &color.w);
 }
 
 void TCompLightDir::uploadShaderCtes(CEntity* e) {

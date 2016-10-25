@@ -38,19 +38,24 @@ function GetMs3FogConstants()
 end
 
 --- FOG Events ---
-function OnEnter__tFogIn()
+function FogCorridorIn()
+	GetMs3FogConstants()
+	p:breakpoint(1)
 	--cam:fog_y(MS3_FOG_2)
-	--cam:fog_fade()
+	cam:fog_fade(MS3_FOG_FADE_POS_X, MS3_FOG_FADE_POS_Y, MS3_FOG_FADE_POS_Z, MS3_FOG_1, MS3_FOG_2, 0.2, 20)
 end
 
-function OnEnter__tFogOut1()
+function FogCorridorOut1()
+	GetMs3FogConstants()
+	p:breakpoint(2)
+	cam:fog_unfade()
+	cam:fog_y(MS3_FOG_1)
+	h:get_handle_caller()
+end
+
+function FogCorridorOut2()
+	GetMs3FogConstants()
 	p:breakpoint(3)
-	--cam:fog_unfade()
-	--cam:fog_y(MS3_FOG_1)
+	cam:fog_unfade()
+	cam:fog_y(MS3_FOG_2)
 end
-
-function OnEnter__tFogOut2()
-	--cam:fog_unfade()
-	--cam:fog_y(MS3_FOG_2)
-end
-

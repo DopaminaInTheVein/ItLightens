@@ -643,10 +643,11 @@ void SLBCamera::setFogHeight(float h)
 	fx->SetFloorHeight(h);
 }
 
-void SLBCamera::fogFade(float x, float y, float z)
+void SLBCamera::fogFade(float x, float y, float z, float hprev, float hnext, float rmin, float rmax)
 {
 	GET_FX(fx, TRenderDepthFog, FX_FOG_DEPTH);
 	fx->SetPosition(VEC3(x, y, z));
+	fx->FadeHeight(hprev, hnext, rmin, rmax);
 	fx->EnableDistanceCalculation();
 }
 void SLBCamera::fogUnfade()

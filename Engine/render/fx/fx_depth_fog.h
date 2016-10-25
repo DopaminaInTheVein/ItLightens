@@ -7,6 +7,10 @@
 struct TRenderDepthFog : public TCompBasicFX {
 	bool enabled;
 	bool enabled_dist_calc;
+	float hprev; // to fade
+	float hnext; // to fade
+	float rmin; // radius to fade
+	float rmax; // radius to fade
 	void init();
 	void renderInMenu();
 
@@ -22,6 +26,7 @@ struct TRenderDepthFog : public TCompBasicFX {
 	void SetPosition(VEC3 new_position);
 	VEC3 GetPosition() const;
 	void SetFloorHeight(float);
+	void FadeHeight(float h_prev, float h_next, float rmin, float rmax);
 
 	void EnableDistanceCalculation();
 	void DisableDistanceCalculation();

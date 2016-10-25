@@ -54,6 +54,12 @@ function SaveLevel( )
 	p:save_level()
 end
 
+function SaveCheckPoint( )
+	h:get_handle_caller()
+	h:destroy()
+	p:save_level()
+end
+
 g_current_level = "level_0"
 g_is_menu = false
 function LoadLevel( logic_level )
