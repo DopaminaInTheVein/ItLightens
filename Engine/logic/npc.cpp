@@ -398,7 +398,7 @@ void npc::updateTalk(string npc_name, CHandle handle) {
 	if (talk_time > MAX_TIME_TALK) {
 		// reset the timers and compute new time
 		talk_time = 0.f;
-		MAX_TIME_TALK = rand() % TIME_TALK_LIMIT;
+		MAX_TIME_TALK = rand() % (TIME_TALK_MAX_LIMIT - TIME_TALK_MIN_LIMIT + 1) + TIME_TALK_MIN_LIMIT;
 		// chose a speech randomly
 		int speech = rand() % 4;
 		speech++;
