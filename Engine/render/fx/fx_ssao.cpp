@@ -14,7 +14,6 @@ extern CRenderPostProcessModule * render_fx;
 
 // ---------------------
 void TRenderSSAO::renderInMenu() {
-	
 	TCompBasicFX::renderInMenu();
 }
 
@@ -51,7 +50,7 @@ void TRenderSSAO::GetTexture(CHandle h_camera, CRenderToTexture* rt_ssao, CRende
 	render_deferred->SetOutputDeferred();
 	//blur shadows
 	CTexture *blurred_ssao = rt_ssao;
-	CTexture *output;
+	CTexture *output = nullptr;
 	TRenderGlow* glow = render_fx->GetFX<TRenderGlow>("blur");
 	//glow->
 	if (glow)
@@ -73,7 +72,9 @@ void TRenderSSAO::GetTexture(CHandle h_camera, CRenderToTexture* rt_ssao, CRende
 
 		activateBlend(BLENDCFG_SUBSTRACT);
 		//activateBlend(BLENDCFG_DEFAULT);	//for testing only
-		drawFullScreen(output, tech);
+		if (output) {
+			drawFullScreen(output, tech);
+		}
 	}
 	activateBlend(BLENDCFG_DEFAULT);
 	//Render.activateBackBuffer();
