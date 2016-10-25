@@ -1,0 +1,6 @@
+<material tech="deferred.tech">
+<texture slot="diffuse" name="textures/electromb__difuso.dds"/>
+<texture slot="specular" name="textures/electromb__specular_gloss.dds"/>
+<texture slot="selfilum" name="textures/electromb__self_ilumination.dds"/>
+<texture slot="normalmap" name="textures/electromb__normal.dds"/>
+</material>

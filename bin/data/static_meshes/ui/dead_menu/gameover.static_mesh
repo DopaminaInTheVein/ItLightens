@@ -1,0 +1,3 @@
+<static_mesh>
+  <slot mesh="meshes/ui/dead_menu/gameover.mesh" material="materials/ui/dead_menu/gameover_tech_ui.material"/>
+</static_mesh>

@@ -1,0 +1,3 @@
+<static_mesh>
+  <slot mesh="meshes/obj/electromb.mesh" material="materials/obj/electromb.material"/>
+</static_mesh>

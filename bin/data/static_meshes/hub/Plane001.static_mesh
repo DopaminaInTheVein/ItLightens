@@ -1,0 +1,3 @@
+<static_mesh>
+  <slot mesh="meshes/hub/Plane001.mesh" material="materials/hub/cielo.material"/>
+</static_mesh>
