@@ -39,7 +39,9 @@ namespace Font {
 	struct TCharacter {
 	private:
 		RectNormalized text_coords;
-		float size; //horizontal size grid
+		RectNormalized text_coords2;
+		float space_right; //horizontal size grid
+		int size; //horizontal size grid
 		char c;
 		std::string special_character;
 		VEC4 color = obtainColorNormFromString("#FFFFFFFF");
@@ -47,10 +49,12 @@ namespace Font {
 		TCharacter() : text_coords(RectNormalized()), size(0.f) {}
 		TCharacter(unsigned char c);
 		TCharacter(std::string special_char);
-		TCharacter(std::string name, int row, int col, float size);
+		TCharacter(std::string name, int row, int col, float space_right, float size);
 		static TCharacter NewLine();
 		RectNormalized GetTxtCoords() { return text_coords; }
-		float GetSize() { return size; }
+		RectNormalized GetTxtCoords2() { return text_coords2; }
+		int GetSize() { return size; }
+		float GetSpaceRight() { return space_right; }
 		VEC4 GetColor() { return isSpecial() ? obtainColorNormFromString("#FFFFFFFF") : color; }
 		bool IsNewLine() { return c == '\n'; }
 		bool IsSpace() { return c == ' '; }

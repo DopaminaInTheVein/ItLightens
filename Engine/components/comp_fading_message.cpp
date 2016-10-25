@@ -121,6 +121,7 @@ bool TCompFadingMessage::reload(const ReloadInfo& atts, float reloadAll)
 	cur_line = cur_char_line = 0;
 	partialReload = true;
 	accumSpacing = 0.f;
+	num_large_chars = 0;
 	if (reloadAll) {
 		numchars = 0;
 		accumTime = 0.0f;
@@ -182,7 +183,7 @@ void TCompFadingMessage::printLetters() {
 			//assert(fatal("Demasiadas letras para Fading message!\n"));
 			break;
 		}
-		CHandle letter_h = gui_letters[letter_index];
+		CHandle letter_h = gui_letters[letter_index + num_large_chars];
 		moveElement(letter_h, new_pos_let);
 		if (letter_h.isValid()) {
 			GET_COMP(letter_gui, letter_h, TCompGui);
@@ -190,13 +191,36 @@ void TCompFadingMessage::printLetters() {
 				letter_gui->setTxCoords(text[i].GetTxtCoords());
 				float size_letter = 1.0f;// text[i].GetSize();
 				GET_COMP(letter_tmx, letter_h, TCompTransform);
-				letter_tmx->setScale(VEC3(ceil(size_letter), 1.f, 1.f));
+				//letter_tmx->setScale(VEC3(ceil(size_letter), 1.f, 1.f));
 				//Color
 				VEC4 color = text[i].GetColor();
 				letter_gui->SetColor(color);
 				accumSpacing += size_letter;
 				if (text[i].isSpecial()) {
-					accumSpacing -= text[i].GetSize();
+					if (text[i].GetSize() == 2) {
+						++num_large_chars;
+						VEC3 offset_pos2;
+						offset_pos2.x = accumSpacing*scale;
+						offset_pos2.y = -cur_line*letterSpacerHigh;
+						offset_pos2.z = i*0.001f;
+						VEC3 new_pos_let2 = init_pos + offset_pos2;
+						CHandle letter_h2 = gui_letters[letter_index + num_large_chars];
+						moveElement(letter_h2, new_pos_let2);
+						if (letter_h2.isValid()) {
+							GET_COMP(letter_gui2, letter_h2, TCompGui);
+							if (letter_gui2) {
+								letter_gui2->setTxCoords(text[i].GetTxtCoords2());
+								//float size_letter = 1.0f;// text[i].GetSize();
+								GET_COMP(letter_tmx2, letter_h2, TCompTransform);
+								//letter_tmx2->setScale(VEC3(ceil(size_letter), 1.f, 1.f));
+								//Color
+								letter_gui2->SetColor(color);
+								accumSpacing += size_letter;
+							}
+						}
+					}
+
+					accumSpacing -= text[i].GetSpaceRight();
 				}
 				else {
 					accumSpacing -= Gui->letter_sizes[text[i].getCharInt()];

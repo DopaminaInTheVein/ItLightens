@@ -19,7 +19,7 @@ private:
 	CHandle gui_mol;
 	CHandle gui_rai;
 
-	//int id;
+	int num_large_chars;
 	bool permanent;
 	float percentLineHeight = 0.02f;
 	float timeForLetter = 0.05f;

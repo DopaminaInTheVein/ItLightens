@@ -53,8 +53,8 @@
 		"F":14,
 		"G":8,
 		"H":10,
-		"I":10,
-		"Í":8,
+		"I":12,
+		"Í":12,
 		"J":10,
 		"K":10,
 		"L":12,
@@ -127,19 +127,19 @@
 		"row":11,
 		"col":2,
 		"size":1,
-		"space_right":8
+		"space_right":0
 	}
 	,"RB": {
 		"row":11,
 		"col":3,
 		"size":1,
-		"space_right":8
+		"space_right":0
 	}
 	,"SHIFT": {
 		"row":11,
 		"col":5,
 		"size":2,
-		"space_right":8
+		"space_right":30
 	}
 	,"BACK": {
 		"row":11,
@@ -157,91 +157,91 @@
 		"row":11,
 		"col":9,
 		"size":1,
-		"space_right":8
+		"space_right":4
 	}
 	,"LSTICK": {
 		"row":11,
 		"col":10,
 		"size":1,
-		"space_right":8
+		"space_right":0
 	}
 	,"RSTICK": {
 		"row":11,
 		"col":11,
 		"size":1,
-		"space_right":8
+		"space_right":0
 	}
 	,"SPACE": {
 		"row":12,
 		"col":5,
 		"size":2,
-		"space_right":8
+		"space_right":16
 	}
 	,"ESC": {
 		"row":13,
 		"col":3,
 		"size":1,
-		"space_right":8
+		"space_right":6
 	}
 	,"QKEY": {
 		"row":14,
 		"col":5,
 		"size":1,
-		"space_right":8
+		"space_right":6
 	}
 	,"EKEY": {
 		"row":14,
 		"col":6,
 		"size":1,
-		"space_right":8
+		"space_right":6
 	}
 	,"WKEY": {
 		"row":13,
 		"col":5,
 		"size":1,
-		"space_right":8
+		"space_right":6
 	}
 	,"AKEY": {
 		"row":13,
 		"col":6,
 		"size":1,
-		"space_right":8
+		"space_right":6
 	}
 	,"SKEY": {
 		"row":13,
 		"col":7,
 		"size":1,
-		"space_right":8
+		"space_right":6
 	}
 	,"DKEY": {
 		"row":13,
 		"col":8,
 		"size":1,
-		"space_right":8
+		"space_right":6
 	}
 	,"APAD": {
 		"row":15,
 		"col":3,
 		"size":1,
-		"space_right":8
+		"space_right":6
 	}
 	,"BPAD": {
 		"row":15,
 		"col":4,
 		"size":1,
-		"space_right":8
+		"space_right":6
 	}
 	,"XPAD": {
 		"row":15,
 		"col":5,
 		"size":1,
-		"space_right":8
+		"space_right":6
 	}
 	,"YPAD": {
 		"row":15,
 		"col":6,
 		"size":1,
-		"space_right":8
+		"space_right":6
 	}
 	
 }

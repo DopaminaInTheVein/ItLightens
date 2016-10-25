@@ -64,7 +64,7 @@ RectNormalized Font::getTxtCoords(unsigned char c)
 Font::TCharacter::TCharacter(unsigned char c)
 {
 	text_coords = getTxtCoords(c);
-	size = Gui->getCharSize(c);
+	space_right = Gui->getCharSize(c);
 	this->c = c;
 }
 TCharacter Font::TCharacter::NewLine()
@@ -79,11 +79,13 @@ Font::TCharacter::TCharacter(std::string special_char)
 	*this = Gui->getSpecialChar(special_char);
 }
 
-Font::TCharacter::TCharacter(std::string name, int row, int col, float size)
+Font::TCharacter::TCharacter(std::string name, int row, int col, float space_right, float size)
 {
 	special_character = name;
 	text_coords = Font::getTxtCoords(row * 16 + col);
-	text_coords.sx *= ceil(size);
+	text_coords2 = Font::getTxtCoords(row * 16 + col+1);
+	//text_coords.sx *= ceil(space_right);
+	this->space_right = space_right;
 	this->size = size;
 	c = '*';
 }
