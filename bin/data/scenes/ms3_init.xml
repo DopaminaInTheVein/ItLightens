@@ -988,6 +988,26 @@
 <rigidbody
    type_collision="trigger"
    type_shape="box"
+   size="3.0 4.0 0.1"/>
+<tags
+   tags="trigger room_switcher"/>
+<room_switcher
+   front_room="1"
+   back_room="2"/>
+<name
+   name="Trigger_Cambio_Sala"/>
+<transform
+   pos="-54.4765 0.753134 -5.47724"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
    size="0.1 4.0 12.0"/>
 <tags
    tags="trigger limit"/>
@@ -1142,8 +1162,8 @@
    velocity="2.0"
    default_dirs="0"
    points_size="9"
-   wpt1="-33.0173 -19.5413 -8.31356"
-   wpt2="-7.92353 -19.5413 -12.672"
+   wpt1="-23.5586 -18.138 4.83162"
+   wpt2="-1.37153 -18.1442 -12.672"
    wpt3="21.7366 -15.7475 -0.261352"
    wpt4="-4.15518 -18.1477 -2.25061"
    wpt5="-3.77384 -7.01166 -15.7786"
@@ -1151,7 +1171,7 @@
    wpt7="6.24339 -11.2487 14.2075"
    wpt8="-16.0139 -0.0888821 7.55574"
    wpt9="-28.1465 1.84666 4.3329"
-   lpt1="-32.9466 -18.6978 3.69036"
+   lpt1="-32.9466 -20.5599 3.69036"
    lpt2="13.2632 -18.6978 -13.4743"
    lpt3="22.7177 -21.8889 -14.9584"
    lpt4="-3.46631 -15.3218 -13.8163"
@@ -1837,8 +1857,8 @@
    points_size="1"
    skippable="no"
    stop_final="yes"
-   wpt1="0.0969548 -18.9482 -18.9551"
-   lpt1="-6.46518 -16.4432 -18.2734"/>
+   wpt1="-3.8 -16.0938 -11.6"
+   lpt1="-4.5 -17.6154 -18.0"/>
 <name
    name="CineTablon1"/>
 <transform
@@ -1857,8 +1877,8 @@
    points_size="1"
    skippable="no"
    stop_final="yes"
-   wpt1="-8.77077 -16.6452 -17.587"
-   lpt1="-2.23728 -14.5072 -19.8532"/>
+   wpt1="-3.8 -14.0191 -11.6"
+   lpt1="-4.5 -15.8232 -18.0"/>
 <name
    name="CineTablon2"/>
 <transform
@@ -1877,8 +1897,8 @@
    points_size="1"
    skippable="no"
    stop_final="yes"
-   wpt1="1.36599 -14.5072 -18.7102"
-   lpt1="-6.3729 -12.3717 -18.2988"/>
+   wpt1="-3.8 -10.8832 -11.6"
+   lpt1="-4.5 -13.401 -18.0"/>
 <name
    name="CineTablon3"/>
 <transform
@@ -1897,8 +1917,8 @@
    points_size="1"
    skippable="no"
    stop_final="yes"
-   wpt1="-8.64099 -12.8981 -17.7905"
-   lpt1="-4.34012 -11.0318 -18.6665"/>
+   wpt1="-3.8 -9.81983 -11.6"
+   lpt1="-4.5 -11.3983 -18.0"/>
 <name
    name="CineTablon4"/>
 <transform
@@ -1917,7 +1937,7 @@
    points_size="1"
    skippable="no"
    stop_final="yes"
-   wpt1="-7.08201 -4.01793 -17.6389"
+   wpt1="-3.8 -7.09407 -11.6"
    lpt1="-3.15616 -10.2888 -18.3613"/>
 <name
    name="CineTablon5"/>
