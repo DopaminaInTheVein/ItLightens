@@ -4,6 +4,7 @@
 #include "bt.h"
 
 #define PLAYER_CENTER_Y					0.5f
+#define TIME_TALK_LIMIT					30
 
 // Implementation of the behavior tree
 // uses the BTnode so both work as a system
@@ -26,7 +27,7 @@ protected:
 
 	// talk management
 	float talk_time = 0.f;
-	float MAX_TIME_TALK = rand() % 60;
+	float MAX_TIME_TALK = rand() % TIME_TALK_LIMIT;
 
 	// stuck management
 	float MAX_STUCK_TIME;
