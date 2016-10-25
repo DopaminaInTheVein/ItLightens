@@ -223,11 +223,13 @@ function OnPutPila_cargador_bateria()
 end
 
 function cineDoor( )
+  p:setControlEnabled(0)
   cam:run_cinematic("CineEnchufeDoor", 10)
   p:exec_command( "ui_cam:fade_out(1);", 0.1)
   p:exec_command( "ui_cam:fade_in(1);", 3)
   p:exec_command( "ui_cam:fade_out(1);", 7)
   p:exec_command( "ui_cam:fade_in(1);", 11)
+  p:exec_command( "p:setControlEnabled(1);",11.1)
 end
 
 function openDoorPila( )
