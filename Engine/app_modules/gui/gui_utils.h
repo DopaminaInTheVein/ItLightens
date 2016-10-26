@@ -44,7 +44,7 @@ namespace Font {
 		int size; //horizontal size grid
 		char c;
 		std::string special_character;
-		VEC4 color = obtainColorNormFromString("#FFFFFFFF");
+		VEC4 color = obtainColorNormFromString("#000000FFF");
 	public:
 		TCharacter() : text_coords(RectNormalized()), size(0.f) {}
 		TCharacter(unsigned char c);

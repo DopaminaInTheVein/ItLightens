@@ -52,7 +52,8 @@ void TCompSenseVision::registerHandle(CHandle h)
 
 void TCompSenseVision::unregisterHandle(CHandle h)
 {
-	handles.erase(h);
+	if (handles.size() > 0)
+		handles.erase(h);
 }
 
 void TCompSenseVision::setSenseVisionMode(bool enabled)

@@ -21,12 +21,12 @@ void TCompGui::onCreate(const TMsgEntityCreated&)
 	if (menu_name != "" && row >= 0 && col >= 0) {
 		addGuiElement(menu_name, col, row, MY_OWNER);
 	}
-	RenderManager.ModifyUI();
 	GET_MY(selector, TCompGuiSelector);
 	if (selector) selector->onCreate();
 	GET_MY(loading, TCompLoadingScreen);
 	if (loading) loading->onCreate();
 	logic_manager->throwEvent(CLogicManagerModule::EVENT::OnCreateGui, MY_NAME, MY_OWNER);
+	RenderManager.ModifyUI();
 }
 
 void TCompGui::setRenderTarget(float rs_target, float speed = FLT_MAX)

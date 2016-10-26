@@ -20,7 +20,7 @@ bool TCompLightDir::save(std::ofstream& os, MKeyValue& atts) {
 	atts.put("color", color);
 	atts.put("znear", getZNear());
 	atts.put("zfar", getZFar());
-	atts.put("fov", getFov());
+	atts.put("fov", rad2deg(getFov()));
 	return true;
 }
 void TCompLightDir::render() const {

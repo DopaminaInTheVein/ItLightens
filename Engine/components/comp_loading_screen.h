@@ -4,31 +4,19 @@
 #include "comp_base.h"
 
 class TCompLoadingScreen : public TCompBase {
-	float resolution_x;
-	float resolution_y;
 	int loading_value = 0;
-	int decenas = 0;
-	int unidades = 0;
-	ImGuiWindowFlags flags;
-	CHandle letras[100];
-
-	float letterBoxSize = 1.0f;
-	int shown_chars;
-	int numchars;
-	int lines = 1;
-
-	int id = std::rand();
-	std::string text;
-	std::vector<std::string> lineText;
-	float  ttl = 0.5f;
-	float sizeFontX = 0.0125f;
-	float sizeFontY = 0.030f;
-	float timeForLetter = 0.05f;
-
+	CHandle h_loading_bar;
+	CHandle h_pag1;
+	CHandle h_pag2;
+	void updateHandle(CHandle &h, std::string tag);
+	int cur_page = 0;
+	float time_page = 0.f;
+	float max_time_page = 1.f;
+	void tooglePages();
+	void swapPages();
 public:
 	//Update info
 	void update(float elapsed);
-	void render() const;
 	bool load(MKeyValue& atts);
 	//void printLetters() const;
 	//void updateLetters(bool loaded) const;

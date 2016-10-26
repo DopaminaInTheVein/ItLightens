@@ -18,10 +18,12 @@
 #define LEFT_EVENT "left_event"
 #define RIGHT_EVENT "right_event"
 #define COLOR_SELECTED "#0000FFFF"
-#define COLOR_NORMAL "#FFFFFFFF"
+#define COLOR_NORMAL "#000000FF"
 #define COLOR_HIDDEN "#00000000"
 #define COLOR_DISABLED "#757575FF"
 #define COLOR_SPEED 0.3f
+#define FONT_SIZE_FACTOR 1.5f
+#define ARROW_SEPARATION_FACTOR 1.25
 
 // Static info
 map<string, statehandler> TCompGuiSelector::statemap = {};
@@ -46,7 +48,7 @@ void TCompGuiSelector::onCreate() {
 
 void TCompGuiSelector::AddArrows()
 {
-	float offset_pos = 0.5f * (myGui->GetWidth() - myGui->GetHeight());
+	float offset_pos = 0.5f * (myGui->GetWidth() + myGui->GetHeight()*ARROW_SEPARATION_FACTOR);
 	AddArrow(arrow_left, "ui/selector_left", LEFT_EVENT, -offset_pos);
 	AddArrow(arrow_right, "ui/selector_right", RIGHT_EVENT, +offset_pos);
 }
@@ -186,9 +188,9 @@ int TCompGuiSelector::AddOption(string option)
 	VEC3 postxt = myTransform->getPosition();
 	float w = myGui->GetWidth();
 	float h = myGui->GetHeight();
-	postxt += VEC3(-w / 2.f + h*1.25f, -h / 2.f, .0001f);
+	postxt += VEC3(-w / 2.f + h*1.25f, -h / 2.f, .0001f);//TODO centrar
 	txt->SetText(lang_manager->getText(option, "title"));
-	txt->SetSize(myGui->GetHeight());
+	txt->SetSize(myGui->GetHeight()*FONT_SIZE_FACTOR);
 	txt->SetPosWorld(postxt);
 	options.push_back(h_option);
 	setTextVisible(res, res == 0);
