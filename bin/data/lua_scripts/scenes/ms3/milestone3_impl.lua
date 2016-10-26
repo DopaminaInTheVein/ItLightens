@@ -11,6 +11,7 @@ SLB.using( SLB )
 
 p = Public( )
 h = Handle( )
+h_elevator = Handle( )
 hg = HandleGroup()
 cam = Camera()
 player = Player()
@@ -373,7 +374,7 @@ function moveElevator( )
   p:setControlEnabled(0)
   
   -- Get handles
-  h:get_handle_by_id(idElevator)
+  h_elevator:get_handle_by_id(idElevator)
   hDoorElevLeftUp:get_handle_by_id(idDoorElevLeftUp)
   hDoorElevRightUp:get_handle_by_id(idDoorElevRightUp)
   hDoorElevLeft:get_handle_by_id(idDoorElevLeft)
@@ -395,7 +396,7 @@ function moveElevator( )
   end
   stateElevator = 1 - stateElevator
   
-  p:exec_command("h:activate();", 2)
+  p:exec_command("h_elevator:activate();", 2)
   p:exec_command("ui_cam:fade_out(1);", 2.5)
   p:exec_command("triggerElevator:setActionable(1);", 4 )
   p:exec_command("ui_cam:fade_in(1);", 7.0)
