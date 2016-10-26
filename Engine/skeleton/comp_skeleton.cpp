@@ -199,8 +199,9 @@ void TCompSkeleton::update(float dt) {
 		return; //El updateAllInParallel no llama infobase
 	CEntity* e = ownerHandle;
 	if (!e) return;
-	if (!isInRoom(ownerHandle)) return;
+	if (first_update && !isInRoom(ownerHandle)) return;
 	updateEndAction();
+	first_update = true;
 	TCompCulling * cculling = culling;
 	TCompCulling::TCullingBits* culling_bits = nullptr;
 	culling_bits = &cculling->bits;
@@ -234,7 +235,7 @@ void TCompSkeleton::update(float dt) {
 }
 
 void TCompSkeleton::updateEndAction() {
-	if (isInRoom(CHandle(this).getOwner())) {
+	if (!first_update || isInRoom(CHandle(this).getOwner())) {
 		float endTimeAction = 0.2f; // Tiempo antes de acabar animacion que empieza el blend
 		auto mixer = model->getMixer();
 		if (mixer->getAnimationActionList().size() == 1) {

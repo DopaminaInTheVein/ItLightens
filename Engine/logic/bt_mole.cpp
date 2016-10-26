@@ -107,7 +107,9 @@ void bt_mole::update(float elapsed) {
 	// Update transforms
 	SetMyEntity();
 	if (!myEntity) return;
-	if (!isInRoom(myParent))return;
+	if (first_update && !isInRoom(myParent))return;
+	first_update = true;
+
 	transform = myEntity->get<TCompTransform>();
 	// If we become possessed, reset the tree and stop all actions
 	if (possessing)

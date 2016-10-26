@@ -354,19 +354,23 @@ bool CEntitiesModule::start() {
 	SUBSCRIBE(player_controller, TMsgCanRec, onCanRec);
 	SUBSCRIBE(TCompGenerator, TMsgTriggerIn, onTriggerEnterCall);
 	SUBSCRIBE(TCompGenerator, TMsgTriggerOut, onTriggerExitCall);
+	SUBSCRIBE(TCompGenerator, TMsgTriggerUnpossess, onTriggerUnposses);
 
 	// task switcher
 	SUBSCRIBE(TasklistSwitch, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TasklistSwitch, TMsgTriggerIn, onTriggerEnterCall);
 	SUBSCRIBE(TasklistSwitch, TMsgTriggerOut, onTriggerExitCall);
+	SUBSCRIBE(TasklistSwitch, TMsgTriggerUnpossess, onTriggerUnposses);
 	// room switcher
 	SUBSCRIBE(TCompRoomSwitch, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompRoomSwitch, TMsgTriggerIn, onTriggerEnterCall);
 	SUBSCRIBE(TCompRoomSwitch, TMsgTriggerOut, onTriggerExitCall);
+	SUBSCRIBE(TCompRoomSwitch, TMsgTriggerUnpossess, onTriggerUnposses);
 	// room limiter
 	SUBSCRIBE(TCompRoomLimit, TMsgEntityCreated, onCreate);
 	SUBSCRIBE(TCompRoomLimit, TMsgTriggerIn, onTriggerEnterCall);
 	SUBSCRIBE(TCompRoomLimit, TMsgTriggerOut, onTriggerExitCall);
+	SUBSCRIBE(TCompRoomLimit, TMsgTriggerUnpossess, onTriggerUnposses);
 
 	SUBSCRIBE(TCompBoxDestructor, TMsgTriggerIn, onTriggerEnterCall);
 
@@ -380,6 +384,7 @@ bool CEntitiesModule::start() {
 	//trigger_lua
 	SUBSCRIBE(TTriggerLua, TMsgTriggerIn, onTriggerEnterCall);
 	SUBSCRIBE(TTriggerLua, TMsgTriggerOut, onTriggerExitCall);
+	SUBSCRIBE(TTriggerLua, TMsgTriggerUnpossess, onTriggerUnposses);
 	SUBSCRIBE(TTriggerLua, TMsgSetActivable, onSetActionable);
 	SUBSCRIBE(TCompPila, TMsgSetActivable, onSetActionable);
 

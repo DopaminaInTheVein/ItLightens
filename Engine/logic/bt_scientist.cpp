@@ -119,7 +119,8 @@ void bt_scientist::update(float elapsed) {
 	// If we become possessed, reset the tree and stop all actions
 	SetMyEntity();
 	if (!myEntity) return;
-	if (!isInRoom(myParent))return;
+	if (first_update && !isInRoom(myParent))return;
+	first_update = true;
 
 	if (possessing)
 		setCurrent(NULL);

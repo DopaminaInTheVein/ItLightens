@@ -57,6 +57,7 @@ class bt_mole : public bt_poss, public TCompBase {
 	CEntity *myEntity = nullptr;
 
 	TCompTransform* transform;
+	bool first_update = false;
 
 	void SetMyEntity();
 
