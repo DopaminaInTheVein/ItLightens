@@ -463,11 +463,11 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 		sprintf(lua_code, "OnLoadedLevel(%s);", params.c_str());
 		break;
 	}
-						  //case (OnLoadingLevel) : {
-						  //	sprintf(lua_code, "OnLoadingLevel(%s);", params.c_str());
-						  //	break;
-						  //}
-												  // Step events
+	case (OnLoadingLevel): {
+		sprintf(lua_code, "OnLoadingLevel(\"%s\");", params.c_str());
+		break;
+	}
+						   // Step events
 	case (OnStep): {
 		int step_number = 0;
 		CEntity* entity = caller_handle;
@@ -545,7 +545,7 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 		sprintf(lua_code, "%s();", params.c_str());
 		break;
 	}
-    //GUI
+					//GUI
 	case (OnCreateGui): {
 		sprintf(lua_code, "OnCreateGui(\"%s\");", params.c_str());
 		break;

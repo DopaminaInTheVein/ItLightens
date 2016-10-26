@@ -354,12 +354,13 @@ void CApp::showLoadingScreen()
 	logic_manager->resetTimers();
 
 	//
-	std::string level_name = "loading";
 	bool reload = next_level == current_level;
 	if (!reload) CEntityParser::clearCollisionables();
 	bool is_ok;
 
 	// Entidades invariantes
+	logic_manager->throwEvent(CLogicManagerModule::EVENT::OnLoadingLevel, getRealLevel(next_level));
+	//std::string level_name = "loading";
 	//CEntitiesModule::ParsingInfo info;
 	//info.filename = level_name;
 	//info.reload = reload;

@@ -538,10 +538,15 @@ function InitScene()
 	p:exec_command("loading_handles:destroy();", 1)
 end
 
--- function OnLoadingLevel()
-	-- p:print("OnLoadingLevel")
-	-- p:show_loading_screen()
--- end
+function OnLoadingLevel(level)
+	p:print("OnLoadingLevel")
+	local ok = CallFunction("OnLoading_"..level)
+	if not ok then 
+		ui_cam:fade_in(0.1)
+		p:load_entities("loading")
+	end
+	--p:show_loading_screen()
+end
 
 --Game Ending
 ---------------------------------------------------

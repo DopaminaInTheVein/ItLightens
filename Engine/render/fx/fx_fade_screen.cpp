@@ -42,6 +42,7 @@ void TFadeScreen::SetMaxTime(float new_time) {
 
 void TFadeScreen::FadeIn()
 {
+	if (fade_in || t_curr_fade <= 0) return;
 	fade_in = true;
 	fade_out = false;
 	t_curr_fade = t_max_fade;
@@ -49,6 +50,7 @@ void TFadeScreen::FadeIn()
 
 void TFadeScreen::FadeOut()
 {
+	if (fade_out || t_curr_fade >= t_max_fade) return;
 	fade_in = false;
 	fade_out = true;
 	t_curr_fade = 0;
