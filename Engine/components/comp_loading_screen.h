@@ -28,7 +28,6 @@ class TCompLoadingScreen : public TCompBase {
 public:
 	//Update info
 	void update(float elapsed);
-	void render() const;
 	bool load(MKeyValue& atts);
 	//void printLetters() const;
 	//void updateLetters(bool loaded) const;
