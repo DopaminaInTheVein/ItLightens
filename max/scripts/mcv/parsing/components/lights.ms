@@ -15,7 +15,7 @@ fn _parse_light_common xml is_ldir = (
 	--Out_radius
 	local far = "out_radius"
 	if is_ldir then ( far = "zfar" )
-	xml.addAttr "out_radius" _parsingObject.farAttenEnd
+	xml.addAttr far _parsingObject.farAttenEnd
 	
 	--Use ramp color?
 	parsePropAttribute xml "ramp" "ramp"
