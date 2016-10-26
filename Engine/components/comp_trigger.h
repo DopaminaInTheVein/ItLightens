@@ -2,11 +2,17 @@
 #define INC_COMP_TRIGGER_H_
 
 #include "comp_base.h"
+#include "player_controllers/player_controller_mole.h"
+#include "player_controllers/player_controller_cientifico.h"
 
 struct TTrigger : public TCompBase {
 	bool triggered = false;
 	TMsgTriggerIn last_msg_in;
 	TMsgTriggerOut last_msg_out;
+
+	// possession management
+	bool possessing = false;
+	CHandle pos_handle;
 
 	void update(float elapsed) {
 		if (triggered) onTriggerInside(last_msg_in);
@@ -19,6 +25,21 @@ struct TTrigger : public TCompBase {
 		if (hEnter.isValid()) {
 			dbg("Entro en trigger!\n");
 			if (hEnter.hasTag("player")) {
+				CEntity* eEnter = hEnter;
+				player_controller_mole* cont_mole = eEnter->get<player_controller_mole>();
+				player_controller_cientifico* cont_cientifico = eEnter->get<player_controller_cientifico>();
+				// if we are possessing, we activate the flags
+				if (cont_mole || cont_cientifico) {
+					possessing = true;
+					pos_handle = hEnter;
+				}
+				// if we are not possessing, but we entered possessing, exit the possession
+				else if (possessing) {
+					possessing = false;
+					TMsgTriggerOut out_msg;
+					out_msg.other = pos_handle;
+					onTriggerExit(out_msg); 
+				}
 				Debug->LogRaw("OnTriggerEnter\n");
 				last_msg_in = msg;
 				triggered = true;
