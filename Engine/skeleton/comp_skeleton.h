@@ -16,6 +16,7 @@ struct TCompSkeleton : public TCompBase {
 	CHandle culling;
 	TCompAbsAABB * aabb;
 	TCompTransform * tmx;
+	bool first_update = false;
 
 	//Render debug
 	static float dt_frame;
