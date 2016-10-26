@@ -79,6 +79,7 @@ class bt_scientist : public bt_poss, public TCompBase {
 
 	int actual_action = IDLE;
 	float timerStunt, _timerStunt;
+	bool first_update = false;
 	//--------------------------------------
 
 	float zmin = 0.0f;

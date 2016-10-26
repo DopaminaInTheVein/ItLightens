@@ -78,6 +78,11 @@ fn parseReload = (
 	)
 )
 
+fn parsePad= (
+	parsePropAttribute XML_PARSING "only_pad" "only_pad"
+	parsePropAttribute XML_PARSING "only_keyboard" "only_keyboard"
+)
+
 ---------------------------------------------------------------------
 -- OBJECT --
 ---------------------------------------------------------------------
@@ -93,6 +98,7 @@ fn _parseObject parent = (
 		parseSlept()
 		parsePermanent()
 		parseReload()
+		parsePad()
 		
 		--Parseamos Tags
 		tags = _descriptorObject.getTags()

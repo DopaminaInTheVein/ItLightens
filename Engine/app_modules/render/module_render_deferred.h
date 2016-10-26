@@ -52,6 +52,7 @@ class CRenderDeferredModule : public IAppModule {
 
 	int xres, yres;
 	bool ssao_test = true;
+	bool generate_shadow_maps = false;
 
 	CHandle                 h_camera;
 	CHandle                 h_ui_camera;
@@ -84,7 +85,7 @@ class CRenderDeferredModule : public IAppModule {
 	void addDirectionalLightsShadows();
 	void addAmbientPass();
 	void generateShadowMaps();
-
+	void generateStaticShadowMaps();	//to generate static shadow maps
 
 	void FinalRender();
 
@@ -95,7 +96,9 @@ public:
 	void stop() override;
 	void update(float dt);
 	void render() override;
-	void generateStaticShadowMaps();	//to generate static shadow maps
+	void UpdateStaticShadowMaps() {
+		generate_shadow_maps = true; //will be put on false after generating static shadow maps
+	}
 	void renderEspVisionMode();
 	void renderEspVisionModeFor(std::string tag, VEC4 color_mask, int stencil_mask, bool use_skeleton = false);
 	void renderDetails(CRenderTechnique::eCategory type);

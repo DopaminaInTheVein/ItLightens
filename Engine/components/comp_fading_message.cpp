@@ -92,7 +92,7 @@ bool TCompFadingMessage::reload(const ReloadInfo& atts, float reloadAll)
 	VEC3 new_pos1 = min_ortho + orthorect * VEC3(0.12f, 0.09f, 0.35f);
 
 	text = Font::getVChar(lang_manager->getText(atts.text));
-	text = Font::formatVChar(text, LINE_TEXT_SIZE);
+	text = Font::formatVChar(text, NUM_CHARS_LINE);
 	permanent = atts.permanent;
 	std::string who = atts.icon;
 	ttl = timeForLetter * text.size() + 4.0f;
