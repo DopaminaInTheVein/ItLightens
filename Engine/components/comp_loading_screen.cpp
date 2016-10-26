@@ -15,6 +15,7 @@
 #include "comp_camera_main.h"
 #include "app_modules/gui/comps/gui_basic.h"
 
+#include "app_modules/gui/gui.h"
 #include <math.h>
 
 using namespace std;

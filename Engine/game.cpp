@@ -360,11 +360,11 @@ void CApp::showLoadingScreen()
 	bool is_ok;
 
 	// Entidades invariantes
-	CEntitiesModule::ParsingInfo info;
-	info.filename = level_name;
-	info.reload = reload;
-	is_ok = entities->loadXML(info);
-	assert(is_ok);
+	//CEntitiesModule::ParsingInfo info;
+	//info.filename = level_name;
+	//info.reload = reload;
+	//is_ok = entities->loadXML(info);
+	//assert(is_ok);
 
 	// Init entities
 	entities->initEntities();

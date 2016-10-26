@@ -538,10 +538,10 @@ function InitScene()
 	p:exec_command("loading_handles:destroy();", 1)
 end
 
-function OnLoadingLevel()
-	p:print("OnLoadingLevel")
-	p:show_loading_screen()
-end
+-- function OnLoadingLevel()
+	-- p:print("OnLoadingLevel")
+	-- p:show_loading_screen()
+-- end
 
 --Game Ending
 ---------------------------------------------------
