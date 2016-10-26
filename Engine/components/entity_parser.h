@@ -54,6 +54,8 @@ class CEntityParser : public CXMLParser {
 	bool curr_entity_reload;
 	bool curr_entity_slept;
 	bool curr_entity_temp;
+	bool curr_entity_pad = false;
+	bool curr_entity_keyboard = false;
 	bool first_load;
 	bool reload = false;
 	bool loading_control = false;
@@ -64,6 +66,7 @@ class CEntityParser : public CXMLParser {
 	CPrefabCompiler* curr_prefab_compiler;
 	CPrefabCompiler* curr_slept_compiler;
 	static std::set<std::string> loaded_files;
+	bool using_pad = false;
 public:
 	CEntityParser() : curr_prefab_compiler(nullptr) {}// { IdEntities::init(); }
 	CEntityParser(bool new_reload) : curr_prefab_compiler(nullptr), reload(new_reload) {}// { IdEntities::init(); }
@@ -85,12 +88,7 @@ public:
 	void setPrefabCompiler(CPrefabCompiler* new_prefab_compiler) {
 		curr_prefab_compiler = new_prefab_compiler;
 	}
-	bool xmlParseFile(const std::string &filename) override {
-		first_load = loaded_files.find(filename) == loaded_files.end();
-		bool result = CXMLParser::xmlParseFile(filename);
-		loaded_files.insert(filename);
-		return result;
-	}
+	bool xmlParseFile(const std::string &filename) override;
 	bool hasToCreate();
 	bool hasToParse(std::string elem);
 	void setLoadingControl(bool value) { loading_control = value; }

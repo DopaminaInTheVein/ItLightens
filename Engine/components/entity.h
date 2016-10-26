@@ -14,6 +14,8 @@ class CEntity : public TCompBase {
 	bool permanent;
 	bool need_reload;
 	bool temp;
+	//bool only_pad = false;
+	//bool only_keyboard = false;
 public:
 
 	void add(CHandle h) {

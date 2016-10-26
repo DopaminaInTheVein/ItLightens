@@ -1,0 +1,5 @@
+<tech is_ui="1">
+  <vs fx="ui" main="VS" decl="positions_normal_uv_tangent" />
+  <ps fx="ui" main="PS" />
+</tech>
+

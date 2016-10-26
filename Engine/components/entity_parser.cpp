@@ -93,6 +93,13 @@ CHandle createPrefab(const std::string& prefab) {
 #define MUST_ADD_COMPONENT (!curr_slept_compiler || elem == "entity" || elem == "tags" || elem == "name")
 #define MUST_COMPILE_SNOOZER (curr_slept_compiler && elem != "entity" && elem != "tags" && elem != "name")
 
+bool CEntityParser::xmlParseFile(const std::string &filename) {
+	using_pad = io->IsGamePadMode();
+	first_load = loaded_files.find(filename) == loaded_files.end();
+	bool result = CXMLParser::xmlParseFile(filename);
+	loaded_files.insert(filename);
+	return result;
+}
 void CEntityParser::onStartElement(const std::string &elem, MKeyValue &atts) {
 	if (!hasToParse(elem)) return;
 	if (curr_prefab_compiler) {
@@ -122,7 +129,8 @@ void CEntityParser::onStartElement(const std::string &elem, MKeyValue &atts) {
 		curr_entity_permanent = atts.getBool("permanent", false);
 		curr_entity_reload = atts.getBool("reload", false);
 		curr_entity_temp = atts.getBool("temp", false);
-
+		curr_entity_keyboard = atts.getBool("only_keyboard", false);
+		curr_entity_pad = atts.getBool("only_pad", false);
 		if (!hasToCreate()) {
 			curr_entity = CHandle();
 			return;
@@ -237,6 +245,8 @@ bool CEntityParser::hasToCreate()
 {
 	//if (curr_entity_permanent && !first_load) return false;
 	if (reload && !curr_entity_reload) return false;
+	if (curr_entity_keyboard && using_pad) return false;
+	if (curr_entity_pad && !using_pad) return false;
 	return true;
 }
 
