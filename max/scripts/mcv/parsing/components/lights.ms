@@ -10,7 +10,7 @@ fn _parse_light_common xml is_ldir = (
 	--In_radius
 	local near = "in_radius"
 	if is_ldir then ( near = "znear")
-	xml.addAttr  near _parsingObject.farAttenStart
+	xml.addAttr  near _parsingObject.nearAttenEnd
 	
 	--Out_radius
 	local far = "out_radius"
