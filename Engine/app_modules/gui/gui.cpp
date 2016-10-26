@@ -200,11 +200,15 @@ void CGuiModule::initTextConfig()
 	auto space_values = readIniAtrData(FONT_JSON, "space_right");
 	float size = general["size"];
 	float default_space = 1.f - space_values["default"] / size;
-	for (int i = 0; i < 256; i++) letter_sizes[i] = default_space;
+	int letter_char = 0;
+	std::string entry_fixed = "";
+	for (int i = 0; i < 256; i++) {
+		letter_sizes[i] = default_space;
+	}
 	for (auto entry : space_values) {
-		std::string entry_fixed = TextEncode::Utf8ToLatin1String(entry.first.c_str());
+		entry_fixed = TextEncode::Utf8ToLatin1String(entry.first.c_str());
 		if (entry_fixed.length() == 1) {
-			unsigned char letter_char = entry_fixed.at(0);
+			letter_char = (unsigned char)entry_fixed[0];
 			letter_sizes[letter_char] = entry.second / size;
 		}
 	}

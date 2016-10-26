@@ -200,7 +200,7 @@ void CGameController::OnLoadedLevel(bool new_level, bool load_game)
 	// Navmesh
 	if (new_level) {
 		CNavmeshManager::initNavmesh(CApp::get().getCurrentRealLevel());
-		render_deferred->generateStaticShadowMaps();
+		render_deferred->UpdateStaticShadowMaps();
 	}
 
 	char params[128];
