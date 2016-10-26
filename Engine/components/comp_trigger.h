@@ -11,8 +11,10 @@ struct TTrigger : public TCompBase {
 	TMsgTriggerOut last_msg_out;
 
 	// possession management
+	int entrance_count = 0;
 	bool possessing = false;
 	CHandle pos_handle;
+	CHandle enter;
 
 	void update(float elapsed) {
 		if (triggered) onTriggerInside(last_msg_in);
@@ -42,7 +44,9 @@ struct TTrigger : public TCompBase {
 				}
 				Debug->LogRaw("OnTriggerEnter\n");
 				last_msg_in = msg;
+				enter = msg.other;
 				triggered = true;
+				entrance_count = entrance_count + 1;
 				onTriggerEnter(last_msg_in);
 			}
 		}
@@ -57,8 +61,43 @@ struct TTrigger : public TCompBase {
 				Debug->LogRaw("OnTriggerExit\n");
 				last_msg_out = msg;
 				triggered = false;
+				entrance_count--;
 				onTriggerExit(last_msg_out);
+			} 
+		}
+		else if (possessing) {
+			possessing = false;
+			TMsgTriggerOut out_msg;
+			out_msg.other = pos_handle;
+			onTriggerExit(out_msg);
+		}
+	}
+
+	void onTriggerUnposses(const TMsgTriggerUnpossess& msg) {
+		if (entrance_count > 0) {
+			// poss controller
+			last_msg_out.other = msg.other;
+			triggered = false;
+			onTriggerExit(last_msg_out);
+			// handle which entered
+			last_msg_out.other = enter;
+			triggered = false;
+			onTriggerExit(last_msg_out);
+			// the player leaves the trigger
+			VHandles handles = tags_manager.getHandlesByTag(getID("player"));
+			for (CHandle h : handles) {
+				TMsgTriggerOut out_msg;
+				out_msg.other = h;
+				onTriggerExit(out_msg);
 			}
+			// npc
+			if (possessing) {
+				possessing = false;
+				TMsgTriggerOut out_msg;
+				out_msg.other = pos_handle;
+				onTriggerExit(out_msg);
+			}
+			entrance_count = 0;
 		}
 	}
 

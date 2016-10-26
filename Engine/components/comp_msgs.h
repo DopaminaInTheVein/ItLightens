@@ -252,6 +252,11 @@ struct TMsgTriggerOut {
 	DECLARE_MSG_ID();
 };
 
+struct TMsgTriggerUnpossess {
+	CHandle other;
+	DECLARE_MSG_ID();
+};
+
 struct TMsgPolarize {
 	CHandle handle;
 	bool range;

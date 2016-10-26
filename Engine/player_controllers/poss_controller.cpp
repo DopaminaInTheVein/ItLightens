@@ -30,6 +30,15 @@ void PossController::UpdatePossession() {
 			UpdateUnpossess();
 			onSetEnable(false);
 			logic_manager->throwEvent(logic_manager->OnUnpossess, name);
+
+			// notify all the triggers the unpossession
+			VHandles handles = tags_manager.getHandlesByTag(getID("trigger"));
+			for (CHandle h : handles) {
+				CEntity* trigger_ent = h;
+				TMsgTriggerUnpossess unpossess_msg;
+				unpossess_msg.other = myHandle;
+				trigger_ent->sendMsg(unpossess_msg);
+			}
 		}
 		else {
 			possessionCooldown -= getDeltaTime();

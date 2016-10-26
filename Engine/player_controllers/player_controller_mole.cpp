@@ -48,6 +48,8 @@ map<string, statehandler> player_controller_mole::statemap = {};
 #define ST_MOLE_PUSH_PREP "pushBoxPreparation"
 
 #define MOLE_TIME_OUT_GO_GRAB	4.f
+#define MOLE_BOX_MIN_DISTANCE	2.1f
+#define MOLE_BOX_MAX_DISTANCE	3.5f
 
 void player_controller_mole::readIniFileAttr() {
 	CHandle h = CHandle(this).getOwner();
@@ -202,7 +204,7 @@ bool player_controller_mole::UpdateMovDirection() {
 		GET_COMP(box_t, boxPushed, TCompTransform);
 		float distance_to_box = simpleDistXZ(box_t->getPosition(), getEntityTransform()->getPosition());
 
-		if (distance_to_box < 2.0f && !pulling_box) {
+		if (distance_to_box < MOLE_BOX_MIN_DISTANCE && !pulling_box) {
 			directionForward = VEC3(0, 0, 0);
 			directionLateral = VEC3(0, 0, 0);
 			directionVertical = VEC3(0, 0, 0);
@@ -266,10 +268,16 @@ void player_controller_mole::UpdateInputActions() {
 		// comprobacion de distancia
 		float distance_to_box = simpleDistXZ(box_t->getPosition(), getEntityTransform()->getPosition());
 
+		//if the box is too near of the player, we leave it
+		if (distance_to_box < MOLE_BOX_MIN_DISTANCE) {
+			LeaveBox();
+			logic_manager->throwEvent(logic_manager->OnPushBoxIdle, "");
+		}
 		//if somehow the box splits from the player, we leave it
-		if (distance_to_box > 3.5f ||
+		else if (distance_to_box > MOLE_BOX_MAX_DISTANCE ||
 			!getEntityTransform()->isHalfConeVision(box_t->getPosition(), deg2rad(10))) {
 			LeaveBox();
+			logic_manager->throwEvent(logic_manager->OnPushBoxIdle, "");
 		}
 		// pushing box
 		else if (controller->IsMoveForward()) {
@@ -283,16 +291,20 @@ void player_controller_mole::UpdateInputActions() {
 		else if (controller->IsMoveBackWard()) {
 			player_curr_speed = player_max_speed / 2.f;
 			pulling_box = true;
-			animController->setState(AST_PULL_WALK);
+			//animController->setState(AST_PULL_WALK);
+			animController->setState(AST_PUSH_WALK);
 			box_p->AddMovement(-push_pull_direction*push_box_force*player_curr_speed*getDeltaTime());
 			logic_manager->throwEvent(logic_manager->OnPushBox, "", boxGrabbed);
 		}
 		else if (controller->IsMoveLeft() || controller->IsMoveRight()) {
 			LeaveBox();
+			logic_manager->throwEvent(logic_manager->OnPushBoxIdle, "");
 		}
 		else {
 			// If we are pushing box in idle state, we just stop the sound
 			player_curr_speed = 0.f;
+			animController->setState(AST_IDLE);
+			//animController->setState(AST_PUSH_IDLE);
 			logic_manager->throwEvent(logic_manager->OnPushBoxIdle, "");
 		}
 	}
