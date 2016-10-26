@@ -27,7 +27,12 @@ fn _parse_name = (
 ----------------------------------------------------------------------
 fn parseTransform parent = (
 	local obj = _parsingObject
-	local mcv_tmx = matrixMax2MCV obj.transform -- matrix3
+	local tmx = obj.transform
+	
+	if classof _parsingObject == FreeSpot then (
+		tmx = (rotateXmatrix 90) * tmx
+	)
+	local mcv_tmx = matrixMax2MCV tmx -- matrix3
 	local t = mcv_tmx.pos
 	local q = mcv_tmx.rotationPart as quat
 	local s = mcv_tmx.scalePart
