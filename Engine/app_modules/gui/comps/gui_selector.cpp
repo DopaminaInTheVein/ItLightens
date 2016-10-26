@@ -17,7 +17,7 @@
 
 #define LEFT_EVENT "left_event"
 #define RIGHT_EVENT "right_event"
-#define COLOR_SELECTED "#FFFF00FF"
+#define COLOR_SELECTED "#0000FFFF"
 #define COLOR_NORMAL "#FFFFFFFF"
 #define COLOR_HIDDEN "#00000000"
 #define COLOR_DISABLED "#757575FF"

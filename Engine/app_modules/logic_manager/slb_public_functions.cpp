@@ -244,6 +244,10 @@ float SLBHandle::getX() {
 }
 
 float SLBHandle::getY() {
+	if (!real_handle.isValid()) {
+		assert(false);
+		return 0.f;
+	}
 	CEntity* entity = real_handle;
 	// if it has entity_controller, we get the coord from there
 	TCompCharacterController* entity_controller = entity->get<TCompCharacterController>();
