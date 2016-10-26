@@ -1,7 +1,7 @@
 ﻿function OnStart_title( )
 	ui_cam:fade_in(2)
 	p:pause_game()
-	p:putText("title_text","It Lightens",0.3,0.6,"#FF0000FF",0.6,"#0000FFFF",3.5,0.2)
+	--p:putText("title_text","It Lightens",0.3,0.6,"#FF0000FF",0.6,"#0000FFFF",3.5,0.2)
 	p:clear_save()
 	p:play_music("event:/OnMenuMusic", 0.4)
 end
