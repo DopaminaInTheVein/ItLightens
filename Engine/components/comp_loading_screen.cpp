@@ -28,8 +28,6 @@ bool TCompLoadingScreen::load(MKeyValue& atts)
 void TCompLoadingScreen::onCreate() {
 }
 
-#define updateLoadingHandle(h, tag) if (!h.isValid()) h = tags_manager.getFirstHavingTag(tag)
-
 void TCompLoadingScreen::updateHandle(CHandle &h, std::string tag) {
 	if (!h.isValid()) h = tags_manager.getFirstHavingTag(tag);
 }

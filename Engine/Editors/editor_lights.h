@@ -125,6 +125,7 @@ public:
 
 	bool HideLight(CHandle h);
 	LightTemplate bool HideLight(CEntity* e);
+	LightTemplate bool HideLight(CHandle);
 
 	//void SetRenderDebug(bool value, std::vector<CHandle> v_lights, std::vector<TypeLight> v_types);
 	LightTemplate void SetRenderDebug(bool value);
@@ -140,6 +141,7 @@ public:
 	void RenderAllLights();
 	void RenderMultiEdit();
 	void DestroySelected();
+	void HideSelected();
 
 	void RenderLightList(VHandles& lights, VTypeLights& types, bool temporal, LightList& list);
 

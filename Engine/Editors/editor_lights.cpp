@@ -148,6 +148,9 @@ void CEditorLights::RenderMultiEdit()
 			if (ImGui::Button("Destroy Selected")) {
 				DestroySelected(); //peta el imgui por alguna razon
 			}
+			if (ImGui::Button("Hide Selected")) {
+				HideSelected(); //peta el imgui por alguna razon
+			}
 		}
 		else if (multi_editing == EDITING) {
 			if (ImGui::Button("Apply")) {
@@ -170,11 +173,19 @@ void CEditorLights::DestroySelected()
 {
 	for (auto hlight : m_Lights) {
 		if (IsSelected(hlight)) {
-			hlight.destroy();//if (hlight.isValid()) hlight.getOwner().destroy();
+			if (hlight.isValid()) hlight.getOwner().destroy();
 		}
 	}
 	for (auto hlight : m_LightsTemp) {
 		if (IsSelected(hlight))  hlight.destroy();//if (hlight.isValid()) hlight.getOwner().destroy();
+	}
+}
+void CEditorLights::HideSelected()
+{
+	for (auto hlight : m_Lights) {
+		if (IsSelected(hlight)) {
+			EACH__LIGHT__(HideLight, (hlight););
+		}
 	}
 }
 
@@ -366,6 +377,13 @@ bool CEditorLights::HideLight(CEntity* e)
 {
 	TLight* l = e->get<TLight>();
 	if (l) l->enabled = !l->enabled;
+	return l;
+}
+LightTemplate
+bool CEditorLights::HideLight(CHandle h)
+{
+	TLight* l = h;
+	if (l) l->enabled = false;
 	return l;
 }
 
