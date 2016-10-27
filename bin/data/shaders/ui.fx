@@ -153,6 +153,24 @@ float4 PSFont(
 }
 
 
+float4 PSBar(
+  in float4 iPosition : SV_Position
+  , in float2 iTex0 : TEXCOORD0
+) : SV_Target
+{
+  float4 result = txDiffuse.Sample(samLinear, iTex0);
+  //result.a = 0;
+ // result.rgb *= float3(1,0.7,0.7);
+  //if(result.a > 0.01f){
+		//float life_normalized = current_life_player/max_life_player;
+		//result.a = 1 - result.a;
+		result.a = step(result.a, state_ui);
+  //}
+  //return float4(1,1,1,1);
+  return result;
+  
+  //return txDiffuse.Sample(samLinear, iTex0);
+}
 
 
 float4 PSHealthBar(
