@@ -1,33 +1,19 @@
 <entities>
 <entity>
-<tags/>
-<name
-   name="Fading_Letter"/>
-<transform
-   pos="4.95482 -97.1774 8.73191"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ui/messages/Fading_Letter.static_mesh"
-   static="true"/>
-<abs_aabb/>
-
-</entity>
-<entity>
 <tags
    tags="ui_pol_e gui"/>
 <gui
    menu_name="player_hud"
-   width="1.43346"
-   height="1.43346"/>
+   width="1.37079"
+   height="1.37079"/>
 <name
    name="polq"/>
 <transform
-   pos="9.27864 -97.4272 6.91231"
+   pos="9.27498 -97.2334 6.91231"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ui/hud/pol_e.static_mesh"
+   name="static_meshes/ui/player_hud/polq.static_mesh"
    static="false"/>
 <abs_aabb/>
 
@@ -37,31 +23,17 @@
    tags="ui_pol_q gui"/>
 <gui
    menu_name="player_hud"
-   width="1.43346"
-   height="1.43346"/>
+   width="1.29558"
+   height="1.29558"/>
 <name
    name="pole"/>
 <transform
-   pos="0.716568 -97.4272 6.91231"
+   pos="0.69838 -97.2334 6.91231"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ui/hud/pol_q.static_mesh"
+   name="static_meshes/ui/player_hud/pole.static_mesh"
    static="false"/>
-<abs_aabb/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="marco_pantalla"/>
-<transform
-   pos="5.0 -95.0 6.63343"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ui/player_hud/marco_pantalla.static_mesh"
-   static="true"/>
 <abs_aabb/>
 
 </entity>
@@ -70,7 +42,7 @@
 <name
    name="lifebar_out"/>
 <transform
-   pos="1.14442 -92.4444 6.71892"
+   pos="1.30764 -92.9796 6.71921"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -84,7 +56,7 @@
 <name
    name="lifebar_back"/>
 <transform
-   pos="1.14442 -92.4444 6.69197"
+   pos="1.30764 -92.9796 6.69591"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -94,16 +66,21 @@
 
 </entity>
 <entity>
-<tags/>
+<tags
+   tags="gui"/>
+<gui
+   menu_name="player_hud"
+   width="1.84311"
+   height="1.84311"/>
 <name
-   name="lifebar_inner"/>
+   name="health_bar_inner"/>
 <transform
-   pos="1.14442 -92.4444 6.70541"
+   pos="1.20412 -92.9796 6.70752"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ui/player_hud/lifebar_inner.static_mesh"
-   static="true"/>
+   name="static_meshes/ui/player_hud/health_bar_inner.static_mesh"
+   static="false"/>
 <abs_aabb/>
 
 </entity>
@@ -112,18 +89,60 @@
    tags="gui"/>
 <gui
    menu_name="player_hud"
-   width="1.34055"
-   height="1.34055"
+   width="1.11558"
+   height="1.11559"
    lang="yes"/>
 <name
    name="lifebar_charge_name"/>
 <transform
-   pos="0.60205 -93.0154 6.7676"
+   pos="0.838822 -93.4933 6.76128"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/ui/player_hud/lifebar_charge_name.static_mesh"
    static="false"/>
+<abs_aabb/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="retrato"/>
+<transform
+   pos="2.22436 -96.7306 6.86634"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ui/player_hud/retrato.static_mesh"
+   static="true"/>
+<abs_aabb/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="marco3"/>
+<transform
+   pos="5.0 -95.0 5.70667"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ui/player_hud/marco3.static_mesh"
+   static="true"/>
+<abs_aabb/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="bocadillo001"/>
+<transform
+   pos="5.57049 -96.8406 6.84133"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ui/player_hud/bocadillo001.static_mesh"
+   static="true"/>
 <abs_aabb/>
 
 </entity>

@@ -1,0 +1,3 @@
+<static_mesh>
+  <slot mesh="meshes/ui/player_hud/pole.mesh" material="materials/ui/player_hud/hud_tech_ui_polarity_q.material"/>
+</static_mesh>

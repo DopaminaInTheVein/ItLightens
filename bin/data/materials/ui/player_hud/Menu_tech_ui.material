@@ -1,0 +1,3 @@
+<material tech="ui.tech">
+<texture slot="diffuse" name="textures/suelo_albedo.dds"/>
+</material>

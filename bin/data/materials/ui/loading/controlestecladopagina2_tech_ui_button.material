@@ -1,0 +1,3 @@
+<material tech="ui_button.tech">
+<texture slot="diffuse" name="textures/controlespagina2teclado.dds"/>
+</material>

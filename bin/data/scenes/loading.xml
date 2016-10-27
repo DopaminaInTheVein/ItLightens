@@ -29,8 +29,7 @@
 <abs_aabb/>
 
 </entity>
-<entity
-   only_pad="yes">
+<entity>
 <tags
    tags="loading"/>
 <name
@@ -61,7 +60,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ui/loading/controlesmandos1.static_mesh"
+   name="static_meshes/ui/loading/controlesmandospagina2.static_mesh"
    static="false"/>
 <abs_aabb/>
 
@@ -72,7 +71,7 @@
 <name
    name="pila"/>
 <transform
-   pos="8.63346 -97.1112 9.69503"
+   pos="8.63346 -97.1112 9.68961"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -83,16 +82,20 @@
 </entity>
 <entity>
 <tags
-   tags="loading"/>
+   tags="loading gui"/>
+<gui
+   menu_name="loading"
+   width="1.44594"
+   height="1.44594"/>
 <name
    name="piladelante"/>
 <transform
-   pos="8.63346 -97.1112 9.7751"
+   pos="8.63346 -97.1112 9.90196"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/ui/loading/piladelante.static_mesh"
-   static="true"/>
+   static="false"/>
 <abs_aabb/>
 
 </entity>
@@ -107,7 +110,7 @@
 <name
    name="loadingpalabra"/>
 <transform
-   pos="8.38044 -97.4308 9.84626"
+   pos="8.38044 -97.4308 9.95977"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -118,31 +121,39 @@
 </entity>
 <entity>
 <tags
-   tags="loading"/>
+   tags="loading gui"/>
+<gui
+   menu_name="loading"
+   width="1.79808"
+   height="1.79808"/>
 <name
-   name="loading_bar"/>
+   name="loadingfondo"/>
 <transform
    pos="8.62052 -97.1427 9.57935"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ui/loading/Plane002.static_mesh"
-   static="true"/>
+   name="static_meshes/ui/loading/loadingfondo.static_mesh"
+   static="false"/>
 <abs_aabb/>
 
 </entity>
 <entity>
 <tags
-   tags="loading"/>
+   tags="loading loading_bar gui"/>
+<gui
+   menu_name="loading"
+   width="1.44594"
+   height="1.44594"/>
 <name
-   name="pilarelleno"/>
+   name="loading_bar"/>
 <transform
-   pos="8.63346 -97.1112 9.73881"
+   pos="8.63346 -97.1112 9.79518"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ui/loading/piladelante.static_mesh"
-   static="true"/>
+   name="static_meshes/ui/loading/loading_bar.static_mesh"
+   static="false"/>
 <abs_aabb/>
 
 </entity>
@@ -162,7 +173,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ui/loading/controlesmandos1.static_mesh"
+   name="static_meshes/ui/loading/controlesmandospagina1.static_mesh"
    static="false"/>
 <abs_aabb/>
 
@@ -183,7 +194,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ui/loading/controlesmandos1.static_mesh"
+   name="static_meshes/ui/loading/controlesteclado.static_mesh"
    static="false"/>
 <abs_aabb/>
 
@@ -204,7 +215,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ui/loading/controlesmandos1.static_mesh"
+   name="static_meshes/ui/loading/controlesteclado2.static_mesh"
    static="false"/>
 <abs_aabb/>
 

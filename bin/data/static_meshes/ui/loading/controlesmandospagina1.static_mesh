@@ -1,0 +1,3 @@
+<static_mesh>
+  <slot mesh="meshes/ui/loading/controlesmandospagina1.mesh" material="materials/ui/loading/controlesmandopagina1_tech_ui_button.material"/>
+</static_mesh>

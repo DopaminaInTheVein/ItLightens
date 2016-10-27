@@ -48,7 +48,7 @@
 <name
    name="opt_lang"/>
 <transform
-   pos="4.92146 -92.9774 6.08875"
+   pos="7.21628 -93.946 6.08875"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -70,7 +70,7 @@
 <name
    name="opt_diff"/>
 <transform
-   pos="4.92146 -93.572 6.08875"
+   pos="7.21628 -93.0153 6.08875"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -92,7 +92,7 @@
 <name
    name="opt_music"/>
 <transform
-   pos="4.92146 -94.6352 6.08875"
+   pos="7.21628 -96.7922 6.08875"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -114,33 +114,11 @@
 <name
    name="opt_sfx"/>
 <transform
-   pos="4.92146 -95.0957 6.08875"
+   pos="7.21628 -95.8291 6.08875"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/ui/options/opt_sfx.static_mesh"
-   static="false"/>
-<abs_aabb/>
-
-</entity>
-<entity>
-<tags
-   tags="options gui gui_selector"/>
-<gui
-   menu_name="options"
-   row="4"
-   col="0"
-   width="3.13228"
-   height="0.154205"/>
-<gui_selector/>
-<name
-   name="opt_axisX"/>
-<transform
-   pos="4.92146 -96.33 6.08875"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ui/options/opt_axysX.static_mesh"
    static="false"/>
 <abs_aabb/>
 
@@ -158,11 +136,11 @@
 <name
    name="opt_axisY"/>
 <transform
-   pos="4.92146 -96.9728 6.08875"
+   pos="7.21628 -94.8719 6.08875"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ui/options/opt_axysY.static_mesh"
+   name="static_meshes/ui/options/opt_axisY.static_mesh"
    static="false"/>
 <abs_aabb/>
 
@@ -179,6 +157,49 @@
 <render_static_mesh
    name="static_meshes/ui/options/background_optioooons.static_mesh"
    static="true"/>
+<abs_aabb/>
+
+</entity>
+<entity>
+<tags
+   tags="options gui gui_button clickable"/>
+<gui
+   menu_name="options"
+   row="10"
+   col="0"
+   width="2.0"
+   height="2.0"
+   lang="yes"/>
+<gui_button/>
+<name
+   name="btn_opt_back"/>
+<transform
+   pos="1.24535 -97.2352 6.80901"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ui/options/btn_opt_back.static_mesh"
+   static="false"/>
+<abs_aabb/>
+
+</entity>
+<entity>
+<tags
+   tags="options gui"/>
+<gui
+   menu_name="options"
+   width="4.2236"
+   height="4.2236"
+   lang="yes"/>
+<name
+   name="optionsmaes"/>
+<transform
+   pos="3.41469 -94.9464 6.03135"
+   quat="0.707107 0 0 0.707107"
+   scale="0.844719"/>
+<render_static_mesh
+   name="static_meshes/ui/options/optionsmaes.static_mesh"
+   static="false"/>
 <abs_aabb/>
 
 </entity>

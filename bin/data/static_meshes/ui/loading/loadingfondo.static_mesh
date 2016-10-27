@@ -1,0 +1,3 @@
+<static_mesh>
+  <slot mesh="meshes/ui/loading/loadingfondo.mesh" material="materials/ui/loading/fondo_bateria_tech_ui.material"/>
+</static_mesh>
