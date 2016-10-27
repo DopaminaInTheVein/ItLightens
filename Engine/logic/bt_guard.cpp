@@ -966,8 +966,8 @@ bool bt_guard::rayCastToTransform(int types, float& distRay, PxRaycastBuffer& hi
 	direction.Normalize();
 	float dist = DIST_RAYSHOT;
 	//rcQuery.types = types;
-	if (DEBUG_CODE)	Debug->DrawLine(origin + direction*(my_cc->GetRadius() + 0.075f), 10.0f, my_tmx->getFront());
-	bool ret = g_PhysxManager->raycast(origin + direction*(my_cc->GetRadius() + 0.075f), direction, dist, hit);
+	if (DEBUG_CODE)	Debug->DrawLine(origin + direction*(my_cc->GetRadius() + 0.0001f), 10.0f, my_tmx->getFront());
+	bool ret = g_PhysxManager->raycast(origin + direction*(my_cc->GetRadius() + 0.0001f), direction, dist, hit);
 
 	if (ret)
 		distRay = hit.getAnyHit(0).distance;

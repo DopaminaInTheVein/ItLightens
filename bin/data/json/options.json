@@ -16,14 +16,14 @@
         "x-axis_inverted": 0.0
     },
     "language": {
-        "lang": "ES"
+        "lang": "EN"
     },
     "game": {
         "difficulty": 0.0
     },
     "sound": {
-        "sfx": 0.385998010635376,
-        "music": 0.20721499621868137,
+        "sfx": 1.0,
+        "music": 0.561843991279602,
         "MAX_DISTANCE": 20.0
     }
 }
