@@ -32,7 +32,7 @@ private:
 	float scale = 0.14f;
 	float letterBoxSize = 1.0f / 16.0f;
 	float letterSpacer = 0.3f / 16.0f;
-	float letterSpacerHigh = scale * 1.25f;
+	float letterSpacerHigh = scale * 1.3f;
 	bool partialReload;
 
 	Font::VCharacter text;

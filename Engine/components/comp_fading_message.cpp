@@ -38,6 +38,9 @@ void TCompFadingMessage::Init() {
 	gui_letters.resize(TOTAL_CHAR);
 	for (int i = 0; i < TOTAL_CHAR; ++i) {
 		gui_letters[i] = Gui->addGuiElement("ui/Fading_Letter", VEC3(0.0f, -1.0, 0.31f), "", scale);
+		GET_COMP(l_gui, gui_letters[i], TCompGui);
+		GET_MY(my_gui, TCompGui);
+		if (l_gui && my_gui) l_gui->SetParent(my_gui);
 	}
 	initialized = true;
 

@@ -347,6 +347,13 @@ void CRenderManager::renderList(CHandle h_camera, CRenderTechnique::eCategory ca
 	// Pasearse por todas las keys
 	while (it != end_it) {
 		PROFILE_FUNCTION("Render Manager each");
+		TCompRenderStaticMesh* stMesh = it->owner;
+
+		assert(!it->owner.isValid() || stMesh);
+		if (stMesh && stMesh->IsHidden()) {
+			++it;
+			continue;
+		}
 		// Do the culling
 		//GET_COMP(tentroom, it->owner.getOwner(), TCompRoom);
 		//if (tentroom) it->room = tentroom->getRoom();
