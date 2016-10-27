@@ -81,7 +81,7 @@ void SkelControllerMole::ungrabPila()
 	grabbedPila.sendMsg(msg);
 	pila->setFalling();
 	grabbedPila = CHandle();
-	//disableIK(SK_LHAND, SK_MOLE_TIME_TO_UNGRAB, ungrabbed);
+	//disableIK(SK_RHAND, SK_MOLE_TIME_TO_UNGRAB, ungrabbed);
 	//(SK_RHAND, SK_MOLE_TIME_TO_UNGRAB, );
 }
 

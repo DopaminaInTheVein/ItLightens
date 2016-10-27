@@ -92,7 +92,7 @@ void TCompPila::StartFalling()
 void TCompPila::Falling()
 {
 	auto phys = keepVertical();
-	phys->AddMovement(VEC3(0.f, getDeltaTime() * -5.f, 0.f));
+	phys->AddMovement(VEC3(0.f, getDeltaTime() * -2.f, 0.f));
 }
 
 void TCompPila::onContact(const TMsgContact& msg)
