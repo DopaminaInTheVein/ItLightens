@@ -1,0 +1,4 @@
+<material tech="deferred.tech">
+<texture slot="diffuse" name="textures/rayo.dds"/>
+<texture slot="selfilum" name="textures/rayosi.dds"/>
+</material>
