@@ -145,7 +145,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ui/loading/piladelante.static_mesh"
+   name="static_meshes/ui/loading/loading_bar.static_mesh"
    static="false"/>
 <abs_aabb/>
 
