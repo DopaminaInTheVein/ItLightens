@@ -208,7 +208,7 @@
 <tags/>
 <sound
    event="OnFluoriscent"
-   volume="0.25"/>
+   volume="0.1"/>
 <name
    name="wall_lamp_sound21"/>
 <transform
@@ -222,7 +222,7 @@
 <tags/>
 <sound
    event="OnFluoriscent"
-   volume="0.25"/>
+   volume="0.1"/>
 <name
    name="wall_lamp_sound01"/>
 <transform
@@ -236,7 +236,7 @@
 <tags/>
 <sound
    event="OnFluoriscent"
-   volume="0.25"/>
+   volume="0.1"/>
 <name
    name="wall_lamp_sound02"/>
 <transform
@@ -250,7 +250,7 @@
 <tags/>
 <sound
    event="OnFluoriscent"
-   volume="0.25"/>
+   volume="0.1"/>
 <name
    name="wall_lamp_sound03"/>
 <transform
@@ -264,7 +264,7 @@
 <tags/>
 <sound
    event="OnFluoriscent"
-   volume="0.25"/>
+   volume="0.1"/>
 <name
    name="wall_lamp_sound04"/>
 <transform
@@ -278,7 +278,7 @@
 <tags/>
 <sound
    event="OnFluoriscent"
-   volume="0.25"/>
+   volume="0.1"/>
 <name
    name="wall_lamp_sound05"/>
 <transform
@@ -292,7 +292,7 @@
 <tags/>
 <sound
    event="OnFluoriscent"
-   volume="0.25"/>
+   volume="0.1"/>
 <name
    name="wall_lamp_sound06"/>
 <transform
@@ -306,7 +306,7 @@
 <tags/>
 <sound
    event="OnFluoriscent"
-   volume="0.25"/>
+   volume="0.1"/>
 <name
    name="wall_lamp_sound07"/>
 <transform
@@ -320,7 +320,7 @@
 <tags/>
 <sound
    event="OnFluoriscent"
-   volume="0.25"/>
+   volume="0.1"/>
 <name
    name="wall_lamp_sound08"/>
 <transform
@@ -334,7 +334,7 @@
 <tags/>
 <sound
    event="OnFluoriscent"
-   volume="0.25"/>
+   volume="0.1"/>
 <name
    name="wall_lamp_sound09"/>
 <transform
@@ -348,7 +348,7 @@
 <tags/>
 <sound
    event="OnFluoriscent"
-   volume="0.25"/>
+   volume="0.1"/>
 <name
    name="wall_lamp_sound10"/>
 <transform
@@ -362,7 +362,7 @@
 <tags/>
 <sound
    event="OnFluoriscent"
-   volume="0.25"/>
+   volume="0.1"/>
 <name
    name="wall_lamp_sound11"/>
 <transform
@@ -376,7 +376,7 @@
 <tags/>
 <sound
    event="OnFluoriscent"
-   volume="0.25"/>
+   volume="0.1"/>
 <name
    name="wall_lamp_sound12"/>
 <transform
@@ -390,7 +390,7 @@
 <tags/>
 <sound
    event="OnFluoriscent"
-   volume="0.25"/>
+   volume="0.1"/>
 <name
    name="wall_lamp_sound13"/>
 <transform
@@ -404,7 +404,7 @@
 <tags/>
 <sound
    event="OnFluoriscent"
-   volume="0.25"/>
+   volume="0.1"/>
 <name
    name="wall_lamp_sound14"/>
 <transform
@@ -418,7 +418,7 @@
 <tags/>
 <sound
    event="OnFluoriscent"
-   volume="0.25"/>
+   volume="0.1"/>
 <name
    name="wall_lamp_sound15"/>
 <transform
@@ -432,7 +432,7 @@
 <tags/>
 <sound
    event="OnFluoriscent"
-   volume="0.25"/>
+   volume="0.1"/>
 <name
    name="wall_lamp_sound16"/>
 <transform
@@ -446,7 +446,7 @@
 <tags/>
 <sound
    event="OnFluoriscent"
-   volume="0.25"/>
+   volume="0.1"/>
 <name
    name="wall_lamp_sound17"/>
 <transform
@@ -460,7 +460,7 @@
 <tags/>
 <sound
    event="OnFluoriscent"
-   volume="0.25"/>
+   volume="0.1"/>
 <name
    name="wall_lamp_sound18"/>
 <transform
@@ -474,7 +474,7 @@
 <tags/>
 <sound
    event="OnFluoriscent"
-   volume="0.25"/>
+   volume="0.1"/>
 <name
    name="wall_lamp_sound19"/>
 <transform
@@ -488,7 +488,7 @@
 <tags/>
 <sound
    event="OnFluoriscent"
-   volume="0.25"/>
+   volume="0.1"/>
 <name
    name="wall_lamp_sound20"/>
 <transform
