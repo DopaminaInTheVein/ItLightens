@@ -182,15 +182,19 @@ float2 getRandom(in float2 uv)
 	return (rnd.xy/rnd.wz);
 }
 
-float doAmbientOcclusion(in float2 tcoord,in float2 uv, in float3 p, in float3 cnorm)
+float doAmbientOcclusion(in float2 tcoord,in float2 uv, in float3 p, in float3 cnorm, float z)
 {
+	float2 pos_offset = tcoord + uv;
 	float3 diff = getPosition(tcoord + uv) - p;
+	
+	int3 ss_load_coords = int3(pos_offset.xy,0);
+	float  new_z = txDepths.Load(ss_load_coords).x;
+	
 	const float3 v = normalize(diff);
 	float d = length(diff)*g_scale ;
-
 	
 	//return v;
-	return max(0.0,dot(cnorm,v)-g_bias)*(1.0/(1.0+d))*g_intensity;
+	return max(0.0,dot(cnorm,v)-g_bias)*(1.0/(1.0+d))*g_intensity/(1+abs(new_z-z)*7000);
 }
 
 float4 PSInv(float4 Pos : SV_POSITION
@@ -224,10 +228,10 @@ float4 PSInv(float4 Pos : SV_POSITION
 		  float2 coord2 = float2(coord1.x*0.707 - coord1.y*0.707,
 					  coord1.x*0.707 + coord1.y*0.707);
 		  
-		  ao += doAmbientOcclusion(Pos.xy,coord1*0.25, p, n);
-		  ao += doAmbientOcclusion(Pos.xy,coord2*0.5, p, n);
-		  ao += doAmbientOcclusion(Pos.xy,coord1*0.75, p, n);
-		  ao += doAmbientOcclusion(Pos.xy,coord2, p, n);
+		  ao += doAmbientOcclusion(Pos.xy,coord1*0.25, p, n, z);
+		  ao += doAmbientOcclusion(Pos.xy,coord2*0.5, p, n, z);
+		  ao += doAmbientOcclusion(Pos.xy,coord1*0.75, p, n, z);
+		  ao += doAmbientOcclusion(Pos.xy,coord2, p, n, z);
 	}
 	ao/=(float)iterations*4.0;
 	
@@ -269,10 +273,10 @@ float4 PS(float4 Pos : SV_POSITION
 		  float2 coord2 = float2(coord1.x*0.707 - coord1.y*0.707,
 					  coord1.x*0.707 + coord1.y*0.707);
 		  
-		  ao += doAmbientOcclusion(Pos.xy,coord1*0.25, p, n);
-		  ao += doAmbientOcclusion(Pos.xy,coord2*0.5, p, n);
-		  ao += doAmbientOcclusion(Pos.xy,coord1*0.75, p, n);
-		  ao += doAmbientOcclusion(Pos.xy,coord2, p, n);
+		  ao += doAmbientOcclusion(Pos.xy,coord1*0.25, p, n, z);
+		  ao += doAmbientOcclusion(Pos.xy,coord2*0.5, p, n, z);
+		  ao += doAmbientOcclusion(Pos.xy,coord1*0.75, p, n, z);
+		  ao += doAmbientOcclusion(Pos.xy,coord2, p, n, z);
 	}
 	ao/=(float)iterations*4.0;
 	
