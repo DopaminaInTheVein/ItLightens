@@ -50,7 +50,12 @@ void CLogicManagerModule::update(float dt) {
 			command_it->execution_time -= dt;
 		}
 		if (command_it->execution_time < 0.f) {
-			slb_script.doString(command_it->code);
+			try {
+				slb_script.doString(command_it->code);
+			}
+			catch (std::exception e) {
+				dbg("Lua exception: %s\n", e.what());
+			}
 			command_it = command_queue.erase(command_it);
 		}
 		else {

@@ -507,8 +507,8 @@ end
 ---------------------------------------------------
 function OnLevelStart( logic_level, real_level )
 	p:print("OnLevelStart\n")
-	InitScene()
-	p:exec_command("CallFunction(\"OnStart_"..real_level.."\");", 1.1)
+	g_new_level = true
+	SceneLoaded()
 end
 
 function OnSavedLevel( logic_level, real_level )
@@ -518,8 +518,18 @@ end
 
 function OnLoadedLevel( logic_level, real_level )
 	p:print("OnLoadedLevel")
-	InitScene()
-	p:exec_command("CallFunction(\"OnLoad_"..real_level.."\");", 1.1)
+	g_new_level = false
+	SceneLoaded()
+end
+
+function SceneLoaded( )
+	if g_loading_screen then
+		--p:exit_game()
+		p:putText("loading_skip", "Press *ACTION*",0.3, 0.6, "#0000FFFF", 0.4, "#0000FFFF",-1, -1)
+		--p:exec_command("InitScene()", 5.0)
+	else
+		InitScene()
+	end
 end
 
 loading_handles = HandleGroup()
@@ -542,15 +552,22 @@ function PrepareScene()
 	loading_handles:get_handles_by_tag("loading")
 	loading_handles:destroy()
 	p:resume_game()
+	if g_new_level then
+		p:exec_command("CallFunction(\"OnStart_"..real_level.."\");", 1.1)
+	else
+		p:exec_command("CallFunction(\"OnLoad_"..real_level.."\");", 1.1)
+	end
 end
 
 function OnLoadingLevel(level)
 	p:print("OnLoadingLevel")
+	g_loading_screen = false
 	if not g_restarting  then
 		local ok = CallFunction("OnLoading_"..level)
 		if not ok then 
 			ui_cam:fade_in(0.1)
 			p:load_entities("loading")
+			g_loading_screen = true
 		end
 	end
 end
