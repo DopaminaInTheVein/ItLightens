@@ -9,6 +9,7 @@
 
 #include "components/entity.h"
 #include "components/entity_tags.h"
+#include "components/comp_loading_screen.h"
 #include "app_modules/render/module_render_deferred.h"
 #include "app_modules/navmesh/navmesh_manager.h"
 
@@ -62,6 +63,14 @@ void CGameController::SetLoadingState(float state) {
 void CGameController::AddLoadingState(float delta) {
 	loading_state += delta;
 	CApp::get().SetLoadingState(loading_state);
+}
+void CGameController::InitLoadingMenu()
+{
+	loading_state = 0;
+	if (h_game_controller.isValid()) {
+		GET_COMP(loading_comp, h_game_controller, TCompLoadingScreen);
+		if (loading_comp) loading_comp->init();
+	}
 }
 
 void CGameController::TogglePauseState() {

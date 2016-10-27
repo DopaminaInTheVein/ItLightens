@@ -34,6 +34,9 @@ void TCompLoadingScreen::updateHandle(CHandle &h, std::string tag) {
 	if (!h.isValid()) h = tags_manager.getFirstHavingTag(tag);
 }
 void TCompLoadingScreen::update(float dt) {
+	// update loading_value;
+	loading_value = GameController->GetLoadingState();
+
 	updateHandle(h_loading_bar, "loading_bar");
 	updateHandle(h_pag1, "loading_pag1");
 	updateHandle(h_pag2, "loading_pag2");
@@ -44,8 +47,6 @@ void TCompLoadingScreen::update(float dt) {
 
 	tooglePages();
 
-	// update loading_value;
-	loading_value = GameController->GetLoadingState();
 	if (loading_value >= 100.f) {
 		GameController->LoadComplete(true);
 	}

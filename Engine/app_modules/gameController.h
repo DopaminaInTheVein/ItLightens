@@ -58,6 +58,7 @@ public:
 	void SetLoadingState(float state);
 	void AddLoadingState(float delta);
 	bool IsLoadingState() { return loading; }
+	void InitLoadingMenu();
 	void LoadComplete(bool complete) {
 		loading = !complete;
 		if (complete)

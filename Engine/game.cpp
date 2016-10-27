@@ -353,6 +353,9 @@ void CApp::showLoadingScreen()
 	// Restart Timers LUA
 	logic_manager->resetTimers();
 
+	// Reset Loading
+	GameController->InitLoadingMenu();
+
 	//
 	bool reload = next_level == current_level;
 	if (!reload) CEntityParser::clearCollisionables();
