@@ -1684,7 +1684,7 @@
 <name
    name="cargador_bateria"/>
 <transform
-   pos="-90.841 -0.915813 14.459"
+   pos="-90.841 -0.409953 14.459"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
