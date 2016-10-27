@@ -230,7 +230,9 @@ void player_controller_mole::UpdateInputActions() {
 			else ChangeState(ST_MOLE_UNPILA);
 		}
 		else {
-			if (this->nearToPila()) {
+			bool nearToPila = this->nearToPila();
+			//GET_COMP(pilaComp, pilaNear, TCompPila);
+			if (nearToPila && !this->nearToPilaContainerWithPilaCharged()){//!pilaComp->isCharged()) {
 				float pitch_dummy;
 				getYawPitchFromVector(grabInfo.dir_to_grab, &grabInfo.yaw, &pitch_dummy);
 				inputEnabled = false;
@@ -560,6 +562,27 @@ bool player_controller_mole::nearToPilaContainer() {
 		if (distY(myPos, containerPos) < 5.f) {
 			float disttowpt = simpleDistXZ(containerPos, getEntityTransform()->getPosition());
 			if (disttowpt < distMax) {
+				pilaContainer = h;
+				pilaContainerPos = containerPos;
+			}
+		}
+	}
+	return pilaContainer.isValid();
+}
+
+bool player_controller_mole::nearToPilaContainerWithPilaCharged() {
+	float distMax = 4.f;
+	pilaContainer = CHandle();
+	for (auto h : TCompPilaContainer::all_pila_containers) {
+		if (!h.isValid()) continue;
+		GET_COMP(tContainer, h, TCompTransform);
+		GET_COMP(pContainer, h, TCompPilaContainer);
+		VEC3 containerPos = tContainer->getPosition();
+		VEC3 myPos = transform->getPosition();
+		if (distY(myPos, containerPos) < 5.f) {
+			float disttowpt = simpleDistXZ(containerPos, getEntityTransform()->getPosition());
+
+			if (disttowpt < distMax && pContainer->HasPilaChargedAndInterruptor()) {
 				pilaContainer = h;
 				pilaContainerPos = containerPos;
 			}

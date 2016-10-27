@@ -96,6 +96,7 @@ public:
 	bool nearToBox();
 	bool nearToPila();
 	bool nearToPilaContainer();
+	bool nearToPilaContainerWithPilaCharged();
 	bool nearToWall();
 
 	void GoToPilaContainer();

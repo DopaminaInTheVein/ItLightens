@@ -13,6 +13,7 @@ struct TCompPilaContainer : public TCompBase {
 	void PutPila(CHandle, bool notify = true);
 	void RemovePila();
 	bool HasPila();
+	bool HasPilaChargedAndInterruptor();
 	bool HasPilaCharged();
 	void onRecharge(const TMsgSetCharged&);
 };

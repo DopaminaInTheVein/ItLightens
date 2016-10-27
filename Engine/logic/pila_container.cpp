@@ -50,6 +50,18 @@ bool TCompPilaContainer::HasPilaCharged() {
 	return false;
 }
 
+bool TCompPilaContainer::HasPilaChargedAndInterruptor() {
+	CEntity* e = CHandle(this).getOwner();
+	int id = e->getId();
+
+	if (pila.isValid()) {
+		TMsgIsCharged msg;
+		pila.sendMsgWithReply(msg);
+		return msg.charged && id == 304;
+	}
+	return false;
+}
+
 void TCompPilaContainer::onRecharge(const TMsgSetCharged& msg) {
 	if (pila.isValid()) {
 		assert(msg.charged || fatal("Cannot empty the cell! (not supported)\n"));

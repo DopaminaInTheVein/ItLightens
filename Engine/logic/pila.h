@@ -43,6 +43,7 @@ struct TCompPila : public aicontroller, public TTriggerLua {
 	void Grab();
 	void onRecharge(const TMsgActivate&);
 	void isCharged(TMsgIsCharged&);
+	bool isCharged() const { return charged; };
 };
 
 #endif
