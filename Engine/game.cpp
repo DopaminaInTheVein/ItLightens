@@ -360,12 +360,6 @@ void CApp::showLoadingScreen()
 
 	// Entidades invariantes
 	logic_manager->throwEvent(CLogicManagerModule::EVENT::OnLoadingLevel, getRealLevel(next_level));
-	//std::string level_name = "loading";
-	//CEntitiesModule::ParsingInfo info;
-	//info.filename = level_name;
-	//info.reload = reload;
-	//is_ok = entities->loadXML(info);
-	//assert(is_ok);
 
 	// Init entities
 	entities->initEntities();

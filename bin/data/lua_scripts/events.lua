@@ -526,16 +526,21 @@ loading_handles = HandleGroup()
 function InitScene()
 	g_dead = false
 	cam:reset_camera()
-	p:hide_message()
-	p:exec_command("ui_cam:fade_in(1)", 1)
-	if not real_level == "hub" then
-		p:exec_command("p:setControlEnabled(1);", 1)
+	ui_cam:fade_out(0.5)
+	p:exec_command("PrepareScene();", 0.5)
+end
+
+function PrepareScene()
+	p:exec_command("ui_cam:fade_in(1);", 0.5)
+	if real_level ~= "hub" then
+		p:exec_command("p:setControlEnabled(1);", 1.5)
 	end
 	if not g_is_menu then
 		p:load_entities("player_hud")
 	end
 	loading_handles:get_handles_by_tag("loading")
-	p:exec_command("loading_handles:destroy();", 1)
+	loading_handles:destroy()
+	p:resume_game()
 end
 
 function OnLoadingLevel(level)

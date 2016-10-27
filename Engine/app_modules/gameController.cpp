@@ -208,8 +208,8 @@ void CGameController::OnLoadedLevel(bool new_level, bool load_game)
 	auto game_event = load_game ? CLogicManagerModule::EVENT::OnLoadedLevel : CLogicManagerModule::EVENT::OnLevelStart;
 
 	logic_manager->throwEvent(game_event, std::string(params));
-	if (!Gui->IsUiControl())
-		GameController->SetGameState(CGameController::RUNNING);
+	//if (!Gui->IsUiControl())
+	//	GameController->SetGameState(CGameController::RUNNING);
 
 	GameController->SetLoadingState(100.f);
 }
