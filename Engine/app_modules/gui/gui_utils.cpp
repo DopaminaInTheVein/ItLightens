@@ -145,7 +145,7 @@ public:
 				}
 			}
 			else if (IsChar('#')) {
-				sprintf(color, "#FFFFFFFF");
+				sprintf(color, "#000000FF");
 				int i = 1;
 				NextChar();
 				while (i < 10 && !IsChar('#')) {

@@ -44,7 +44,7 @@
         "sense_pad": "Comencem per SENTIR (*BPAD*)!!! \nPer la demostració, es mantindrà una estoneta.",
         "target_seen_green": "Aquest senyal #00FF00#VERD## indica el següent punt a visitar.",
         "target_seen_yellow": "Aquest senyal #ffff00#GROGA## indica el punt final, l'objectiu a alcanzr en el nivell.",
-        "target_seen_white": "Els objectes en BLANC són generadors, on pots restaurar tota la teva vida.",
+        "target_seen_white": "Els objectes en #FFFFFF#BLANC## són generadors, on pots restaurar tota la teva vida.",
         "return_control": "És el teu torn.\nMou-te amb *WKEY**AKEY**SKEY**DKEY* + *MOUSE*, salta amb *SPACE*.\nIntenta anar al noi gran i fort anomenat MOLE.\nPresiona *LMOUSE* per entrar en el seu somni.",
         "return_control_pad": "És el teu torn.\nMou-te amb *LSTICK* + *RSTICK*, salta amb *APAD*.\nIntenta anar al noi gran i fort anomenat MOLE.\nPresiona *XPAD* per entrar en el seu somni",
         "mole_tuto_complete": "Felicitats per completar el tutorial del MOLE",
