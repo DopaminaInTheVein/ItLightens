@@ -2,18 +2,6 @@
 <entity>
 <tags/>
 <name
-   name="__Door___opened_pos"/>
-<transform
-   pos="-82.841 4.37253 -29.8566"
-   quat="0.708405 0 0 0.705806"
-   scale="1.0"/>
-<room
-   name="2"/>
-
-</entity>
-<entity>
-<tags/>
-<name
    name="alarma_mapeada"/>
 <transform
    pos="-93.4887 0.0968893 -4.23804"
@@ -6019,20 +6007,25 @@
    pos="0 0 0"
    quat="0 0 0 1.0"
    scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/puerta_final_marco.static_mesh"
+   static="true"/>
+<abs_aabb/>
 <rigidbody
-   type_collision="static"/>
+   type_collision="static"
+   mesh_name="ms3/puerta_final_marco"/>
 
 </entity>
 <entity>
 <tags/>
 <name
-   name="puerta_final"/>
+   name="puerta_final___opened_pos"/>
 <transform
-   pos="-82.8391 0.666156 -29.7621"
-   quat="0 0 0 1.0"
-   scale="1.10643"/>
-<rigidbody
-   type_collision="static"/>
+   pos="-82.8428 4.28161 -29.951"
+   quat="0.708405 0 0 0.705806"
+   scale="1.0"/>
+<room
+   name="2"/>
 
 </entity>
 
