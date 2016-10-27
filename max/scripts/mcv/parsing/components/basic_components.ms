@@ -205,6 +205,7 @@ fn _parse_tracker = (
 fn parse_render_common xml = (
 	xml.addAttr "static" (isStatic _parsingObject)
 	parsePropAttribute xml "cast_shadows" "cast_shadows"
+	parsePropAttribute xml "hidden" "hidden"
 )
 
 fn _parse_render = (

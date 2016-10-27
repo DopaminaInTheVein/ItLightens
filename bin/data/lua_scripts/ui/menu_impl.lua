@@ -3,6 +3,9 @@ p = Public()
 function OnCreateGui_btn_resume( )
 	p:pause_game()
 	p:wait_escape("OnClicked_btn_resume();")
+	local hud_elements = HandleGroup()
+	hud_elements:get_handles_by_tag("hiddeable_hud")
+	hud_elements:set_visible(0)
 end
 
 function OnClicked_btn_resume( )
@@ -49,4 +52,7 @@ end
 
 function destroyMenu( )
 	DestroyAllByTag("menu")
+	local hud_elements = HandleGroup()
+	hud_elements:get_handles_by_tag("hiddeable_hud")
+	hud_elements:set_visible(1)
 end

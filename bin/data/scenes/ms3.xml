@@ -73,7 +73,7 @@
 <name
    name="balcon_redondo"/>
 <transform
-   pos="-34.6137 -2.2547 -0.896849"
+   pos="-34.5171 -2.19858 -0.896849"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -150,7 +150,7 @@
 <name
    name="barrotes_balcon_arriba"/>
 <transform
-   pos="-34.9403 -0.685649 -1.29331"
+   pos="-34.8437 -0.662699 -1.29331"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -966,7 +966,7 @@
 <tags/>
 <sound
    event="OnFluoriscent"
-   volume="0.25"/>
+   volume="0.1"/>
 <name
    name="farolillos_sound001"/>
 <transform
@@ -980,7 +980,7 @@
 <tags/>
 <sound
    event="OnFluoriscent"
-   volume="0.25"/>
+   volume="0.1"/>
 <name
    name="farolillos_sound005"/>
 <transform
@@ -994,7 +994,7 @@
 <tags/>
 <sound
    event="OnFluoriscent"
-   volume="0.25"/>
+   volume="0.1"/>
 <name
    name="farolillos_sound009"/>
 <transform
@@ -1008,7 +1008,7 @@
 <tags/>
 <sound
    event="OnFluoriscent"
-   volume="0.25"/>
+   volume="0.1"/>
 <name
    name="farolillos_sound013"/>
 <transform
@@ -1022,7 +1022,7 @@
 <tags/>
 <sound
    event="OnFluoriscent"
-   volume="0.25"/>
+   volume="0.1"/>
 <name
    name="farolillos_sound017"/>
 <transform
@@ -1036,7 +1036,7 @@
 <tags/>
 <sound
    event="OnFluoriscent"
-   volume="0.25"/>
+   volume="0.1"/>
 <name
    name="farolillos_sound022"/>
 <transform
@@ -1050,7 +1050,7 @@
 <tags/>
 <sound
    event="OnFluoriscent"
-   volume="0.25"/>
+   volume="0.1"/>
 <name
    name="farolillos_sound026"/>
 <transform
@@ -1064,7 +1064,7 @@
 <tags/>
 <sound
    event="OnFluoriscent"
-   volume="0.25"/>
+   volume="0.1"/>
 <name
    name="farolillos_sound029"/>
 <transform
@@ -1078,7 +1078,7 @@
 <tags/>
 <sound
    event="OnFluoriscent"
-   volume="0.25"/>
+   volume="0.1"/>
 <name
    name="farolillos_sound036"/>
 <transform
@@ -1092,7 +1092,7 @@
 <tags/>
 <sound
    event="OnFluoriscent"
-   volume="0.25"/>
+   volume="0.1"/>
 <name
    name="farolillos_sound040"/>
 <transform
@@ -1106,7 +1106,7 @@
 <tags/>
 <sound
    event="OnFluoriscent"
-   volume="0.25"/>
+   volume="0.1"/>
 <name
    name="farolillos_sound044"/>
 <transform
@@ -1120,7 +1120,7 @@
 <tags/>
 <sound
    event="OnFluoriscent"
-   volume="0.25"/>
+   volume="0.1"/>
 <name
    name="farolillos_sound048"/>
 <transform
@@ -1134,7 +1134,7 @@
 <tags/>
 <sound
    event="OnFluoriscent"
-   volume="0.25"/>
+   volume="0.1"/>
 <name
    name="farolillos_sound051"/>
 <transform
@@ -1148,7 +1148,7 @@
 <tags/>
 <sound
    event="OnFluoriscent"
-   volume="0.25"/>
+   volume="0.1"/>
 <name
    name="farolillos_sound056"/>
 <transform
@@ -1162,7 +1162,7 @@
 <tags/>
 <sound
    event="OnFluoriscent"
-   volume="0.25"/>
+   volume="0.1"/>
 <name
    name="farolillos_sound059"/>
 <transform
@@ -1176,7 +1176,7 @@
 <tags/>
 <sound
    event="OnFluoriscent"
-   volume="0.25"/>
+   volume="0.1"/>
 <name
    name="farolillos_sound062"/>
 <transform
@@ -2004,7 +2004,7 @@
 <name
    name="pibotes_balcon_arriba"/>
 <transform
-   pos="-35.0434 -0.736112 -1.33485"
+   pos="-34.9469 -0.713163 -1.33485"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -2194,7 +2194,7 @@
 <tags/>
 <sound
    event="OnFluoriscent"
-   volume="0.25"/>
+   volume="0.1"/>
 <name
    name="plafoncitos_sound001"/>
 <transform
@@ -2208,7 +2208,7 @@
 <tags/>
 <sound
    event="OnFluoriscent"
-   volume="0.25"/>
+   volume="0.1"/>
 <name
    name="plafoncitos_sound002"/>
 <transform
@@ -2222,7 +2222,7 @@
 <tags/>
 <sound
    event="OnFluoriscent"
-   volume="0.25"/>
+   volume="0.1"/>
 <name
    name="plafoncitos_sound003"/>
 <transform
@@ -2236,7 +2236,7 @@
 <tags/>
 <sound
    event="OnFluoriscent"
-   volume="0.25"/>
+   volume="0.1"/>
 <name
    name="plafoncitos_sound004"/>
 <transform
@@ -2250,7 +2250,7 @@
 <tags/>
 <sound
    event="OnFluoriscent"
-   volume="0.25"/>
+   volume="0.1"/>
 <name
    name="plafoncitos_sound005"/>
 <transform
@@ -2283,7 +2283,7 @@
 <tags/>
 <sound
    event="OnFluoriscent"
-   volume="0.25"/>
+   volume="0.1"/>
 <name
    name="plafones_sound003"/>
 <transform
@@ -2297,7 +2297,7 @@
 <tags/>
 <sound
    event="OnFluoriscent"
-   volume="0.25"/>
+   volume="0.1"/>
 <name
    name="plafones_sound006"/>
 <transform
@@ -2311,7 +2311,7 @@
 <tags/>
 <sound
    event="OnFluoriscent"
-   volume="0.25"/>
+   volume="0.1"/>
 <name
    name="plafones_sound009"/>
 <transform
@@ -2325,7 +2325,7 @@
 <tags/>
 <sound
    event="OnFluoriscent"
-   volume="0.25"/>
+   volume="0.1"/>
 <name
    name="plafones_sound012"/>
 <transform
@@ -2339,7 +2339,7 @@
 <tags/>
 <sound
    event="OnFluoriscent"
-   volume="0.25"/>
+   volume="0.1"/>
 <name
    name="plafones_sound015"/>
 <transform
@@ -2353,7 +2353,7 @@
 <tags/>
 <sound
    event="OnFluoriscent"
-   volume="0.25"/>
+   volume="0.1"/>
 <name
    name="plafones_sound018"/>
 <transform
@@ -2367,7 +2367,7 @@
 <tags/>
 <sound
    event="OnFluoriscent"
-   volume="0.25"/>
+   volume="0.1"/>
 <name
    name="plafones_sound021"/>
 <transform
@@ -2381,7 +2381,7 @@
 <tags/>
 <sound
    event="OnFluoriscent"
-   volume="0.25"/>
+   volume="0.1"/>
 <name
    name="plafones_sound024"/>
 <transform
@@ -2395,7 +2395,7 @@
 <tags/>
 <sound
    event="OnFluoriscent"
-   volume="0.25"/>
+   volume="0.1"/>
 <name
    name="plafones_sound027"/>
 <transform
@@ -2409,7 +2409,7 @@
 <tags/>
 <sound
    event="OnFluoriscent"
-   volume="0.25"/>
+   volume="0.1"/>
 <name
    name="plafones_sound030"/>
 <transform
@@ -2423,7 +2423,7 @@
 <tags/>
 <sound
    event="OnFluoriscent"
-   volume="0.25"/>
+   volume="0.1"/>
 <name
    name="plafones_sound033"/>
 <transform
@@ -2437,7 +2437,7 @@
 <tags/>
 <sound
    event="OnFluoriscent"
-   volume="0.25"/>
+   volume="0.1"/>
 <name
    name="plafones_sound036"/>
 <transform
@@ -2451,7 +2451,7 @@
 <tags/>
 <sound
    event="OnFluoriscent"
-   volume="0.25"/>
+   volume="0.1"/>
 <name
    name="plafones_sound039"/>
 <transform
@@ -2465,7 +2465,7 @@
 <tags/>
 <sound
    event="OnFluoriscent"
-   volume="0.25"/>
+   volume="0.1"/>
 <name
    name="plafones_sound042"/>
 <transform
@@ -2479,7 +2479,7 @@
 <tags/>
 <sound
    event="OnFluoriscent"
-   volume="0.25"/>
+   volume="0.1"/>
 <name
    name="plafones_sound045"/>
 <transform
@@ -2493,7 +2493,7 @@
 <tags/>
 <sound
    event="OnFluoriscent"
-   volume="0.25"/>
+   volume="0.1"/>
 <name
    name="plafones_sound048"/>
 <transform
@@ -2507,7 +2507,7 @@
 <tags/>
 <sound
    event="OnFluoriscent"
-   volume="0.25"/>
+   volume="0.1"/>
 <name
    name="plafones_sound051"/>
 <transform
@@ -2521,7 +2521,7 @@
 <tags/>
 <sound
    event="OnFluoriscent"
-   volume="0.25"/>
+   volume="0.1"/>
 <name
    name="plafones_sound054"/>
 <transform
@@ -2535,7 +2535,7 @@
 <tags/>
 <sound
    event="OnFluoriscent"
-   volume="0.25"/>
+   volume="0.1"/>
 <name
    name="plafones_sound057"/>
 <transform
@@ -2549,7 +2549,7 @@
 <tags/>
 <sound
    event="OnFluoriscent"
-   volume="0.25"/>
+   volume="0.1"/>
 <name
    name="plafones_sound060"/>
 <transform
@@ -2563,7 +2563,7 @@
 <tags/>
 <sound
    event="OnFluoriscent"
-   volume="0.25"/>
+   volume="0.1"/>
 <name
    name="plafones_sound063"/>
 <transform
@@ -2646,7 +2646,7 @@
 <name
    name="puerta_Ascensor_derecha_arriba___opened_pos002"/>
 <transform
-   pos="-66.0781 16.8798 19.739"
+   pos="-66.0781 16.8798 19.7683"
    quat="0.708405 0 0 0.705806"
    scale="1.0"/>
 <room
@@ -2670,7 +2670,7 @@
 <name
    name="puerta_Ascensor_izquierda_arriba___opened_pos004"/>
 <transform
-   pos="-64.7441 16.8798 19.724"
+   pos="-64.7441 16.8798 19.7533"
    quat="0.708405 0 0 0.705806"
    scale="1.0"/>
 <room
@@ -3845,7 +3845,7 @@
 <name
    name="arboles_balcon_redondo_grande"/>
 <transform
-   pos="-40.6128 0.725866 -0.804768"
+   pos="-40.5162 0.781989 -0.804768"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -4482,7 +4482,7 @@
 <name
    name="arboles_balcon_redondo_grande_maceta_1"/>
 <transform
-   pos="-40.6128 0.725866 -0.804768"
+   pos="-40.5162 0.781989 -0.804768"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -4499,7 +4499,7 @@
 <name
    name="arboles_balcon_redondo_grande_maceta_2"/>
 <transform
-   pos="-40.6128 0.725866 -0.804768"
+   pos="-40.5162 0.781989 -0.804768"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -4516,7 +4516,7 @@
 <name
    name="arboles_balcon_redondo_grande_2"/>
 <transform
-   pos="-40.6128 0.725866 -0.804768"
+   pos="-40.5162 0.781989 -0.804768"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -5992,6 +5992,47 @@
    pos="-58.8493 -1.0 -7.99588"
    quat="0 0 0 1.0"
    scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="flecha_carga"/>
+<transform
+   pos="-90.8309 -0.023538 13.6837"
+   quat="0 0 0.5 0.866025"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/flecha_carga.static_mesh"
+   static="true"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"
+   mesh_name="ms3/flecha_carga"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="puerta_final_marco"/>
+<transform
+   pos="0 0 0"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<rigidbody
+   type_collision="static"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="puerta_final"/>
+<transform
+   pos="-82.8391 0.666156 -29.7621"
+   quat="0 0 0 1.0"
+   scale="1.10643"/>
+<rigidbody
+   type_collision="static"/>
 
 </entity>
 

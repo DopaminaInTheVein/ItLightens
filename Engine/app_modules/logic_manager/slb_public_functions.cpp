@@ -220,6 +220,16 @@ void SLBHandle::setSize(float size) {
 	}
 }
 
+void SLBHandle::setVisible(int visible) {
+	if (real_handle.isValid()) {
+		GET_COMP(st_mesh, real_handle, TCompRenderStaticMesh);
+		if (st_mesh) {
+			if (visible > 0) st_mesh->Show();
+			else st_mesh->Hide();
+		}
+	}
+}
+
 void SLBHandle::setPosition(float x, float y, float z) {
 	const PxVec3 new_position(x, y, z);
 
@@ -529,6 +539,21 @@ void SLBHandleGroup::destroy() {
 	for (auto h : handle_group) {
 		if (h.isValid()) {
 			h.destroy();
+		}
+	}
+}
+
+//Set visible
+void SLBHandleGroup::setVisible(int visible) {
+	if (handle_group.size() > 0) {
+		for (auto real_handle : handle_group) {
+			if (real_handle.isValid()) {
+				GET_COMP(st_mesh, real_handle, TCompRenderStaticMesh);
+				if (st_mesh) {
+					if (visible > 0) st_mesh->Show();
+					else st_mesh->Hide();
+				}
+			}
 		}
 	}
 }

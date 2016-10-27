@@ -72,6 +72,7 @@ public:
 	SLBPosition getPos();
 	void setPos(SLBPosition);
 	void setSize(float size);
+	void setVisible(int visible);
 	void setPosition(float x, float y, float z);
 	float getX();
 	float getY();
@@ -114,6 +115,7 @@ public:
 	void awake();
 	void removePhysics();
 	void destroy();
+	void setVisible(int visible);
 };
 
 // camera control in LUA

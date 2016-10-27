@@ -1,0 +1,3 @@
+<static_mesh>
+  <slot mesh="meshes/ms3/flecha_carga.mesh" material="materials/ms3/cargador_nuevo.material"/>
+</static_mesh>

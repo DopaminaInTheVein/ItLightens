@@ -1,10 +1,11 @@
 #include "mcv_platform.h"
 #include "gui_basic.h"
 
-#include "render\draw_utils.h"
-#include "components\comp_transform.h"
-#include "components\entity.h"
-#include "components\comp_loading_screen.h"
+#include "render/draw_utils.h"
+#include "components/comp_transform.h"
+#include "components/entity.h"
+#include "components/comp_loading_screen.h"
+#include "components/comp_render_static_mesh.h"
 #include "gui_cursor.h"
 #include "../gui.h"
 
@@ -177,9 +178,17 @@ CHandle TCompGui::getCursor()
 #include "components\entity.h"
 void TCompGui::update(float elapsed)
 {
-	if (parent != CHandle() && !parent.isValid()) {
-		MY_OWNER.destroy();
-		return;
+	if (parent != CHandle()) {
+		if (!parent.isValid()) {
+			MY_OWNER.destroy();
+			return;
+		}
+		GET_COMP(parent_st_mesh, parent, TCompRenderStaticMesh);
+		GET_MY(my_st_mesh, TCompRenderStaticMesh);
+		if (my_st_mesh && parent_st_mesh) {
+			if (parent_st_mesh->IsHidden()) my_st_mesh->Show();
+			else my_st_mesh->Hide();
+		}
 	}
 
 	if (loop_color) updateColorLag(elapsed);

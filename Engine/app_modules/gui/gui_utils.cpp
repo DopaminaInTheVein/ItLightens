@@ -101,7 +101,7 @@ private:
 
 	//Intern
 	int index = 0;
-	char color[10] = "#FFFFFFFF";
+	char color[10] = "#000000FF";
 	char value = 0;
 	bool RemainChars() {
 		return index < input.length();

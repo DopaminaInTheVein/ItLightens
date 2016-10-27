@@ -1,7 +1,7 @@
 <entities>
 <entity>
 <tags
-   tags="ui_pol_e gui"/>
+   tags="ui_pol_e hiddeable_hud gui"/>
 <gui
    menu_name="player_hud"
    width="1.37079"
@@ -20,7 +20,7 @@
 </entity>
 <entity>
 <tags
-   tags="ui_pol_q gui"/>
+   tags="ui_pol_q hiddeable_hud gui"/>
 <gui
    menu_name="player_hud"
    width="1.29558"
@@ -38,7 +38,8 @@
 
 </entity>
 <entity>
-<tags/>
+<tags
+   tags="hiddeable_hud"/>
 <name
    name="lifebar_out"/>
 <transform
@@ -52,7 +53,8 @@
 
 </entity>
 <entity>
-<tags/>
+<tags
+   tags="hiddeable_hud"/>
 <name
    name="lifebar_back"/>
 <transform
@@ -67,7 +69,7 @@
 </entity>
 <entity>
 <tags
-   tags="gui"/>
+   tags="hiddeable_hud gui"/>
 <gui
    menu_name="player_hud"
    width="1.84311"
@@ -86,7 +88,7 @@
 </entity>
 <entity>
 <tags
-   tags="gui"/>
+   tags="hiddeable_hud gui"/>
 <gui
    menu_name="player_hud"
    width="1.11558"
@@ -104,35 +106,6 @@
 <abs_aabb/>
 
 </entity>
-<!--
-<entity>
-<tags/>
-<name
-   name="retrato"/>
-<transform
-   pos="2.22436 -96.7306 6.86634"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ui/player_hud/retrato.static_mesh"
-   static="true"/>
-<abs_aabb/>
-
-</entity>
-<entity>
-<tags/>
-<name
-   name="bocadillo001"/>
-<transform
-   pos="5.57049 -96.8406 6.84133"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ui/player_hud/bocadillo001.static_mesh"
-   static="true"/>
-<abs_aabb/>
-</entity>
--->
 <entity>
 <tags/>
 <name

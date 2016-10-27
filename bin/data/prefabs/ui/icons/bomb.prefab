@@ -1,7 +1,7 @@
 <entities>
 <entity temp="yes">
 <tags
-   tags="gui"/>
+   tags="gui hiddeable_hud"/>
 <gui
    width="1.0"
    height="1.0"/>

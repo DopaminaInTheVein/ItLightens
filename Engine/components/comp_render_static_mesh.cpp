@@ -21,6 +21,7 @@ bool TCompRenderStaticMesh::load(MKeyValue& atts) {
 	dynamic = !atts.getBool("static", true);
 	to_render = atts.getBool("to_render", true);
 	cast_shadows = atts.getBool("cast_shadows", true);
+	hidden = atts.getBool("hidden", false); //Never exported at the moment
 	if (!cast_shadows) {
 		cast_shadows_dyn = false;
 		auto type_cast_shadows = atts.getString("cast_shadows", "");
@@ -35,6 +36,7 @@ bool TCompRenderStaticMesh::save(std::ofstream& os, MKeyValue& atts)
 	atts.put("name", res_name);
 	atts.put("static", !dynamic);
 	if (!to_render) atts.put("to_render", to_render);
+	if (hidden) atts.put("hidden", hidden);
 	return true;
 }
 
@@ -58,4 +60,5 @@ void TCompRenderStaticMesh::onGetLocalAABB(const TMsgGetLocalAABB& msg) {
 void TCompRenderStaticMesh::renderInMenu()
 {
 	ImGui::Text(res_name.c_str());
+	ImGui::Checkbox("Hidden", &hidden);
 }

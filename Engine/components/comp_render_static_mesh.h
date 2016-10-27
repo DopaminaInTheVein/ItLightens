@@ -13,6 +13,7 @@ struct TCompRenderStaticMesh : public TCompBase {
 	bool to_render = true;
 	bool cast_shadows = true;
 	bool cast_shadows_dyn = true;
+	bool hidden = false;
 	const CStaticMesh* static_mesh;
 	std::string res_name;
 	~TCompRenderStaticMesh();
@@ -26,6 +27,9 @@ struct TCompRenderStaticMesh : public TCompBase {
 	bool isCastShadows() { return cast_shadows; }
 	bool isCastShadowsDynamic() { return cast_shadows_dyn; }
 	void renderInMenu();
+	void Hide() { hidden = true; }
+	void Show() { hidden = false; }
+	bool IsHidden() { return hidden; }
 };
 
 #endif

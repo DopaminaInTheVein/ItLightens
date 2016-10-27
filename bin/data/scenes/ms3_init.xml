@@ -214,12 +214,12 @@
 <magnet_door
    locked="no"
    speedOpening="1"
-   target="-66.0781 16.8798 19.739"
+   target="-66.0781 16.8798 19.7683"
    pol="neutral"/>
 <name
    name="puerta_Ascensor_derecha_arriba"/>
 <transform
-   pos="-66.8968 16.8798 19.739"
+   pos="-66.8968 16.8798 19.7683"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -276,12 +276,12 @@
 <magnet_door
    locked="no"
    speedOpening="1"
-   target="-64.7441 16.8798 19.724"
+   target="-64.7441 16.8798 19.7533"
    pol="neutral"/>
 <name
    name="puerta_Ascensor_izquierda_arriba"/>
 <transform
-   pos="-63.9488 16.8798 19.724"
+   pos="-63.9488 16.8798 19.7533"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh

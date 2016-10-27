@@ -1,6 +1,7 @@
 <entities>
 <entity permanent="yes">
-<tags/>
+<tags
+	tags="hiddeable_hud"/>
 <name
    name="retrato"/>
 <transform
