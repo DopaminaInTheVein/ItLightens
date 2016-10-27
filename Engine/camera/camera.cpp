@@ -74,6 +74,11 @@ void CCamera::smoothLookAt(VEC3 new_position, VEC3 new_target, VEC3 new_up_aux, 
 	up = front.Cross(left);
 	up.Normalize();
 
+	if (up == VEC3(0, 0, 0)) {
+		int i = 0;
+		return;
+	}
+
 	updateViewProjection();
 }
 
