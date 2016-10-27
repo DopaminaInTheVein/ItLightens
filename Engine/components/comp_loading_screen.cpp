@@ -13,6 +13,7 @@
 #include "constants/ctes_camera.h"
 #include "constants/ctes_globals.h"
 #include "comp_camera_main.h"
+#include "comp_render_static_mesh.h"
 #include "app_modules/gui/comps/gui_basic.h"
 
 #include "app_modules/gui/gui.h"
@@ -63,13 +64,20 @@ void TCompLoadingScreen::tooglePages()
 
 void TCompLoadingScreen::swapPages()
 {
-	GET_COMP(tmx1, h_pag1, TCompTransform);
-	GET_COMP(tmx2, h_pag2, TCompTransform);
-	if (tmx1 && tmx2) {
-		VEC3 pos1 = tmx1->getPosition();
-		tmx1->setPosition(tmx2->getPosition());
-		tmx2->setPosition(pos1);
+	GET_COMP(stm1, h_pag1, TCompRenderStaticMesh);
+	GET_COMP(stm2, h_pag2, TCompRenderStaticMesh);
+	if (stm1 && stm2) {
+		bool h1prev = stm1->IsHidden();
+		bool h2prev = stm2->IsHidden();
+		dbg("Swap: stm1 %d, stm2 %d\n", h1prev, h2prev);
+		if (stm1->IsHidden()) stm1->Show();
+		else stm1->Hide();
+		dbg("Swap: stm1 %d, stm2 %d\n", stm1->IsHidden(), stm2->IsHidden());
+		if (stm2->IsHidden()) stm2->Show();
+		else stm2->Hide();
+		dbg("Swap: stm1 %d --> %d, stm2 %d --> %d\n", h1prev, h2prev, stm1->IsHidden(), stm2->IsHidden());
 	}
+	RenderManager.ModifyUI();
 }
 
 void TCompLoadingScreen::renderInMenu() {
