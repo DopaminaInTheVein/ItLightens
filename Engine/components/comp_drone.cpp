@@ -11,6 +11,7 @@
 #include "player_controllers/player_controller_cientifico.h"
 #include "app_modules/logic_manager/logic_manager.h"
 #include "app_modules/sound_manager/sound_manager.h"
+#include "app_modules/gui/gui.h"
 
 
 void TCompDrone::onCreate(const TMsgEntityCreated &)
@@ -283,6 +284,23 @@ void TCompDrone::onTriggerEnter(const TMsgTriggerIn & msg)
 	CHandle h_in = msg.other;
 	if (h_in.hasTag("raijin")) {
 		CanRechargeDrone(true);
+	}
+}
+
+void TCompDrone::onTriggerInside(const TMsgTriggerIn & msg)
+{
+	CHandle h_in = msg.other;
+	if (h_in.hasTag("raijin")) {
+		TMsgTriggerOut msj;
+		msj.other = h_in;
+		CHandle thisHandle = CHandle(this).getOwner();
+		CEntity * thisHandle_e = thisHandle;
+		GET_COMP(rait, h_in, TCompTransform);
+		GET_COMP(gent, thisHandle, TCompTransform);
+		if (simpleDist(rait->getPosition(), gent->getPosition()) > 5.0f) {
+			thisHandle_e->sendMsg(msj);
+			Gui->setActionAvailable(eAction::NONE);
+		}
 	}
 }
 

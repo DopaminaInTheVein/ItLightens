@@ -6,6 +6,7 @@
 #include "comp_transform.h"
 #include "comp_render_static_mesh.h"
 #include "entity_tags.h"
+#include "app_modules/gui/gui.h"
 
 #include "utils/utils.h"
 
@@ -36,6 +37,23 @@ void TCompGenerator::onTriggerEnter(const TMsgTriggerIn & msg)
 	CHandle h_in = msg.other;
 	if (h_in.hasTag("raijin")) {
 		CanRec(true);
+	}
+}
+
+void TCompGenerator::onTriggerInside(const TMsgTriggerIn & msg)
+{
+	CHandle h_in = msg.other;
+	if (h_in.hasTag("raijin")) {
+		TMsgTriggerOut msj;
+		msj.other = h_in;
+		CHandle thisHandle = CHandle(this).getOwner();
+		CEntity * thisHandle_e = thisHandle;
+		GET_COMP(rait, h_in, TCompTransform);
+		GET_COMP(gent, thisHandle, TCompTransform);
+		if (simpleDist(rait->getPosition(), gent->getPosition()) > 5.0f) {
+			thisHandle_e->sendMsg(msj);
+			Gui->setActionAvailable(eAction::NONE);
+		}
 	}
 }
 
