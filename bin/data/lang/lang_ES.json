@@ -44,7 +44,7 @@
         "sense_pad": "Empezemos por SENTIR (*BPAD*)!!!\nPara la demostración, se mantendrá un ratito.",
         "target_seen_green": "Esta señal #00FF00#VERDE## indica el siguiente punto a visitar.",
         "target_seen_yellow": "Esta señal #FFFF00#AMARILLA## indica el punto final, el objetivo a alcanzar en el nivel.",
-        "target_seen_white": "Los objetos en BLANCO son generadores, donde puedes restaurar toda tu vida.",
+        "target_seen_white": "Los objetos en #FFFFFF#BLANCO## son generadores, donde puedes restaurar toda tu vida.",
         "return_control": "Es tu turno.\nMuevete con *WKEY**AKEY**SKEY**DKEY* + *MOUSE*, salta con *SPACE*.\nIntenta ir al chico grande y fuerte llamado MOLE\nPresiona *LMOUSE* para entrar en su sueño.",
         "return_control_pad": "Es tu turno.\nMuevete con *LSTICK* + *RSTICK*, salta con *APAD*.\nIntenta ir al chico grande y fuerte llamado MOLE\nPresiona *XPAD* para entrar en su sueño",
         "mole_tuto_complete": "Felicidades por completar el tutorial del MOLE",

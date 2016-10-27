@@ -44,7 +44,7 @@
         "sense_pad": "Let's SENSE (*BPAD*)!!!\nFor demonstration it will keep for a short time.",
         "target_seen_green": "This #00FF00#GREEN## signal is your next step.",
         "target_seen_yellow": "The #FFFF00#YELLOW## one is the final point of the level.",
-        "target_seen_white": "WHITE are generators, where you can restore all your life.",
+        "target_seen_white": "#FFFFFF#WHITE## are generators, where you can restore all your life.",
         "return_control": "It's your turn now.\nMove with *WKEY**AKEY**SKEY**DKEY* + *MOUSE*, jump with *SPACE*.\nTry going next to the big strong boy MASS\nThen press *LMOUSE* button and enter his dream",
         "return_control_pad": "It's your turn now.\nMove with *LSTICK* + *RSTICK*, jump with *APAD*.\nTry going next to the big strong boy MASS\nThen press *XPAD* button and enter his dream",
         "mole_tuto_complete": "Congratulations for completing the MASS tutorial",
