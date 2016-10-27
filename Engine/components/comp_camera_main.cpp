@@ -83,7 +83,7 @@ void TCompCameraMain::update(float dt) {
 	}
 	if (Gui->IsUiControl()) return;
 
-	if (guidedCamera.isValid()) {
+	if (guidedCamera.isValid() && GameController->GetGameState() == CGameController::RUNNING) {
 		//Camara guida
 		GET_COMP(gc, guidedCamera, TCompGuidedCamera);
 		cameraIsGuided = gc->followGuide(transform, this);
@@ -180,6 +180,7 @@ void TCompCameraMain::update(float dt) {
 			}
 		}
 	}
+	updateViewProjection();
 }
 
 void TCompCameraMain::endGuidedCamera()
@@ -537,6 +538,7 @@ void TCompCameraMain::StopCinematic()
 		msg_camera.camera = CHandle(this).getOwner();
 		t.sendMsg(msg_camera);	//set target camera
 	}
+	smoothCurrent = 1.f; //Return to player smoothly
 }
 
 void TCompCameraMain::reset()
@@ -551,12 +553,12 @@ void TCompCameraMain::reset()
 	GET_MY(cam_control, TCompController3rdPerson);
 	if (cam_control) cam_control->StopOrbit();
 
-	CHandle player = CPlayerBase::handle_player;
+	CHandle player = tags_manager.getFirstHavingTag("player");
 	if (player.isValid()) {
 		GET_COMP(player_tmx, player, TCompTransform);
 		if (player_tmx) {
 			GET_MY(cam_tmx, TCompTransform);
-			if (cam_tmx) cam_tmx->setPosition(player_tmx->getPosition());
+			if (cam_tmx) cam_tmx->setPosition(player_tmx->getPosition() - player_tmx->getFront());
 		}
 	}
 }

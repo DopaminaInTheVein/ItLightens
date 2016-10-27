@@ -166,7 +166,7 @@ bool TCompGuidedCamera::followGuide(TCompTransform* camTransform, TCompCameraMai
 		VEC3 look = default_dirs
 			? positions[clamp(curPoint + 1, 0, positions.size() - 1)]
 			: VEC3::CatmullRom(lookCmr[0], lookCmr[1], lookCmr[2], lookCmr[3], factor);
-		cam->smoothLookAt(pos, look, cam->getUpAux(), smoothFactor / getDeltaTime());
+		cam->smoothLookAt(pos, look, cam->getUpAux(), getDeltaTime() > 0 ? smoothFactor / getDeltaTime() : 1.f);
 		camTransform->lookAt(pos, look, cam->getUpAux());
 	}
 	else {

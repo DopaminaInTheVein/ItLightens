@@ -64,7 +64,7 @@ void CCamera::smoothLookAt(VEC3 new_position, VEC3 new_target, VEC3 new_up_aux, 
 	up_aux = new_up_aux;
 
 	view = MAT44::CreateLookAt(position, target, up_aux);
-
+	assert(view.m);
 	front = (target - position);
 	front.Normalize();
 

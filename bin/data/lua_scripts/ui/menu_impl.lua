@@ -18,8 +18,10 @@ function OnClicked_btn_restart( )
 	p:play_sound("event:/OnMenuAccept", 1.0, false)
 	p:wait_escape_cancel()
 	p:set_cursor_enabled(false)
+	cam:skip_cinematic()
 	p:exec_command("destroyMenu();", 1)
 	p:exec_command("LoadLevel(g_current_level);", 1.1)
+	g_restarting = true
 end
 
 function OnClicked_btn_back_title( )

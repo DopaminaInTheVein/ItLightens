@@ -23,11 +23,11 @@ class CCamera {
 	bool  is_ortho;
 
 	MAT44 view_projection;
-	void updateViewProjection();
 
 protected:
 	VEC3 min_ortho;
 	VEC3 max_ortho;
+	void updateViewProjection();
 public:
 
 	//For Test

@@ -496,7 +496,7 @@ function OnCinematicEnd( param )
 	CallFunction("OnCinematicEnd_"..param)
 end
 
---Game Restart
+--Game Restart (creo no se usa)
 ---------------------------------------------------
 function OnRestartLevel( logic_level, real_level )
 	p:print( "OnRestartLevel\n")
@@ -524,6 +524,7 @@ end
 
 loading_handles = HandleGroup()
 function InitScene()
+	g_restarting = false
 	g_dead = false
 	cam:reset_camera()
 	ui_cam:fade_out(0.5)
@@ -545,12 +546,13 @@ end
 
 function OnLoadingLevel(level)
 	p:print("OnLoadingLevel")
-	local ok = CallFunction("OnLoading_"..level)
-	if not ok then 
-		ui_cam:fade_in(0.1)
-		p:load_entities("loading")
+	if not g_restarting  then
+		local ok = CallFunction("OnLoading_"..level)
+		if not ok then 
+			ui_cam:fade_in(0.1)
+			p:load_entities("loading")
+		end
 	end
-	--p:show_loading_screen()
 end
 
 --Game Ending
