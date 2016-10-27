@@ -1022,6 +1022,14 @@ void SLBPublicFunctions::putText(const char* id, const char* text, float posx, f
 	t->setup(std::string(id), text_fixed, posx, posy, std::string(textColor), scale, std::string(textColorTarget), textColorSpeed, textColorSpeedLag);
 }
 
+void SLBPublicFunctions::putTextUi(const char* id, const char* text, float posx, float posy, const char* textColor, float scale) {
+	auto text_fixed = TextEncode::Utf8ToLatin1String(text);
+	CHandle h = createPrefab("ui/text");
+	GET_COMP(t, h, TCompText);
+	t->SetId(id);
+	t->setup(std::string(id), text_fixed, posx, posy, std::string(textColor), scale);
+}
+
 void SLBPublicFunctions::removeText(const char* id) {
 	std::string id_string(id);
 	getHandleManager<TCompText>()->each([id_string](TCompText * mess) {

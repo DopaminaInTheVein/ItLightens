@@ -73,7 +73,10 @@ void TCompText::setup(std::string set_id, std::string set_text, float set_posx, 
 	SetText(set_text);
 	this->loop = loop;
 }
-
+void TCompText::SetId(std::string new_id)
+{
+	id = new_id;
+}
 void TCompText::SetText(std::string new_text)
 {
 	original_text = new_text;

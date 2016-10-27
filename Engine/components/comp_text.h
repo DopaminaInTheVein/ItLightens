@@ -38,6 +38,7 @@ public:
 	// Setter
 	void setup(std::string id, std::string text, float posx, float posy, std::string textColor, float scale, std::string set_textColorTarget, float set_textColorSpeed, float set_textColorSpeedLag, float set_posz = 0.99f, bool loop = true);
 	void SetText(std::string text);
+	void SetId(std::string text);
 	void SetPosWorld(VEC3 pos);
 	void SetPosScreen(VEC3 pos);
 	void SetSize(float);
