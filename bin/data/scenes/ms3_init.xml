@@ -1,36 +1,5 @@
 <entities>
 <entity
-   id="300"
-   reload="yes">
-<tags
-   tags="doorExit door"/>
-<magnet_door
-   locked="yes"
-   speedOpening="1"
-   target="-82.841 4.37253 -29.8566"
-   pol="neutral"/>
-<name
-   name="__Door"/>
-<transform
-   pos="-82.841 0.575238 -29.8566"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/__Door.static_mesh"
-   static="false"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="convex"
-   mass="5"/>
-<local_aabb/>
-<polarized
-   pol="neutral"/>
-<room
-   name="2"/>
-
-</entity>
-<entity
    reload="yes">
 <tags
    tags="platform pila interactive"/>
@@ -1715,7 +1684,7 @@
 <name
    name="cargador_bateria"/>
 <transform
-   pos="-90.841 -0.915813 14.459"
+   pos="-90.841 -0.409953 14.459"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -2041,6 +2010,35 @@
    pos="-46.1595 0.753134 -0.840155"
    quat="0 0 0 1.0"
    scale="1.0"/>
+
+</entity>
+<entity
+   id="300"
+   reload="yes">
+<tags
+   tags="doorExit door"/>
+<magnet_door
+   locked="yes"
+   speedOpening="1"
+   target="-82.8428 4.28161 -29.951"
+   pol="neutral"/>
+<name
+   name="puerta_final"/>
+<transform
+   pos="-82.841 0.575238 -29.8566"
+   quat="0 0 0 1.0"
+   scale="1.10643"/>
+<render_static_mesh
+   name="static_meshes/ms3/puerta_final.static_mesh"
+   static="false"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="convex"
+   mass="5"/>
+<local_aabb/>
+<polarized
+   pol="neutral"/>
 
 </entity>
 
