@@ -29,7 +29,7 @@ private:
 	int numchars;
 	int shown_chars;
 	int lines;
-	float scale = 0.2f;
+	float scale = 0.14f;
 	float letterBoxSize = 1.0f / 16.0f;
 	float letterSpacer = 0.3f / 16.0f;
 	float letterSpacerHigh = scale * 1.25f;

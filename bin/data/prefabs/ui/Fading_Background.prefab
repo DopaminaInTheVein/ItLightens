@@ -2,13 +2,14 @@
 <entity permanent="yes">
 <tags/>
 <name
-   name="Fading_Background"/>
+   name="bocadillo001"/>
 <transform
-   pos="5.0024 -97.1774 3"
-   quat="0.707107 0 0 0.707107"
+   pos="5.57049 -96.8406 6.84133"
+   quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ui/messages/Fading_Background.static_mesh"/>
-
+   name="static_meshes/ui/player_hud/bocadillo001.static_mesh"
+   static="true"/>
+<abs_aabb/>
 </entity>
 </entities>

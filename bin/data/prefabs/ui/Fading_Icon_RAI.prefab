@@ -2,16 +2,14 @@
 <entity permanent="yes">
 <tags/>
 <name
-   name="Fading_Icon"/>
+   name="retrato"/>
 <transform
-   pos="1.12695 -97.3231 3.5"
-   quat="0.707107 0 0 0.707107"
+   pos="2.22436 -96.7306 6.86634"
+   quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ui/messages/Fading_Icon_RAI.static_mesh"/>
+   name="static_meshes/ui/player_hud/retrato.static_mesh"
+   static="true"/>
 <abs_aabb/>
-<rigidbody
-   type_collision="static"/>
-
 </entity>
 </entities>

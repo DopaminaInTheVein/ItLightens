@@ -1,0 +1,3 @@
+<static_mesh>
+  <slot mesh="meshes/ui/player_hud/retrato.mesh" material="materials/ui/player_hud/retrato_sci_tech_ui.material"/>
+</static_mesh>

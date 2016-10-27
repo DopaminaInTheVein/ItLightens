@@ -13,12 +13,12 @@
 
 #define FONT_JSON "./data/json/font.json"
 
-#define NUM_LINES 4
-#define NUM_CHARS_LINE 75
+#define NUM_LINES 6
+#define NUM_CHARS_LINE 55
 #define TOTAL_CHAR (NUM_LINES * NUM_CHARS_LINE)
 #define LINE_TEXT_SIZE 31.f
 
-#define INIT_POS VEC3(0.16f, 0.16f, 0.35f)
+#define INIT_POS VEC3(0.32f, 0.21f, 0.35f)
 
 void TCompFadingMessage::moveElement(CHandle h, const VEC3 pos)
 {
@@ -89,7 +89,7 @@ bool TCompFadingMessage::reload(const ReloadInfo& atts, float reloadAll)
 		hideAll();
 	}
 	this->atts = atts;
-	VEC3 new_pos1 = min_ortho + orthorect * VEC3(0.12f, 0.09f, 0.35f);
+	VEC3 new_pos1 = min_ortho + orthorect * VEC3(0.22f, 0.19f, 0.35f);
 
 	text = Font::getVChar(lang_manager->getText(atts.text));
 	text = Font::formatVChar(text, NUM_CHARS_LINE);
@@ -97,7 +97,7 @@ bool TCompFadingMessage::reload(const ReloadInfo& atts, float reloadAll)
 	std::string who = atts.icon;
 	ttl = timeForLetter * text.size() + 4.0f;
 
-	VEC3 new_pos2 = min_ortho + orthorect * VEC3(0.5f, 0.02f, 0.3f);
+	VEC3 new_pos2 = min_ortho + orthorect * VEC3(0.55f, 0.15f, 0.3f);
 	//new_pos2.z = 0.3f;
 	moveElement(gui_back, new_pos2);
 
