@@ -100,7 +100,7 @@ public:
 		generate_shadow_maps = true; //will be put on false after generating static shadow maps
 	}
 	void renderEspVisionMode();
-	void renderEspVisionModeFor(std::string tag, VEC4 color_mask, int stencil_mask, bool use_skeleton = false);
+	void renderEspVisionModeFor(std::string tag, VEC4 color_mask, int stencil_mask, bool use_skeleton = false, bool only_borders = true);
 	void renderDetails(CRenderTechnique::eCategory type);
 	void uploadConstantsGPU();
 	void applyPostFX();

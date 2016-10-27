@@ -1017,12 +1017,12 @@ void CRenderDeferredModule::renderEspVisionMode() {
 
 	//MarkInteractives(VEC4(1,1,1,1), "AI", VISION_OBJECTS);
 	renderEspVisionModeFor("sense_generator", VEC4(1, 1, 1, 1), VISION_OBJECTS_WHITE);
-	renderEspVisionModeFor("tasklist", VEC4(0, 1, 0, 1), VISION_OBJECTS_GREEN);
-	renderEspVisionModeFor("tasklistend", VEC4(1, 1, 0, 1), VISION_OBJECTS_YELLOW);
+	renderEspVisionModeFor("tasklist", VEC4(0, 1, 0, 1), VISION_OBJECTS_GREEN, false, false);
+	renderEspVisionModeFor("tasklistend", VEC4(1, 1, 0, 1), VISION_OBJECTS_YELLOW, false, false);
 	renderEspVisionModeFor("AI_guard", VEC4(1, 0, 0, 1), VISION_OBJECTS_RED, true);
 }
 
-void CRenderDeferredModule::renderEspVisionModeFor(std::string tagstr, VEC4 color_mask, int sencil_mask, bool use_skeleton) {
+void CRenderDeferredModule::renderEspVisionModeFor(std::string tagstr, VEC4 color_mask, int sencil_mask, bool use_skeleton, bool only_borders) {
 	//color
 	shader_ctes_globals.global_color = color_mask;
 	shader_ctes_globals.uploadToGPU();
@@ -1115,55 +1115,59 @@ void CRenderDeferredModule::renderEspVisionModeFor(std::string tagstr, VEC4 colo
 		}
 	}
 
-	activateZ(ZCFG_OUTLINE, sencil_mask);
-	activateBlend(BLENDCFG_ADDITIVE);
-	//edge detection
-	{
-		rt_black->clear(VEC4(0, 0, 0, 0));
-		//PROFILE_FUNCTION(("referred: mark detection " + tagstr).c_str());
-		//CTraceScoped scope(("mark detection " + tagstr).c_str());
-		PROFILE_FUNCTION("referred: mark detection ");
-		CTraceScoped scope("mark detection ");
+	rt_black->clear(VEC4(0, 0, 0, 0));
+	if (only_borders) {
+		activateZ(ZCFG_OUTLINE, sencil_mask);
+		activateBlend(BLENDCFG_ADDITIVE);
+		//edge detection
+		{
+			
+			//PROFILE_FUNCTION(("referred: mark detection " + tagstr).c_str());
+			//CTraceScoped scope(("mark detection " + tagstr).c_str());
+			PROFILE_FUNCTION("referred: mark detection ");
+			CTraceScoped scope("mark detection ");
 
-		// Activar el rt para pintar las luces...
+			// Activar el rt para pintar las luces...
 
-		ID3D11RenderTargetView* rts[3] = {
-			rt_black->getRenderTargetView()
-			,	nullptr   // remove the other rt's from the pipeline
-			,	nullptr
-		};
-		// Y el ZBuffer del backbuffer principal
+			ID3D11RenderTargetView* rts[3] = {
+				rt_black->getRenderTargetView()
+				,	nullptr   // remove the other rt's from the pipeline
+				,	nullptr
+			};
+			// Y el ZBuffer del backbuffer principal
 
-		Render.ctx->OMSetRenderTargets(3, rts, Render.depth_stencil_view);
+			Render.ctx->OMSetRenderTargets(3, rts, Render.depth_stencil_view);
 
-		//activateZ(ZCFG_ALL_DISABLED);
+			//activateZ(ZCFG_ALL_DISABLED);
 
-		auto tech = Resources.get("global_color.tech")->as<CRenderTechnique>();
+			auto tech = Resources.get("global_color.tech")->as<CRenderTechnique>();
 
-		drawFullScreen(rt_final, tech);
-		//rt_black->clear(VEC4(0, 0, 0, 1)); //we dont care about that texture, clean black texture
-		CTexture::deactivate(TEXTURE_SLOT_DIFFUSE);
+			drawFullScreen(rt_final, tech);
+			//rt_black->clear(VEC4(0, 0, 0, 1)); //we dont care about that texture, clean black texture
+			CTexture::deactivate(TEXTURE_SLOT_DIFFUSE);
 
-		//Render.activateBackBuffer();
+			//Render.activateBackBuffer();
 
-		//drawFullScreen(rt_black);
+			//drawFullScreen(rt_black);
+		}
 	}
+
 	{
 		//PROFILE_FUNCTION(("referred: edge detection " + tagstr).c_str());
 		//CTraceScoped scope(("edge detection " + tagstr).c_str());
 		PROFILE_FUNCTION("referred: edge detection ");
 		CTraceScoped scope("edge detection ");
-		// Activar el rt para pintar las luces...
 
 		ID3D11RenderTargetView* rts[3] = {
 			rt_black->getRenderTargetView()
 			,	nullptr   // remove the other rt's from the pipeline
 			,	nullptr
 		};
-		// Y el ZBuffer del backbuffer principal
-
 		Render.ctx->OMSetRenderTargets(3, rts, Render.depth_stencil_view);
-		activateBlend(BLENDCFG_SUBSTRACT);
+
+		
+		if(only_borders)	activateBlend(BLENDCFG_SUBSTRACT);	//to make outlines
+		if(!only_borders)	activateBlend(BLENDCFG_ADDITIVE);
 		activateZ(ZCFG_ALL_DISABLED);
 
 		auto tech = Resources.get("global_color.tech")->as<CRenderTechnique>();
