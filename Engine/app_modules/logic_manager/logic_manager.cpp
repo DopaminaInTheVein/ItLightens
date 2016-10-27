@@ -691,6 +691,10 @@ void CLogicManagerModule::bindHandle(SLB::Manager& m) {
 		// destroy the handler
 		.set("destroy", &SLBHandle::destroy)
 		.comment("Destroy this element")
+		// set visible
+		.set("set_visible", &SLBHandle::setVisible)
+		.comment("Set visible its mesh")
+		.param("int: visible")
 		// set new to the object
 		.set("set_size", &SLBHandle::setSize)
 		.comment("set size to the object")
@@ -827,6 +831,10 @@ void CLogicManagerModule::bindHandleGroup(SLB::Manager& m) {
 		// Destroy
 		.set("destroy", &SLBHandleGroup::destroy)
 		.comment("Destroy all handlen in that group")
+		// set visible
+		.set("set_visible", &SLBHandleGroup::setVisible)
+		.comment("Set visible its mesh")
+		.param("int: visible")
 		;
 }
 
