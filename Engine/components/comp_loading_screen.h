@@ -11,7 +11,7 @@ class TCompLoadingScreen : public TCompBase {
 	void updateHandle(CHandle &h, std::string tag);
 	int cur_page = 0;
 	float time_page = 0.f;
-	float max_time_page = .5f;
+	float max_time_page = 2.f;
 	void tooglePages();
 	void swapPages();
 public:

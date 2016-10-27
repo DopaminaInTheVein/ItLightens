@@ -49,7 +49,6 @@ public:
 class CEntityParser : public CXMLParser {
 	CHandle curr_entity;
 	int curr_entity_id;
-	static float entity_load_value;
 	bool curr_entity_permanent;
 	bool curr_entity_reload;
 	bool curr_entity_slept;
@@ -59,6 +58,8 @@ class CEntityParser : public CXMLParser {
 	bool first_load;
 	bool reload = false;
 	bool loading_control = false;
+	float entity_load_accum = 0.f;
+	static float entity_load_value;
 	bool only_lights = false;
 	CHandle root_entity;
 	VHandles handles;

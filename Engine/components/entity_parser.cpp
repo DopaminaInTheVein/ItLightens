@@ -131,6 +131,7 @@ void CEntityParser::onStartElement(const std::string &elem, MKeyValue &atts) {
 		curr_entity_temp = atts.getBool("temp", false);
 		curr_entity_keyboard = atts.getBool("only_keyboard", false);
 		curr_entity_pad = atts.getBool("only_pad", false);
+		//entity_load_accum = 0.f;
 		if (!hasToCreate()) {
 			curr_entity = CHandle();
 			return;
@@ -187,6 +188,7 @@ void CEntityParser::onStartElement(const std::string &elem, MKeyValue &atts) {
 }
 
 void CEntityParser::onEndElement(const std::string &elem) {
+	if (loading_control) GameController->AddLoadingState(0.f); // for update
 	if (!hasToParse(elem)) return;
 
 	if (curr_prefab_compiler) {
@@ -224,7 +226,15 @@ void CEntityParser::onEndElement(const std::string &elem) {
 
 		if (loading_control)
 			GameController->AddLoadingState(entity_load_value);
+		//GameController->AddLoadingState(entity_load_value - entity_load_accum);
 	}
+	//else {
+	//	float to_add = 0.1 * entity_load_value;
+	//	if (to_add + entity_load_accum > entity_load_value)
+	//		to_add = entity_load_value - entity_load_accum;
+	//	entity_load_accum += to_add;
+	//	GameController->AddLoadingState(to_add);
+	//}
 
 	if (elem == "entities" || elem == "prefab") {
 		for (auto h : handles) {

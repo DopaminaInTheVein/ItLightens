@@ -58,9 +58,11 @@ void TCompLightPoint::uploadShaderCtes() {
 void TCompLightPoint::activate() {
 	if (!enabled) return;
 	CEntity* e = CHandle(this).getOwner();
-	assert(e);
+	//assert(e);
+	if (!e) return;
 	TCompTransform* trans = e->get<TCompTransform>();
-	assert(trans);
+	//assert(trans);
+	if (!trans) return;
 
 	// So the unit sphere goes to the proper place in screen
 	// 1.05 because the unit_sphere is inscribed inside the

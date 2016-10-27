@@ -83,4 +83,9 @@ void TCompLoadingScreen::swapPages()
 
 void TCompLoadingScreen::renderInMenu() {
 	IMGUI_SHOW_INT(loading_value);
+	if (ImGui::Button("Swap pages")) {
+		updateHandle(h_pag1, "loading_pag1");
+		updateHandle(h_pag2, "loading_pag2");
+		swapPages();
+	}
 }
