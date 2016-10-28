@@ -58,7 +58,7 @@ void TRenderHatching::init() {
 	shader_ctes_hatching.diffuse_strenght = 1.0f;
 	shader_ctes_hatching.frequency_texture = 10.0f;
 	shader_ctes_hatching.color_ramp = 0.0f;
-	shader_ctes_hatching.specular_force = 0.2f;
+	shader_ctes_hatching.specular_force = 0.5f;
 	shader_ctes_hatching.rim_specular = 1.5f;
 
 	shader_ctes_hatching.uploadToGPU();

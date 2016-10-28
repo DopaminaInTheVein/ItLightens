@@ -1,0 +1,9 @@
+<model>
+  <skeleton    src ="skeletons/cientifico/cientifico.csf"/>
+  <animations src ="skeletons/cientifico/"/>
+  <mesh     src="skeletons/cientifico/cientifico.cmf"/>
+  <key_bones 
+  />
+  <measures 
+  />
+</model>

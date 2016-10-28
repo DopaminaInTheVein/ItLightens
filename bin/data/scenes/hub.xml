@@ -650,8 +650,8 @@
 <name
    name="_mole_slept_sound"/>
 <transform
-   pos="-1.93588 52.5728 -20.103"
-   quat="0 -0.707107 0.707107 0"
+   pos="-1.96203 52.3895 -20.2486"
+   quat="0.5 -0.5 0.5 0.5"
    scale="1.0"/>
 
 </entity>
@@ -664,8 +664,8 @@
 <name
    name="_scientist_1_sound"/>
 <transform
-   pos="-1.68249 52.8966 -30.7131"
-   quat="0 -0.707107 0.707107 0"
+   pos="-1.6989 52.8966 -30.7382"
+   quat="0.5 -0.5 0.5 0.5"
    scale="1.0"/>
 
 </entity>
@@ -724,18 +724,18 @@
 <entity>
 <tags/>
 <name
-   name="Plane001"/>
+   name="Sphere_cielo"/>
 <transform
-   pos="2.56953 181.352 -24.604"
+   pos="12.2799 0 -27.0242"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/hub/Plane001.static_mesh"
+   name="static_meshes/hub/Sphere_cielo.static_mesh"
    static="true"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="hub/Plane001"/>
+   mesh_name="hub/Sphere_cielo"/>
 
 </entity>
 
