@@ -9,8 +9,8 @@
 #include "components/comp_render_static_mesh.h"
 
 VEC3 CGuiMunition::posIcon = VEC3(0.9f, 0.05f, 0.41f);
-VEC3 CGuiMunition::posTxt = VEC3(0.925f, 0.01, 0.42f);
-float CGuiMunition::scaleText = 0.4f;
+VEC3 CGuiMunition::posTxt = VEC3(0.05f, 0.06, 0.9f);
+float CGuiMunition::scaleText = 0.5f;
 float CGuiMunition::scaleIcon = 0.4f;
 
 void CGuiMunition::update(float dt)
@@ -48,15 +48,17 @@ void CGuiMunition::update(float dt)
 	//}
 
 	//Update gui elements
-	if (!player.isValid()) {
+	if (player.isValid() && !Gui->IsUiControl()) {
 		if (player_type == SCIENTIST) {
 			GET_COMP(sci, player, player_controller_cientifico);
 			GET_COMP(gui_number, number, TCompGui);
 			if (!sci || !gui_number) return;
 			if (gui_number) gui_number->setTxLetter('0' + sci->getMunition());
+			if (sci->getMunition() > 0) gui_number->SetColor(VEC4(0.f, 0.f, 1.f, 1.f));
+			else gui_number->SetColor(VEC4(1.f, 0.f, 0.f, 1.f));
 		}
 	}
-	if (Gui->IsUiControl()) {
+	else {
 		setVisible(polq, false);
 		setVisible(pole, false);
 		setVisible(number, false);
