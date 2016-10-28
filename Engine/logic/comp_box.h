@@ -22,7 +22,7 @@ struct TCompBox : public TCompBase {
 
 	VEC3 originPoint;
 	float dist_separation = 5.0f;
-	float push_box_distance = 0.965f;
+	float push_box_distance = 0.9635f;
 
 	~TCompBox();
 	void init();

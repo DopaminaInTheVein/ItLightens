@@ -293,8 +293,7 @@ void player_controller_mole::UpdateInputActions() {
 		else if (controller->IsMoveBackWard()) {
 			player_curr_speed = player_max_speed / 2.f;
 			pulling_box = true;
-			//animController->setState(AST_PULL_WALK);
-			animController->setState(AST_PUSH_WALK);
+			animController->setState(AST_PULL_WALK);
 			box_p->AddMovement(-push_pull_direction*push_box_force*player_curr_speed*getDeltaTime());
 			logic_manager->throwEvent(logic_manager->OnPushBox, "", boxGrabbed);
 		}
@@ -305,8 +304,7 @@ void player_controller_mole::UpdateInputActions() {
 		else {
 			// If we are pushing box in idle state, we just stop the sound
 			player_curr_speed = 0.f;
-			animController->setState(AST_IDLE);
-			//animController->setState(AST_PUSH_IDLE);
+			animController->setState(AST_PUSH_IDLE);
 			logic_manager->throwEvent(logic_manager->OnPushBoxIdle, "");
 		}
 	}
