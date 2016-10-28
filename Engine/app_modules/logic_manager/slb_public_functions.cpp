@@ -657,6 +657,14 @@ void SLBCamera::fadeIn(float speed) {
 	fx->FadeIn();
 }
 
+//void SLBCamera::fadeIn(float speed) {
+//	GET_FX(fx, TFadeScreen, FX_FADESCREEN);
+//	if (fx) {
+//		fx->SetMaxTime(speed);
+//		fx->FadeIn();
+//	}
+//}
+
 void SLBCamera::fadeOut(float speed) {
 	GET_FX(fx, TFadeScreen, FX_FADESCREEN);
 	if (!render_fx->isActive(FX_FADESCREEN)) {
@@ -665,6 +673,13 @@ void SLBCamera::fadeOut(float speed) {
 	fx->SetMaxTime(speed);
 	fx->FadeOut();
 }
+//void SLBCamera::fadeOut(float speed) {
+//	GET_FX(fx, TFadeScreen, FX_FADESCREEN);
+//	if (fx) {
+//		fx->SetMaxTime(speed);
+//		fx->FadeOut();
+//	}
+//}
 
 void SLBCamera::setFogHeight(float h)
 {
@@ -753,6 +768,13 @@ void SLBUiCamera::fadeIn(float speed) {
 	fx->SetMaxTime(speed);
 	fx->FadeIn();
 }
+//void SLBUiCamera::fadeIn(float speed) {
+//	TCompFadeScreen * fx = render_fx->GetFX<TCompFadeScreen>(FX_FADESCREEN_ALL);
+//	if (fx) {
+//		fx->SetMaxTime(speed);
+//		fx->FadeOut();
+//	}
+//}
 
 void SLBUiCamera::fadeOut(float speed) {
 	GET_FX(fx, TFadeScreenAll, FX_FADESCREEN_ALL);
@@ -763,17 +785,30 @@ void SLBUiCamera::fadeOut(float speed) {
 	fx->FadeOut();
 }
 
+//void SLBUiCamera::fadeOut(float speed) {
+//	TCompFadeScreen * fx = render_fx->GetFX<TCompFadeScreen>(FX_FADESCREEN_ALL);
+//	if (fx) {
+//		fx->SetMaxTime(speed);
+//		fx->FadeOut();
+//	}
+//}
+
+//void SLBUiCamera::fx(const char* name, bool enabled) {
+//	if (enabled) {
+//		if (!render_fx->isActive(name)) {
+//			render_fx->ActivateFXAtEnd(name);
+//		}
+//	}
+//	else {
+//		if (render_fx->isActive(name)) {
+//			render_fx->RemoveActiveFX(name);
+//		}
+//	}
+//}
+
 void SLBUiCamera::fx(const char* name, bool enabled) {
-	if (enabled) {
-		if (!render_fx->isActive(name)) {
-			render_fx->ActivateFXAtEnd(name);
-		}
-	}
-	else {
-		if (render_fx->isActive(name)) {
-			render_fx->RemoveActiveFX(name);
-		}
-	}
+	TCompBasicFX * fx = render_fx->GetFX<TCompBasicFX>(name);
+	if (fx) fx->enabled = enabled;
 }
 
 // Data
