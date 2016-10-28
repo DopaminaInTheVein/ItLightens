@@ -1,0 +1,3 @@
+<material tech="deferred.tech">
+<texture slot="diffuse" name="textures/comic_difuso.dds"/>
+</material>

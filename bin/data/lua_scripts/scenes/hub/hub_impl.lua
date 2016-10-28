@@ -131,5 +131,6 @@ end
 
 function hub_end()
 	SaveLevel()
-	LoadLevel("level_4")
+	cam:run_cinematic("CineEndHub", 1.0)
+	p:exec_command("LoadLevel(\"level_4\")", 3.0)
 end
