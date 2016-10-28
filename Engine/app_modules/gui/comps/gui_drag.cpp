@@ -14,8 +14,6 @@
 
 #include <math.h>
 
-#define LEFT_EVENT "left_event"
-#define RIGHT_EVENT "right_event"
 #define DRAG_ITEM_PREFAB "ui/drag_item"
 
 // Static info

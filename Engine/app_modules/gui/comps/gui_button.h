@@ -81,7 +81,7 @@ public:
 
 	//Render State
 	void updateRenderState();
-	//void updateSize();
+	void updateSize();
 	float getRenderState() { return render_state; }
 
 	//Aux

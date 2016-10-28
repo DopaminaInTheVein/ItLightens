@@ -87,6 +87,9 @@ void CImGuiModule::update(float dt) {
 		ImGui::EndMenuBar();
 	}
 	//---------------------------------------
+	//Current Level
+	IMGUI_SHOW_INT(CApp::get().GetLevelNumber());
+
 	//Language
 	IMGUI_SHOW_STRING(lang_manager->GetLanguage());
 
@@ -214,7 +217,7 @@ void CImGuiModule::update(float dt) {
 			ImGui::TreePop();
 		}
 		ImGui::TreePop();
-	}
+}
 #endif
 	//Profiling
 	//---------------------------------------

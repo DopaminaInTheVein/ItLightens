@@ -250,11 +250,17 @@ void CApp::clearSaveData() {
 }
 
 void CApp::loadedLevelNotify(bool new_level) {
-	current_level = next_level;
+	SetLevel(next_level);
 	next_level = "";
 	loading = false;
 	bool load_game = setContains(has_check_point, getCurrentLogicLevel());
 	GameController->OnLoadedLevel(new_level, load_game);
+}
+
+void CApp::SetLevel(std::string set_level)
+{
+	current_level = set_level;
+	current_level_number = (set_level[6] - '0');
 }
 
 void CApp::exitGame() {

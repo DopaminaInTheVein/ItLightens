@@ -40,7 +40,7 @@
    tags="options gui gui_selector"/>
 <gui
    menu_name="options"
-   row="0"
+   row="1"
    col="0"
    width="3.13228"
    height="0.154205"/>
@@ -62,7 +62,7 @@
    tags="options gui gui_selector"/>
 <gui
    menu_name="options"
-   row="1"
+   row="0"
    col="0"
    width="3.13228"
    height="0.154205"/>
@@ -84,7 +84,7 @@
    tags="options gui gui_drag"/>
 <gui
    menu_name="options"
-   row="2"
+   row="4"
    col="0"
    width="3.13228"
    height="0.154205"/>
@@ -128,7 +128,7 @@
    tags="options gui gui_selector"/>
 <gui
    menu_name="options"
-   row="5"
+   row="2"
    col="0"
    width="3.13228"
    height="0.154205"/>
@@ -174,7 +174,7 @@
 <name
    name="btn_opt_back"/>
 <transform
-   pos="1.24535 -97.2352 6.80901"
+   pos="1.24535 -97.2352 6.09391"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
