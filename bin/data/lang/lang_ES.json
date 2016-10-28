@@ -79,7 +79,7 @@
         "help_box_pad": "Acercate a la caja y presiona *XPAD* para empujar o tirar de ella.",
         "help_djump": "Presiona *SPACE* para saltar. Presiona en el aire de nuevo para un doble salto.",
         "help_djump_pad": "Presiona *APAD* para saltar. Presiona en el aire de nuevo para un doble salto.",
-        "fall_column": "Vaya, Me he caído...."
+        "fall_column": "Vaya, me he caído...."
     },
     "tuto_sci": {
         "help_possess": "Este es el sueño de la CIENTIFICO.\nAcercate a ella y presiona *SHIFT* para controlarla.",
@@ -93,18 +93,18 @@
         "help_repair_pad": "Como es un sueño, los GUARDIAS se quedaran aturdidos.\nAcercate al DRONE y presiona *XPAD* para repararlo.",
         "help_unpossess": "Presiona *SHIFT* de nuevo para salir de la CIENTIFICO.",
         "help_unpossess_pad": "Presiona *YPAD* de nuevo para salir de la CIENTIFICO.",
-        "help_polarity": "Presiona *QKEY* y *EKEY* para cambiar tu polaridad.\nUsa esta abilidad para ser atraído o repelido por el DRONE.\n*WKEY**AKEY**SKEY**DKEY* + *SPACE* te permite situarte encima del DRONE para la repulsión.\nPuede haber cajas con polaridad por el mundo...",
-        "help_polarity_pad": "Presiona *LB* y *RB* para cambiar tu polaridad.\nUsa esta abilidad para ser atraído o repelido por el DRONE.\n*LSTICK* + *APAD* te permite situarte encima del DRONE para la repulsión.\nPuede haber cajas con polaridad por el mundo...",
+        "help_polarity": "Presiona *QKEY* y *EKEY* para cambiar tu polaridad.\nUsa esta habilidad para ser atraído o repelido por el DRONE.\n*WKEY**AKEY**SKEY**DKEY* + *SPACE* te permite situarte encima del DRONE para la repulsión.\nPuede haber cajas con polaridad por el mundo...",
+        "help_polarity_pad": "Presiona *LB* y *RB* para cambiar tu polaridad.\nUsa esta habilidad para ser atraído o repelido por el DRONE.\n*LSTICK* + *APAD* te permite situarte encima del DRONE para la repulsión.\nPuede haber cajas con polaridad por el mundo...",
         "help_generator": "Presiona *LMOUSE* cerca de un generador para recuperar tu energía.\nAquí también abrirá la puerta.",
         "help_generator_pad": "Presiona *XPAD* cerca de un generador para recuperar tu energía.\nAquí también abrirá la puerta.",
         "help_exit": "Recuperaste tu energía!\nAtraviesa la puerta para completar el tutorial."
     },
     "ms3": {
-        "pila_1": "Donde puedo utilizar esta pila?",
+        "pila_1": "Dónde puedo utilizar esta pila?",
         "pila_2": "Este objeto tenia energía antes...",
-        "sci_pila": "La pila está agotada. Y es muy pesada para mi...",
+        "sci_pila": "La pila está agotada. Y es muy pesada para mí...",
         "cargador_player_1": "La pila está recargada.",
-        "cargador_player_2": "La pila encaja bien.\nPero no se como funciona esta máquina...",
+        "cargador_player_2": "La pila encaja bien.\nPero no sé como funciona esta máquina...",
         "cargador_player_3": "Siento mucha energía aquí...",
         "cargador_sci_1": "La pila tiene energía y funciona!",
         "cargador_sci_2": "Vamos allá!",
@@ -114,7 +114,7 @@
         "enchufe_player_2": "La pila de aquí no tiene energía...",
         "enchufe_player_3": "Necesita energía para funcionar.",
         "enchufe_sci_1": "Esto es un buen trabajo.",
-        "enchufe_sci_2": "La pila está vacia, y es muy pesada para mi...",
+        "enchufe_sci_2": "La pila está vacía, y es muy pesada para mí...",
         "enchufe_sci_3": "Necesita una pila para funcionar.",
         "elevator_player": "No se que es esto ni como funciona.",
         "look_wall": "Este muro parece débil. Seguro que hay algo detrás..."
