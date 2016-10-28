@@ -141,6 +141,7 @@ void CPlayerBase::setLife(float new_life)
 	assert(eMe);
 	TCompLife * life = eMe->get<TCompLife>();
 	assert(life || fatal("Player doesnt have life component!"));
+	if (!life) return;
 	life->setCurrent(new_life);
 }
 

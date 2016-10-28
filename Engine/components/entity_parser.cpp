@@ -188,7 +188,7 @@ void CEntityParser::onStartElement(const std::string &elem, MKeyValue &atts) {
 }
 
 void CEntityParser::onEndElement(const std::string &elem) {
-	if (loading_control) GameController->AddLoadingState(0.f); // for update
+	//if (loading_control) GameController->AddLoadingState(0.f); // for update
 	if (!hasToParse(elem)) return;
 
 	if (curr_prefab_compiler) {
