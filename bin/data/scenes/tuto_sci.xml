@@ -238,7 +238,7 @@
 <name
    name="panel_mapeado"/>
 <transform
-   pos="45.4892 1.1108 -2.62513"
+   pos="45.4892 1.14687 -2.62513"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
