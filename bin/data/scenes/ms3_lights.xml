@@ -963,29 +963,4 @@
 	tags=""
 	/>
 </entity>
-<entity
-	permanent="0"
-	reload="0"
->
-<culling
-	/>
-<light_dir_shadows_dynamic
-	color="1.000000 1.000000 1.000000 0.000000"
-	fov="75"
-	resolution="512"
-	zfar="100"
-	znear="5"
-	/>
-<name
-	name="light_dir_shadow_dyn1"
-	/>
-<room
-	name="1"
-	/>
-<transform
-	pos="-9.707741 -14.106126 -2.549666"
-	quat="0.706490 0.000000 0.000000 0.707723"
-	scale="1.000000 1.000000 1.000000"
-	/>
-</entity>
 </entities>
