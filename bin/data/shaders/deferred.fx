@@ -232,8 +232,8 @@ void PSLightPoint(
   float4 specular_color = txSpeculars.Load(ss_load_coords); 
   float  glossiness = txGlossiness.Load(ss_load_coords).r;
   
-  // Calculo el vector E normalizado
-  float3 E = normalize(CameraWorldPos.xyz - wPos);
+  float3 E = normalize(CameraWorldPos.xyz - wPos.xyz);
+
 
   float3 H = normalize(E + L);
   float  cos_beta = saturate(dot(N, H));
@@ -249,8 +249,10 @@ void PSLightPoint(
   //spec_amount /= 2.0f;
 
   // Environment. incident_vector = -E
-  float3 E_refl = reflect(-E, N);
-  float3 env = txDiffuse.Sample(samLinear, E_refl).xyz;
+  //float3 E_refl = reflect(-E_fixed, N/2);
+  
+  
+  
   
 	//if(NL < 1.0f)
 		//NL = 1.0f;
@@ -284,8 +286,10 @@ void PSLightPoint(
   // Aportacion final de la luz es NL x color_luz x atenuacion
   o_color.xyz = lightCol * NL * distance_att * albedo + o_specular.xyz*specular_color;
  
-  //o_color.xyz += env * glossiness * 0.3;
+  //o_color.xyz += env * glossiness * 0.02;
+  //o_color.xyz = env.xyz;
   //o_color.xyz = E_refl.xyz;
+  //o_color = length((CameraWorldPos - pos_env));
   o_color.a = 1.;
   
   //o_inv_shadows = float4(1,1,1,1);
@@ -505,10 +509,27 @@ void PSLightDirShadows(
 	}else{
 		o_inv_shadows = float4(0,0,0,0);
 	}
+	
+	float4 specular_color = txSpeculars.Load(ss_load_coords); 
+	float  glossiness = txGlossiness.Load(ss_load_coords).r;
   
+	float3 E = normalize(CameraWorldPos.xyz - wPos.xyz);
+	float3 H = normalize(E + L);
+	float  cos_beta = saturate(dot(N, H));
+	//glossiness *= 10;
+	glossiness *= 100.0f;
+
+	//float spec_reflec = pow(cos_beta, 20);
+	float spec_amount = pow(cos_beta, (255-glossiness*3)/10);
+
+	//spec_amount += spec_reflec*glossiness;
+	spec_amount *= att_factor;
+	
+	o_specular = spec_amount*specular_force*LightColor.a*0.2f;
+	o_specular.a = 1;
+	
   //final_color = float4(1,1,1,1);
 	float4 albedo = txDiffuse.Load(ss_load_coords);
-	o_specular = float4(0,0,0,0);
 	o_color = (NLWarped * final_color * albedo + o_specular);
   
 }

@@ -44,11 +44,11 @@ void TRenderHatching::init() {
 	tech = Resources.get("hatching.tech")->as<CRenderTechnique>();
 
 	//enable textures
-	Resources.get("textures/hatching/hatching_tileable_ALPHAS.dds")->as<CTexture>()->activate(63);
+	Resources.get("textures/hatching/hatching_tileable_ALPHAS.dds")->as<CTexture>()->activate(TEXTURE_SLOT_HATCHING);
 	Resources.get("textures/hatching/hatching_tileable_prueba_plugin.dds")->as<CTexture>()->activate(64);
 
 	//hatching texture
-	Resources.get("textures/hatching/hatch_0.dds")->as<CTexture>()->activate(TEXTURE_SLOT_HATCHING);
+	//Resources.get("textures/hatching/hatch_0.dds")->as<CTexture>()->activate(TEXTURE_SLOT_HATCHING);
 
 	shader_ctes_hatching.edge_lines_detection = 0.02f;
 	shader_ctes_hatching.frequency_offset = 8.0f;

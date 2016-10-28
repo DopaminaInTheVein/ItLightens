@@ -15,7 +15,7 @@ ShaderBuffer(TCteGlobals, CTE_SHADER_GLOBALS_SLOT)
   float env_factor;
   float shadow_intensity;
   float polarity;
-  float goblal_dummy;
+  float level;
 
   float4 global_color;
 };

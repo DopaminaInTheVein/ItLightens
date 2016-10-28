@@ -605,6 +605,9 @@
     <ClCompile Include="render\fx\fx_ssao.cpp">
       <Filter>render\fx</Filter>
     </ClCompile>
+    <ClCompile Include="lights_data\lights_data.cpp">
+      <Filter>lights_data</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="windows\app.h">
@@ -1563,6 +1566,9 @@
     <ClInclude Include="render\fx\fx_ssao.h">
       <Filter>render\fx</Filter>
     </ClInclude>
+    <ClInclude Include="lights_data\lights_data.h">
+      <Filter>lights_data</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="windows">
@@ -1747,6 +1753,9 @@
     </Filter>
     <Filter Include="ui">
       <UniqueIdentifier>{2917f34c-ffc3-42e4-89ef-6a7fc4026c36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lights_data">
+      <UniqueIdentifier>{86554aab-12fa-408b-bd82-9bbdf48b476f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

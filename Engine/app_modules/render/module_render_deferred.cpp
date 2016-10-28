@@ -43,6 +43,9 @@
 #include "test_module_fx.h"
 #include "app_modules\io\io.h"
 
+//cubemaps
+#include "lights_data\lights_data.h"
+
 extern CRenderPostProcessModule* render_fx;
 
 // ------------------------------------------------------
@@ -148,6 +151,10 @@ bool CRenderDeferredModule::start() {
 
 	Resources.get("textures/ramps/rampa_prueba.dds")->as<CTexture>()->activate(TEXTURE_SLOT_RAMP);
 
+	//upload cubemaps
+	TContainerCubemaps c;
+	c.uploadTextures();
+
 	shader_ctes_globals.use_ramp = 1;
 	shader_ctes_globals.world_time = 0.f;
 	shader_ctes_globals.xres = xres;
@@ -163,6 +170,7 @@ void CRenderDeferredModule::stop() {
 	//RenderManager.clear();
 }
 
+static bool test_reflections = false;
 // ------------------------------------------------------
 void CRenderDeferredModule::update(float dt) {
 	shader_ctes_globals.world_time += dt;
@@ -177,6 +185,11 @@ void CRenderDeferredModule::update(float dt) {
 	if (io->keys[VK_F6].becomesPressed()) {
 		UpdateStaticShadowMaps();
 	}
+#ifndef NDEBUG
+	if (io->keys[VK_F5].becomesPressed()) {
+		test_reflections = !test_reflections;
+	}
+#endif
 
 	//m_isSpecialVisionActive = tags_manager.getFirstHavingTag(getID("player")).hasTag("raijin") && controller->IsSenseButtonPressed();
 	m_isSpecialVisionActive = GameController->isSenseVisionEnabled();
@@ -493,6 +506,7 @@ void CRenderDeferredModule::renderAccLight() {
 	//Render.activateBackBuffer();
 	SetOutputDeferred();
 
+
 	{
 		// Activar el rt para pintar las luces...
 		ID3D11RenderTargetView* rts[3] = {
@@ -508,6 +522,26 @@ void CRenderDeferredModule::renderAccLight() {
 		activateBlend(BLENDCFG_SUBSTRACT);
 		drawFullScreen(blurred_shadows);
 		//CTexture::deactivate(TEXTURE_SLOT_SHADOWS);
+	}
+
+	{
+		rt_specular_lights->activate(TEXTURE_SLOT_SPECULAR_GL);
+		//ss_reflections
+		ID3D11RenderTargetView* rts[3] = {
+			rt_acc_light->getRenderTargetView()
+			,  nullptr
+			,  nullptr
+		};
+		// Y el ZBuffer del backbuffer principal
+		Render.ctx->OMSetRenderTargets(3, rts, Render.depth_stencil_view);
+
+		activateBlend(BLENDCFG_ADDITIVE);
+		if(test_reflections)activateBlend(BLENDCFG_DEFAULT);
+		activateZ(ZCFG_ALL_DISABLED);
+
+		auto tech = Resources.get("ss_reflections.tech")->as<CRenderTechnique>();
+
+		drawFullScreen(rt_albedos, tech);
 	}
 
 	CTexture::deactivate(TEXTURE_SLOT_DIFFUSE);

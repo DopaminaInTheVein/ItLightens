@@ -221,6 +221,7 @@
     <ClCompile Include="handle\handle.cpp" />
     <ClCompile Include="handle\handle_manager.cpp" />
     <ClCompile Include="imgui\imgui_user.cpp" />
+    <ClCompile Include="lights_data\lights_data.cpp" />
     <ClCompile Include="logic\aicontroller.cpp" />
     <ClCompile Include="logic\ai_cam.cpp" />
     <ClCompile Include="logic\ai_workbench.cpp" />
@@ -471,6 +472,7 @@
     <ClInclude Include="imgui\imgui_internal.h" />
     <ClInclude Include="imgui\imgui_user.h" />
     <ClInclude Include="imgui\stb_textedit.h" />
+    <ClInclude Include="lights_data\lights_data.h" />
     <ClInclude Include="logic\aicontroller.h" />
     <ClInclude Include="logic\ai_cam.h" />
     <ClInclude Include="logic\ai_workbench.h" />
