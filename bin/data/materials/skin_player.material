@@ -1,6 +1,5 @@
 <material tech="skin_textured.tech">
 <texture slot="diffuse" name="textures/player/player_albedo_map.dds"/>
-<texture slot="specular" name="textures/player/player_specular.dds"/>
 <texture slot="selfilum" name="textures/player/player_self_ilumination.dds"/>
 <texture slot="selfilum_plus" name="textures/player/player_self_ilumination_azul.dds"/>
 <texture slot="selfilum_minus" name="textures/player/player_self_ilumination_rojo.dds"/>
