@@ -130,7 +130,7 @@
 <name
    name="pared_rompible"/>
 <transform
-   pos="-87.1847 0.893398 -7.83921"
+   pos="-87.1911 0.893398 -7.83921"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh

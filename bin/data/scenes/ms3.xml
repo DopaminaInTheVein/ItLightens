@@ -1700,8 +1700,6 @@
 <rigidbody
    type_collision="static"
    mesh_name="ms3/pantallas"/>
-<room
-   name="2"/>
 
 </entity>
 <entity>
@@ -1719,8 +1717,6 @@
 <rigidbody
    type_collision="static"
    mesh_name="ms3/pantallas001"/>
-<room
-   name="2"/>
 
 </entity>
 <entity>
@@ -6026,6 +6022,23 @@
    scale="1.0"/>
 <room
    name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="techo_oficina"/>
+<transform
+   pos="-83.1094 9.10116 -9.22597"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/techo_oficina.static_mesh"
+   static="true"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"
+   mesh_name="ms3/techo_oficina"/>
 
 </entity>
 
