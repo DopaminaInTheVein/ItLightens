@@ -40,6 +40,7 @@ public:
 	void loadEntities(std::string file_name);
 	void loadLights(std::string file_name);
 	void loadedLevelNotify(bool new_level);
+	void SetLevel(std::string set_level);
 	//void restart();
 	void restartLevelNotify();
 	void saveLevel();
@@ -60,7 +61,7 @@ public:
 	static CApp& get();
 
 	CTimer timer_app;
-
+	int GetLevelNumber() { return current_level_number; }
 private:
 
 	// Windows stuff
@@ -72,6 +73,7 @@ private:
 	bool	  loading = false;
 
 	std::string current_level = "";
+	int current_level_number = -1;
 	std::string next_level = "";
 
 	VModules  all_modules;

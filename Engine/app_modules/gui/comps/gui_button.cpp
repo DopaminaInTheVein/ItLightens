@@ -200,7 +200,7 @@ void TCompGuiButton::update(float dt)
 {
 	Recalc();
 	updateRenderState();
-	//updateSize();
+	updateSize();
 }
 
 void TCompGuiButton::updateRenderState()
@@ -219,20 +219,20 @@ void TCompGuiButton::updateRenderState()
 	myGui->setRenderTarget(render_state_target, speed);
 }
 
-//void TCompGuiButton::updateSize()
-//{
-//	//update size buttons
-//	float offset = render_state;
-//
-//	//reset offset
-//	if (offset > RSTATE_OVER) {
-//		offset = (RSTATE_RELEASED - offset) / RSTATE_RELEASED;
-//	}
-//	// +1 because default render state is 0
-//	//float value = 1 + offset*0.25f;
-//	//if (value != 0)
-//	//	myTransform->setScale(VEC3(value, value, value));
-//}
+void TCompGuiButton::updateSize()
+{
+	//update size buttons
+	float offset = render_state;
+
+	//reset offset
+	if (offset > RSTATE_OVER) {
+		offset = (RSTATE_RELEASED - offset) / RSTATE_RELEASED;
+	}
+	// +1 because default render state is 0
+	float value = 1 + offset*0.25f;
+	if (value != 0)
+		myTransform->setScale(VEC3(value, value, value));
+}
 
 #define DragFloatTimes(name, sufix, rstate) if (ImGui::DragFloat(STRING(name), &name, 0.01f, 0.001f, 1.f)) speeds_##sufix[RStates::rstate] = inverseFloat(name);
 void TCompGuiButton::renderInMenu()

@@ -174,7 +174,7 @@
 <name
    name="btn_opt_back"/>
 <transform
-   pos="1.24535 -97.2352 6.80901"
+   pos="1.24535 -97.2352 6.09391"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh

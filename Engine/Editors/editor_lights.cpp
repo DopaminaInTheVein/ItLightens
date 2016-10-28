@@ -653,6 +653,11 @@ void CEditorLights::EditLight::updateLight(CHandle lowner)
 	pNear.update(light->original->getNearPointer(), light->getNearPointer());
 	pFar.update(light->original->getFarPointer(), light->getFarPointer());
 	pFov.update(light->original->getFovPointer(), light->getFovPointer());
+	if (pFov.modified || pFar.modified || pNear.modified) {
+		GET_COMP(light_shadow, lowner, TCompLightDirShadows);
+		if (light_shadow) light_shadow->setProjection();
+	}
+
 }
 
 void CEditorLights::EditLight::LightParam::update(float *orig, float * dest)
@@ -663,16 +668,36 @@ void CEditorLights::EditLight::LightParam::update(float *orig, float * dest)
 
 	switch (mode) {
 	case OFFSET:
+		if (*dest != *orig)
+			this->modified = true;
+		else {
+			this->modified = false;
+		}
+
 		*dest = *orig + v;
 		break;
 	case PROP:
+		if (*dest != *orig)
+			this->modified = true;
+		else {
+			this->modified = false;
+		}
 		*dest = *orig * v;
 		break;
 	case REPLACE:
+		if (*dest != *orig)
+			this->modified = true;
+		else {
+			this->modified = false;
+		}
 		*dest = v;
 		break;
 	}
+
 	*dest = clamp(*dest, rmin, rmax);
 	ToIntern(orig);
 	ToIntern(dest);
+
+	
+
 }

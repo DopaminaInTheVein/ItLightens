@@ -186,8 +186,8 @@ void TCompGui::update(float elapsed)
 		GET_COMP(parent_st_mesh, parent, TCompRenderStaticMesh);
 		GET_MY(my_st_mesh, TCompRenderStaticMesh);
 		if (my_st_mesh && parent_st_mesh) {
-			if (parent_st_mesh->IsHidden()) my_st_mesh->Show();
-			else my_st_mesh->Hide();
+			if (parent_st_mesh->IsHidden()) my_st_mesh->Hide();
+			else my_st_mesh->Show();
 		}
 	}
 
@@ -206,18 +206,18 @@ void TCompGui::update(float elapsed)
 	}
 
 	//update size buttons
-	CEntity* e_owner = CHandle(this).getOwner();
-	TCompTransform* trans = e_owner->get<TCompTransform>();
-	float offset = getRenderState();
+	//CEntity* e_owner = CHandle(this).getOwner();
+	//TCompTransform* trans = e_owner->get<TCompTransform>();
+	//float offset = getRenderState();
 
-	//reset offset
-	if (offset > RSTATE_OVER) {
-		offset = (RSTATE_RELEASED - offset) / RSTATE_RELEASED;
-	}
-	// +1 because default render state is 0
-	float value = 1 + offset*0.25f;
-	if (value < 1.f) value = 1.f;
-	trans->setScale(VEC3(value, value, value));
+	////reset offset
+	//if (offset > RSTATE_OVER) {
+	//	offset = (RSTATE_RELEASED - offset) / RSTATE_RELEASED;
+	//}
+	//// +1 because default render state is 0
+	//float value = 1 + offset*0.25f;
+	//if (value < 1.f) value = 1.f;
+	//trans->setScale(VEC3(value, value, value));
 }
 
 void TCompGui::uploadCtes() {

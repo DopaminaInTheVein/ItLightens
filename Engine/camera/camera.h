@@ -27,14 +27,14 @@ class CCamera {
 protected:
 	VEC3 min_ortho;
 	VEC3 max_ortho;
-	void updateViewProjection();
+	
 public:
 
 	//For Test
 	//static float cui_left, cui_right, cui_bottom, cui_top;
 
 	CCamera();
-
+	void updateViewProjection();
 	// View
 	void lookAt(VEC3 eye, VEC3 target, VEC3 up = VEC3(0, 1, 0));
 	void smoothLookAt(VEC3 eye, VEC3 target, VEC3 up = VEC3(0, 1, 0), float smooth_factor = 10);
@@ -51,6 +51,7 @@ public:
 
 	// Projection
 	void setProjection(float fov_v_vertical_rads, float znear, float zfar);
+	void setProjection();
 	void setAspectRatio(float new_ratio);
 	void setOrtho(float size_x, float size_y, float znear, float zfar, float ar = 1);
 	bool isOrtho() const { return is_ortho; }
@@ -63,8 +64,12 @@ public:
 
 	MAT44 getViewProjection() const { return view_projection; }
 	float* getNearPointer() { return &znear; }
-	float* getFarPointer() { return &zfar; }
-	float* getFovPointer() { return &fov_vertical_rads; }
+	float* getFarPointer() { 
+		return &zfar; 
+	}
+	float* getFovPointer() { 
+		return &fov_vertical_rads; 
+	}
 };
 
 #endif
