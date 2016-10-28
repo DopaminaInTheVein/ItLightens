@@ -84,8 +84,8 @@
     "tuto_sci": {
         "help_possess": "Este es el sueño de la CIENTIFICO.\nAcercate a ella y presiona *SHIFT* para controlarla.",
         "help_possess_pad": "Este es el sueño de la CIENTIFICO.\nAcercate a ella y presiona *YPAD* para controlarla.",
-        "help_wb": "Esta personaje es muy lista, puede crear bombas\nen los sitios de trabajo. Presiona *LMOUSE* para crear algunas.\nTambién parece que has descubrido como sobrecargarte,\nasí puedes aturdir los GUARDIAS con *LMOUSE*, pero perderás mucha vida.",
-        "help_wb_pad": "Esta personaje es muy lista, puede crear bombas\nen los sitios de trabajo. Presiona *XPAD* para crear algunas.\nTambién parece que has descubrido como sobrecargarte,\nasí puedes aturdir los GUARDIAS con *XPAD*, pero perderás mucha vida.",
+        "help_wb": "Esta personaje es muy lista, puede crear bombas\nen los sitios de trabajo. Presiona *LMOUSE* para crear algunas.\nTambién parece que has descubierto como sobrecargarte,\nasí puedes aturdir los GUARDIAS con *LMOUSE*, pero perderás mucha vida.",
+        "help_wb_pad": "Esta personaje es muy lista, puede crear bombas\nen los sitios de trabajo. Presiona *XPAD* para crear algunas.\nTambién parece que has descubierto como sobrecargarte,\nasí puedes aturdir los GUARDIAS con *XPAD*, pero perderás mucha vida.",
         "help_bomb": "Tira bombas con *EKEY*.\nLas bombas permiten aturdir los GUARDIAS un ratito\nLos GUARDIAS son los únicos personajes que te ven...\nY quieren tu muerte, ve con cuidado!",
         "help_bomb_pad": "Tira bombas con *RB*.\nLas bombas permiten aturdir los GUARDIAS un ratito\nLos GUARDIAS son los únicos personajes que te ven...\nY quieren tu muerte, ve con cuidado!",
         "stunned_guard_remain": "Fallaste!\nPodría ser peor... Aturde el GUARDA que queda.",
