@@ -13,6 +13,8 @@
 #include "app_modules/render/module_render_deferred.h"
 #include "app_modules/navmesh/navmesh_manager.h"
 
+#include "render\draw_utils.h"
+
 extern CRenderDeferredModule * render_deferred;
 
 bool CGameController::start()
@@ -219,6 +221,8 @@ void CGameController::OnLoadedLevel(bool new_level, bool load_game)
 	logic_manager->throwEvent(game_event, std::string(params));
 	//if (!Gui->IsUiControl())
 	//	GameController->SetGameState(CGameController::RUNNING);
+
+	shader_ctes_globals.level = CApp::get().GetLevelNumber();
 
 	GameController->SetLoadingState(100.f);
 }

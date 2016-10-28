@@ -1,0 +1,4 @@
+<tech>
+  <vs fx="effects" main="VSTextureScreen" decl="positions_uv" />
+  <ps fx="effects" main="PSReflections" />
+</tech>
