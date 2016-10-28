@@ -87,6 +87,12 @@ void CCamera::setProjection(float new_fov_vertical_rads, float new_znear, float 
 	updateViewProjection();
 }
 
+void CCamera::setProjection() {
+	is_ortho = false;
+	projection = MAT44::CreatePerspectiveFieldOfView(fov_vertical_rads, aspect_ratio, znear, zfar);
+	updateViewProjection();
+}
+
 // Orthographic projection
 void CCamera::setOrtho(float size_x, float size_y, float new_znear, float new_zfar, float ar) {
 	//ar = aspect_ratio screen

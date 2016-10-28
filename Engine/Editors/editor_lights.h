@@ -44,6 +44,7 @@ public:
 		struct LightParam {
 			std::string name = "unnamed";
 			float v = 0;
+			bool modified = false;
 			EditMode mode = OFFSET;
 			bool vmode[SIZE] = { false };
 			bool changed_by_user = false;
