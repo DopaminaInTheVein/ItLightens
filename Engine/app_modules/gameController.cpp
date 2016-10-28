@@ -50,7 +50,9 @@ void CGameController::Setup()
 }
 int CGameController::GetGameState() const {
 	int res = game_state;
-	if (Gui && Gui->IsUiControl()) res = STOPPED;
+	if (game_state != PLAY_VIDEO) {
+		if (Gui && Gui->IsUiControl()) res = STOPPED;
+	}
 	return res;
 }
 void CGameController::SetGameState(int state) {

@@ -47,7 +47,7 @@ wireGoDown()
 end
 
 function OnEnter_tVictory( )
-OnVictory()
+Ms3Victory()
 end
 
 function OnEnter_tSave01( )
