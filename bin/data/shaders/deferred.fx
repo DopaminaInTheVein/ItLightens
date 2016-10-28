@@ -473,7 +473,7 @@ void PSLightDirShadows(
 	lightSpacePos.x = (lightSpacePos.x + 1) * 0.5;
 	lightSpacePos.y = (1 - lightSpacePos.y) * 0.5;
 
-	float4 light_mask = txLightMask.Sample(samLightBlackBorder, lightSpacePos.xy );
+	float4 light_mask = txLightMask.Sample(samLightBlackBorder, lightSpacePos.xy )-0.2;
 	if( lightSpacePos.w < 0 )
 		light_mask.xyzw = .0;
   
@@ -526,8 +526,8 @@ void PSLightDirShadows(
 	spec_amount *= att_factor;
 	
 	
-	o_specular = spec_amount*specular_force*0.2f;
-	o_specular.a = 1;
+	o_specular = spec_amount*specular_force*light_mask*0.2f;
+	//o_specular.a = 0;
 	
 	if(LightColor.a <= 0){
 		o_specular = float4(0,0,0,0);
