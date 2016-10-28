@@ -526,7 +526,10 @@ function SceneLoaded(real_level)
 	if g_loading_screen then
 		--p:exit_game()
 		p:pause_game()
-		p:putTextUi("loading_skip", "::loading_skip", 0.4, 0.1, "#000000FF", 0.4)
+		p:putTextUi("loading_skip", "::loading_skip", 0.475, 0.08, "#555599EE", 0.4)
+		local hloading_text = Handle()
+		hloading_text:get_handle_by_name_tag("loadingpalabra", "loading_text")
+		hloading_text:destroy()
 		p:wait_action("InitScene(\""..real_level.."\");");
 		--p:exec_command("InitScene()", 5.0)
 	else

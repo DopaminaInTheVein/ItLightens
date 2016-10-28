@@ -44,10 +44,11 @@ function OnClicked_btn_opt_menu( )
 end
 
 function OnClicked_btn_exit_pause( )
-	p:play_sound("event:/OnMenuCancel", 1.0, false)
-	p:wait_escape_cancel()
-	p:print("exit..")
-	p:exit_game()
+	OnClicked_btn_back_title() --El exit ya no es exit!
+	-- p:play_sound("event:/OnMenuCancel", 1.0, false)
+	-- p:wait_escape_cancel()
+	-- p:print("exit..")
+	-- p:exit_game()
 end
 
 function destroyMenu( )

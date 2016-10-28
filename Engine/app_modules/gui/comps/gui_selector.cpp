@@ -23,7 +23,7 @@
 #define COLOR_DISABLED "#757575FF"
 #define COLOR_SPEED 0.3f
 #define FONT_SIZE_FACTOR 1.5f
-#define ARROW_SEPARATION_FACTOR 1.25
+#define ARROW_SEPARATION_FACTOR 1.5
 
 // Static info
 map<string, statehandler> TCompGuiSelector::statemap = {};

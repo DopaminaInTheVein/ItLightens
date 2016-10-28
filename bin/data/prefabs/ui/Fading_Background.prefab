@@ -1,5 +1,6 @@
 <entities>
 <entity permanent="yes">
+<gui/>
 <tags
 	tags="hiddeable_hud"/>
 <name

@@ -26,7 +26,7 @@
 <name
    name="cursor_opt"/>
 <transform
-   pos="6.99314 -94.9994 6.26128"
+   pos="6.99314 -94.9994 9.0"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -48,7 +48,7 @@
 <name
    name="opt_lang"/>
 <transform
-   pos="7.21628 -93.946 6.08875"
+   pos="7.21628 -94.1214 6.08875"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -70,7 +70,7 @@
 <name
    name="opt_diff"/>
 <transform
-   pos="7.21628 -93.0153 6.08875"
+   pos="7.21628 -93.2697 6.08875"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -92,7 +92,7 @@
 <name
    name="opt_music"/>
 <transform
-   pos="7.21628 -96.7922 6.08875"
+   pos="7.21628 -96.7262 6.08875"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -114,7 +114,7 @@
 <name
    name="opt_sfx"/>
 <transform
-   pos="7.21628 -95.8291 6.08875"
+   pos="7.21628 -95.9155 6.08875"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -136,7 +136,7 @@
 <name
    name="opt_axisY"/>
 <transform
-   pos="7.21628 -94.8719 6.08875"
+   pos="7.21628 -94.9711 6.08875"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -174,7 +174,7 @@
 <name
    name="btn_opt_back"/>
 <transform
-   pos="1.24535 -97.2352 6.09391"
+   pos="1.24535 -97.2352 6.07768"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh

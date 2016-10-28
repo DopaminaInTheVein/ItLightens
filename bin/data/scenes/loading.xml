@@ -35,7 +35,7 @@
 <name
    name="Plane001"/>
 <transform
-   pos="6.87576 -95.196 9.45184"
+   pos="6.87576 -95.0969 9.45184"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -60,7 +60,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ui/loading/controlesmandospagina2.static_mesh"
+   name="static_meshes/ui/loading/controlesmandos1.static_mesh"
    static="false"
    hidden="yes"/>
 <abs_aabb/>
@@ -87,7 +87,7 @@
 <name
    name="piladelante"/>
 <transform
-   pos="8.63346 -97.1112 9.7751"
+   pos="8.63346 -97.1112 9.74056"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -98,7 +98,7 @@
 </entity>
 <entity>
 <tags
-   tags="loading gui"/>
+   tags="loading loading_text gui"/>
 <gui
    menu_name="loading"
    width="0.737976"
@@ -126,7 +126,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ui/loading/loadingfondo.static_mesh"
+   name="static_meshes/ui/loading/Plane002.static_mesh"
    static="true"/>
 <abs_aabb/>
 
@@ -166,7 +166,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ui/loading/controlesmandospagina1.static_mesh"
+   name="static_meshes/ui/loading/controlesmandos1.static_mesh"
    static="false"/>
 <abs_aabb/>
 
@@ -187,7 +187,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ui/loading/controlesteclado.static_mesh"
+   name="static_meshes/ui/loading/controlesmandos1.static_mesh"
    static="false"/>
 <abs_aabb/>
 
@@ -208,7 +208,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ui/loading/controlesteclado2.static_mesh"
+   name="static_meshes/ui/loading/controlesmandos1.static_mesh"
    static="false"
    hidden="yes"/>
 <abs_aabb/>

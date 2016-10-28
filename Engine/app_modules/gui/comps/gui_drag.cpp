@@ -15,7 +15,7 @@
 #include <math.h>
 
 #define DRAG_ITEM_PREFAB "ui/drag_item"
-
+#define DRAG_ITEM_SCALE_FACTOR 2
 // Static info
 map<string, statehandler> TCompGuiDrag::statemap = {};
 
@@ -74,7 +74,7 @@ void TCompGuiDrag::AddDragItem()
 	if (tmx && gui) {
 		tmx->setPosition(myTransform->getPosition() + VEC3_FRONT * 0.01f);
 		float height = myGui->GetHeight();
-		tmx->setScaleBase(VEC3(height, height, height));
+		tmx->setScaleBase(VEC3(height, height, height) * DRAG_ITEM_SCALE_FACTOR);
 		gui->SetHeight(height);
 		gui->SetWidth(height); // No es un error, la flecha es cuadrada con la altura del selector
 		gui->SetParent(MY_OWNER);

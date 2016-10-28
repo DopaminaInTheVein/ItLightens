@@ -107,7 +107,9 @@ void TCompGuiCursor::putCursorOn(CHandle next_gui)
 {
 	assert(next_gui.isValid());
 	GET_COMP(tmx, next_gui, TCompTransform);
-	if (tmx) myTransform->setPosition(tmx->getPosition());
+	VEC3 new_pos = tmx->getPosition();
+	new_pos.z = myTransform->getPosition().z;
+	if (tmx) myTransform->setPosition(new_pos);
 	GET_COMP(gui, next_gui, TCompGui);
 	VEC3 offset = VEC3(gui->GetWidth(), -gui->GetHeight(), 0.f);
 	myTransform->addPosition(offset*0.4f);
