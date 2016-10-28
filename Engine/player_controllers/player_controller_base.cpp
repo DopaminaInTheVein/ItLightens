@@ -97,7 +97,13 @@ void CPlayerBase::setControllable(bool control)
 	stopMovement();
 	ChangeState("idle");
 	ChangeCommonState("idle");
-	if (!control) sense_vision->unregisterHandle(myHandle);
+	if (!control) {
+		if (!h_sense_vision.isValid()) h_sense_vision = tags_manager.getFirstHavingTag("game_controller");
+		sense_vision = GETH_COMP(h_sense_vision, TCompSenseVision);
+		assert(sense_vision);
+		if (!sense_vision) return;
+		sense_vision->unregisterHandle(myHandle);
+	}
 }
 
 void CPlayerBase::onGoAndLook(const TMsgGoAndLook& msg) {

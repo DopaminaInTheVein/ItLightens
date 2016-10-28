@@ -159,21 +159,21 @@ float TCompFadingGlobe::getGlobeScale()
 	float range_x = sinf(cam->getFov())*dist*2.f;
 	return Gui->getUiSize().x * size_world / range_x;
 }
-void TCompFadingGlobe::render() const {
-#ifndef NDEBUG
-	PROFILE_FUNCTION("TCompFadingGlobe render");
-
-	bool b = false;
-
-	ImGui::Begin("Game GUI", &b, ImVec2(resolution_x, resolution_y), 0.0f, flags);
-	ImGui::SetWindowSize("Game GUI", ImVec2(resolution_x, resolution_y));
-
-	/*Rect rect = GUI::createRect(screen_x, screen_y, 0.1f, 0.1f);
-	GUI::drawRect(rect, obtainColorFromString("#00FF00FF"));*/
-
-	ImGui::End();
-#endif
-}
+//void TCompFadingGlobe::render() const {
+//#ifndef NDEBUG
+//	PROFILE_FUNCTION("TCompFadingGlobe render");
+//
+//	bool b = false;
+//
+//	ImGui::Begin("Game GUI", &b, ImVec2(resolution_x, resolution_y), 0.0f, flags);
+//	ImGui::SetWindowSize("Game GUI", ImVec2(resolution_x, resolution_y));
+//
+//	/*Rect rect = GUI::createRect(screen_x, screen_y, 0.1f, 0.1f);
+//	GUI::drawRect(rect, obtainColorFromString("#00FF00FF"));*/
+//
+//	ImGui::End();
+//#endif
+//}
 
 bool TCompFadingGlobe::isBehindCamera() {
 	float cam_x = shader_ctes_camera.CameraWorldPos.x;
