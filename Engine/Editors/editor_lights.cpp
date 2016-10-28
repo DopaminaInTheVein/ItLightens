@@ -277,6 +277,8 @@ bool CEditorLights::AddLightToEngine(TypeLight type, bool* rooms)
 		std::string sname = "point_light";
 		sname += std::to_string(id_name);
 		name->setName(sname);
+		TCompLightPoint* light = h;
+		if (m_show_axis) light->debug_render = true;
 	}
 	else if (type == TypeLight::DIR) {
 		h = spawnPrefab("light_dir_default");
@@ -287,6 +289,9 @@ bool CEditorLights::AddLightToEngine(TypeLight type, bool* rooms)
 		std::string sname = "light_dir";
 		sname += std::to_string(id_name);
 		name->setName(sname);
+		TCompLightDir* light = h;
+		if (m_show_axis) light->setRenderDebug(true);
+
 	}
 	else if (type == TypeLight::DIR_SHADOWS) {
 		h = spawnPrefab("light_dir_shadows_default");
@@ -297,6 +302,8 @@ bool CEditorLights::AddLightToEngine(TypeLight type, bool* rooms)
 		std::string sname = "light_dir_shadow";
 		sname += std::to_string(id_name);
 		name->setName(sname);
+		TCompLightDirShadows* light = h;
+		if (m_show_axis) light->setRenderDebug(true);
 	}
 	else if (type == TypeLight::DIR_SHADOWS_DYN) {
 		h = spawnPrefab("light_dir_shadows_dyn_default");
@@ -307,6 +314,8 @@ bool CEditorLights::AddLightToEngine(TypeLight type, bool* rooms)
 		std::string sname = "light_dir_shadow_dyn";
 		sname += std::to_string(id_name);
 		name->setName(sname);
+		TCompLightDirShadowsDynamic* light = h;
+		if(m_show_axis) light->setRenderDebug(true);
 	}
 	else {
 		//nothing to do

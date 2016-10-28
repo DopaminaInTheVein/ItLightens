@@ -27,6 +27,11 @@ bool TCompTransform::load(MKeyValue& atts) {
 	auto p = atts.getPoint("pos");
 	auto q = atts.getQuat("quat");
 	auto s = atts.getFloat("scale", 1.0f);
+
+	if (q == VEC4(0.707107, 0, 0, 0.707107)) {
+		q.w += 0.00001;
+	}
+
 	setPosition(p);
 	setRotation(q);
 	setScaleBase(VEC3(s));
