@@ -665,10 +665,12 @@ int bt_guard::actionSeekWpt() {
 		if (turnTo(dest)) {
 			curkpt = (curkpt + 1) % keyPoints.size();
 			path_found = false;
+			SET_ANIM_GUARD(AST_IDLE);
 			return OK;
 		}
 		else {
 			stuck_time = 0.f;
+			SET_ANIM_GUARD(AST_MOVE);
 			return STAY;
 		}
 	}
@@ -682,7 +684,6 @@ int bt_guard::actionNextWpt() {
 	if (!myParent.isValid()) return false;
 	lookAtFront();
 	if (keyPoints.size() == 0) return false;
-	SET_ANIM_GUARD(AST_TURN);
 	VEC3 myPos = my_tmx->getPosition();
 	VEC3 dest = keyPoints[curkpt].pos;
 	//Player Visible?
@@ -696,9 +697,11 @@ int bt_guard::actionNextWpt() {
 		return OK;
 	//Look to waypoint
 	if (turnTo(dest)) {
+		SET_ANIM_GUARD(AST_IDLE);
 		return OK;
 	}
 	else {
+		SET_ANIM_GUARD(AST_MOVE);
 		return STAY;
 	}
 }
@@ -761,7 +764,7 @@ int bt_guard::actionTurnToFormation() {
 		return OK;
 	}
 	else {
-		SET_ANIM_GUARD(AST_TURN);
+		SET_ANIM_GUARD(AST_MOVE);
 		return STAY;
 	}
 }
