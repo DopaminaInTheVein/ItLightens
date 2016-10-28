@@ -71,6 +71,7 @@ void CLogicManagerModule::update(float dt) {
 	//Exec wait
 	updateWait(command_wait, exec_wait, controller->IsBackPressed());
 	updateWait(command_wait_escape, exec_wait_escape, controller->IsEscapePressed());
+	updateWait(command_wait_action, exec_wait_action, controller->IsActionButtonPessed());
 	//if (exec_wait) {
 	//	const char* copy_code = command_wait.code;
 	//	exec_wait = false;
@@ -999,6 +1000,10 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		.comment("Executes the specified command after press escape/back button")
 		.param("string: code to execute")
 		// cancel command function
+		.set("wait_action", &SLBPublicFunctions::waitAction)
+		.comment("Executes the specified command after press action button")
+		.param("string: code to execute")
+		// cancel command function
 		.set("wait_button_cancel", &SLBPublicFunctions::cancelWaitButton)
 		.comment("Cancel wait command")
 		// cancel command function escape
@@ -1138,6 +1143,15 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		.param("float: scale")
 		.param("string: HEX TEXT COLOR TARGET -> #RRGGBBAA")
 		.param("float: scale")
+		.param("float: scale")
+		// launch text span
+		.set("putTextUi", &SLBPublicFunctions::putTextUi)
+		.comment("Shows the specified text")
+		.param("string: text id")
+		.param("string: text to show")
+		.param("float:  x pos")
+		.param("float:  y pos")
+		.param("string: HEX TEXT COLOR -> #RRGGBBAA")
 		.param("float: scale")
 		// alter text span
 		//.set("alterText", &SLBPublicFunctions::alterText)

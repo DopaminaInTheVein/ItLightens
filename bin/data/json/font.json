@@ -175,7 +175,7 @@
 		"row":12,
 		"col":5,
 		"size":2,
-		"space_right":16
+		"space_right":0
 	}
 	,"ESC": {
 		"row":13,

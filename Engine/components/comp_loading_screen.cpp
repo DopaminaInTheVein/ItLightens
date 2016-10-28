@@ -46,9 +46,10 @@ void TCompLoadingScreen::update(float dt) {
 	}
 
 	tooglePages();
-
-	if (loading_value >= 100.f) {
-		GameController->LoadComplete(true);
+	if (GameController->IsLoadingState()) {
+		if (loading_value >= 100.f) {
+			GameController->LoadComplete(true);
+		}
 	}
 }
 

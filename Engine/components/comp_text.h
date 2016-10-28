@@ -22,6 +22,7 @@ class TCompText : public TCompBase {
 	bool loop = false;
 
 	std::string original_text;
+	std::string section;
 	Font::VCharacter text;
 
 	float  ttl;
@@ -36,8 +37,8 @@ public:
 	// Getter
 	const std::string getId() const { return id; }
 	// Setter
-	void setup(std::string id, std::string text, float posx, float posy, std::string textColor, float scale, std::string set_textColorTarget, float set_textColorSpeed, float set_textColorSpeedLag, float set_posz = 0.99f, bool loop = true);
-	void SetText(std::string text);
+	void setup(std::string id, std::string text, float posx, float posy, std::string textColor, float scale, std::string set_textColorTarget, float set_textColorSpeed, float set_textColorSpeedLag, float set_posz = 0.5f, bool loop = true);
+	void SetText(std::string text, std::string section = "");
 	void SetId(std::string text);
 	void SetPosWorld(VEC3 pos);
 	void SetPosScreen(VEC3 pos);

@@ -187,6 +187,7 @@ public:
 	void execCommand(const char* exec_code, float exec_time);
 	void waitButton(const char* exec_code);
 	void waitEscape(const char* exec_code);
+	void waitAction(const char* exec_code);
 	void cancelWaitButton();
 	void cancelWaitEscape();
 	void completeTasklist(int i);
@@ -221,6 +222,7 @@ public:
 	void showMessage(const char* text, const char* icon);
 	void hideMessage();
 	void putText(const char* id, const char* text, float posx, float posy, const char* textColor, float scale, const char* textColorTarget, float textColorSpeed, float textColorSpeedLag);
+	void putTextUi(const char* id, const char* text, float posx, float posy, const char* textColor, float scale);
 	//AI control
 	void AIStart();
 	void AIStop();

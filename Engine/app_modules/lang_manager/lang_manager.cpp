@@ -85,6 +85,7 @@ void CLangManagerModule::GetLanguageMap(LangMap& lmap, std::string lang_file) {
 
 	// Read action texts
 	lmap["actions"] = readIniAtrDataStr(lang_file, "actions");
+	lmap["ui"] = readIniAtrDataStr(lang_file, "ui");
 }
 
 std::string CLangManagerModule::getText(std::string entry, std::string scene) {

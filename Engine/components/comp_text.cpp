@@ -77,10 +77,11 @@ void TCompText::SetId(std::string new_id)
 {
 	id = new_id;
 }
-void TCompText::SetText(std::string new_text)
+void TCompText::SetText(std::string new_text, std::string new_section)
 {
 	original_text = new_text;
-	text = Font::getVChar(lang_manager->getText(new_text));
+	section = new_section;
+	text = Font::getVChar(lang_manager->getText(new_text, section));
 	printed = false;
 }
 void TCompText::SetPosWorld(VEC3 pos)
@@ -144,11 +145,14 @@ void TCompText::printLetters() {
 				//ltmx->setScale(VEC3(ceilf(tchar.GetSize()), 1.f, 1.f));
 
 				//Color
-				lgui->SetColor(color);
-				if (colorChangeSpeed > 0.0f) {
-					lgui->setTargetColorAndSpeed(colorTarget, colorChangeSpeed, accumLag, loop);
+				if (tchar.isSpecial()) lgui->SetColor(tchar.GetColor());
+				else {
+					lgui->SetColor(color);
+					if (colorChangeSpeed > 0.0f) {
+						lgui->setTargetColorAndSpeed(colorTarget, colorChangeSpeed, accumLag, loop);
+					}
+					accumLag += colorChangeSpeedLag;
 				}
-				accumLag += colorChangeSpeedLag;
 			}
 		}
 	}
@@ -174,10 +178,10 @@ void TCompText::SetZ(float z)
 
 void TCompText::onLanguageChanged(const TMsgLanguageChanged &msg)
 {
-	SetText(original_text);
+	SetText(original_text, section);
 }
 
 void TCompText::onControlsChanged(const TMsgControlsChanged &msg)
 {
-	SetText(original_text);
+	SetText(original_text, section);
 }

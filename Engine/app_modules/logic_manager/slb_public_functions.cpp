@@ -825,6 +825,11 @@ void SLBPublicFunctions::waitEscape(const char* exec_code) {
 	command new_command(exec_code);
 	logic_manager->setWaitEscape(new_command);
 }
+void SLBPublicFunctions::waitAction(const char* exec_code) {
+	// create the new command
+	command new_command(exec_code);
+	logic_manager->setWaitAction(new_command);
+}
 void SLBPublicFunctions::cancelWaitButton() {
 	logic_manager->setWait(command());
 }
@@ -1027,7 +1032,10 @@ void SLBPublicFunctions::putTextUi(const char* id, const char* text, float posx,
 	CHandle h = createPrefab("ui/text");
 	GET_COMP(t, h, TCompText);
 	t->SetId(id);
-	t->setup(std::string(id), text_fixed, posx, posy, std::string(textColor), scale);
+	t->SetText(text, "ui");
+	t->SetPosScreen(VEC3(posx, posy, 0.975f));
+	t->SetColor(textColor);
+	t->SetSize(scale);
 }
 
 void SLBPublicFunctions::removeText(const char* id) {

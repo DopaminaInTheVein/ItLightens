@@ -25,7 +25,7 @@ bool TCompLightDirShadows::load(MKeyValue& atts) {
 
 	enabled = atts.getBool("enabled", true);
 	generate_shadow = atts.getBool("gen_shadow", true);
-	
+
 	return is_ok;
 }
 bool TCompLightDirShadows::save(std::ofstream& os, MKeyValue& atts) {
@@ -42,6 +42,7 @@ void TCompLightDirShadows::update(float dt) {
 
 void TCompLightDirShadows::uploadShaderCtes(CEntity* e) {
 	TCompTransform* trans = e->get<TCompTransform>();
+	if (!trans) return;
 	VEC3 lpos = trans->getPosition();
 	shader_ctes_lights.LightWorldPos = VEC4(lpos);
 	shader_ctes_lights.LightWorldFront = VEC4(trans->getFront());
@@ -62,7 +63,6 @@ void TCompLightDirShadows::uploadShaderCtes(CEntity* e) {
 
 	light_mask->activate(TEXTURE_SLOT_LIGHT_MASK);
 }
-
 
 void TCompLightDirShadows::activate() {
 	PROFILE_FUNCTION("shadows: activate");
@@ -149,7 +149,7 @@ void TCompLightDirShadows::renderInMenu()
 {
 	TCompLightDir::renderInMenu();
 	ImGui::Checkbox("Cast shadows", &generate_shadow);
- }
+}
 
 void TCompLightDirShadows::start_editing() {
 	if (original) delete original;

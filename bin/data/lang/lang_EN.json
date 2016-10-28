@@ -1,4 +1,8 @@
 {
+	"ui": {
+		"loading_skip": "*LMOUSE*:Let's play!",
+		"loading_skip_pad": "*XPAD*:Let's play!"
+	},
     "actions": {
         "none": "",
         "overcharge": "*LMOUSE*: Overcharge",
