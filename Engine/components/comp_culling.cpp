@@ -70,15 +70,23 @@ void TCompCulling::update() {
 	PROFILE_FUNCTION("TCompCulling: do culling");
 	for (size_t i = 0; i < hm->size(); ++i, ++aabb) {
 		PROFILE_FUNCTION("TCompCulling: do culling each");
-		bool isPlayer = false;
-		{
+
+		CHandle aabb_h = aabb;
+		CHandle aabb_h_owner = aabb_h.getOwner();
+
+		bool isPlayer = aabb_h_owner == CPlayerBase::handle_player;
+		/*{
 			PROFILE_FUNCTION("TCompCulling: isPlayer");
 			isPlayer = MY_OWNER == CPlayerBase::handle_player;
-		}
+		}*/
 		{
 			PROFILE_FUNCTION("TCompCulling: isVisible");
-			if (planes.isVisible(aabb) || MY_OWNER == CPlayerBase::handle_player)
+			if (isPlayer) {
 				bits.set(i);
+			}
+			else if (planes.isVisible(aabb)) {
+				bits.set(i);
+			}
 		}
 	}
 }

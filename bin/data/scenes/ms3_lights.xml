@@ -1,676 +1,641 @@
 <entities>
+<entity>
+<tags/>
+<light_point
+   color="1.0 0.862745 0.717647 0.435"
+   in_radius="20.9071"
+   out_radius="31.0896"/>
+<name
+   name="Omni001"/>
+<transform
+   pos="-9.71152 -3.55078 -0.586896"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
 
-  <!-- SALA 1 -->
+</entity>
+<entity>
+<tags/>
+<light_point
+   color="1.0 0.862745 0.717647 0.305"
+   in_radius="8.02324"
+   out_radius="23.5648"/>
+<name
+   name="Omni002"/>
+<transform
+   pos="-4.61685 -5.5431 0.9247"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
 
+</entity>
+<entity>
+<tags/>
+<light_point
+   color="1.0 0.862745 0.717647 0.305"
+   in_radius="8.02324"
+   out_radius="23.5648"/>
+<name
+   name="Omni003"/>
+<transform
+   pos="-14.788 -5.5431 0.0915428"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
 
-  <!-- Omnis -->
-  <entity>
-    <tags
-       tags=""/>
-    <light_point
-       color="0.7 0.7 0.5 1.0"
-       in_radius="25.0"
-       out_radius="70.0"/>
-    <name
-       name="Omni100"/>
-    <transform
-       pos="-9.300 -8.482 -1.00"
-       quat="0 0 0 1.0"
-       scale="1.0"/>
-    <room
-       name="1/2"/>
-  </entity>
+</entity>
+<entity>
+<tags/>
+<light_point
+   color="1.0 0.862745 0.717647 0.455"
+   in_radius="8.57845"
+   out_radius="21.7013"/>
+<name
+   name="Omni006"/>
+<transform
+   pos="-39.9101 -18.5099 23.7538"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
 
-  <!--<entity>
-    <tags
-       tags=""/>
-    <light_point
-       color="0.3 0.3 0.1 0.1"
-       in_radius="15.0"
-       out_radius="70.0"/>
-    <name
-       name="Omni101"/>
-    <transform
-       pos="-14.500 -9.582 0"
-       quat="0 0 0 1.0"
-       scale="1.0"/>
-    <room
-        name="1/2"/>
-  </entity>
+</entity>
+<entity>
+<tags/>
+<light_point
+   color="1.0 0.862745 0.717647 0.545"
+   in_radius="3.85428"
+   out_radius="18.6631"/>
+<name
+   name="Omni007"/>
+<transform
+   pos="-41.1214 3.58379 -0.80906"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
 
-  <entity>
-    <tags
-       tags=""/>
-    <light_point
-       color="0.3 0.3 0.1 0.1"
-       in_radius="15.0"
-       out_radius="70.0"/>
-    <name
-       name="Omni102"/>
-    <transform
-       pos="-4.7 -9.582 0.7"
-       quat="0 0 0 1.0"
-       scale="1.0"/>
-    <room
-        name="1/2"/>
-  </entity>
+</entity>
+<entity>
+<tags/>
+<light_point
+   color="1.0 0.862745 0.717647 0.545"
+   in_radius="3.85428"
+   out_radius="18.6631"/>
+<name
+   name="Omni008"/>
+<transform
+   pos="-17.6726 1.7092 25.2418"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
 
-  <entity>
-    <tags
-       tags=""/>
-    <light_point
-       color="0.3 0.3 0.1 0.1"
-       in_radius="15.0"
-       out_radius="70.0"/>
-    <name
-       name="Omni103"/>
-    <transform
-       pos="-6.8 -9.582 -5.3"
-       quat="0 0 0 1.0"
-       scale="1.0"/>
-    <room
-        name="1/2"/>
-  </entity>
+</entity>
+<entity>
+<tags/>
+<light_point
+   color="1.0 0.862745 0.717647 0.475"
+   in_radius="2.88956"
+   out_radius="8.53738"/>
+<name
+   name="Omni010"/>
+<transform
+   pos="10.3101 -7.83066 25.1737"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
 
-  <entity>
-    <tags
-       tags=""/>
-    <light_point
-       color="0.3 0.3 0.1 0.1"
-       in_radius="15.0"
-       out_radius="70.0"/>
-    <name
-       name="Omni104"/>
-    <transform
-       pos="-10.2 -9.582 4.6"
-       quat="0 0 0 1.0"
-       scale="1.0"/>
-    <room
-        name="1/2"/>
-  </entity>
+</entity>
+<entity>
+<tags/>
+<light_point
+   color="1.0 0.862745 0.717647 0.435"
+   in_radius="3.25981"
+   out_radius="17.22"/>
+<name
+   name="Omni011"/>
+<transform
+   pos="19.5998 -18.5099 23.8533"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
 
-  <entity>
-    <tags
-       tags=""/>
-    <light_point
-       color="0.3 0.3 0.1 0.1"
-       in_radius="15.0"
-       out_radius="70.0"/>
-    <name
-       name="Omni104"/>
-    <transform
-       pos="-13.00 -9.582 4.7"
-       quat="0 0 0 1.0"
-       scale="1.0"/>
-    <room
-        name="1/2"/>
-  </entity>
--->
-  <!-- shadows -->
+</entity>
+<entity>
+<tags/>
+<light_point
+   color="1.0 0.862745 0.717647 0.475"
+   in_radius="2.88956"
+   out_radius="8.53738"/>
+<name
+   name="Omni012"/>
+<transform
+   pos="10.2618 -7.91235 -24.8462"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
 
-  <entity>
-    <name name="light_dir_shadows10" />
-    <transform pos="-9.6 -10.300 -1.10" yaw = "0" pitch = "-89.9"	/>
-    <light_dir_shadows_dynamic color="1 1 1 1" znear="5.0" zfar="100" fov="45" resolution="512"/>
-    <culling/>
-    <room
-     name="1"/>
-  </entity>
+</entity>
+<entity>
+<tags/>
+<light_point
+   color="1.0 0.862745 0.717647 0.605"
+   in_radius="2.92131"
+   out_radius="12.9445"/>
+<name
+   name="Omni013"/>
+<transform
+   pos="29.7566 -7.37627 -8.01152"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
 
+</entity>
+<entity>
+<tags/>
+<light_point
+   color="1.0 0.862745 0.717647 0.605"
+   in_radius="2.92131"
+   out_radius="12.9445"/>
+<name
+   name="Omni014"/>
+<transform
+   pos="29.7566 -7.37626 7.78783"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
 
-  <!-- SALA 2 -->
+</entity>
+<entity>
+<tags/>
+<light_point
+   color="1.0 0.862745 0.717647 0.455"
+   in_radius="8.57845"
+   out_radius="21.7013"/>
+<name
+   name="Omni015"/>
+<transform
+   pos="-39.7827 -18.5099 -23.9405"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
 
-  <!-- Omnis -->
- <entity>
-    <tags
-       tags=""/>
-    <light_point
-       color="0.7 0.7 1.0 0.4"
-       in_radius="7.0"
-       out_radius="15.0"/>
-    <name
-       name="Omni001"/>
-    <transform
-       pos="-91.664 4.218 -9.648"
-       quat="0 0 0 1.0"
-       scale="1.0"/>
-    <room
-     name="1/2"/>
+</entity>
+<entity>
+<tags/>
+<light_point
+   color="1.0 0.858824 0.709804 0.375"
+   in_radius="4.04217"
+   out_radius="10.7316"/>
+<name
+   name="Omni016"/>
+<transform
+   pos="-20.4724 -18.5099 -23.9405"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
 
-  </entity>
+</entity>
+<entity>
+<tags/>
+<light_dir_shadows
+   gen_shadow="yes"
+   color="0.913726 0.996079 0.82353 0.351"
+   znear="6.18135"
+   zfar="8.978"
+   fov="77.5"/>
+<culling/>
+<name
+   name="Fspot001"/>
+<transform
+   pos="-67.2909 4.95731 7.71195"
+   quat="0.707107 0 0 0.707107"
+   scale="1.0"/>
 
-  <entity>
-    <tags
-       tags=""/>
-    <light_point
-       color="0.7 0.7 1.0 0.4"
-       in_radius="7.0"
-       out_radius="15.0"/>
-    <name
-       name="Omni021"/>
-    <transform
-       pos="-92.564 4.218 -18.148"
-       quat="0 0 0 1.0"
-       scale="1.0"/>
-    <room
-     name="1/2"/>
-  </entity>
+</entity>
+<entity>
+<tags/>
+<light_point
+   color="1.0 0.827451 0.639216 0.259"
+   in_radius="0.520364"
+   out_radius="25.6331"/>
+<name
+   name="Omni018"/>
+<transform
+   pos="-67.2909 1.85775 12.2411"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
 
-  <entity>
-    <tags
-       tags=""/>
-    <light_point
-       color="0.7 0.7 1.0 0.4"
-       in_radius="7.0"
-       out_radius="15.0"/>
-    <name
-       name="Omni022"/>
-    <transform
-       pos="-86.264 4.218 -26.448"
-       quat="0 0 0 1.0"
-       scale="1.0"/>
-    <room
-    name="2"/>
-  </entity>
+</entity>
+<entity>
+<tags/>
+<light_dir_shadows
+   gen_shadow="yes"
+   color="0.913726 0.996079 0.82353 0.351"
+   znear="6.18135"
+   zfar="8.978"
+   fov="77.5"/>
+<culling/>
+<name
+   name="Fspot002"/>
+<transform
+   pos="-67.2909 4.95731 16.2942"
+   quat="0.707107 0 0 0.707107"
+   scale="1.0"/>
 
-  <entity>
-    <tags
-       tags=""/>
-    <light_point
-       color="0.7 0.7 1.0 0.4"
-       in_radius="7.0"
-       out_radius="15.0"/>
-    <name
-       name="Omni023"/>
-    <transform
-       pos="-79.564 4.218 -26.448"
-       quat="0 0 0 1.0"
-       scale="1.0"/>
-    <room
-    name="2"/>
-  </entity>
+</entity>
+<entity>
+<tags/>
+<light_dir_shadows
+   gen_shadow="yes"
+   color="0.913726 0.996079 0.82353 0.351"
+   znear="6.18135"
+   zfar="8.978"
+   fov="77.5"/>
+<culling/>
+<name
+   name="Fspot003"/>
+<transform
+   pos="-64.8288 4.95731 -6.97766"
+   quat="0.707107 0 0 0.707107"
+   scale="1.0"/>
 
-  <entity>
-    <tags
-       tags=""/>
-    <light_point
-       color="0.7 0.7 1.0 0.7"
-       in_radius="6.0"
-       out_radius="12.0"/>
-    <name
-       name="Omni_oficina"/>
-    <transform
-       pos="-80.864 1.518 -8.448"
-       quat="0 0 0 1.0"
-       scale="1.0"/>
-    <room
-    name="2"/>
-  </entity>
+</entity>
+<entity>
+<tags/>
+<light_dir_shadows
+   gen_shadow="yes"
+   color="0.913726 0.996079 0.82353 0.351"
+   znear="6.18135"
+   zfar="8.978"
+   fov="77.5"/>
+<culling/>
+<name
+   name="Fspot005"/>
+<transform
+   pos="-79.7709 4.95731 2.37872"
+   quat="0.707107 0 0 0.707107"
+   scale="1.0"/>
 
-  <entity>
-    <tags
-       tags=""/>
-    <light_point
-       color="0.7 0.7 1.0 1.0"
-       in_radius="5.0"
-       out_radius="10.0"/>
-    <name
-       name="Omni_cosas"/>
-    <transform
-       pos="-90.064 1.318 16.752"
-       quat="0 0 0 1.0"
-       scale="1.0"/>
-    <room
-    name="2"/>
-  </entity>
+</entity>
+<entity>
+<tags/>
+<light_dir_shadows
+   gen_shadow="yes"
+   color="0.913726 0.996079 0.82353 0.351"
+   znear="6.18135"
+   zfar="8.978"
+   fov="77.5"/>
+<culling/>
+<name
+   name="Fspot006"/>
+<transform
+   pos="-89.26 4.65133 2.37872"
+   quat="0.707107 0 0 0.707107"
+   scale="1.0"/>
 
-  <entity>
-    <tags
-       tags=""/>
-    <light_point
-       color="1.0 1.0 0.5 0.7"
-       in_radius="3.0"
-       out_radius="6.0"/>
-    <name
-       name="Omni_cosas_p"/>
-    <transform
-       pos="-88.634 0.318 21.452"
-       quat="0 0 0 1.0"
-       scale="1.0"/>
-    <room
-    name="2"/>
-  </entity>
+</entity>
+<entity>
+<tags/>
+<light_dir_shadows
+   gen_shadow="yes"
+   color="0.913726 0.996079 0.82353 0.351"
+   znear="3.62536"
+   zfar="7.09262"
+   fov="77.5"/>
+<culling/>
+<name
+   name="Fspot007"/>
+<transform
+   pos="-90.2643 1.93533 16.3373"
+   quat="0.707107 0 0 0.707107"
+   scale="1.0"/>
 
-  <entity>
-    <tags
-       tags=""/>
-    <light_point
-       color="0.7 0.7 1.0 0.4"
-       in_radius="7.0"
-       out_radius="15.0"/>
-    <name
-       name="Omni024"/>
-    <transform
-       pos="-77.164 4.218 -15.448"
-       quat="0 0 0 1.0"
-       scale="1.0"/>
-    <room
-    name="2"/>
-  </entity>
+</entity>
+<entity>
+<tags/>
+<light_dir_shadows
+   gen_shadow="yes"
+   color="0.913726 0.996079 0.82353 0.321"
+   znear="6.18135"
+   zfar="8.978"
+   fov="77.5"/>
+<culling/>
+<name
+   name="Fspot009"/>
+<transform
+   pos="-82.6705 4.75274 -26.2625"
+   quat="0.707107 0 0 0.707107"
+   scale="1.0"/>
 
-  <entity>
-    <tags
-       tags=""/>
-    <light_point
-       color="0.7 0.7 1.0 0.4"
-       in_radius="7.0"
-       out_radius="15.0"/>
-    <name
-       name="Omni007"/>
-    <transform
-       pos="-100.264 4.218 -9.148"
-       quat="0 0 0 1.0"
-       scale="1.0"/>
-    <room
-    name="2"/>
-  </entity>
+</entity>
+<entity>
+<tags/>
+<light_dir_shadows
+   gen_shadow="yes"
+   color="0.913726 0.996079 0.82353 0.351"
+   znear="6.18135"
+   zfar="8.978"
+   fov="77.5"/>
+<culling/>
+<name
+   name="Fspot010"/>
+<transform
+   pos="-99.9094 4.59611 -9.50144"
+   quat="0.707107 0 0 0.707107"
+   scale="1.0"/>
 
-  <entity>
-    <tags
-       tags=""/>
-    <light_point
-       color="0.7 0.7 1.0 0.4"
-       in_radius="7.0"
-       out_radius="15.0"/>
-    <name
-       name="Omni0011"/>
-    <transform
-       pos="-91.064 4.218 2.052"
-       quat="0 0 0 1.0"
-       scale="1.0"/>
-    <room
-    name="2"/>
-  </entity>
+</entity>
+<entity>
+<tags/>
+<light_point
+   color="1.0 0.827451 0.639216 0.259"
+   in_radius="0.520364"
+   out_radius="25.6331"/>
+<name
+   name="Omni019"/>
+<transform
+   pos="-62.3635 1.85775 -7.48719"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
 
-  <entity>
-    <tags
-       tags=""/>
-    <light_point
-       color="0.7 0.7 1.0 0.4"
-       in_radius="7.0"
-       out_radius="15.0"/>
-    <name
-       name="Omni0012"/>
-    <transform
-       pos="-83.864 4.218 2.052"
-       quat="0 0 0 1.0"
-       scale="1.0"/>
-    <room
-    name="2"/>
-  </entity>
+</entity>
+<entity>
+<tags/>
+<light_point
+   color="1.0 0.827451 0.639216 0.259"
+   in_radius="0.520364"
+   out_radius="25.6331"/>
+<name
+   name="Omni020"/>
+<transform
+   pos="-85.5786 1.85775 1.82377"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
 
-  <entity>
-    <tags
-       tags=""/>
-    <light_point
-       color="0.7 0.7 1.0 0.4"
-       in_radius="7.0"
-       out_radius="15.0"/>
-    <name
-       name="Omni0013"/>
-    <transform
-       pos="-77.064 4.218 2.052"
-       quat="0 0 0 1.0"
-       scale="1.0"/>
-    <room
-    name="1/2"/>
-  </entity>
+</entity>
+<entity>
+<tags/>
+<light_point
+   color="1.0 0.858824 0.709804 0.489"
+   in_radius="1.95849"
+   out_radius="8.66388"/>
+<name
+   name="Omni022"/>
+<transform
+   pos="-88.3952 0.945724 21.5686"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
 
-  <entity>
-    <tags
-       tags=""/>
-    <light_point
-       color="0.7 0.7 1.0 0.4"
-       in_radius="7.0"
-       out_radius="15.0"/>
-    <name
-       name="Omni0014"/>
-    <transform
-       pos="-70.264 4.218 -6.948"
-       quat="0 0 0 1.0"
-       scale="1.0"/>
-    <room
-    name="1/2"/>
-  </entity>
+</entity>
+<entity>
+<tags/>
+<light_point
+   color="0.690196 1.0 0.972549 0.569"
+   in_radius="0.820699"
+   out_radius="2.75908"/>
+<name
+   name="Omni023"/>
+<transform
+   pos="-94.5505 0.265248 19.972"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
 
-  <entity>
-    <tags
-       tags=""/>
-    <light_point
-       color="0.7 0.7 1.0 0.4"
-       in_radius="7.0"
-       out_radius="15.0"/>
-    <name
-       name="Omni0015"/>
-    <transform
-       pos="-64.764 4.218 -6.948"
-       quat="0 0 0 1.0"
-       scale="1.0"/>
-    <room
-    name="1/2"/>
-  </entity>
+</entity>
+<entity>
+<tags/>
+<light_dir_shadows
+   gen_shadow="yes"
+   color="0.913726 0.996079 0.82353 0.211"
+   znear="6.18135"
+   zfar="8.978"
+   fov="77.5"/>
+<culling/>
+<name
+   name="Fspot011"/>
+<transform
+   pos="-81.0661 2.24469 -8.27315"
+   quat="0.707107 0 0 0.707107"
+   scale="1.0"/>
 
-  <entity>
-    <tags
-       tags=""/>
-    <light_point
-       color="0.7 0.7 1.0 0.4"
-       in_radius="7.0"
-       out_radius="15.0"/>
-    <name
-       name="Omni0016"/>
-    <transform
-       pos="-64.964 4.218 7.652"
-       quat="0 0 0 1.0"
-       scale="1.0"/>
-    <room
-    name="1/2"/>
-  </entity>
+</entity>
+<entity>
+<tags/>
+<light_point
+   color="1.0 0.827451 0.639216 0.259"
+   in_radius="0.520364"
+   out_radius="25.6331"/>
+<name
+   name="Omni024"/>
+<transform
+   pos="-82.6192 1.85775 -26.1874"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
 
-  <entity>
-    <tags
-       tags=""/>
-    <light_point
-       color="0.7 0.7 1.0 0.4"
-       in_radius="7.0"
-       out_radius="15.0"/>
-    <name
-       name="Omni0017"/>
-    <transform
-       pos="-64.964 4.218 17.052"
-       quat="0 0 0 1.0"
-       scale="1.0"/>
-    <room
-    name="1/2"/>
-  </entity>
+</entity>
+<entity>
+<tags/>
+<light_point
+   color="1.0 0.862745 0.717647 0.379"
+   in_radius="0.807792"
+   out_radius="2.97239"/>
+<name
+   name="Omni025"/>
+<transform
+   pos="-108.432 1.10359 -9.96799"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
 
-  <entity>
-    <tags
-       tags=""/>
-    <light_point
-       color="0.7 0.7 1.0 0.4"
-       in_radius="7.0"
-       out_radius="15.0"/>
-    <name
-       name="Omni0018"/>
-    <transform
-       pos="-69.564 4.218 17.052"
-       quat="0 0 0 1.0"
-       scale="1.0"/>
-    <room
-    name="1/2"/>
-  </entity>
+</entity>
+<entity>
+<tags/>
+<light_point
+   color="1.0 0.72549 0.717647 0.369"
+   in_radius="0.760364"
+   out_radius="11.2453"/>
+<name
+   name="Omni026"/>
+<transform
+   pos="-81.0578 0.943105 -8.23886"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
 
-  <entity>
-    <tags
-       tags=""/>
-    <light_point
-       color="0.7 0.7 1.0 0.4"
-       in_radius="7.0"
-       out_radius="15.0"/>
-    <name
-       name="Omni0019"/>
-    <transform
-       pos="-69.564 4.218 7.652"
-       quat="0 0 0 1.0"
-       scale="1.0"/>
-    <room
-    name="1/2"/>
-  </entity>
+</entity>
+<entity>
+<tags/>
+<light_point
+   color="1.0 0.827451 0.639216 0.259"
+   in_radius="0.520364"
+   out_radius="25.6331"/>
+<name
+   name="Omni027"/>
+<transform
+   pos="-99.907 1.85775 -9.75988"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
 
+</entity>
+<entity>
+<tags/>
+<light_point
+   color="1.0 0.82353 0.631373 0.479"
+   in_radius="1.12436"
+   out_radius="5.86371"/>
+<name
+   name="Omni028"/>
+<transform
+   pos="-122.237 1.66262 -9.96799"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
 
-  <entity>
-    <tags
-       tags=""/>
-    <light_point
-       color="1.0 1.0 0.5 0.4"
-       in_radius="4.0"
-       out_radius="8.0"/>
-    <name
-       name="Omni002"/>
-    <transform
-       pos="-108.364 1.18 -9.848"
-       quat="0 0 0 1.0"
-       scale="1.0"/>
-    <room
-    name="2"/>
-  </entity>
+</entity>
+<entity>
+<tags/>
+<light_point
+   color="1.0 0.862745 0.717647 0.379"
+   in_radius="0.807792"
+   out_radius="2.97239"/>
+<name
+   name="Omni029"/>
+<transform
+   pos="-116.047 1.10359 -9.96799"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
 
-  <entity>
-    <tags
-       tags=""/>
-    <light_point
-       color="1.0 1.0 0.5 0.4"
-       in_radius="4.0"
-       out_radius="8.0"/>
-    <name
-       name="Omni003"/>
-    <transform
-       pos="-115.864 1.18 -9.848"
-       quat="0 0 0 1.0"
-       scale="1.0"/>
-    <room
-    name="2"/>
-  </entity>
+</entity>
+<entity>
+<tags/>
+<light_point
+   color="1.0 0.862745 0.717647 0.339"
+   in_radius="0.680364"
+   out_radius="6.62993"/>
+<name
+   name="Omni030"/>
+<transform
+   pos="-65.4052 17.3333 20.9509"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
 
-  <entity>
-    <tags
-       tags=""/>
-    <light_point
-       color="1.0 1.0 0.5 0.4"
-       in_radius="4.0"
-       out_radius="8.0"/>
-    <name
-       name="Omni004"/>
-    <transform
-       pos="-122.164 0.880 -9.848"
-       quat="0 0 0 1.0"
-       scale="1.0"/>
-    <room
-    name="2"/>
-  </entity>
+</entity>
+<entity>
+<tags/>
+<light_dir_shadows
+   gen_shadow="yes"
+   color="0.913726 0.996079 0.82353 0.581"
+   znear="1.91931"
+   zfar="2.96274"
+   fov="80.9"/>
+<culling/>
+<name
+   name="Fspot012"/>
+<transform
+   pos="-67.4694 18.3073 15.5698"
+   quat="0.707107 0 0 0.707107"
+   scale="1.0"/>
 
-  <entity>
-    <tags
-       tags=""/>
-    <light_point
-       color="0.1 0.1 1.0 0.7"
-       in_radius="2.0"
-       out_radius="4.0"/>
-    <name
-       name="Omni005"/>
-    <transform
-       pos="-121.564 1.280 -5.848"
-       quat="0 0 0 1.0"
-       scale="1.0"/>
-    <room
-    name="2"/>
-  </entity>
+</entity>
+<entity>
+<tags/>
+<light_point
+   color="1.0 0.858824 0.709804 0.469"
+   in_radius="0.917792"
+   out_radius="2.43433"/>
+<name
+   name="Omni031"/>
+<transform
+   pos="-65.754 17.6839 8.91196"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
 
-  <!-- Directional Shadows -->
+</entity>
+<entity>
+<tags/>
+<light_dir_shadows
+   gen_shadow="yes"
+   color="0.913726 0.996079 0.82353 0.581"
+   znear="1.91931"
+   zfar="2.96274"
+   fov="80.9"/>
+<culling/>
+<name
+   name="Fspot013"/>
+<transform
+   pos="-65.5469 18.3073 13.1908"
+   quat="0.707107 0 0 0.707107"
+   scale="1.0"/>
 
-  <entity>
-    <name name="light_dir_shadows" />
-    <transform pos="-99.364 9.518 -9.148" yaw = "0" pitch = "-89.9"	/>
-    <light_dir_shadows color="1 1 1 1" znear="5.0" zfar="12" fov="45" resolution="512"/>
-    <culling/>
-    <room
- name="2"/>
-  </entity>
+</entity>
+<entity>
+<tags/>
+<light_point
+   color="0.690196 1.0 0.972549 0.419"
+   in_radius="0.820699"
+   out_radius="2.75908"/>
+<name
+   name="Omni032"/>
+<transform
+   pos="-63.5079 17.3875 12.7094"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
 
-  <entity>
-    <name name="light_dir_shadows1" />
-    <transform pos="-91.964 9.518 -9.148" yaw = "0" pitch = "-89.9" />
-    <light_dir_shadows color="1 1 1 1" znear="5.0" zfar="12" fov="45" resolution="512"/>
-    <culling/>
-    <room
- name="2"/>
-  </entity>
+</entity>
+<entity>
+<tags/>
+<light_point
+   color="1.0 1.0 1.0 1.079"
+   in_radius="3.59036"
+   out_radius="8.3974"/>
+<name
+   name="Omni034"/>
+<transform
+   pos="-74.4425 1.85775 -41.6363"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
 
-  <entity>
-    <name name="light_dir_shadows5" />
-    <transform pos="-83.564 9.518 2.452" yaw = "0" pitch = "-89.9" />
-    <light_dir_shadows color="1 1 1 1" znear="5.0" zfar="12" fov="45" resolution="512"/>
-    <culling/>
-    <room
- name="2"/>
-  </entity>
+</entity>
+<entity>
+<tags/>
+<light_point
+   color="0.690196 1.0 0.972549 0.471575"
+   in_radius="1.05656"
+   out_radius="3.23296"/>
+<name
+   name="Omni036"/>
+<transform
+   pos="-55.5159 0.706535 -3.4374"
+   quat="0.707107 0 0 0.707107"
+   scale="1.0"/>
 
-  <entity>
-    <name name="light_dir_shadows6" />
-    <transform pos="-77.664 9.218 2.452" yaw = "0" pitch = "-89.9" />
-    <light_dir_shadows color="1 1 1 1" znear="5.0" zfar="12" fov="45" resolution="512"/>
-    <culling/>
-    <room
- name="2"/>
-  </entity>
+</entity>
+<entity>
+<tags/>
+<light_dir_shadows
+   gen_shadow="yes"
+   color="0.913726 0.996079 0.82353 0.351"
+   znear="6.18135"
+   zfar="8.978"
+   fov="77.5"/>
+<culling/>
+<name
+   name="Fspot014"/>
+<transform
+   pos="-70.1286 4.50456 -7.17749"
+   quat="0.707107 0 0 0.707107"
+   scale="1.0"/>
 
-  <entity>
-    <name name="light_dir_shadows7" />
-    <transform pos="-90.964 9.218 2.452" yaw = "0" pitch = "-89.9" />
-    <light_dir_shadows color="1 1 1 1" znear="5.0" zfar="12" fov="45" resolution="512"/>
-    <culling/>
-    <room
- name="2"/>
-  </entity>
+</entity>
+<entity>
+<tags/>
+<light_point
+   color="1.0 0.862745 0.717647 0.295"
+   in_radius="8.14953"
+   out_radius="21.7013"/>
+<name
+   name="Omni037"/>
+<transform
+   pos="34.6346 -18.8497 -15.7208"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
 
-  <entity>
-    <name name="light_dir_shadows2" />
-    <transform pos="-108.564 6.018 -10.448" yaw = "0" pitch = "-89.9" />
-    <light_dir_shadows color="1 1 1 1" znear="5.0" zfar="8" fov="40" resolution="512"/>
-    <culling/>
-    <room
- name="2"/>
-  </entity>
+</entity>
+<entity>
+<tags/>
+<light_point
+   color="1.0 0.862745 0.717647 0.295"
+   in_radius="8.14953"
+   out_radius="21.7013"/>
+<name
+   name="Omni038"/>
+<transform
+   pos="34.6875 -18.8497 15.1894"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
 
-  <entity>
-    <name name="light_dir_shadows3" />
-    <transform pos="-116.964 6.018 -9.848" yaw = "0" pitch = "-89.9" />
-    <light_dir_shadows color="1 1 1 1" znear="5.0" zfar="8" fov="40" resolution="512"/>
-    <culling/>
-    <room
- name="2"/>
-  </entity>
-
-  <entity>
-    <name name="light_dir_shadows4" />
-    <transform pos="-122.264 5.9 -9.848" yaw = "0" pitch = "-89.9" />
-    <light_dir_shadows color="1 1 1 1" znear="5.0" zfar="8" fov="40" resolution="512"/>
-    <culling/>
-    <room
- name="2"/>
-  </entity>
-
-
-  <!-- SALA P CIENTIFICO -->
-
-  <!-- omni -->
-
-  <entity>
-    <tags
-       tags=""/>
-    <light_point
-       color="0.7 0.7 1.0 0.7"
-       in_radius="4.0"
-       out_radius="8.0"/>
-    <name
-       name="Omni_cientifico001"/>
-    <transform
-       pos="-67.564 18.118 15.552"
-       quat="0 0 0 1.0"
-       scale="1.0"/>
-    <room
-    name="2"/>
-  </entity>
-
-  <entity>
-    <tags
-       tags=""/>
-    <light_point
-       color="0.7 0.7 1.0 0.7"
-       in_radius="4.0"
-       out_radius="8.0"/>
-    <name
-       name="Omni_cientifico002"/>
-    <transform
-       pos="-65.264 18.118 18.052"
-       quat="0 0 0 1.0"
-       scale="1.0"/>
-    <room
-    name="2"/>
-  </entity>
-
-  <entity>
-    <tags
-       tags=""/>
-    <light_point
-       color="0.7 0.7 1.0 0.7"
-       in_radius="4.0"
-       out_radius="8.0"/>
-    <name
-       name="Omni_cientifico003"/>
-    <transform
-       pos="-65.264 18.118 13.152"
-       quat="0 0 0 1.0"
-       scale="1.0"/>
-    <room
-    name="2"/>
-  </entity>
-
-  <entity>
-    <tags
-       tags=""/>
-    <light_point
-       color="0.7 0.7 1.0 0.7"
-       in_radius="4.0"
-       out_radius="8.0"/>
-    <name
-       name="Omni_cientifico004"/>
-    <transform
-       pos="-63.764 18.118 13.152"
-       quat="0 0 0 1.0"
-       scale="1.0"/>
-    <room
-    name="2"/>
-  </entity>
-
-  <entity>
-    <tags
-       tags=""/>
-    <light_point
-       color="1.0 0.7 0.5 0.7"
-       in_radius="4.0"
-       out_radius="8.0"/>
-    <name
-       name="Omni_cientifico_p_001"/>
-    <transform
-       pos="-65.764 17.418 9.052"
-       quat="0 0 0 1.0"
-       scale="1.0"/>
-    <room
-    name="2"/>
-  </entity>
-
-  <!-- helper arrow -->
-  <entity>
-    <tags  tags="helper_arrow" />
-    <helper_arrow />
-    <render_static_mesh  name="static_meshes/helpers/helper_arrow.static_mesh" />
-    <name name="helper_arrow" />
-    <transform
-       pos="0 10000.0 0"
-       quat="0 0 0 1.0"
-       scale="0.3" />
-  </entity>
+</entity>
 
 </entities>
