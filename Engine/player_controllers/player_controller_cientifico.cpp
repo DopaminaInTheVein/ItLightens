@@ -164,6 +164,7 @@ void player_controller_cientifico::WorkBenchActions() {
 				obj = THROW_BOMB;
 				//TODO: Destruir bomba actual
 				logic_manager->throwEvent(logic_manager->OnUseWorkbench, "");
+				SET_ANIM_SCIENTIST(AST_WORK);
 				ChangeState("createBomb");
 				stopMovement();
 			}
@@ -251,7 +252,6 @@ void player_controller_cientifico::CreateBomb()
 {
 	PROFILE_FUNCTION("player cientifico: create bomb");
 	t_waiting += getDeltaTime();
-	SET_ANIM_SCIENTIST(AST_WORK);
 	if (t_waiting >= t_create_MagneticBomb) {
 		dbg("bomb created!\n");
 		t_waiting = 0;

@@ -115,7 +115,7 @@
 		"t_to_explode" : 5.0,
 		"t_create_beacon" : 1.0,
 		"t_create_StaticBomb" : 1.0,
-		"t_create_MagneticBomb" : 1.0,
+		"t_create_MagneticBomb" : 2.0,
 		"t_explode_static_bomb" : 5.0,
 		"t_create_beacon_energy" : 5.0,
 		"t_create_StaticBomb_energy" : 5.0,
