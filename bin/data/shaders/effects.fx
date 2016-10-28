@@ -62,9 +62,9 @@ float4 PSReflections(float4 Pos : SV_POSITION
 	float3 env = GetEnvColor(E_refl, wPos.xyz);
 	//o_color.xyz += (env/2) * specular_color1*5;
 	
-	//return specular_color1.xxxx;
+	return specular_color.xxxx;
 	//o_color.xyz += (env/2) * specular_color*10;
-	o_color.xyz = env.xyz*specular_color*20;
+	o_color.xyz = env.xyz*specular_color*10;
 	//return float4(0,0,0,0);
 	//return float4(1,1,1,1);
 	//o_color.xyz = E_refl.xyz;

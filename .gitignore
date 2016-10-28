@@ -33,3 +33,4 @@ bin/data/navmeshes/
 bin/data/scenes/*_save.xml
 bin/log.txt
 *enc_temp_folder*
+*.avi

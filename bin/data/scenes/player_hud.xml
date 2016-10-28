@@ -1,5 +1,6 @@
 <entities>
-<entity>
+<entity
+   temp="yes">
 <tags
    tags="ui_pol_e hiddeable_hud gui"/>
 <gui
@@ -18,7 +19,8 @@
 <abs_aabb/>
 
 </entity>
-<entity>
+<entity
+   temp="yes">
 <tags
    tags="ui_pol_q hiddeable_hud gui"/>
 <gui
@@ -37,7 +39,8 @@
 <abs_aabb/>
 
 </entity>
-<entity>
+<entity
+   temp="yes">
 <tags
    tags="hiddeable_hud"/>
 <name
@@ -52,7 +55,8 @@
 <abs_aabb/>
 
 </entity>
-<entity>
+<entity
+   temp="yes">
 <tags
    tags="hiddeable_hud"/>
 <name
@@ -67,7 +71,8 @@
 <abs_aabb/>
 
 </entity>
-<entity>
+<entity
+   temp="yes">
 <tags
    tags="hiddeable_hud gui"/>
 <gui
@@ -86,7 +91,8 @@
 <abs_aabb/>
 
 </entity>
-<entity>
+<entity
+   temp="yes">
 <tags
    tags="hiddeable_hud gui"/>
 <gui
@@ -106,7 +112,8 @@
 <abs_aabb/>
 
 </entity>
-<entity>
+<entity
+   temp="yes">
 <tags/>
 <name
    name="marco3"/>
@@ -117,6 +124,48 @@
 <render_static_mesh
    name="static_meshes/ui/player_hud/marco3.static_mesh"
    static="true"/>
+<abs_aabb/>
+
+</entity>
+<entity
+   temp="yes">
+<tags
+   tags="bomb_counter gui"/>
+<gui
+   menu_name="player_hud"
+   width="1.29558"
+   height="1.29558"/>
+<name
+   name="contadorbombas"/>
+<transform
+   pos="0.69838 -97.3001 6.82302"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ui/player_hud/contadorbombas.static_mesh"
+   static="false"
+   hidden="yes"/>
+<abs_aabb/>
+
+</entity>
+<entity
+   temp="yes">
+<tags
+   tags="bomb_icon gui"/>
+<gui
+   menu_name="player_hud"
+   width="1.37079"
+   height="1.37079"/>
+<name
+   name="bomba"/>
+<transform
+   pos="9.27498 -97.2538 6.82186"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ui/player_hud/bomba.static_mesh"
+   static="false"
+   hidden="yes"/>
 <abs_aabb/>
 
 </entity>
