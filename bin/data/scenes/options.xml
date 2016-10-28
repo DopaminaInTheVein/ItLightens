@@ -40,7 +40,7 @@
    tags="options gui gui_selector"/>
 <gui
    menu_name="options"
-   row="0"
+   row="1"
    col="0"
    width="3.13228"
    height="0.154205"/>
@@ -62,7 +62,7 @@
    tags="options gui gui_selector"/>
 <gui
    menu_name="options"
-   row="1"
+   row="0"
    col="0"
    width="3.13228"
    height="0.154205"/>
@@ -84,7 +84,7 @@
    tags="options gui gui_drag"/>
 <gui
    menu_name="options"
-   row="2"
+   row="4"
    col="0"
    width="3.13228"
    height="0.154205"/>
@@ -128,7 +128,7 @@
    tags="options gui gui_selector"/>
 <gui
    menu_name="options"
-   row="5"
+   row="2"
    col="0"
    width="3.13228"
    height="0.154205"/>
