@@ -571,7 +571,7 @@ void CRenderDeferredModule::generateStaticShadowMaps() {
 		c->generateStaticShadowMap();
 	});
 
-	generate_shadow_maps = false;
+	--generate_shadow_maps ;
 }
 
 // ----------------------------------------------
@@ -909,7 +909,7 @@ void CRenderDeferredModule::render() {
 	rt_specular->clear(VEC4(0, 0, 0, 0));
 	rt_glossiness->clear(VEC4(0, 0, 0, 0));
 
-	if(generate_shadow_maps) generateStaticShadowMaps();
+	if(generate_shadow_maps > 0) generateStaticShadowMaps();
 	generateShadowMaps();
 
 	rt_data2->clear(VEC4(0, 0, 0, 0));
