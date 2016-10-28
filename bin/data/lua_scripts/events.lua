@@ -569,6 +569,9 @@ end
 function OnLoadingLevel(level)
 	p:print("OnLoadingLevel")
 	g_loading_screen = false
+	-- Capo no pasar por loading screen en el restart!
+	g_restarting = false
+	--
 	if not g_restarting  then
 		local ok = CallFunction("OnLoading_"..level)
 		if not ok then 
