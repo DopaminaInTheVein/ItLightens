@@ -163,7 +163,6 @@ int bt_mole::actionNextWpt() {
 	PROFILE_FUNCTION("mole: actionnextwpt");
 	if (!myParent.isValid()) return false;
 	if (fixedWpts.size() == 0) return false;
-	SET_ANIM_MOLE_BT(AST_TURN);
 	VEC3 myPos = getTransform()->getPosition();
 	VEC3 dest = fixedWpts[curwpt];
 	//If we are already there, we continue
@@ -171,9 +170,11 @@ int bt_mole::actionNextWpt() {
 		return OK;
 	//Look to waypoint
 	if (turnTo(dest)) {
+		SET_ANIM_MOLE_BT(AST_IDLE);
 		return OK;
 	}
 	else {
+		SET_ANIM_MOLE_BT(AST_MOVE);
 		return STAY;
 	}
 }

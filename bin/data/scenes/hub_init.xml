@@ -180,5 +180,25 @@
    scale="1.0"/>
 
 </entity>
+<entity
+   reload="yes">
+<tags
+   tags="guided_camera"/>
+<guided_camera
+   velocity="0.5"
+   default_dirs="0"
+   points_size="1"
+   skippable="no"
+   stop_final="yes"
+   wpt1="-0.817787 53.3546 -25.649"
+   lpt1="-1.60307 51.8462 -25.6497"/>
+<name
+   name="CineEndHub"/>
+<transform
+   pos="35.6838 66.6056 -57.4401"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
 
 </entities>

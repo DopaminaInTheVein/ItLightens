@@ -1,0 +1,3 @@
+<static_mesh>
+  <slot mesh="meshes/hub/libros_modelo_1.mesh" material="materials/hub/comicitlightens.material"/>
+</static_mesh>

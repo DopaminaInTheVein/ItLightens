@@ -654,3 +654,25 @@ function ms3_onTablon6()
 	--Mejor sin
 	--cam:run_cinematic("CineTablon6", 5)
 end
+
+
+
+
+
+function Ms3Victory()
+	ui_cam:fade_out(0.2)
+	p:exec_command("Credits()", 0.2)
+end
+
+function Credits()
+	p:pause_game()
+	p:play_video_and_do("data\\videos\\ms3.avi", "LoadLevel(\"level_0\");")
+end
+
+
+
+
+
+
+
+

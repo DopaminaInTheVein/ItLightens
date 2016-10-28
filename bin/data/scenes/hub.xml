@@ -600,25 +600,6 @@
 
 </entity>
 <entity
-   slept="yes">
-<tags
-   tags="end_hub"/>
-<name
-   name="end_hub"/>
-<transform
-   pos="-2.18931 53.361 -25.4419"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/hub/end_hub.static_mesh"
-   static="true"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"
-   mesh_name="hub/end_hub"/>
-
-</entity>
-<entity
    slept="yes"
    reload="no">
 <tags
@@ -736,6 +717,25 @@
 <rigidbody
    type_collision="static"
    mesh_name="hub/Sphere_cielo"/>
+
+</entity>
+<entity
+   slept="yes">
+<tags
+   tags="end_hub"/>
+<name
+   name="end_hub"/>
+<transform
+   pos="0 0 0"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/hub/comicitlightens.static_mesh"
+   static="true"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"
+   mesh_name="hub/comicitlightens"/>
 
 </entity>
 

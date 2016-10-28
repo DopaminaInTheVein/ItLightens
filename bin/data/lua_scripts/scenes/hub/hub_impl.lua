@@ -131,5 +131,12 @@ end
 
 function hub_end()
 	SaveLevel()
-	LoadLevel("level_4")
+	cam:run_cinematic("CineEndHub", 1.0)
+	p:exec_command("ui_cam:fade_out(0.2)", 2.8)
+	p:exec_command("EndHub();", 3.0)
+end
+
+function EndHub()
+	p:pause_game()
+	p:play_video_and_do("data\\videos\\ms3.avi", "LoadLevel(\"level_4\");")
 end

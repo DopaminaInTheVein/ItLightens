@@ -1,10 +1,10 @@
 {
     "ms3": {
         "elevator_state": 0.0,
-        "door_open": 1.0,
+        "door_open": 0.0,
         "alert": 0.0,
         "cp_elevator": 1.0,
-        "cp_door_opened": 1.0,
+        "cp_door_opened": 0.0,
         "fog_state": 1.0
     }
 }

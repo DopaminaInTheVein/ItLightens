@@ -898,6 +898,7 @@ void CRenderDeferredModule::ShootGuardRender() {
 
 // ----------------------------------------------
 void CRenderDeferredModule::render() {
+	if (GameController->GetGameState() == CGameController::PLAY_VIDEO) return;
 	if (!h_camera.isValid()) h_camera = tags_manager.getFirstHavingTag("camera_main");
 	if (!h_camera.isValid()) return;
 	if (!h_ui_camera.isValid()) h_ui_camera = tags_manager.getFirstHavingTag("ui_camera");

@@ -78,8 +78,8 @@ bool CRenderPostProcessModule::start()
 	//fs->FadeIn();
 
 	//<-- from here would start the fade screen effect on render -->
-	//ActivateFXAtEnd("fade_screen", 200); //should go as the last one always
-	//ActivateFXBeforeUI("fade_screen", 200); //should go as the last one always
+	//ActivateFXBeforeUI(FX_FADESCREEN, 200); //should go as the last one always
+	//ActivateFXAtEnd(FX_FADESCREEN_ALL, 200); //should go as the last one always
 
 	//###### end lua scripts #################
 
@@ -273,6 +273,26 @@ bool CRenderPostProcessModule::isActive(std::string name)
 		idx++;
 	}
 	return false;
+}
+
+TCompBasicFX* CRenderPostProcessModule::GetBasicFX(std::string name)
+{
+	int idx = 0;
+	for (auto fx_key : m_activated_ui_layer) {
+		if (fx_key.fx == m_list_fx[name]) {
+			return m_list_fx[name];
+		}
+		idx++;
+	}
+
+	idx = 0;
+	for (auto fx_key : m_activated_end) {
+		if (fx_key.fx == m_list_fx[name]) {
+			return m_list_fx[name];
+		}
+		idx++;
+	}
+	return nullptr;
 }
 
 //clear all memory

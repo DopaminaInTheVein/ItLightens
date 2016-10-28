@@ -16,6 +16,7 @@ bool TCompVideo::load(MKeyValue & atts)
 	size_t lastposfolder = file.find_last_of('\\');
 	file = file.substr(0, lastposfolder + 1);
 	file += atts.getString("file", "");
+	GameController->SetGameState(CGameController::PLAY_VIDEO);
 	return true;
 }
 
