@@ -116,10 +116,10 @@ float3 GetEnvColor(float3 E_refl, float3 pixel_pos){
 		/*for(int i=0; i<sci_cubemaps;i++){
 			env+= float3(0,0,0);
 		}*/
+		/*env+= txHubEnv1.Sample(samClampLinear, E_refl).xyz;
 		env+= txHubEnv1.Sample(samClampLinear, E_refl).xyz;
 		env+= txHubEnv1.Sample(samClampLinear, E_refl).xyz;
-		env+= txHubEnv1.Sample(samClampLinear, E_refl).xyz;
-		env+= txHubEnv1.Sample(samClampLinear, E_refl).xyz;
+		env+= txHubEnv1.Sample(samClampLinear, E_refl).xyz;*/
 	}
 	
 	//ms3 - room1
@@ -127,10 +127,10 @@ float3 GetEnvColor(float3 E_refl, float3 pixel_pos){
 		/*for(int i=0; i<sci_cubemaps;i++){
 			env+= float3(0,0,0);
 		}*/
+		/*env+= txHubEnv1.Sample(samClampLinear, E_refl).xyz;
 		env+= txHubEnv1.Sample(samClampLinear, E_refl).xyz;
 		env+= txHubEnv1.Sample(samClampLinear, E_refl).xyz;
-		env+= txHubEnv1.Sample(samClampLinear, E_refl).xyz;
-		env+= txHubEnv1.Sample(samClampLinear, E_refl).xyz;
+		env+= txHubEnv1.Sample(samClampLinear, E_refl).xyz;*/
 	}
 	
 	return env;
