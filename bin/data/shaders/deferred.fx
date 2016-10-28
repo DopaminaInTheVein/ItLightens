@@ -525,10 +525,14 @@ void PSLightDirShadows(
 	//spec_amount += spec_reflec*glossiness;
 	spec_amount *= att_factor;
 	
-	o_specular = spec_amount*specular_force*LightColor.a*0.2f;
+	
+	o_specular = spec_amount*specular_force*0.2f;
 	o_specular.a = 1;
 	
-  //final_color = float4(1,1,1,1);
+	if(LightColor.a <= 0){
+		o_specular = float4(0,0,0,0);
+	}
+	
 	float4 albedo = txDiffuse.Load(ss_load_coords);
 	o_color = (NLWarped * final_color * albedo + o_specular);
   
