@@ -1,0 +1,10 @@
+<model>
+  <skeleton    src ="skeletons/scientist_slept/scientist_slept.csf"/>
+  <animations src ="skeletons/scientist_slept/"/>
+  <mesh     src="skeletons/scientist_slept/scientist_slept.cmf"/>
+  <key_bones 
+    right_hand="scientist_slept69"
+  />
+  <measures 
+  />
+</model>

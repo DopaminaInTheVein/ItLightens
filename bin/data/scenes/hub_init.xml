@@ -101,10 +101,10 @@
    quat="0 0.931596 0 0.363497"
    scale="0.00929856"/>
 <skeleton
-   model="skeletons/scientist/scientist.skeleton"
+   model="skeletons/scientist_slept/scientist_slept.skeleton"
    anim="sleep"/>
 <render_static_mesh
-   name="skeletons/scientist/scientist.static_mesh"
+   name="skeletons/scientist_slept/scientist_slept.static_mesh"
    static="false"/>
 <skeleton_ik/>
 <abs_aabb/>
