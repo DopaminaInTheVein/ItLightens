@@ -1,0 +1,15 @@
+<model>
+  <skeleton    src ="skeletons/mole_slept/mole_slept.csf"/>
+  <animations src ="skeletons/mole_slept/"/>
+  <mesh     src="skeletons/mole_slept/mole_slept.cmf"/>
+  <key_bones 
+    left_hand="mole_slept18"
+    right_hand="mole_slept69"
+    LFoot="mole_slept05"
+    RFoot="mole_slept10"
+  />
+  <measures 
+    LFootHigh="0.182677"
+    RFootHigh="0.182677"
+  />
+</model>
