@@ -97,7 +97,7 @@ public:
 	void update(float dt);
 	void render() override;
 	void UpdateStaticShadowMaps() {
-		generate_shadow_maps = 250; //will be put on false after generating static shadow maps
+		generate_shadow_maps = 350; //will be put on false after generating static shadow maps
 	}
 	void renderEspVisionMode();
 	void renderEspVisionModeFor(std::string tag, VEC4 color_mask, int stencil_mask, bool use_skeleton = false, bool only_borders = true);

@@ -159,7 +159,7 @@ bool CRenderDeferredModule::start() {
 	shader_ctes_globals.world_time = 0.f;
 	shader_ctes_globals.xres = xres;
 	shader_ctes_globals.yres = yres;
-	shader_ctes_globals.env_factor = 0.115f;
+	shader_ctes_globals.env_factor = 0.215f;
 	shader_ctes_globals.shadow_intensity = 0.5f;
 
 	return true;
@@ -913,7 +913,7 @@ void CRenderDeferredModule::render() {
 	if(generate_shadow_maps > 0) generateStaticShadowMaps();
 	generateShadowMaps();
 
-	rt_data2->clear(VEC4(0, 0, 0, 0));
+	rt_data2->clear(VEC4(0, 0, 0, 0));;
 
 	rt_selfIlum->clear(VEC4(0, 0, 0, 0));
 	rt_selfIlum_int->clear(VEC4(0, 0, 0, 0));
