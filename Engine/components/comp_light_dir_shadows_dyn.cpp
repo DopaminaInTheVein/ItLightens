@@ -20,7 +20,7 @@ void TCompLightDirShadowsDynamic::update(float dt) {
 	CHandle owner = CHandle(this).getOwner();
 	CHandle player = CPlayerBase::handle_player;
 	GET_COMP(t_player, player, TCompTransform);
-
+	updateFromEntityTransform(owner);
 	//check if component same room as player
 	CEntity *e = owner;
 	if (!e) return;
