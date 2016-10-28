@@ -181,9 +181,6 @@
     <ClCompile Include="components\comp_tracker.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="components\comp_tracker_cinta.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="components\comp_transform.cpp" />
     <ClCompile Include="components\comp_transform_animator.cpp" />
     <ClCompile Include="components\comp_trigger_lua.cpp" />
@@ -431,9 +428,6 @@
     <ClInclude Include="components\comp_text.h" />
     <ClInclude Include="components\comp_tracker.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="components\comp_tracker_cinta.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="components\comp_transform.h" />
     <ClInclude Include="components\comp_transform_animator.h" />

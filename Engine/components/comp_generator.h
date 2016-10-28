@@ -23,7 +23,7 @@ struct TCompGenerator : public TTrigger {
 	bool isUsable();
 	float use();
 	void mUpdate(float dt);
-	void onTriggerInside(const TMsgTriggerIn& msg) {} //will do nothing, particles effect, ui message or something
+	void onTriggerInside(const TMsgTriggerIn& msg);//will do nothing, particles effect, ui message or something
 	void onTriggerEnter(const TMsgTriggerIn& msg);
 	void onTriggerExit(const TMsgTriggerOut& msg);
 	~TCompGenerator();
