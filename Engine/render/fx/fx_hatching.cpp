@@ -44,7 +44,7 @@ void TRenderHatching::init() {
 	tech = Resources.get("hatching.tech")->as<CRenderTechnique>();
 
 	//enable textures
-	Resources.get("textures/hatching/hatching_tileable_ALPHAS.dds")->as<CTexture>()->activate(TEXTURE_SLOT_HATCHING);
+	Resources.get("textures/hatching/hatching_tileable_ALPHAS.dds")->as<CTexture>()->activate(63);
 	Resources.get("textures/hatching/hatching_tileable_prueba_plugin.dds")->as<CTexture>()->activate(64);
 
 	//hatching texture
