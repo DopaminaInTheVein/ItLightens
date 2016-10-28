@@ -101,8 +101,8 @@
 	/>
 <light_point
 	color="1.000000 0.862745 0.717647 0.545000"
-	in_radius="3.85428"
-	out_radius="18.6631"
+	in_radius="1.95428"
+	out_radius="7.4631"
 	/>
 </entity>
 <entity
@@ -658,12 +658,12 @@
 <culling
 	/>
 <light_dir_shadows
-	color="0.913726 0.996079 0.823530 0.351000"
-	fov="64.7"
+	color="0.913726 0.996079 0.823530 0.231000"
+	fov="50.9"
 	gen_shadow="1"
 	resolution="256"
-	zfar="2.6"
-	znear="4.68135"
+	zfar="6.778"
+	znear="1.48135"
 	/>
 <name
 	name="Fspot001"
@@ -684,12 +684,12 @@
 <culling
 	/>
 <light_dir_shadows
-	color="0.913726 0.996079 0.823530 0.351000"
-	fov="64.7"
+	color="0.913726 0.996079 0.823530 0.231000"
+	fov="41.3"
 	gen_shadow="1"
 	resolution="256"
-	zfar="2.6"
-	znear="4.68135"
+	zfar="6.778"
+	znear="1.48135"
 	/>
 <name
 	name="Fspot002"
@@ -710,18 +710,18 @@
 <culling
 	/>
 <light_dir_shadows
-	color="0.913726 0.996079 0.823530 0.351000"
-	fov="64.7"
+	color="0.913726 0.996079 0.823530 0.231000"
+	fov="29.1"
 	gen_shadow="1"
 	resolution="256"
-	zfar="2.6"
-	znear="4.68135"
+	zfar="6.778"
+	znear="1.48135"
 	/>
 <name
 	name="Fspot003"
 	/>
 <transform
-	pos="-64.828796 4.957310 -6.977660"
+	pos="-64.629005 4.957310 -6.878000"
 	quat="0.707102 0.000000 0.000000 0.707112"
 	scale="1.000000 1.000000 1.000000"
 	/>
@@ -736,12 +736,12 @@
 <culling
 	/>
 <light_dir_shadows
-	color="0.913726 0.996079 0.823530 0.351000"
-	fov="64.7"
+	color="0.913726 0.996079 0.823530 0.231000"
+	fov="41.3"
 	gen_shadow="1"
 	resolution="256"
-	zfar="2.6"
-	znear="4.68135"
+	zfar="6.778"
+	znear="1.48135"
 	/>
 <name
 	name="Fspot005"
@@ -762,12 +762,12 @@
 <culling
 	/>
 <light_dir_shadows
-	color="0.913726 0.996079 0.823530 0.351000"
-	fov="64.7"
+	color="0.913726 0.996079 0.823530 0.231000"
+	fov="41.3"
 	gen_shadow="1"
 	resolution="256"
-	zfar="1"
-	znear="6.18135"
+	zfar="6.778"
+	znear="1.48135"
 	/>
 <name
 	name="Fspot006"
@@ -788,12 +788,12 @@
 <culling
 	/>
 <light_dir_shadows
-	color="0.913726 0.996079 0.823530 0.351000"
-	fov="64.7"
+	color="0.913726 0.996079 0.823530 0.231000"
+	fov="41.3"
 	gen_shadow="1"
 	resolution="256"
-	zfar="1"
-	znear="3.62536"
+	zfar="4.89262"
+	znear="0.01"
 	/>
 <name
 	name="Fspot007"
@@ -814,12 +814,12 @@
 <culling
 	/>
 <light_dir_shadows
-	color="0.913726 0.996079 0.823530 0.321000"
-	fov="64.7"
+	color="0.913726 0.996079 0.823530 0.201000"
+	fov="41.3"
 	gen_shadow="1"
 	resolution="256"
-	zfar="1"
-	znear="6.18135"
+	zfar="6.778"
+	znear="1.48135"
 	/>
 <name
 	name="Fspot009"
@@ -840,12 +840,12 @@
 <culling
 	/>
 <light_dir_shadows
-	color="0.913726 0.996079 0.823530 0.351000"
-	fov="64.7"
+	color="0.913726 0.996079 0.823530 0.231000"
+	fov="41.3"
 	gen_shadow="1"
 	resolution="256"
-	zfar="1"
-	znear="6.18135"
+	zfar="6.778"
+	znear="1.48135"
 	/>
 <name
 	name="Fspot010"
@@ -866,12 +866,12 @@
 <culling
 	/>
 <light_dir_shadows
-	color="0.913726 0.996079 0.823530 0.211000"
-	fov="64.7"
+	color="0.913726 0.996079 0.823530 0.091000"
+	fov="41.3"
 	gen_shadow="1"
 	resolution="256"
-	zfar="1"
-	znear="6.18135"
+	zfar="6.778"
+	znear="1.48135"
 	/>
 <name
 	name="Fspot011"
@@ -892,12 +892,12 @@
 <culling
 	/>
 <light_dir_shadows
-	color="0.913726 0.996079 0.823530 0.581000"
-	fov="68.1"
+	color="0.913726 0.996079 0.823530 0.441000"
+	fov="45.3"
 	gen_shadow="1"
 	resolution="256"
-	zfar="2.6"
-	znear="0.41931"
+	zfar="2.4"
+	znear="0.01"
 	/>
 <name
 	name="Fspot012"
@@ -918,12 +918,12 @@
 <culling
 	/>
 <light_dir_shadows
-	color="0.913726 0.996079 0.823530 0.581000"
-	fov="68.1"
+	color="0.913726 0.996079 0.823530 0.441000"
+	fov="45.3"
 	gen_shadow="1"
 	resolution="256"
-	zfar="2.6"
-	znear="0.41931"
+	zfar="2.4"
+	znear="0.01"
 	/>
 <name
 	name="Fspot013"
@@ -944,12 +944,12 @@
 <culling
 	/>
 <light_dir_shadows
-	color="0.913726 0.996079 0.823530 0.351000"
-	fov="64.7"
+	color="0.913726 0.996079 0.823530 0.231000"
+	fov="42.8"
 	gen_shadow="1"
 	resolution="256"
-	zfar="1"
-	znear="6.18135"
+	zfar="6.778"
+	znear="1.48135"
 	/>
 <name
 	name="Fspot014"
@@ -961,6 +961,31 @@
 	/>
 <tags
 	tags=""
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="0"
+>
+<culling
+	/>
+<light_dir_shadows_dynamic
+	color="1.000000 1.000000 1.000000 0.000000"
+	fov="75"
+	resolution="512"
+	zfar="100"
+	znear="5"
+	/>
+<name
+	name="light_dir_shadow_dyn1"
+	/>
+<room
+	name="1"
+	/>
+<transform
+	pos="-9.707741 -12.106126 -2.549666"
+	quat="0.706490 0.000000 0.000000 0.707723"
+	scale="1.000000 1.000000 1.000000"
 	/>
 </entity>
 </entities>
