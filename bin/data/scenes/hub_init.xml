@@ -80,10 +80,10 @@
    quat="0 0.902573 0 -0.430536"
    scale="1.0"/>
 <skeleton
-   model="skeletons/mole/mole.skeleton"
+   model="skeletons/mole_slept/mole_slept.skeleton"
    anim="sleep"/>
 <render_static_mesh
-   name="skeletons/mole/mole.static_mesh"
+   name="skeletons/mole_slept/mole_slept.static_mesh"
    static="false"/>
 <skeleton_ik/>
 <abs_aabb/>
