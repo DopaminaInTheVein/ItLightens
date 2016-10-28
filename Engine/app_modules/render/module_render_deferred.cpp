@@ -36,7 +36,6 @@
 #include "components\comp_life.h"
 #include "player_controllers\player_controller.h"
 
-
 #include "render\fx\fx_ssao.h"
 
 //for test
@@ -506,7 +505,6 @@ void CRenderDeferredModule::renderAccLight() {
 	//Render.activateBackBuffer();
 	SetOutputDeferred();
 
-
 	{
 		// Activar el rt para pintar las luces...
 		ID3D11RenderTargetView* rts[3] = {
@@ -536,7 +534,7 @@ void CRenderDeferredModule::renderAccLight() {
 		Render.ctx->OMSetRenderTargets(3, rts, Render.depth_stencil_view);
 
 		activateBlend(BLENDCFG_ADDITIVE);
-		if(test_reflections)activateBlend(BLENDCFG_DEFAULT);
+		if (test_reflections)activateBlend(BLENDCFG_DEFAULT);
 		activateZ(ZCFG_ALL_DISABLED);
 
 		auto tech = Resources.get("ss_reflections.tech")->as<CRenderTechnique>();
@@ -595,7 +593,7 @@ void CRenderDeferredModule::generateShadowMaps() {
 		// la world para la mesh y las constantes en el pixel shader
 		PROFILE_FUNCTION("check gen shadow");
 
-		if(c->isInRoom()) 
+		if (c->isInRoom())
 			c->generateShadowMap();
 	});
 }
@@ -685,59 +683,59 @@ void CRenderDeferredModule::ApplySSAO() {
 	rt_normals->activate(TEXTURE_SLOT_NORMALS);
 	rt_depths->activate(TEXTURE_SLOT_DEPTHS);
 
-/*
-	ID3D11RenderTargetView* rts[3] = {
-		//Render.render_target_view
-		rt_ssao->getRenderTargetView()
-		,   nullptr
-		,	nullptr
-	};
-
-	Render.ctx->OMSetRenderTargets(3, rts, Render.depth_stencil_view);
-	activateBlend(BLENDCFG_DEFAULT);
-
-	activateZ(ZCFG_ALL_DISABLED);
-
-	rt_normals->activate(TEXTURE_SLOT_NORMALS);
-	rt_depths->activate(TEXTURE_SLOT_DEPTHS);
-	auto tech = Resources.get("ssao.tech")->as<CRenderTechnique>();
-
-	drawFullScreen(rt_albedos, tech);
-
-	//Render.activateBackBuffer();
-	SetOutputDeferred();
-	//blur shadows
-	CTexture *blurred_ssao = rt_ssao;
-	GET_COMP(glow, h_camera, TCompRenderGlow);
-	//glow->
-	if (glow)
-		blurred_ssao = glow->apply(blurred_ssao);
-
-	//Render.activateBackBuffer();	//reset size viewport
-	SetOutputDeferred();
-	activateZ(ZCFG_ALL_DISABLED);
-
-	{
+	/*
 		ID3D11RenderTargetView* rts[3] = {
-			rt_acc_light->getRenderTargetView()
-			, rt_shadows_gl->getRenderTargetView()
+			//Render.render_target_view
+			rt_ssao->getRenderTargetView()
 			,   nullptr
+			,	nullptr
 		};
+
 		Render.ctx->OMSetRenderTargets(3, rts, Render.depth_stencil_view);
+		activateBlend(BLENDCFG_DEFAULT);
 
-		auto tech = Resources.get("solid_textured_multiple_outputs.tech")->as<CRenderTechnique>();
+		activateZ(ZCFG_ALL_DISABLED);
 
-		activateBlend(BLENDCFG_SUBSTRACT);
-		//activateBlend(BLENDCFG_DEFAULT);	//for testing only
-		drawFullScreen(blurred_ssao, tech);
-	}
-	activateBlend(BLENDCFG_DEFAULT);
-	//Render.activateBackBuffer();
-	SetOutputDeferred();*/
+		rt_normals->activate(TEXTURE_SLOT_NORMALS);
+		rt_depths->activate(TEXTURE_SLOT_DEPTHS);
+		auto tech = Resources.get("ssao.tech")->as<CRenderTechnique>();
 
-	/*CTexture::deactivate(TEXTURE_SLOT_DEPTHS);
-	CTexture::deactivate(TEXTURE_SLOT_NORMALS);*/
-	
+		drawFullScreen(rt_albedos, tech);
+
+		//Render.activateBackBuffer();
+		SetOutputDeferred();
+		//blur shadows
+		CTexture *blurred_ssao = rt_ssao;
+		GET_COMP(glow, h_camera, TCompRenderGlow);
+		//glow->
+		if (glow)
+			blurred_ssao = glow->apply(blurred_ssao);
+
+		//Render.activateBackBuffer();	//reset size viewport
+		SetOutputDeferred();
+		activateZ(ZCFG_ALL_DISABLED);
+
+		{
+			ID3D11RenderTargetView* rts[3] = {
+				rt_acc_light->getRenderTargetView()
+				, rt_shadows_gl->getRenderTargetView()
+				,   nullptr
+			};
+			Render.ctx->OMSetRenderTargets(3, rts, Render.depth_stencil_view);
+
+			auto tech = Resources.get("solid_textured_multiple_outputs.tech")->as<CRenderTechnique>();
+
+			activateBlend(BLENDCFG_SUBSTRACT);
+			//activateBlend(BLENDCFG_DEFAULT);	//for testing only
+			drawFullScreen(blurred_ssao, tech);
+		}
+		activateBlend(BLENDCFG_DEFAULT);
+		//Render.activateBackBuffer();
+		SetOutputDeferred();*/
+
+		/*CTexture::deactivate(TEXTURE_SLOT_DEPTHS);
+		CTexture::deactivate(TEXTURE_SLOT_NORMALS);*/
+
 	TRenderSSAO* ssao_fx = render_fx->GetFX<TRenderSSAO>("ssao");
 	ssao_fx->GetOcclusionTextue(h_camera, rt_ssao, rt_acc_light, rt_shadows_gl);
 }
@@ -898,6 +896,7 @@ void CRenderDeferredModule::ShootGuardRender() {
 
 // ----------------------------------------------
 void CRenderDeferredModule::render() {
+	if (GameController->GetGameState() == CGameController::PLAY_VIDEO) return;
 	if (!h_camera.isValid()) h_camera = tags_manager.getFirstHavingTag("camera_main");
 	if (!h_camera.isValid()) return;
 	if (!h_ui_camera.isValid()) h_ui_camera = tags_manager.getFirstHavingTag("ui_camera");
@@ -909,7 +908,7 @@ void CRenderDeferredModule::render() {
 	rt_specular->clear(VEC4(0, 0, 0, 0));
 	rt_glossiness->clear(VEC4(0, 0, 0, 0));
 
-	if(generate_shadow_maps) generateStaticShadowMaps();
+	if (generate_shadow_maps) generateStaticShadowMaps();
 	generateShadowMaps();
 
 	rt_data2->clear(VEC4(0, 0, 0, 0));
@@ -1155,7 +1154,6 @@ void CRenderDeferredModule::renderEspVisionModeFor(std::string tagstr, VEC4 colo
 		activateBlend(BLENDCFG_ADDITIVE);
 		//edge detection
 		{
-			
 			//PROFILE_FUNCTION(("referred: mark detection " + tagstr).c_str());
 			//CTraceScoped scope(("mark detection " + tagstr).c_str());
 			PROFILE_FUNCTION("referred: mark detection ");
@@ -1199,9 +1197,8 @@ void CRenderDeferredModule::renderEspVisionModeFor(std::string tagstr, VEC4 colo
 		};
 		Render.ctx->OMSetRenderTargets(3, rts, Render.depth_stencil_view);
 
-		
-		if(only_borders)	activateBlend(BLENDCFG_SUBSTRACT);	//to make outlines
-		if(!only_borders)	activateBlend(BLENDCFG_ADDITIVE);
+		if (only_borders)	activateBlend(BLENDCFG_SUBSTRACT);	//to make outlines
+		if (!only_borders)	activateBlend(BLENDCFG_ADDITIVE);
 		activateZ(ZCFG_ALL_DISABLED);
 
 		auto tech = Resources.get("global_color.tech")->as<CRenderTechnique>();

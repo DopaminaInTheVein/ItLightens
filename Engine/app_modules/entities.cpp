@@ -632,6 +632,7 @@ void CEntitiesModule::update(float dt) {
 		getHandleManager<TCompCameraMain>()->updateAll(dt);
 		getHandleManager<TCompFadeScreen>()->updateAll(dt);
 		getHandleManager<TCompLoadingScreen>()->updateAll(dt);
+		//getHandleManager<TCompVideo>()->updateAll(dt);
 	}
 
 	if (GameController->GetGameState() == CGameController::PLAY_VIDEO) {
