@@ -8,6 +8,7 @@ end
 function OnClicked_btn_retry( )
 	p:play_sound("event:/OnMenuAccept", 1.0, false)
 	p:exec_command("destroyMenuDead();", 1)
+	g_restarting = true
 	LoadLevel(g_current_level)
 end
 
