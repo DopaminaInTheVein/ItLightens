@@ -1,7 +1,7 @@
 <entity temp="yes">
     <tags tags="static_bomb"/>
     <name name="static_bomb"/>
-	<transform pos="1 0 0" quat="0.0 0.0 0.0 1.0" scale="1.0" />
-    <render_static_mesh name="static_meshes/obj/bomb.static_mesh"/>
+	<transform pos="1 0 0" quat="0.0 0.0 0.0 1.0" scale="2.0" />
+    <render_static_mesh name="static_meshes/obj/electromb.static_mesh"/>
 	<static_bomb/>
 </entity>

@@ -1,8 +1,8 @@
 <entity temp="yes">
     <tags tags="throw_bomb"/>
     <name name="throw_bomb"/>
-	<transform pos="0 1000 0" quat="0.0 0.0 0.0 1.0" scale="0.05" />
-    <render_static_mesh name="static_meshes/obj/bomb.static_mesh"/>
+	<transform pos="0 1000 0" quat="0.0 0.0 0.0 1.0" scale="0.40" />
+    <render_static_mesh name="static_meshes/obj/electromb.static_mesh"/>
 
 	<rigidbody
 		type_collision="dynamic"
