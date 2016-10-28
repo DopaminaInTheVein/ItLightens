@@ -1,3 +1,4 @@
 <material tech="deferred.tech">
-<texture slot="diffuse" name="textures/cielo_c_base_hub.dds"/>
+<texture slot="diffuse" name="textures/cielo_c_base_hub_diffuso.dds"/>
+<texture slot="selfilum" name="textures/cielo_c_base_hub.dds"/>
 </material>
