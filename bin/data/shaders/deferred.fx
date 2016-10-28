@@ -101,7 +101,7 @@ void PSGBuffer(
 	o_glossiness = float4(o_speculars.a, o_speculars.a, o_speculars.a, 1);
 	
   else
-	o_glossiness = float4(0.2f, 0.2f, 0.2f, 1);
+	o_glossiness = float4(0.f, 0.f, 0.f, 1);
 	
   // Generar la matrix TBN usando la informacion interpolada
   // desde los 3 vertices del triangulo
@@ -240,8 +240,8 @@ void PSLightPoint(
   //glossiness *= 10;
   glossiness *= 100.0f;
 
-  float spec_reflec = pow(cos_beta, 20);
-  float spec_amount = pow(cos_beta, 100-glossiness);
+  //float spec_reflec = pow(cos_beta, 20);
+  float spec_amount = pow(cos_beta, (255-glossiness*3)/10);
  
   //spec_amount += spec_reflec*glossiness;
   spec_amount *= distance_att;
