@@ -18,7 +18,7 @@ float CThrowBomb::speed_st = 6.f;
 float CThrowBomb::timer_st = 2.5;
 float CThrowBomb::radius_st = 2.f;
 #endif
-VEC3 CThrowBomb::offset_init_throw = VEC3(0.25f, 0.3f, 0.25f);
+VEC3 CThrowBomb::offset_init_throw = VEC3(0.25f, 0.1f, 0.25f);
 
 bool CThrowBomb::getUpdateInfo() {
 	transform = GETH_MY(TCompTransform);
@@ -37,7 +37,7 @@ bool CThrowBomb::load(MKeyValue & atts)
 	hmax = atts.getFloat("hmax", 1.f);
 	speed = atts.getFloat("speed", 1.f);
 	t_explode = atts.getFloat("timer", 2.5f);
-	rad_squared = powf(atts.getFloat("radius", 2.f), 2);
+	rad_squared = powf(atts.getFloat("radius", 3.f), 2);
 	return true;
 }
 

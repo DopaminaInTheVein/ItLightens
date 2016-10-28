@@ -6,6 +6,10 @@ function OnCreateGui_btn_resume( )
 	local hud_elements = HandleGroup()
 	hud_elements:get_handles_by_tag("hiddeable_hud")
 	hud_elements:set_visible(0)
+	hud_elements:get_handles_by_tag("ui_pol_e")
+	hud_elements:set_visible(0)
+	hud_elements:get_handles_by_tag("ui_pol_q")
+	hud_elements:set_visible(0)
 end
 
 function OnClicked_btn_resume( )
