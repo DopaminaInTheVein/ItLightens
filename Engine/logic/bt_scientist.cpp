@@ -220,10 +220,11 @@ int bt_scientist::actionAimToPos() {
 		TCompTransform *me_transform = myEntity->get<TCompTransform>();
 		VEC3 myPos = me_transform->getPosition();
 		getPath(myPos, obj_position);
+		SET_ANIM_SCI_BT(AST_IDLE);
 		return OK;
 	}
 	else {
-		SET_ANIM_SCI_BT(AST_IDLE);
+		SET_ANIM_SCI_BT(AST_MOVE);
 		return STAY;
 	}
 }
@@ -279,7 +280,7 @@ int bt_scientist::actionSeekWpt() {
 			return OK;
 		}
 		else {
-			SET_ANIM_SCI_BT(AST_IDLE);
+			SET_ANIM_SCI_BT(AST_MOVE);
 			return STAY;
 		}
 	}
@@ -302,7 +303,7 @@ int bt_scientist::actionNextWpt() {
 		return OK;
 	}
 	else {
-		SET_ANIM_SCI_BT(AST_IDLE);
+		SET_ANIM_SCI_BT(AST_MOVE);
 		return STAY;
 	}
 }
