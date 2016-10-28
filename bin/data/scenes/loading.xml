@@ -60,7 +60,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ui/loading/controlesmandos1.static_mesh"
+   name="static_meshes/ui/loading/controlesmandospagina2.static_mesh"
    static="false"
    hidden="yes"/>
 <abs_aabb/>
@@ -166,7 +166,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ui/loading/controlesmandos1.static_mesh"
+   name="static_meshes/ui/loading/controlesmandospagina1.static_mesh"
    static="false"/>
 <abs_aabb/>
 
@@ -187,7 +187,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ui/loading/controlesmandos1.static_mesh"
+   name="static_meshes/ui/loading/controlesteclado.static_mesh"
    static="false"/>
 <abs_aabb/>
 
@@ -208,7 +208,7 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ui/loading/controlesmandos1.static_mesh"
+   name="static_meshes/ui/loading/controlesteclado2.static_mesh"
    static="false"
    hidden="yes"/>
 <abs_aabb/>

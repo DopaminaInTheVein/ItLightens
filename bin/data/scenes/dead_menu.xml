@@ -26,11 +26,11 @@
 <name
    name="cursor_dead"/>
 <transform
-   pos="6.04535 -94.8127 9.13068"
+   pos="6.04535 -94.8127 9.9"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ui/cursor.static_mesh"
+   name="static_meshes/ui/components_ui/cursor.static_mesh"
    static="false"/>
 <abs_aabb/>
 
@@ -45,9 +45,7 @@
    col="0"
    width="1.94359"
    height="1.94359"/>
-<gui_button
-   width="1.94359"
-   height="1.94359"/>
+<gui_button/>
 <name
    name="btn_exit_dead"/>
 <transform
@@ -70,9 +68,7 @@
    col="0"
    width="2.0"
    height="2.0"/>
-<gui_button
-   width="2.0"
-   height="2.0"/>
+<gui_button/>
 <name
    name="btn_retry"/>
 <transform
@@ -86,11 +82,12 @@
 
 </entity>
 <entity>
-<tags/>
+<tags
+   tags="menu"/>
 <name
    name="gameover"/>
 <transform
-   pos="4.98987 -93.4805 9.84375"
+   pos="4.98987 -93.4805 9.53418"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -109,9 +106,7 @@
    col="0"
    width="2.25155"
    height="2.25156"/>
-<gui_button
-   width="2.25155"
-   height="2.25156"/>
+<gui_button/>
 <name
    name="btn_back_title_dead"/>
 <transform
