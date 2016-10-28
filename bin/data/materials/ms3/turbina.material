@@ -1,5 +1,5 @@
 <material tech="deferred.tech">
 <texture slot="diffuse" name="textures/turbine_gen_difuso.dds"/>
-<texture slot="specular" name="textures/turbine_gen_specular.dds"/>
+<texture slot="specular" name="textures/turbine_gen_specular_gloss_dtx5.dds"/>
 <texture slot="normalmap" name="textures/turbine_gen_normal.dds"/>
 </material>
