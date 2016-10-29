@@ -56,7 +56,7 @@ public:
 	bool load(MKeyValue& atts);
 	bool reload(const ReloadInfo& atts, float reloadAll = true);
 	void hideAll();
-	void kill() { ttl = -1.f; }
+	void kill() { hideAll(); ttl = -1.f; }
 
 	//Change Language and Controls
 	void onLanguageChanged(const TMsgLanguageChanged &msg);

@@ -138,5 +138,6 @@ end
 
 function EndHub()
 	p:pause_game()
+	p:stop_music()
 	p:play_video_and_do("data\\videos\\ms3.avi", "LoadLevel(\"level_4\");")
 end

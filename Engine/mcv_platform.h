@@ -2,7 +2,7 @@
 #define INC_MCV_PLATFORM_H_
 
 // -- Global settings -- //
-#define FINAL_BUILD
+//vi#define FINAL_BUILD
 #ifndef FINAL_BUILD //Defines para version NO final
 
 #define TEST_VALUES // Read initialization_test.json
