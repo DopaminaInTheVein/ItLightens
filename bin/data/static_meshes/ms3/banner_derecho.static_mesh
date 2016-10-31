@@ -1,0 +1,3 @@
+<static_mesh>
+  <slot mesh="meshes/ms3/banner_derecho.mesh" material="materials/ms3/banner.material"/>
+</static_mesh>

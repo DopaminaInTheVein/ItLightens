@@ -62,6 +62,8 @@ void CImGuiModule::update(float dt) {
 	window_flags |= ImGuiWindowFlags_MenuBar;
 	bool menu = true;
 #ifndef FINAL_BUILD
+	if (controller->IsToogleDebugUIPressed()) show_imgui = !show_imgui;
+	if (!show_imgui) return;
 	ImGui::Begin("Debug UI", &menu, ImVec2(800, 512), -1.0f, window_flags);
 	ImGui::PushItemWidth(-140);                                 // Right align, keep 140 pixels for labels
 

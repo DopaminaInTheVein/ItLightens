@@ -1,4 +1,0 @@
-<material tech="deferred.tech">
-<texture slot="diffuse" name="textures/desk_1_difuso.dds"/>
-<texture slot="specular" name="textures/desk_1_specular.dds"/>
-</material>

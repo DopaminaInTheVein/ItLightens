@@ -1,5 +1,0 @@
-<material tech="deferred.tech">
-<texture slot="diffuse" name="textures/cinta_t_container_enlace_soportes_difuso.dds"/>
-<texture slot="specular" name="textures/cinta_t_container_enlace_soportes_spec+gloss.dds"/>
-<texture slot="normalmap" name="textures/cinta_t_container_enlace_soportes_nrml.dds"/>
-</material>

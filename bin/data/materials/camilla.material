@@ -1,4 +1,0 @@
-<material tech="deferred.tech">
-<texture slot="diffuse" name="textures/difuso-camilla.dds"/>
-<texture slot="normalmap" name="textures/normals_camilla.dds"/>
-</material>

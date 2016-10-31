@@ -5,7 +5,7 @@
 #include "recast/navmesh_query.h"
 #include "recast/DebugUtils/Include/DebugDraw.h"
 
-bool sortGreaterThan(int i, int j) { return (i>j); }
+bool sortGreaterThan(int i, int j) { return (i > j); }
 
 void npc::readNpcIni(std::map<std::string, float>& fields)
 {
@@ -239,29 +239,29 @@ void npc::computeUnstuckTarget() {
 	VEC3 front = getTransform()->getFront();
 	switch (direction) {
 		// front
-		case 0: {
-			unstuck_target = front*UNSTUCK_DISTANCE + getTransform()->getPosition();
-			break;
-		}
-		// back
-		case 1: {
-			unstuck_target = -front*UNSTUCK_DISTANCE + getTransform()->getPosition();
-			break;
-		}
-		// left
-		case 2: {
-			unstuck_target = left*UNSTUCK_DISTANCE + getTransform()->getPosition();
-			break;
-		}
-		// right
-		case 3: {
-			unstuck_target = -left*UNSTUCK_DISTANCE + getTransform()->getPosition();
-			break;
-		}
-		default: {
-			unstuck_target = left*UNSTUCK_DISTANCE + getTransform()->getPosition();
-			break;
-		}
+	case 0: {
+		unstuck_target = front*UNSTUCK_DISTANCE + getTransform()->getPosition();
+		break;
+	}
+			// back
+	case 1: {
+		unstuck_target = -front*UNSTUCK_DISTANCE + getTransform()->getPosition();
+		break;
+	}
+			// left
+	case 2: {
+		unstuck_target = left*UNSTUCK_DISTANCE + getTransform()->getPosition();
+		break;
+	}
+			// right
+	case 3: {
+		unstuck_target = -left*UNSTUCK_DISTANCE + getTransform()->getPosition();
+		break;
+	}
+	default: {
+		unstuck_target = left*UNSTUCK_DISTANCE + getTransform()->getPosition();
+		break;
+	}
 	}
 }
 
@@ -371,7 +371,7 @@ void npc::goTo(const VEC3& dest) {
 	if (needsSteering(npcPos, getTransform(), SPEED_WALK, getParent())) {
 		goForward(SPEED_WALK);
 	}
-    else if (!getTransform()->isHalfConeVision(target, deg2rad(5.0f))) {
+	else if (!getTransform()->isHalfConeVision(target, deg2rad(5.0f))) {
 		turnTo(target);
 	}
 	else {
@@ -386,11 +386,14 @@ void npc::goTo(const VEC3& dest) {
 void npc::goForward(float stepForward) {
 	//static int test_forward = 0;
 	//dbg("Estoy avanzando! (%d)\n", (++test_forward) % 100);
-
 	PROFILE_FUNCTION("guard: go forward");
-	VEC3 myPos = getTransform()->getPosition();
-	float dt = getDeltaTime();
-	getCC()->AddMovement(getTransform()->getFront() * stepForward*dt);
+	auto tmx = getTransform();
+	auto cc = getCC();
+	if (tmx && cc) {
+		VEC3 myPos = tmx->getPosition();
+		float dt = getDeltaTime();
+		cc->AddMovement(getTransform()->getFront() * stepForward*dt);
+	}
 }
 
 void npc::updateTalk(string npc_name, CHandle handle) {

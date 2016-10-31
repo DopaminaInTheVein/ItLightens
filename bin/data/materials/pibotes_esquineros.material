@@ -1,4 +1,0 @@
-<material tech="deferred.tech">
-<texture slot="diffuse" name="textures/albedo_columna_esquinera.dds"/>
-<texture slot="normalmap" name="textures/albedo_columna_esquinera_NRM.dds"/>
-</material>

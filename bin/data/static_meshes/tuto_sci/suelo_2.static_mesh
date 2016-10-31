@@ -1,3 +1,3 @@
 <static_mesh>
-  <slot mesh="meshes/tuto_sci/suelo_2.mesh" material="materials/parque.material" mesh_idx="0"/>
+  <slot mesh="meshes/tuto_sci/suelo_2.mesh" material="materials/tuto_sci/parque.material"/>
 </static_mesh>

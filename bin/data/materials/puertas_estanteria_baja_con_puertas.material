@@ -1,5 +1,0 @@
-<material tech="deferred.tech">
-<texture slot="diffuse" name="textures/door_bs_w_d_difuso.dds"/>
-<texture slot="specular" name="textures/door_bs_w_d_specular.dds"/>
-<texture slot="normalmap" name="textures/door_bs_w_d_normal.dds"/>
-</material>

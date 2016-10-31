@@ -1,4 +1,0 @@
-<material tech="deferred.tech">
-<texture slot="diffuse" name="textures/techo_milestone_3.dds"/>
-<texture slot="normalmap" name="textures/difuso_techo_ms3.dds"/>
-</material>

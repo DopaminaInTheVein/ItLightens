@@ -1,4 +1,0 @@
-<material tech="deferred.tech">
-<texture slot="diffuse" name="textures/columna_2_albedo.dds"/>
-<texture slot="normalmap" name="textures/columna_2_normals_normals.dds"/>
-</material>

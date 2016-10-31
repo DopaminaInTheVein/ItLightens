@@ -1,5 +1,0 @@
-<material tech="deferred.tech">
-<texture slot="diffuse" name="textures/farolillos_difuso.dds"/>
-<texture slot="selfilum" name="textures/farolillos_selfilumination.dds"/>
-<texture slot="normalmap" name="textures/farolillos_norm_normals.dds"/>
-</material>

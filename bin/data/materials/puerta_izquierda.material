@@ -1,4 +1,0 @@
-<material tech="deferred.tech">
-<texture slot="diffuse" name="textures/puerta_albedo_izquierda.dds"/>
-<texture slot="normalmap" name="textures/puerta_normal_izquierda.dds"/>
-</material>

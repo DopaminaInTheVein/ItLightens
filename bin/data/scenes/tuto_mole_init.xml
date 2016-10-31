@@ -2,62 +2,21 @@
 <entity
    reload="yes">
 <tags
-   tags="player raijin"/>
-<player/>
-<life
-   points="10"/>
-<skc_player/>
-<skeleton_lookat/>
+   tags="guided_camera"/>
+<guided_camera
+   velocity="2.0"
+   default_dirs="0"
+   points_size="1"
+   skippable="no"
+   stop_final="yes"
+   wpt1="-0.148925 2.92834 0.0672892"
+   lpt1="5.54949 9.15136 -0.0429501"/>
 <name
-   name="_player_1"/>
+   name="CineNearPortal"/>
 <transform
-   pos="1039.65 64.5601 -27.6757"
+   pos="-11.486 2.28844 17.2026"
    quat="0 0 0 1.0"
-   scale="1.0"/>
-<skeleton
-   model="skeletons/player/player.skeleton"/>
-<render_static_mesh
-   name="skeletons/player/player.static_mesh"
-   static="false"/>
-<skeleton_ik/>
-<abs_aabb/>
-<local_aabb/>
-<character_controller
-   radius="0.3"
-   height="0.7"/>
-
-</entity>
-<entity
-   reload="yes">
-<tags
-   tags="AI AI_mole AI_poss"/>
-<bt_mole
-   wpts_size="3"
-   wpt0_pos="1035.83 64.9498 -26.9732"
-   wpt0_wait="2"
-   wpt1_pos="1035.83 64.9498 -24.3355"
-   wpt1_wait="2"
-   wpt2_pos="1037.4 64.9498 -27.1372"
-   wpt2_wait="2"/>
-<player_mole/>
-<skc_mole/>
-<name
-   name="_mole_1"/>
-<transform
-   pos="1035.47 65.1939 -26.4838"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<skeleton
-   model="skeletons/mole/mole.skeleton"/>
-<render_static_mesh
-   name="skeletons/mole/mole.static_mesh"
-   static="false"/>
-<skeleton_ik/>
-<abs_aabb/>
-<local_aabb/>
-<character_controller
-   radius="0.3"
-   height="2.01"/>
+   scale="0.703206"/>
 
 </entity>
 <entity
@@ -66,34 +25,261 @@
 <rigidbody
    type_collision="trigger"
    type_shape="box"
-   size="1.26359 0.185 4.84482"/>
+   size="8.30953 8.63955 4.84482"/>
 <tags
    tags="trigger"/>
-<trigger_lua
-   action="examinate"
-   actionMole="destroy"/>
+<trigger_lua/>
 <name
-   name="_tWall"/>
+   name="_tColumn"/>
 <transform
-   pos="1033.85 64.402 -26.0653"
+   pos="6.06104 9.14595 -0.226735"
    quat="0 0 0 1.0"
    scale="1.0"/>
 
 </entity>
 <entity
-   slept="yes"
    reload="yes">
 <tags
-   tags="fragment wall1_fragment"/>
+   tags="guided_camera"/>
+<guided_camera
+   velocity="2.0"
+   default_dirs="0"
+   points_size="3"
+   skippable="no"
+   stop_final="yes"
+   wpt1="-2.172 7.74133 5.24402"
+   wpt2="-2.172 3.24262 -0.294317"
+   wpt3="0.699218 2.93104 -6.19281"
+   lpt1="2.44287 3.17351 -0.08519"
+   lpt2="-9.96225 -1.32521 -7.50646"
+   lpt3="-8.04542 1.26347 -6.91716"/>
 <name
-   name="_wall_down"/>
+   name="CineBox"/>
 <transform
-   pos="1033.84 65.0197 -26.0653"
+   pos="-5.08533 2.28844 17.2026"
+   quat="0 0 0 1.0"
+   scale="0.703206"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags
+   tags="guided_camera"/>
+<guided_camera
+   velocity="2.0"
+   default_dirs="0"
+   points_size="2"
+   skippable="no"
+   stop_final="yes"
+   wpt1="-2.32971 6.55357 5.43181"
+   wpt2="-6.63452 12.6367 9.78516"
+   lpt1="5.95534 8.15202 -0.31527"
+   lpt2="0.999376 2.10315 -0.949755"/>
+<name
+   name="CinePortalWay"/>
+<transform
+   pos="1.90894 2.28844 17.2026"
+   quat="0 0 0 1.0"
+   scale="0.703206"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags
+   tags="guided_camera"/>
+<guided_camera
+   velocity="2.0"
+   default_dirs="0"
+   points_size="3"
+   skippable="no"
+   stop_final="yes"
+   wpt1="3.98279 1.36005 -4.91033"
+   wpt2="-2.97107 1.26669 -2.50291"
+   wpt3="-5.31311 2.33658 7.94997"
+   lpt1="-5.35735 4.73314 -1.03509"
+   lpt2="10.6032 1.18189 -1.00273"
+   lpt3="5.52573 7.47893 -1.11247"/>
+<name
+   name="CineSala"/>
+<transform
+   pos="8.58838 2.28844 17.2026"
+   quat="0 0 0 1.0"
+   scale="0.703206"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags
+   tags="guided_camera"/>
+<guided_camera
+   velocity="2.0"
+   default_dirs="0"
+   points_size="4"
+   skippable="no"
+   stop_final="yes"
+   wpt1="4.59094 13.4323 -7.27333"
+   wpt2="4.59094 3.52165 -2.93202"
+   wpt3="6.43884 1.50041 -1.29036"
+   wpt4="16.931 1.89252 1.28713"
+   lpt1="-1.36078 7.82704 0.177347"
+   lpt2="-6.68647 2.31953 -0.184956"
+   lpt3="-6.73947 1.7505 -6.89095"
+   lpt4="5.59511 2.05684 -2.62893"/>
+<name
+   name="CineIntro"/>
+<transform
+   pos="15.5474 2.28844 17.2026"
+   quat="0 0 0 1.0"
+   scale="0.703206"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags
+   tags="box_placer"/>
+<box_placer
+   event_out="tutomole_box_moved"/>
+<name
+   name="_box_init"/>
+<transform
+   pos="-6.8927 0.855423 -7.31555"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags
+   tags="tasklist"/>
+<render_static_mesh
+   name="static_meshes/test/baliza.static_mesh"
+   to_render="no"/>
+<room
+   name="-1"/>
+<tasklist
+   points_size="5"
+   pos0="12.5078 -0.126236 -0.798203"
+   room0="-1"
+   pos1="10.4863 -0.126236 -1.12753"
+   room1="-1"
+   pos2="-7.03003 -0.126236 -7.31671"
+   room2="-1"
+   pos3="2.03416 -0.126236 -1.13274"
+   room3="-1"
+   pos4="4.7699 4.73894 -0.0696261"
+   room4="-1"/>
+<name
+   name="tasklist"/>
+<transform
+   pos="12.5078 -0.126236 -0.798203"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity
+   id="101"
+   reload="yes">
+<tags/>
+<name
+   name="pared_rota_jaula"/>
+<transform
+   pos="9.78418 1.86931 -1.11206"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_mole/_wall_down.static_mesh"
+   name="static_meshes/tuto_mole/pared_rota_jaula.static_mesh"
    static="true"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"
+   mesh_name="tuto_mole/pared_rota_jaula"/>
+
+</entity>
+<entity
+   id="100"
+   reload="yes">
+<tags/>
+<name
+   name="pared_rompible"/>
+<transform
+   pos="9.78418 1.86931 -1.11206"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/tuto_mole/pared_rompible.static_mesh"
+   static="true"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"
+   mesh_name="tuto_mole/pared_rompible"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="0.416751 10.914 3.76478"/>
+<tags
+   tags="trigger"/>
+<trigger_lua/>
+<name
+   name="_ttutomole_end"/>
+<transform
+   pos="5.7959 8.98405 -0.0439152"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="0.299994 2.955 21.6094"/>
+<tags
+   tags="trigger"/>
+<trigger_lua/>
+<name
+   name="_tCrossWall"/>
+<transform
+   pos="8.78955 1.5992 -1.14104"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags
+   tags="box_placer"/>
+<box_placer
+   event_in="tutomole_box_placed"/>
+<name
+   name="_box_target"/>
+<transform
+   pos="-1.39832 0.0260162 -0.404682"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags
+   tags="box platform removable interactive"/>
+<box
+   size="3.0 1.5 3.0"/>
+<bone_tracker/>
+<name
+   name="_Box_1"/>
+<transform
+   pos="-6.8927 0.855423 -7.31555"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/obj/box2.static_mesh"
+   static="false"/>
 <abs_aabb/>
 <rigidbody
    type_collision="dynamic"
@@ -108,13 +294,13 @@
 <tags
    tags="fragment wall1_fragment"/>
 <name
-   name="_wall_up"/>
+   name="_wall_left"/>
 <transform
-   pos="1033.84 66.2475 -26.0653"
+   pos="10.4644 1.34412 -0.504993"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_mole/_wall_up.static_mesh"
+   name="static_meshes/tuto_mole/_wall_left.static_mesh"
    static="true"/>
 <abs_aabb/>
 <rigidbody
@@ -132,7 +318,7 @@
 <name
    name="_wall_right"/>
 <transform
-   pos="1033.83 65.8211 -26.7662"
+   pos="10.406 1.6333 -1.84191"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -152,13 +338,35 @@
 <tags
    tags="fragment wall1_fragment"/>
 <name
-   name="_wall_left"/>
+   name="_wall_up"/>
 <transform
-   pos="1033.89 65.5319 -25.4293"
+   pos="10.4148 2.05969 -1.14104"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_mole/_wall_left.static_mesh"
+   name="static_meshes/tuto_mole/_wall_up.static_mesh"
+   static="true"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="dynamic"
+   type_shape="convex"
+   mass="5"/>
+<local_aabb/>
+
+</entity>
+<entity
+   slept="yes"
+   reload="yes">
+<tags
+   tags="fragment wall1_fragment"/>
+<name
+   name="_wall_down"/>
+<transform
+   pos="10.4136 0.831909 -1.14104"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/tuto_mole/_wall_down.static_mesh"
    static="true"/>
 <abs_aabb/>
 <rigidbody
@@ -170,291 +378,83 @@
 </entity>
 <entity
    reload="yes">
+<tags/>
+<rigidbody
+   type_collision="trigger"
+   type_shape="box"
+   size="1.26359 0.185 4.84482"/>
 <tags
-   tags="box platform removable interactive"/>
-<box
-   size="3.0 1.5 3.0"/>
-<bone_tracker/>
+   tags="trigger"/>
+<trigger_lua
+   action="examinate"
+   actionMole="destroy"/>
 <name
-   name="_Box_1"/>
+   name="_tWall"/>
 <transform
-   pos="1016.53 65.0432 -32.2398"
+   pos="10.4199 0.214204 -1.14104"
    quat="0 0 0 1.0"
    scale="1.0"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags
+   tags="AI AI_mole AI_poss"/>
+<bt_mole
+   wpts_size="3"
+   wpt0_pos="12.4083 0.762009 -2.04892"
+   wpt0_wait="2"
+   wpt1_pos="12.4083 0.762009 0.588779"
+   wpt1_wait="2"
+   wpt2_pos="13.9728 0.762009 -2.21298"
+   wpt2_wait="2"/>
+<player_mole/>
+<skc_mole/>
+<name
+   name="_mole_1"/>
+<transform
+   pos="12.0474 1.00609 -1.55958"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<skeleton
+   model="skeletons/mole/mole.skeleton"/>
 <render_static_mesh
-   name="static_meshes/obj/box2.static_mesh"
+   name="skeletons/mole/mole.static_mesh"
    static="false"/>
+<skeleton_ik/>
 <abs_aabb/>
-<rigidbody
-   type_collision="dynamic"
-   type_shape="convex"
-   mass="5"/>
 <local_aabb/>
+<character_controller
+   radius="0.3"
+   height="2.01"/>
 
 </entity>
 <entity
    reload="yes">
 <tags
-   tags="box_placer"/>
-<box_placer
-   event_in="tutomole_box_placed"/>
+   tags="player raijin"/>
+<player/>
+<life
+   points="10"/>
+<skc_player/>
+<skeleton_lookat/>
 <name
-   name="_box_target"/>
+   name="_player_1"/>
 <transform
-   pos="1022.03 64.2138 -25.3289"
+   pos="16.2212 0.372269 -2.75144"
    quat="0 0 0 1.0"
    scale="1.0"/>
-
-</entity>
-<entity
-   reload="yes">
-<tags/>
-<rigidbody
-   type_collision="trigger"
-   type_shape="box"
-   size="0.299994 2.955 21.6094"/>
-<tags
-   tags="trigger"/>
-<trigger_lua/>
-<name
-   name="_tCrossWall"/>
-<transform
-   pos="1032.22 65.787 -26.0653"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity
-   reload="yes">
-<tags/>
-<rigidbody
-   type_collision="trigger"
-   type_shape="box"
-   size="0.416751 10.914 3.76478"/>
-<tags
-   tags="trigger"/>
-<trigger_lua/>
-<name
-   name="_ttutomole_end"/>
-<transform
-   pos="1029.22 73.1718 -24.9682"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity
-   id="100"
-   reload="yes">
-<tags/>
-<name
-   name="pared_rompible"/>
-<transform
-   pos="1033.21 66.0571 -26.0363"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
+<skeleton
+   model="skeletons/player/player.skeleton"/>
 <render_static_mesh
-   name="static_meshes/tuto_mole/pared_rompible.static_mesh"
-   static="true"/>
+   name="skeletons/player/player.static_mesh"
+   static="false"/>
+<skeleton_ik/>
 <abs_aabb/>
-<rigidbody
-   type_collision="static"
-   mesh_name="tuto_mole/pared_rompible"/>
-
-</entity>
-<entity
-   id="101"
-   reload="yes">
-<tags/>
-<name
-   name="pared_rota_jaula"/>
-<transform
-   pos="1033.21 66.0571 -26.0363"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/tuto_mole/pared_rota_jaula.static_mesh"
-   static="true"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"
-   mesh_name="tuto_mole/pared_rota_jaula"/>
-
-</entity>
-<entity
-   reload="yes">
-<tags
-   tags="tasklist"/>
-<render_static_mesh
-   name="static_meshes/test/baliza.static_mesh"
-   to_render="no"/>
-<room
-   name="-1"/>
-<tasklist
-   points_size="5"
-   pos0="1035.93 64.0616 -25.7225"
-   room0="-1"
-   pos1="1033.91 64.0616 -26.0518"
-   room1="-1"
-   pos2="1016.4 64.0616 -32.241"
-   room2="-1"
-   pos3="1025.46 64.0616 -26.057"
-   room3="-1"
-   pos4="1028.2 68.9267 -24.9939"
-   room4="-1"/>
-<name
-   name="tasklist"/>
-<transform
-   pos="1035.93 64.0616 -25.7225"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity
-   reload="yes">
-<tags
-   tags="box_placer"/>
-<box_placer
-   event_out="tutomole_box_moved"/>
-<name
-   name="_box_init"/>
-<transform
-   pos="1016.53 65.0432 -32.2398"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity
-   reload="yes">
-<tags
-   tags="guided_camera"/>
-<guided_camera
-   velocity="2.0"
-   default_dirs="0"
-   points_size="4"
-   skippable="no"
-   stop_final="yes"
-   wpt1="1028.02 77.6201 -32.1976"
-   wpt2="1028.02 67.7094 -27.8563"
-   wpt3="1029.87 65.6882 -26.2146"
-   wpt4="1040.36 66.0803 -23.6371"
-   lpt1="1022.07 72.0148 -24.7469"
-   lpt2="1016.74 66.5073 -25.1092"
-   lpt3="1016.69 65.9383 -31.8152"
-   lpt4="1029.02 66.2446 -27.5532"/>
-<name
-   name="CineIntro"/>
-<transform
-   pos="1038.97 66.4762 -7.72171"
-   quat="0 0 0 1.0"
-   scale="0.703206"/>
-
-</entity>
-<entity
-   reload="yes">
-<tags
-   tags="guided_camera"/>
-<guided_camera
-   velocity="2.0"
-   default_dirs="0"
-   points_size="3"
-   skippable="no"
-   stop_final="yes"
-   wpt1="1027.41 65.5478 -29.8346"
-   wpt2="1020.46 65.4545 -27.4272"
-   wpt3="1018.11 66.5244 -16.9743"
-   lpt1="1018.07 68.9209 -25.9594"
-   lpt2="1034.03 65.3697 -25.927"
-   lpt3="1028.95 71.6667 -26.0367"/>
-<name
-   name="CineSala"/>
-<transform
-   pos="1032.01 66.4762 -7.72171"
-   quat="0 0 0 1.0"
-   scale="0.703206"/>
-
-</entity>
-<entity
-   reload="yes">
-<tags
-   tags="guided_camera"/>
-<guided_camera
-   velocity="2.0"
-   default_dirs="0"
-   points_size="2"
-   skippable="no"
-   stop_final="yes"
-   wpt1="1021.1 70.7414 -19.4925"
-   wpt2="1016.79 76.8245 -15.1391"
-   lpt1="1029.38 72.3398 -25.2395"
-   lpt2="1024.43 66.2909 -25.874"/>
-<name
-   name="CinePortalWay"/>
-<transform
-   pos="1025.34 66.4762 -7.72171"
-   quat="0 0 0 1.0"
-   scale="0.703206"/>
-
-</entity>
-<entity
-   reload="yes">
-<tags
-   tags="guided_camera"/>
-<guided_camera
-   velocity="2.0"
-   default_dirs="0"
-   points_size="3"
-   skippable="no"
-   stop_final="yes"
-   wpt1="1021.25 71.9291 -19.6802"
-   wpt2="1021.25 67.4304 -25.2186"
-   wpt3="1024.13 67.1188 -31.1171"
-   lpt1="1025.87 67.3613 -25.0095"
-   lpt2="1013.46 62.8626 -32.4307"
-   lpt3="1015.38 65.4513 -31.8414"/>
-<name
-   name="CineBox"/>
-<transform
-   pos="1018.34 66.4762 -7.72171"
-   quat="0 0 0 1.0"
-   scale="0.703206"/>
-
-</entity>
-<entity
-   reload="yes">
-<tags/>
-<rigidbody
-   type_collision="trigger"
-   type_shape="box"
-   size="8.30953 8.63955 4.84482"/>
-<tags
-   tags="trigger"/>
-<trigger_lua/>
-<name
-   name="_tColumn"/>
-<transform
-   pos="1029.49 73.3337 -25.151"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-
-</entity>
-<entity
-   reload="yes">
-<tags
-   tags="guided_camera"/>
-<guided_camera
-   velocity="2.0"
-   default_dirs="0"
-   points_size="1"
-   skippable="no"
-   stop_final="yes"
-   wpt1="1023.28 67.1161 -24.857"
-   lpt1="1028.98 73.3392 -24.9672"/>
-<name
-   name="CineNearPortal"/>
-<transform
-   pos="1011.94 66.4762 -7.72171"
-   quat="0 0 0 1.0"
-   scale="0.703206"/>
+<local_aabb/>
+<character_controller
+   radius="0.3"
+   height="0.7"/>
 
 </entity>
 

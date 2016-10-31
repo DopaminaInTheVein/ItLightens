@@ -1,4 +1,0 @@
-<material tech="deferred.tech">
-<texture slot="diffuse" name="textures/columna_rota_difuso.dds"/>
-<texture slot="normalmap" name="textures/columna_rota_tocapelotas_normals.dds"/>
-</material>

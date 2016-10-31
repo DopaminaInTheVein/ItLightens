@@ -1,0 +1,3 @@
+<static_mesh>
+  <slot mesh="meshes/ms3/caja2.mesh" material="materials/ms3/caja_de_herramientas.material"/>
+</static_mesh>

@@ -1,3 +1,0 @@
-<material tech="deferred.tech">
-<texture slot="diffuse" name="textures/albedo_plataforma_redonda_pequena.dds"/>
-</material>

@@ -1,4 +1,0 @@
-<material tech="deferred.tech">
-<texture slot="diffuse" name="textures/suelo_albedoES.dds"/>
-<texture slot="normalmap" name="textures/floor1_v_Cracks_1_Normal_map.dds"/>
-</material>

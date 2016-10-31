@@ -1,5 +1,0 @@
-<material tech="deferred.tech">
-<texture slot="diffuse" name="textures/vending_machine_1_difuso.dds"/>
-<texture slot="specular" name="textures/vending_machine_1_specular.dds"/>
-<texture slot="normalmap" name="textures/vending_machine_1_normal.dds"/>
-</material>

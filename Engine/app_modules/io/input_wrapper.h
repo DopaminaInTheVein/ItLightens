@@ -82,6 +82,7 @@ public:
 	void ChangeMouseState(bool captured);
 
 	// DEBUG TOOLS
+	DECL_INPUT_DEBUG(IsToogleDebugUIPressed);
 	DECL_INPUT_DEBUG(isCameraReleaseButtonPressed);
 	DECL_INPUT_DEBUG(isReleaseButtonPressed);
 	DECL_INPUT_DEBUG(isTeleportComboButtonPressed);

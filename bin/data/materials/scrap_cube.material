@@ -1,4 +1,0 @@
-<material tech="deferred.tech">
-<texture slot="diffuse" name="textures/cube_scrap__difuso.dds"/>
-<texture slot="specular" name="textures/cube_scrap__spec+gloss.dds"/>
-</material>

@@ -1,4 +1,0 @@
-<material tech="deferred.tech">
-<texture slot="diffuse" name="textures/difuso_valla.dds"/>
-<texture slot="normalmap" name="textures/normals_valla.dds"/>
-</material>

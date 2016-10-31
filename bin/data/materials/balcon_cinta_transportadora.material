@@ -1,4 +1,0 @@
-<material tech="deferred.tech">
-<texture slot="diffuse" name="textures/difuso_balcon_adorno_descomunal.dds"/>
-<texture slot="normalmap" name="textures/normal_balcon_adorno_descomunal.dds"/>
-</material>

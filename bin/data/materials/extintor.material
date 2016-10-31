@@ -1,4 +1,0 @@
-<material tech="deferred.tech">
-<texture slot="diffuse" name="textures/difuso_extintor.dds"/>
-<texture slot="normalmap" name="textures/exintor_normals.dds"/>
-</material>

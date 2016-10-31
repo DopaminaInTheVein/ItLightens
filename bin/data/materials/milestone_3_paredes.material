@@ -1,4 +1,0 @@
-<material tech="deferred.tech">
-<texture slot="diffuse" name="textures/pared_difuso.dds"/>
-<texture slot="normalmap" name="textures/normalsms_3.dds"/>
-</material>

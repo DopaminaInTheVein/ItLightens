@@ -12,6 +12,7 @@ class CImGuiModule : public IAppModule {
 	//editor
 	CEditorLights* m_pLights_editor;
 	CEditorMessages* m_pMessages_editor;
+	bool show_imgui = true;
 
 public:
 	void StartLightEditor();

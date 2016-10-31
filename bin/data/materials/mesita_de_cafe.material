@@ -1,4 +1,0 @@
-<material tech="deferred.tech">
-<texture slot="diffuse" name="textures/mesita_de_cafe_difuso.dds"/>
-<texture slot="normalmap" name="textures/normal_mesita_de_cafe.dds"/>
-</material>

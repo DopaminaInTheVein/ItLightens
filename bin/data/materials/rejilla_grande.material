@@ -1,4 +1,0 @@
-<material tech="deferred.tech">
-<texture slot="diffuse" name="textures/difuso_rejilla_grande.dds"/>
-<texture slot="normalmap" name="textures/normal_rejilla_grande.dds"/>
-</material>

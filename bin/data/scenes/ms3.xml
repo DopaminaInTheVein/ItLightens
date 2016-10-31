@@ -136,6 +136,147 @@
 <entity>
 <tags/>
 <name
+   name="barandilla_mapeaaado"/>
+<transform
+   pos="-89.2474 -0.82739 -9.23426"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/barandilla_mapeaaado.static_mesh"
+   static="true"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"
+   mesh_name="ms3/barandilla_mapeaaado"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="barandilla4"/>
+<transform
+   pos="-66.8816 16.2484 18.6188"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/barandilla4.static_mesh"
+   static="true"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"
+   mesh_name="ms3/barandilla4"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="barandilla005"/>
+<transform
+   pos="-67.671 16.2484 16.9526"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/barandilla005.static_mesh"
+   static="true"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"
+   type_shape="convex"
+   mass="5"/>
+<local_aabb/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="barandilla006"/>
+<transform
+   pos="-64.6155 16.2722 14.3309"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/barandilla006.static_mesh"
+   static="true"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"
+   type_shape="convex"
+   mass="5"/>
+<local_aabb/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="barandilla007"/>
+<transform
+   pos="-66.2139 16.2722 13.8865"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/barandilla007.static_mesh"
+   static="true"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"
+   type_shape="convex"
+   mass="5"/>
+<local_aabb/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="barandilla008"/>
+<transform
+   pos="-63.8707 16.2722 15.6266"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/barandilla008.static_mesh"
+   static="true"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"
+   type_shape="convex"
+   mass="5"/>
+<local_aabb/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="barandillas2"/>
+<transform
+   pos="-86.6447 -0.842288 4.75572"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/barandillas2.static_mesh"
+   static="true"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"
+   mesh_name="ms3/barandillas2"/>
+<room
+   name="2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
    name="barrotes_balcon_arriba"/>
 <transform
    pos="-34.8437 -0.662699 -1.29331"
@@ -3554,6 +3695,40 @@
 <entity>
 <tags/>
 <name
+   name="barandilla_2"/>
+<transform
+   pos="-89.2474 -0.82739 -9.23426"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/barandilla_2.static_mesh"
+   static="true"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"
+   mesh_name="ms3/barandilla_2"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="barandilla_5"/>
+<transform
+   pos="-89.2474 -0.82739 -9.23426"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/barandilla_5.static_mesh"
+   static="true"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"
+   mesh_name="ms3/barandilla_5"/>
+
+</entity>
+<entity>
+<tags/>
+<name
    name="bookshelf_3"/>
 <transform
    pos="0 0 0"
@@ -3577,12 +3752,12 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3/Object001.static_mesh"
+   name="static_meshes/ms3/banner_derecho.static_mesh"
    static="true"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/Object001"/>
+   mesh_name="ms3/banner_derecho"/>
 
 </entity>
 <entity>
@@ -3594,12 +3769,12 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3/Object002.static_mesh"
+   name="static_meshes/ms3/banner_izquierdo.static_mesh"
    static="true"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/Object002"/>
+   mesh_name="ms3/banner_izquierdo"/>
 
 </entity>
 <entity>
@@ -5711,35 +5886,18 @@
 <entity>
 <tags/>
 <name
-   name="Object003"/>
-<transform
-   pos="-5.57598 -20.2973 2.07459"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ms3/cubo.static_mesh"
-   static="true"/>
-<abs_aabb/>
-<rigidbody
-   type_collision="static"
-   mesh_name="ms3/cubo"/>
-
-</entity>
-<entity>
-<tags/>
-<name
    name="cubos"/>
 <transform
    pos="-5.54537 -20.2856 2.08098"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3/cubo.static_mesh"
+   name="static_meshes/ms3/cubos.static_mesh"
    static="true"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/cubo"/>
+   mesh_name="ms3/cubos"/>
 
 </entity>
 <entity>
@@ -5751,12 +5909,12 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3/cajas_de_herramientas_ms1.static_mesh"
+   name="static_meshes/ms3/caja2.static_mesh"
    static="true"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/cajas_de_herramientas_ms1"/>
+   mesh_name="ms3/caja2"/>
 
 </entity>
 <entity>
@@ -5785,12 +5943,12 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3/cacharro_cientificomapeadoabajo.static_mesh"
+   name="static_meshes/ms3/pipetas_e.static_mesh"
    static="true"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/cacharro_cientificomapeadoabajo"/>
+   mesh_name="ms3/pipetas_e"/>
 
 </entity>
 <entity>
@@ -5802,12 +5960,12 @@
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/ms3/cacharro_cientificomapeadoarriba.static_mesh"
+   name="static_meshes/ms3/pipetas002.static_mesh"
    static="true"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="ms3/cacharro_cientificomapeadoarriba"/>
+   mesh_name="ms3/pipetas002"/>
 
 </entity>
 <entity>
@@ -6039,6 +6197,23 @@
 <rigidbody
    type_collision="static"
    mesh_name="ms3/techo_oficina"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="farolillo_pasillo"/>
+<transform
+   pos="-55.6608 0.831858 -3.45743"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/farolillo_pasillo.static_mesh"
+   static="true"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"
+   mesh_name="ms3/farolillo_pasillo"/>
 
 </entity>
 

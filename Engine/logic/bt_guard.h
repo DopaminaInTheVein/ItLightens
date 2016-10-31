@@ -318,7 +318,10 @@ public:
 
 	TCompTransform * getTransform() { return my_tmx; };
 	CHandle getParent() override { return MY_OWNER; };
-	TCompCharacterController * getCC() { return my_cc; }
+	TCompCharacterController * getCC() {
+		if (!my_cc) my_cc = GETH_MY(TCompCharacterController);
+		return my_cc;
+	}
 
 	____TIMER_DECLARE_VALUE_(timerShootingWall, 8)
 };
