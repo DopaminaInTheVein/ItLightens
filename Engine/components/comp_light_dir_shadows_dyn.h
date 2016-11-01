@@ -13,6 +13,7 @@ struct TCompLightDirShadowsDynamic : public TCompLightDirShadows {
 	bool is_inRoom = true;
 
 	bool save(std::ofstream & os, MKeyValue & atts);
+	bool load(MKeyValue & atts);
 	void init();
 	void update(float dt);
 

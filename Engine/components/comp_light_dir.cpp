@@ -10,8 +10,8 @@ bool TCompLightDir::debug_render = false;
 bool TCompLightDir::load(MKeyValue& atts) {
 	TCompCamera::load(atts);
 	color = atts.getQuat("color");
-
-	std::string light_mask_name = atts.getString("light_mask", "textures/lightdir_mask.dds");
+	
+	std::string light_mask_name = atts.getString("light_mask", "textures/dir_shader_circular.dds");
 	light_mask = Resources.get(light_mask_name.c_str())->as<CTexture>();
 
 	return true;

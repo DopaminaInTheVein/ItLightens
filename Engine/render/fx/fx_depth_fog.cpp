@@ -117,10 +117,10 @@ void TRenderDepthFog::init() {
 	tech = Resources.get("fog_depth.tech")->as<CRenderTechnique>();
 	h_player = CPlayerBase::handle_player;
 
-	shader_ctes_fog.color_fog = VEC4(0.83, 0.75, 0.7, 0.7);
+	shader_ctes_fog.color_fog = VEC4(0.914, 0.824, 0.65, 0.4);
 
 	shader_ctes_fog.fog_upper_limit = 7;
-	shader_ctes_fog.fog_density = 0.5f;
+	shader_ctes_fog.fog_density = 0.2f;
 	shader_ctes_fog.fog_max_intesity = 0.7f;
 	shader_ctes_fog.fog_distance = 0.02f;
 

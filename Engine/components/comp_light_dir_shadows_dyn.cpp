@@ -7,6 +7,14 @@
 #include "comp_room.h"
 #include "player_controllers\player_controller_base.h"
 
+
+bool TCompLightDirShadowsDynamic::load(MKeyValue& atts) {
+	TCompLightDirShadows::load(atts);
+	std::string light_mask_name = atts.getString("light_mask", "textures/lightdir_mask.dds");
+	light_mask = Resources.get(light_mask_name.c_str())->as<CTexture>();
+	return true;
+}
+
 void TCompLightDirShadowsDynamic::init() {
 	PROFILE_FUNCTION("shadows: update");
 	debug_render = true;

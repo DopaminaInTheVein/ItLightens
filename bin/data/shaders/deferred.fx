@@ -473,7 +473,7 @@ void PSLightDirShadows(
 	lightSpacePos.x = (lightSpacePos.x + 1) * 0.5;
 	lightSpacePos.y = (1 - lightSpacePos.y) * 0.5;
 
-	float4 light_mask = txLightMask.Sample(samLightBlackBorder, lightSpacePos.xy )-0.2;
+	float4 light_mask = txLightMask.Sample(samLightBlackBorder, lightSpacePos.xy );
 	if( lightSpacePos.w < 0 )
 		light_mask.xyzw = .0;
   
