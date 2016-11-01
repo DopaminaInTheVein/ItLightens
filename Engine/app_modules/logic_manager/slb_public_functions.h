@@ -238,6 +238,7 @@ public:
 	void unforceSenseVision();
 	SLBHandle SLBPublicFunctions::create(const char* name, float x, float y, float z);
 	void loadLevel(const char* level_name);
+	void clearLevel();
 	void saveLevel();
 	void clearSaveData();
 	void loadEntities(const char* file_name);

@@ -1198,6 +1198,10 @@ void SLBPublicFunctions::loadLevel(const char* level_name) {
 	CApp::get().changeScene(level_name);
 }
 
+void SLBPublicFunctions::clearLevel() {
+	CApp::get().clearScene();
+}
+
 void SLBPublicFunctions::saveLevel() {
 	CApp::get().saveLevel();
 }

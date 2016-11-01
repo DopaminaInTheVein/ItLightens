@@ -192,6 +192,12 @@ void CApp::changeScene(string level) {
 	entities->clear(reload);
 	next_level = level;
 }
+void CApp::clearScene() {
+	dbg("Destroying scene...\n");
+	// Level load
+	entities->clear(false);
+}
+
 void CApp::loadEntities(string file_name) {
 	CEntitiesModule::ParsingInfo info;
 	info.filename = file_name;

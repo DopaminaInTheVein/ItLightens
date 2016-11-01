@@ -275,7 +275,7 @@ bool CInputWrapper::changegui() {
 	return io->keys[VK_F1].becomesPressed();
 }
 bool CInputWrapper::IsToogleDebugUIPressed() {
-	return io->keys[VK_F5].becomesPressed();
+	return io->keys[VK_F4].becomesPressed();
 }
 
 #endif

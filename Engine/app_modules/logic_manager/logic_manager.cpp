@@ -1203,7 +1203,10 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		// show loading screen
 		//.set("show_loading_screen", &SLBPublicFunctions::showLoadingScreen)
 		//.comment("Shows the loading screen")
-		// LoadLevel (and clear current)
+		// Clear Level
+		.set("clear_level", &SLBPublicFunctions::clearLevel)
+		.comment("Clear current scene")
+		// Load Level
 		.set("load_level", &SLBPublicFunctions::loadLevel)
 		.comment("Clear current scene and load next (param)")
 		.param("string: name of the level")

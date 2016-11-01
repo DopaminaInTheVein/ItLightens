@@ -37,6 +37,7 @@ public:
 	bool start();
 	void stop();
 	void changeScene(std::string level);
+	void clearScene();
 	void loadEntities(std::string file_name);
 	void loadLights(std::string file_name);
 	void loadedLevelNotify(bool new_level);

@@ -32,6 +32,7 @@ function playVideoIntro( )
 end
 
 function StartTheGame()
+	p:clear_level()
 	LoadLevel("level_1")
 	--p:play_video_and_do("data\\videos\\intro.avi", "LoadLevel(\"level_1\");")
 end
