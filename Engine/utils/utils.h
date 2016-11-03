@@ -118,6 +118,9 @@ void mod(int& value, int module);
 #define removeFromVector(v, elem) v.erase(std::remove(v.begin(), v.end(), elem), v.end())
 #define setContains(container, elem) (container.find(elem) != container.end())
 
+void split(const std::string &s, char delim, std::vector<std::string> &elems);
+std::vector<std::string> split(const std::string &s, char delim);
+
 //Handles, messages, ...
 #define BROADCAST_MSG(Msg) getHandleManager<CEntity>()->each([](CEntity * e) {e->sendMsg(Msg());});
 

@@ -4,23 +4,25 @@
 #include "entity.h"
 #include "render/draw_utils.h"
 #include "resources/resources_manager.h"
+#include "app_modules/imgui/module_imgui.h"
 
 bool TCompLightDir::debug_render = false;
 
 bool TCompLightDir::load(MKeyValue& atts) {
 	TCompCamera::load(atts);
 	color = atts.getQuat("color");
-	
-	std::string light_mask_name = atts.getString("light_mask", "textures/dir_shader_circular.dds");
-	light_mask = Resources.get(light_mask_name.c_str())->as<CTexture>();
-
+	shadow_intensity = atts.getFloat("shadow_intensity", 1.0f);
+	light_mask_path = atts.getString("light_mask", "textures/dir_shader_circular.dds");
+	light_mask = Resources.get(light_mask_path.c_str())->as<CTexture>();
 	return true;
 }
 bool TCompLightDir::save(std::ofstream& os, MKeyValue& atts) {
 	atts.put("color", color);
+	atts.put("shadow_intensity", shadow_intensity);
 	atts.put("znear", getZNear());
 	atts.put("zfar", getZFar());
 	atts.put("fov", rad2deg(getFov()));
+	atts.put("light_mask", light_mask_path);
 	return true;
 }
 void TCompLightDir::render() const {
@@ -37,6 +39,22 @@ void TCompLightDir::renderInMenu() {
 	TCompCamera::renderInMenu();
 	ImGui::ColorEdit3("Color", &color.x);
 	ImGui::DragFloat("Intensity", &color.w);
+	ImGui::DragFloat("Shadow Intensity", &shadow_intensity);
+	ImGui::Text("Light mask path: %s", light_mask_path.c_str());
+	renderLightMaskInMenu();
+}
+void TCompLightDir::renderLightMaskInMenu()
+{
+	if (ImGui::Button("Change light mask...")) {
+		std::string newTextureFullPath = CImGuiModule::getFilePath();
+		std::replace(newTextureFullPath.begin(), newTextureFullPath.end(), '\\', '/'); // replace all 'x' to 'y'
+		std::string delimiter = "bin/data/";
+		auto pos = newTextureFullPath.find(delimiter);
+		if (pos != std::string::npos) {
+			light_mask_path = newTextureFullPath.substr(pos + delimiter.length());
+			light_mask = Resources.get(light_mask_path.c_str())->as<CTexture>();
+		}
+	}
 }
 
 void TCompLightDir::uploadShaderCtes(CEntity* e) {
@@ -85,6 +103,12 @@ void TCompLightDir::cancel_editing() {
 	*this = *original;
 	if (light_to_delete) delete light_to_delete;
 	if (original) delete original;
+}
+
+void TCompLightDir::reloadLightmap(std::string new_light_mask)
+{
+	light_mask_path = new_light_mask;
+	light_mask = Resources.get(light_mask_path.c_str())->as<CTexture>();
 }
 
 TCompLightDir::~TCompLightDir()

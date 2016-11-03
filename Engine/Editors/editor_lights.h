@@ -71,9 +71,9 @@ public:
 			void ToDisplay(float* f) override { *f = rad2deg(*f); }
 			void ToIntern(float* f) override { *f = deg2rad(*f); }
 		};
-
 		static char mode_names[EditMode::SIZE][20];// = { "Offset(+)", "Proportional(*)", "Replace(=)" };
 		LightParam pIntensity = LightParam("Intensity", 0.01f, 0.f, 5.f);
+		LightParam pShadowIntensity = LightParam("Shadow Intensity", 0.01f, 0.f, 5.f);
 		LightParam pRed = LightParam("Red", 0.1f, 0.f, 1.f);
 		LightParam pGreen = LightParam("Green", 0.1f, 0.f, 1.f);
 		LightParam pBlue = LightParam("Blue", 0.1f, 0.f, 1.f);
@@ -128,6 +128,9 @@ public:
 	LightTemplate bool HideLight(CEntity* e);
 	LightTemplate bool HideLight(CHandle);
 
+	bool UnhideLight(CHandle h);
+	LightTemplate bool UnhideLight(CHandle);
+
 	//void SetRenderDebug(bool value, std::vector<CHandle> v_lights, std::vector<TypeLight> v_types);
 	LightTemplate void SetRenderDebug(bool value);
 
@@ -143,6 +146,7 @@ public:
 	void RenderMultiEdit();
 	void DestroySelected();
 	void HideSelected();
+	void UnhideSelected();
 
 	void RenderLightList(VHandles& lights, VTypeLights& types, bool temporal, LightList& list);
 
@@ -163,6 +167,9 @@ public:
 	LightTemplate bool IsSelected(CHandle hlight);
 
 	void UpdateEditingLight(CHandle hlight);
+	void renderLightMaskInMenu();
+
+	LightTemplate void ReloadLightMask(CHandle light, std::string light_mask);
 };
 
 #endif

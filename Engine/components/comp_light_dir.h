@@ -9,7 +9,9 @@
 // ------------------------------------
 struct TCompLightDir : public TCompCamera {
 	const CTexture*	light_mask;
-	VEC4				color;
+	std::string		light_mask_path = "";
+	VEC4			color;
+	float			shadow_intensity;
 	bool				enabled = true;
 	bool				selected = false;
 	static bool			debug_render;
@@ -19,11 +21,14 @@ struct TCompLightDir : public TCompCamera {
 	bool				save(std::ofstream& os, MKeyValue& atts);
 	void				render() const;
 	void				renderInMenu();
+	void				renderLightMaskInMenu();
 	void				uploadShaderCtes(CEntity* e);
 	void				activate();
 	void				update(float dt);
+	void				reloadLightmap(std::string);
 
 	//Editor
+	float* getShadowIntensityPointer() { return &shadow_intensity; }
 	TCompLightDir* original = nullptr;
 	void start_editing();
 	void cancel_editing();

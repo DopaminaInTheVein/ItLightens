@@ -10,11 +10,19 @@ fn _parse_light_common xml is_ldir = (
 	--In_radius
 	local near = "in_radius"
 	if is_ldir then ( near = "znear")
-	xml.addAttr  near _parsingObject.nearAttenEnd
+	local near_val = _parsingObject.nearAttenStart
+	if near_val == 0 or (_parsingObject.useNearAtten == off) then (
+		near_val = 1
+	)
+	xml.addAttr  near _parsingObject.nearAttenStart
 	
 	--Out_radius
 	local far = "out_radius"
 	if is_ldir then ( far = "zfar" )
+	local far_val = _parsingObject.farAttenEnd
+	if far_val == 0 or (_parsingObject.useFarAtten == off) then (
+		far_val = 50
+	)
 	xml.addAttr far _parsingObject.farAttenEnd
 	
 	--Use ramp color?
@@ -32,7 +40,7 @@ fn _parse_light_mask xml = (
 	local mascara = _parsingObject.projectorMap
 	if mascara != undefined then (
 		local mascara_file = fileNameFromPath (mascara.filename)
-		xml.addAttr "light_mask" mascara_file
+		xml.addAttr "light_mask" ("textures/light_masks/" + mascara_file)
 	)
 )
 
@@ -75,4 +83,7 @@ fn _parse_lightDir = (
 	
 	--Parse light fov
 	xml.addAttr "fov" _parsingObject.falloff
+	
+	--Parse light intensity
+	parsePropAttribute xml "shadow_intensity" "shadow_intensity"
 )

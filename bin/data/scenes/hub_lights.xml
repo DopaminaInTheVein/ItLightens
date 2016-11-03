@@ -1,701 +1,468 @@
-<entities
->
-<entity
-	permanent="0"
-	reload="0"
->
-<name
-	name="Omni107"
-	/>
-<transform
-	pos="-2.473320 57.115700 -31.430700"
-	quat="0.000000 0.000000 0.000000 1.000000"
-	scale="1.000000 1.000000 1.000000"
-	/>
-<tags
-	tags="gui circle_3"
-	/>
+<entities>
+<entity>
+<tags/>
 <light_point
-	color="0.847059 0.639216 0.831373 0.000000"
-	in_radius="0.01"
-	out_radius="3.55"
-	/>
-</entity>
-<entity
-	permanent="0"
-	reload="0"
->
+   color="0.560784 0.862745 0.960784 5.0"
+   in_radius="18.0"
+   out_radius="28.5"/>
 <name
-	name="Omni113"
-	/>
+   name="Omni005"/>
 <transform
-	pos="7.252940 55.241299 -19.932699"
-	quat="0.000000 0.000000 0.000000 1.000000"
-	scale="1.000000 1.000000 1.000000"
-	/>
-<tags
-	tags="gui circle_3"
-	/>
-<light_point
-	color="1.000000 0.968628 0.635294 2.180000"
-	in_radius="0.01"
-	out_radius="1.35"
-	/>
+   pos="9.27955 56.6631 -17.7151"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
 </entity>
-<entity
-	permanent="0"
-	reload="0"
->
+<entity>
+<tags/>
+<light_point
+   color="0.713726 0.988235 1.0 0.9"
+   in_radius="18.0"
+   out_radius="96.5"/>
 <name
-	name="Omni112"
-	/>
+   name="Omni013"/>
 <transform
-	pos="7.252940 55.241299 -31.003500"
-	quat="0.000000 0.000000 0.000000 1.000000"
-	scale="1.000000 1.000000 1.000000"
-	/>
-<tags
-	tags="gui"
-	/>
-<light_point
-	color="1.000000 0.968628 0.635294 2.180000"
-	in_radius="0.01"
-	out_radius="1.35"
-	/>
+   pos="29.9741 56.9098 -25.4998"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
 </entity>
-<entity
-	permanent="0"
-	reload="0"
->
+<entity>
+<tags/>
+<light_point
+   color="0.847059 0.639216 0.831373 0.9"
+   in_radius="18.0"
+   out_radius="96.5"/>
 <name
-	name="Omni111"
-	/>
+   name="Omni016"/>
 <transform
-	pos="15.790100 55.241299 -31.003500"
-	quat="0.000000 0.000000 0.000000 1.000000"
-	scale="1.000000 1.000000 1.000000"
-	/>
-<tags
-	tags="AI AI_guard"
-	/>
-<light_point
-	color="1.000000 0.968628 0.635294 2.180000"
-	in_radius="0.01"
-	out_radius="1.35"
-	/>
+   pos="25.4809 57.1157 -19.4281"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
 </entity>
-<entity
-	permanent="0"
-	reload="0"
->
+<entity>
+<tags/>
+<light_point
+   color="1.0 0.968628 0.635294 9.09"
+   in_radius="18.0"
+   out_radius="53.5"/>
 <name
-	name="Omni110"
-	/>
+   name="Omni020"/>
 <transform
-	pos="15.790100 55.241299 -19.932699"
-	quat="0.000000 0.000000 0.000000 1.000000"
-	scale="1.000000 1.000000 1.000000"
-	/>
-<tags
-	tags="AI AI_guard"
-	/>
-<light_point
-	color="1.000000 0.968628 0.635294 2.180000"
-	in_radius="0.01"
-	out_radius="1.35"
-	/>
+   pos="21.6102 55.2413 -28.0003"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
 </entity>
-<entity
-	permanent="0"
-	reload="0"
->
+<entity>
+<tags/>
+<light_point
+   color="1.0 1.0 1.0 0.5"
+   in_radius="18.0"
+   out_radius="96.5"/>
 <name
-	name="Omni109"
-	/>
+   name="Omni050"/>
 <transform
-	pos="29.974100 56.909801 -26.289600"
-	quat="0.000000 0.000000 0.000000 1.000000"
-	scale="1.000000 1.000000 1.000000"
-	/>
-<tags
-	tags="player raijin"
-	/>
-<light_point
-	color="0.713726 0.988235 1.000000 0.000000"
-	in_radius="0.01"
-	out_radius="1.35"
-	/>
+   pos="30.2588 52.8794 -25.4998"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
 </entity>
-<entity
-	permanent="0"
-	reload="0"
->
+<entity>
+<tags/>
+<light_point
+   color="0.560784 0.862745 0.960784 5.0"
+   in_radius="18.0"
+   out_radius="28.5"/>
 <name
-	name="Omni108"
-	/>
+   name="Omni087"/>
 <transform
-	pos="29.974100 56.909801 -24.676701"
-	quat="0.000000 0.000000 0.000000 1.000000"
-	scale="1.000000 1.000000 1.000000"
-	/>
-<tags
-	tags="workstation"
-	/>
-<light_point
-	color="0.713726 0.988235 1.000000 0.000000"
-	in_radius="0.01"
-	out_radius="1.35"
-	/>
+   pos="9.27955 55.9599 -17.3862"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
 </entity>
-<entity
-	permanent="0"
-	reload="0"
->
+<entity>
+<tags/>
+<light_point
+   color="0.560784 0.862745 0.960784 5.0"
+   in_radius="18.0"
+   out_radius="28.5"/>
 <name
-	name="Omni106"
-	/>
+   name="Omni088"/>
 <transform
-	pos="-2.473320 57.115700 -19.428101"
-	quat="0.000000 0.000000 0.000000 1.000000"
-	scale="1.000000 1.000000 1.000000"
-	/>
-<tags
-	tags="workbench interactive"
-	/>
-<light_point
-	color="0.847059 0.639216 0.831373 0.000000"
-	in_radius="0.01"
-	out_radius="3.55"
-	/>
+   pos="9.27955 55.4183 -17.3862"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
 </entity>
-<entity
-	permanent="0"
-	reload="0"
->
+<entity>
+<tags/>
+<light_point
+   color="0.560784 0.862745 0.960784 5.0"
+   in_radius="18.0"
+   out_radius="28.5"/>
 <name
-	name="Omni105"
-	/>
+   name="Omni089"/>
 <transform
-	pos="25.480900 57.115700 -31.555901"
-	quat="0.000000 0.000000 0.000000 1.000000"
-	scale="1.000000 1.000000 1.000000"
-	/>
-<tags
-	tags="AI AI_cientifico AI_poss"
-	/>
-<light_point
-	color="0.847059 0.639216 0.831373 0.000000"
-	in_radius="0.01"
-	out_radius="3.55"
-	/>
+   pos="13.6517 56.6631 -17.3862"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
 </entity>
-<entity
-	permanent="0"
-	reload="0"
->
+<entity>
+<tags/>
+<light_point
+   color="0.560784 0.862745 0.960784 5.0"
+   in_radius="18.0"
+   out_radius="28.5"/>
 <name
-	name="Omni104"
-	/>
+   name="Omni090"/>
 <transform
-	pos="21.524200 55.241299 -23.478701"
-	quat="0.000000 0.000000 0.000000 1.000000"
-	scale="1.000000 1.000000 1.000000"
-	/>
-<tags
-	tags="workstation"
-	/>
-<light_point
-	color="1.000000 0.968628 0.635294 2.180000"
-	in_radius="0.01"
-	out_radius="1.35"
-	/>
+   pos="13.7259 55.9833 -17.3862"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
 </entity>
-<entity
-	permanent="0"
-	reload="0"
->
+<entity>
+<tags/>
+<light_point
+   color="0.560784 0.862745 0.960784 5.0"
+   in_radius="18.0"
+   out_radius="28.5"/>
 <name
-	name="Omni103"
-	/>
+   name="Omni091"/>
 <transform
-	pos="1.482820 55.241299 -22.947500"
-	quat="0.000000 0.000000 0.000000 1.000000"
-	scale="1.000000 1.000000 1.000000"
-	/>
-<tags
-	tags="drone platform interactive"
-	/>
-<light_point
-	color="1.000000 0.968628 0.635294 2.180000"
-	in_radius="0.01"
-	out_radius="1.35"
-	/>
+   pos="13.7249 55.4183 -17.3862"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
 </entity>
-<entity
-	permanent="0"
-	reload="0"
->
+<entity>
+<tags/>
+<light_point
+   color="0.560784 0.862745 0.960784 5.0"
+   in_radius="18.0"
+   out_radius="28.5"/>
 <name
-	name="Omni102"
-	/>
+   name="Omni092"/>
 <transform
-	pos="1.410980 55.241299 -28.123301"
-	quat="0.000000 0.000000 0.000000 1.000000"
-	scale="1.000000 1.000000 1.000000"
-	/>
-<tags
-	tags="trigger generator"
-	/>
-<light_point
-	color="1.000000 0.968628 0.635294 2.180000"
-	in_radius="0.01"
-	out_radius="1.35"
-	/>
+   pos="9.58666 56.6631 -33.6328"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
 </entity>
-<entity
-	permanent="0"
-	reload="0"
->
+<entity>
+<tags/>
+<light_point
+   color="0.560784 0.862745 0.960784 5.0"
+   in_radius="18.0"
+   out_radius="28.5"/>
 <name
-	name="Omni101"
-	/>
+   name="Omni093"/>
 <transform
-	pos="1.410980 55.241299 -27.470699"
-	quat="0.000000 0.000000 0.000000 1.000000"
-	scale="1.000000 1.000000 1.000000"
-	/>
-<tags
-	tags="trigger"
-	/>
-<light_point
-	color="1.000000 0.968628 0.635294 2.180000"
-	in_radius="0.01"
-	out_radius="1.35"
-	/>
+   pos="9.58666 55.9599 -33.6328"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
 </entity>
-<entity
-	permanent="0"
-	reload="0"
->
+<entity>
+<tags/>
+<light_point
+   color="0.560784 0.862745 0.960784 5.0"
+   in_radius="18.0"
+   out_radius="28.5"/>
 <name
-	name="Omni100"
-	/>
+   name="Omni094"/>
 <transform
-	pos="21.610201 55.241299 -22.865200"
-	quat="0.000000 0.000000 0.000000 1.000000"
-	scale="1.000000 1.000000 1.000000"
-	/>
-<tags
-	tags="door"
-	/>
-<light_point
-	color="1.000000 0.968628 0.635294 2.180000"
-	in_radius="0.01"
-	out_radius="1.35"
-	/>
+   pos="9.58666 55.4183 -33.6328"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
 </entity>
-<entity
-	permanent="0"
-	reload="0"
->
+<entity>
+<tags/>
+<light_point
+   color="0.560784 0.862745 0.960784 5.0"
+   in_radius="18.0"
+   out_radius="28.5"/>
 <name
-	name="Omni099"
-	/>
+   name="Omni095"/>
 <transform
-	pos="1.505090 55.241299 -23.449699"
-	quat="0.000000 0.000000 0.000000 1.000000"
-	scale="1.000000 1.000000 1.000000"
-	/>
-<tags
-	tags="trigger"
-	/>
-<light_point
-	color="1.000000 0.968628 0.635294 2.180000"
-	in_radius="0.01"
-	out_radius="1.35"
-	/>
+   pos="13.7976 56.6631 -33.6328"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
 </entity>
-<entity
-	permanent="0"
-	reload="0"
->
+<entity>
+<tags/>
+<light_point
+   color="0.560784 0.862745 0.960784 5.0"
+   in_radius="18.0"
+   out_radius="28.5"/>
 <name
-	name="Omni098"
-	/>
+   name="Omni096"/>
 <transform
-	pos="21.508400 55.241299 -27.539900"
-	quat="0.000000 0.000000 0.000000 1.000000"
-	scale="1.000000 1.000000 1.000000"
-	/>
-<tags
-	tags="tasklist"
-	/>
-<light_point
-	color="1.000000 0.968628 0.635294 2.180000"
-	in_radius="0.01"
-	out_radius="1.35"
-	/>
+   pos="13.7976 55.9599 -33.6328"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
 </entity>
-<entity
-	permanent="0"
-	reload="0"
->
+<entity>
+<tags/>
+<light_point
+   color="0.560784 0.862745 0.960784 5.0"
+   in_radius="18.0"
+   out_radius="28.5"/>
 <name
-	name="Omni097"
-	/>
+   name="Omni097"/>
 <transform
-	pos="13.797600 55.418301 -33.632801"
-	quat="0.000000 0.000000 0.000000 1.000000"
-	scale="1.000000 1.000000 1.000000"
-	/>
-<tags
-	tags="guided_camera"
-	/>
-<light_point
-	color="0.560784 0.862745 0.960784 0.000000"
-	in_radius="0.01"
-	out_radius="1.78"
-	/>
+   pos="13.7976 55.4183 -33.6328"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
 </entity>
-<entity
-	permanent="0"
-	reload="0"
->
+<entity>
+<tags/>
+<light_point
+   color="1.0 0.968628 0.635294 9.09"
+   in_radius="18.0"
+   out_radius="53.5"/>
 <name
-	name="Omni096"
-	/>
+   name="Omni098"/>
 <transform
-	pos="13.797600 55.959900 -33.632801"
-	quat="0.000000 0.000000 0.000000 1.000000"
-	scale="1.000000 1.000000 1.000000"
-	/>
-<tags
-	tags="guided_camera"
-	/>
-<light_point
-	color="0.560784 0.862745 0.960784 0.000000"
-	in_radius="0.01"
-	out_radius="2.58"
-	/>
+   pos="21.5084 55.2413 -27.5399"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
 </entity>
-<entity
-	permanent="0"
-	reload="0"
->
+<entity>
+<tags/>
+<light_point
+   color="1.0 0.968628 0.635294 9.09"
+   in_radius="18.0"
+   out_radius="53.5"/>
 <name
-	name="Omni095"
-	/>
+   name="Omni099"/>
 <transform
-	pos="13.797600 56.663101 -33.632801"
-	quat="0.000000 0.000000 0.000000 1.000000"
-	scale="1.000000 1.000000 1.000000"
-	/>
-<tags
-	tags="gui"
-	/>
-<light_point
-	color="0.560784 0.862745 0.960784 0.160000"
-	in_radius="0.01"
-	out_radius="1.48"
-	/>
+   pos="1.50509 55.2413 -23.4497"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
 </entity>
-<entity
-	permanent="0"
-	reload="0"
->
+<entity>
+<tags/>
+<light_point
+   color="1.0 0.968628 0.635294 9.09"
+   in_radius="18.0"
+   out_radius="53.5"/>
 <name
-	name="Omni094"
-	/>
+   name="Omni100"/>
 <transform
-	pos="9.587000 55.418003 -33.632801"
-	quat="0.000000 0.000000 0.000000 1.000000"
-	scale="1.000000 1.000000 1.000000"
-	/>
-<tags
-	tags="gui"
-	/>
-<light_point
-	color="0.560784 0.862745 0.960784 0.000000"
-	in_radius="0.01"
-	out_radius="1.78"
-	/>
+   pos="21.6102 55.2413 -22.8652"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
 </entity>
-<entity
-	permanent="0"
-	reload="0"
->
+<entity>
+<tags/>
+<light_point
+   color="1.0 0.968628 0.635294 9.09"
+   in_radius="18.0"
+   out_radius="53.5"/>
 <name
-	name="Omni093"
-	/>
+   name="Omni101"/>
 <transform
-	pos="9.586660 55.959900 -33.632801"
-	quat="0.000000 0.000000 0.000000 1.000000"
-	scale="1.000000 1.000000 1.000000"
-	/>
-<tags
-	tags="gui"
-	/>
-<light_point
-	color="0.560784 0.862745 0.960784 0.000000"
-	in_radius="0.01"
-	out_radius="2.58"
-	/>
+   pos="1.41098 55.2413 -27.4707"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
 </entity>
-<entity
-	permanent="0"
-	reload="0"
->
+<entity>
+<tags/>
+<light_point
+   color="1.0 0.968628 0.635294 9.09"
+   in_radius="18.0"
+   out_radius="53.5"/>
 <name
-	name="Omni092"
-	/>
+   name="Omni102"/>
 <transform
-	pos="9.586660 56.663101 -33.632801"
-	quat="0.000000 0.000000 0.000000 1.000000"
-	scale="1.000000 1.000000 1.000000"
-	/>
-<tags
-	tags="gui"
-	/>
-<light_point
-	color="0.560784 0.862745 0.960784 0.160000"
-	in_radius="0.01"
-	out_radius="1.48"
-	/>
+   pos="1.41098 55.2413 -28.1233"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
 </entity>
-<entity
-	permanent="0"
-	reload="0"
->
+<entity>
+<tags/>
+<light_point
+   color="1.0 0.968628 0.635294 9.09"
+   in_radius="18.0"
+   out_radius="53.5"/>
 <name
-	name="Omni091"
-	/>
+   name="Omni103"/>
 <transform
-	pos="13.724900 55.418301 -17.386200"
-	quat="0.000000 0.000000 0.000000 1.000000"
-	scale="1.000000 1.000000 1.000000"
-	/>
-<tags
-	tags="gui"
-	/>
-<light_point
-	color="0.560784 0.862745 0.960784 0.000000"
-	in_radius="0.01"
-	out_radius="1.78"
-	/>
+   pos="1.48282 55.2413 -22.9475"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
 </entity>
-<entity
-	permanent="0"
-	reload="0"
->
+<entity>
+<tags/>
+<light_point
+   color="1.0 0.968628 0.635294 9.09"
+   in_radius="18.0"
+   out_radius="53.5"/>
 <name
-	name="Omni090"
-	/>
+   name="Omni104"/>
 <transform
-	pos="13.725900 55.983299 -17.386200"
-	quat="0.000000 0.000000 0.000000 1.000000"
-	scale="1.000000 1.000000 1.000000"
-	/>
-<tags
-	tags="gui"
-	/>
-<light_point
-	color="0.560784 0.862745 0.960784 0.000000"
-	in_radius="0.01"
-	out_radius="2.58"
-	/>
+   pos="21.5242 55.2413 -23.4787"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
 </entity>
-<entity
-	permanent="0"
-	reload="0"
->
+<entity>
+<tags/>
+<light_point
+   color="0.847059 0.639216 0.831373 0.9"
+   in_radius="18.0"
+   out_radius="96.5"/>
 <name
-	name="Omni089"
-	/>
+   name="Omni105"/>
 <transform
-	pos="13.651700 56.663101 -17.386200"
-	quat="0.000000 0.000000 0.000000 1.000000"
-	scale="1.000000 1.000000 1.000000"
-	/>
-<tags
-	tags="gui"
-	/>
-<light_point
-	color="0.560784 0.862745 0.960784 0.160000"
-	in_radius="0.01"
-	out_radius="1.48"
-	/>
+   pos="25.4809 57.1157 -31.5559"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
 </entity>
-<entity
-	permanent="0"
-	reload="0"
->
+<entity>
+<tags/>
+<light_point
+   color="0.847059 0.639216 0.831373 0.9"
+   in_radius="18.0"
+   out_radius="96.5"/>
 <name
-	name="Omni088"
-	/>
+   name="Omni106"/>
 <transform
-	pos="9.279550 55.418301 -17.386200"
-	quat="0.000000 0.000000 0.000000 1.000000"
-	scale="1.000000 1.000000 1.000000"
-	/>
-<tags
-	tags="gui"
-	/>
-<light_point
-	color="0.560784 0.862745 0.960784 0.000000"
-	in_radius="0.01"
-	out_radius="1.78"
-	/>
+   pos="-2.47332 57.1157 -19.4281"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
 </entity>
-<entity
-	permanent="0"
-	reload="0"
->
+<entity>
+<tags/>
+<light_point
+   color="0.713726 0.988235 1.0 0.9"
+   in_radius="18.0"
+   out_radius="96.5"/>
 <name
-	name="Omni087"
-	/>
+   name="Omni108"/>
 <transform
-	pos="9.279550 55.959900 -17.386200"
-	quat="0.000000 0.000000 0.000000 1.000000"
-	scale="1.000000 1.000000 1.000000"
-	/>
-<tags
-	tags="gui"
-	/>
-<light_point
-	color="0.560784 0.862745 0.960784 0.000000"
-	in_radius="0.01"
-	out_radius="2.58"
-	/>
+   pos="29.9741 56.9098 -24.6767"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
 </entity>
-<entity
-	permanent="0"
-	reload="0"
->
+<entity>
+<tags/>
+<light_point
+   color="0.713726 0.988235 1.0 0.9"
+   in_radius="18.0"
+   out_radius="96.5"/>
 <name
-	name="Omni050"
-	/>
+   name="Omni109"/>
 <transform
-	pos="30.258801 52.879398 -25.499800"
-	quat="0.000000 0.000000 0.000000 1.000000"
-	scale="1.000000 1.000000 1.000000"
-	/>
-<tags
-	tags="gui"
-	/>
-<light_point
-	color="1.000000 1.000000 1.000000 0.000000"
-	in_radius="0.01"
-	out_radius="1.35"
-	/>
+   pos="29.9741 56.9098 -26.2896"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
 </entity>
-<entity
-	permanent="0"
-	reload="0"
->
+<entity>
+<tags/>
+<light_point
+   color="1.0 0.968628 0.635294 9.09"
+   in_radius="18.0"
+   out_radius="53.5"/>
 <name
-	name="Omni020"
-	/>
+   name="Omni110"/>
 <transform
-	pos="21.610201 55.241299 -28.000299"
-	quat="0.000000 0.000000 0.000000 1.000000"
-	scale="1.000000 1.000000 1.000000"
-	/>
-<tags
-	tags="gui"
-	/>
-<light_point
-	color="1.000000 0.968628 0.635294 2.180000"
-	in_radius="0.01"
-	out_radius="1.35"
-	/>
+   pos="15.7901 55.2413 -19.9327"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
 </entity>
-<entity
-	permanent="0"
-	reload="0"
->
+<entity>
+<tags/>
+<light_point
+   color="1.0 0.968628 0.635294 9.09"
+   in_radius="18.0"
+   out_radius="53.5"/>
 <name
-	name="Omni016"
-	/>
+   name="Omni111"/>
 <transform
-	pos="25.480900 57.115700 -19.428101"
-	quat="0.000000 0.000000 0.000000 1.000000"
-	scale="1.000000 1.000000 1.000000"
-	/>
-<tags
-	tags="gui"
-	/>
-<light_point
-	color="0.847059 0.639216 0.831373 0.000000"
-	in_radius="0.01"
-	out_radius="3.55"
-	/>
+   pos="15.7901 55.2413 -31.0035"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
 </entity>
-<entity
-	permanent="0"
-	reload="0"
->
+<entity>
+<tags/>
+<light_point
+   color="1.0 0.968628 0.635294 9.09"
+   in_radius="18.0"
+   out_radius="53.5"/>
 <name
-	name="Omni013"
-	/>
+   name="Omni112"/>
 <transform
-	pos="29.974100 56.909801 -25.499800"
-	quat="0.000000 0.000000 0.000000 1.000000"
-	scale="1.000000 1.000000 1.000000"
-	/>
-<tags
-	tags="gui"
-	/>
-<light_point
-	color="0.713726 0.988235 1.000000 0.000000"
-	in_radius="0.01"
-	out_radius="1.35"
-	/>
+   pos="7.25294 55.2413 -31.0035"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
 </entity>
-<entity
-	permanent="0"
-	reload="0"
->
+<entity>
+<tags/>
+<light_point
+   color="1.0 0.968628 0.635294 9.09"
+   in_radius="18.0"
+   out_radius="53.5"/>
 <name
-	name="Omni005"
-	/>
+   name="Omni113"/>
 <transform
-	pos="9.279550 56.663101 -17.715099"
-	quat="0.000000 0.000000 0.000000 1.000000"
-	scale="1.000000 1.000000 1.000000"
-	/>
-<tags
-	tags=""
-	/>
-<light_point
-	color="0.560784 0.862745 0.960784 0.160000"
-	in_radius="0.01"
-	out_radius="1.48"
-	/>
+   pos="7.25294 55.2413 -19.9327"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
 </entity>
-<entity
-	permanent="0"
-	reload="0"
->
-<culling
-	/>
+<entity>
+<tags/>
+<light_point
+   color="0.847059 0.639216 0.831373 0.9"
+   in_radius="18.0"
+   out_radius="96.5"/>
+<name
+   name="Omni107"/>
+<transform
+   pos="-2.47332 57.1157 -31.4307"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity>
+<tags/>
 <light_dir_shadows
-	color="1.000000 1.000000 1.000000 5.000000"
-	fov="35.6"
-	gen_shadow="1"
-	resolution="256"
-	zfar="25"
-	znear="1"
-	/>
+   gen_shadow="yes"
+   color="1.0 1.0 1.0 1.0"
+   znear="35.2"
+   zfar="200.0"
+   fov="24.9"/>
+<culling/>
 <name
-	name="Fspot001"
-	/>
+   name="Fspot001"/>
 <transform
-	pos="12.560000 72.918602 -25.895000"
-	quat="-0.403422 -0.614439 0.568534 -0.369437"
-	scale="1.000000 1.000000 1.000000"
-	/>
-<tags
-	tags=""
-	/>
+   pos="11.5596 72.9186 -30.6948"
+   quat="0.625535 0 0 0.780196"
+   scale="1.0"/>
+
 </entity>
+
 </entities>

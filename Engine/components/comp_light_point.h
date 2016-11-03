@@ -22,11 +22,13 @@ struct TCompLightPoint : public TCompBase {
 	void renderInMenu();
 	void uploadShaderCtes();
 	void activate();
+	void reloadLightmap(std::string) {} //Do nothing
 
 	//Editor
 	TCompLightPoint* original = nullptr;
 	void start_editing();
 	void cancel_editing();
+	float* getShadowIntensityPointer() { return nullptr; }
 	float* getNearPointer() { return &in_radius; }
 	float* getFarPointer() { return &out_radius; }
 	float* getFovPointer() { return nullptr; }

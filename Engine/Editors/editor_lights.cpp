@@ -5,6 +5,8 @@
 
 #include "utils/utils.h"
 
+#include "app_modules/imgui/module_imgui.h"
+
 #include "handle\handle_manager.h"
 #include "components\entity.h"
 #include "components\comp_name.h"
@@ -146,10 +148,13 @@ void CEditorLights::RenderMultiEdit()
 				multi_editing = EDITING;
 			}
 			if (ImGui::Button("Destroy Selected")) {
-				DestroySelected(); //peta el imgui por alguna razon
+				DestroySelected();
 			}
 			if (ImGui::Button("Hide Selected")) {
-				HideSelected(); //peta el imgui por alguna razon
+				HideSelected();
+			}
+			if (ImGui::Button("Unhide Selected")) {
+				UnhideSelected();
 			}
 		}
 		else if (multi_editing == EDITING) {
@@ -165,6 +170,7 @@ void CEditorLights::RenderMultiEdit()
 				multi_edit_light = EditLight();
 			}
 			multi_edit_light.renderInMenu();
+			renderLightMaskInMenu();
 		}
 	}
 }
@@ -185,6 +191,14 @@ void CEditorLights::HideSelected()
 	for (auto hlight : m_Lights) {
 		if (IsSelected(hlight)) {
 			EACH__LIGHT__(HideLight, (hlight););
+		}
+	}
+}
+void CEditorLights::UnhideSelected()
+{
+	for (auto hlight : m_Lights) {
+		if (IsSelected(hlight)) {
+			EACH__LIGHT__(UnhideLight, (hlight););
 		}
 	}
 }
@@ -291,7 +305,6 @@ bool CEditorLights::AddLightToEngine(TypeLight type, bool* rooms)
 		name->setName(sname);
 		TCompLightDir* light = h;
 		if (m_show_axis) light->setRenderDebug(true);
-
 	}
 	else if (type == TypeLight::DIR_SHADOWS) {
 		h = spawnPrefab("light_dir_shadows_default");
@@ -315,7 +328,7 @@ bool CEditorLights::AddLightToEngine(TypeLight type, bool* rooms)
 		sname += std::to_string(id_name);
 		name->setName(sname);
 		TCompLightDirShadowsDynamic* light = h;
-		if(m_show_axis) light->setRenderDebug(true);
+		if (m_show_axis) light->setRenderDebug(true);
 	}
 	else {
 		//nothing to do
@@ -381,6 +394,12 @@ bool CEditorLights::HideLight(CHandle h)
 	if (!e_owner) return false;
 	return false EACH__LIGHT__(|| HideLight, (e_owner));
 }
+bool CEditorLights::UnhideLight(CHandle h)
+{
+	CEntity* e_owner = h.getOwner();
+	if (!e_owner) return false;
+	return false EACH__LIGHT__(|| UnhideLight, (e_owner));
+}
 LightTemplate
 bool CEditorLights::HideLight(CEntity* e)
 {
@@ -393,6 +412,13 @@ bool CEditorLights::HideLight(CHandle h)
 {
 	TLight* l = h;
 	if (l) l->enabled = false;
+	return l;
+}
+LightTemplate
+bool CEditorLights::UnhideLight(CHandle h)
+{
+	TLight* l = h;
+	if (l) l->enabled = true;
 	return l;
 }
 
@@ -574,6 +600,7 @@ char CEditorLights::EditLight::mode_names[EditMode::SIZE][20] = { "Offset(+)", "
 void CEditorLights::EditLight::renderInMenu()
 {
 	pIntensity.renderInMenu();
+	pShadowIntensity.renderInMenu();
 	pRed.renderInMenu();
 	pGreen.renderInMenu();
 	pBlue.renderInMenu();
@@ -595,9 +622,9 @@ void CEditorLights::EditLight::LightParam::renderInMenu()
 	ImGui::SameLine();
 	ImGui::PushID(&vspeed);
 	ImGui::PushItemWidth(100);
-	if (ImGui::InputFloat("", &vspeed, 0.01f, 0.01f, 2) && !changed_by_user) {
+	if (ImGui::InputFloat("", &vspeed, 0.00001f, 0.01f, 5) && !changed_by_user) {
 		changed_by_user = true;
-		if (vspeed < 0.01f) vspeed = 0.01f;
+		if (vspeed < 0.00001f) vspeed = 0.00001f;
 	}
 	ImGui::PopItemWidth();
 	ImGui::PopID();
@@ -633,6 +660,30 @@ void CEditorLights::EditLight::LightParam::renderInMenu()
 	changed_by_user = false;
 }
 
+void CEditorLights::renderLightMaskInMenu()
+{
+	if (ImGui::Button("Change light mask...")) {
+		std::string newTextureFullPath = CImGuiModule::getFilePath();
+		std::replace(newTextureFullPath.begin(), newTextureFullPath.end(), '\\', '/'); // replace all 'x' to 'y'
+		std::string delimiter = "bin/data/";
+		auto pos = newTextureFullPath.find(delimiter);
+		if (pos != std::string::npos) {
+			for (auto hlight : m_Lights) {
+				CHandle lowner = hlight.getOwner();
+				std::string light_mask = newTextureFullPath.substr(pos + delimiter.length());
+				//light_mask = Resources.get(light_mask_path.c_str())->as<CTexture>();
+				EACH__LIGHT__(ReloadLightMask, (lowner, light_mask););
+			}
+		}
+	}
+}
+
+LightTemplate
+void CEditorLights::ReloadLightMask(CHandle lowner, std::string lightmask) {
+	GET_COMP(light, lowner, TLight);
+	if (light && light->selected) light->reloadLightmap(lightmask);
+}
+
 void CEditorLights::UpdateEditingLight(CHandle hlight)
 {
 	if (!hlight.isValid()) return;
@@ -641,12 +692,13 @@ void CEditorLights::UpdateEditingLight(CHandle hlight)
 	EACH__LIGHT__(multi_edit_light.updateLight, (lowner););
 }
 
-template <typename TLight>
+LightTemplate
 void CEditorLights::EditLight::updateLight(CHandle lowner)
 {
 	GET_COMP(light, lowner, TLight);
 	if (!light || !light->selected || !light->original) return;
 	pIntensity.update(&light->original->color.w, &light->color.w);
+	pShadowIntensity.update(light->original->getShadowIntensityPointer(), light->getShadowIntensityPointer());
 	pRed.update(&light->original->color.x, &light->color.x);
 	pGreen.update(&light->original->color.y, &light->color.y);
 	pBlue.update(&light->original->color.z, &light->color.z);
@@ -657,7 +709,6 @@ void CEditorLights::EditLight::updateLight(CHandle lowner)
 		GET_COMP(light_shadow, lowner, TCompLightDirShadows);
 		if (light_shadow) light_shadow->setProjection();
 	}
-
 }
 
 void CEditorLights::EditLight::LightParam::update(float *orig, float * dest)
@@ -697,7 +748,4 @@ void CEditorLights::EditLight::LightParam::update(float *orig, float * dest)
 	*dest = clamp(*dest, rmin, rmax);
 	ToIntern(orig);
 	ToIntern(dest);
-
-	
-
 }
