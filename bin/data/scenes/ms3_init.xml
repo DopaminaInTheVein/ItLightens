@@ -855,14 +855,14 @@
 <rigidbody
    type_collision="trigger"
    type_shape="sphere"
-   radius="1.64"/>
+   radius="1.0168"/>
 <tags
    tags="trigger generator"/>
 <generator/>
 <name
    name="trigger_3"/>
 <transform
-   pos="-6.74973 -12.2363 -19.6071"
+   pos="-6.58948 -11.8899 -19.28"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <room
@@ -1702,14 +1702,14 @@
 <rigidbody
    type_collision="trigger"
    type_shape="box"
-   size="1.63823 0.2586 3.99284"/>
+   size="2.85052 2.95074 3.99284"/>
 <tags
    tags="trigger"/>
 <trigger_lua/>
 <name
    name="__ttablon1"/>
 <transform
-   pos="-2.58481 -18.8921 -18.7102"
+   pos="-2.76456 -17.546 -18.7102"
    quat="0 0.0436194 0 0.999048"
    scale="1.0"/>
 <room
@@ -1722,14 +1722,14 @@
 <rigidbody
    type_collision="trigger"
    type_shape="box"
-   size="1.8005 0.7486 4.15632"/>
+   size="3.67302 2.4375 4.15632"/>
 <tags
    tags="trigger"/>
 <trigger_lua/>
 <name
    name="__ttablon002"/>
 <transform
-   pos="-6.30417 -16.6547 -18.2734"
+   pos="-6.30417 -15.8102 -18.2734"
    quat="0 0.173648 0 0.984808"
    scale="1.0"/>
 <room
@@ -1742,15 +1742,15 @@
 <rigidbody
    type_collision="trigger"
    type_shape="box"
-   size="1.46271 0.2586 3.74443"/>
+   size="4.40325 3.1692 3.74443"/>
 <tags
    tags="trigger"/>
 <trigger_lua/>
 <name
    name="__ttablon003"/>
 <transform
-   pos="-2.23728 -14.9636 -18.7102"
-   quat="0 -0.34202 0 0.939693"
+   pos="-2.23728 -13.5083 -18.7102"
+   quat="0 0.0871557 0 0.996195"
    scale="1.0"/>
 <room
    name="2"/>
@@ -1762,14 +1762,14 @@
 <rigidbody
    type_collision="trigger"
    type_shape="box"
-   size="1.46271 0.2586 3.74443"/>
+   size="3.20991 5.53202 3.74443"/>
 <tags
    tags="trigger"/>
 <trigger_lua/>
 <name
    name="__ttablon004"/>
 <transform
-   pos="-6.3729 -12.8281 -18.2988"
+   pos="-6.7208 -10.1476 -18.2988"
    quat="0 0.130526 0 0.991445"
    scale="1.0"/>
 <room

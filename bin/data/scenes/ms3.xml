@@ -6216,5 +6216,22 @@
    mesh_name="ms3/farolillo_pasillo"/>
 
 </entity>
+<entity>
+<tags/>
+<name
+   name="scrap_cube_andamio"/>
+<transform
+   pos="-3.03265 -14.5043 -19.8298"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ms3/scrap_cube_andamio.static_mesh"
+   static="true"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"
+   mesh_name="ms3/scrap_cube_andamio"/>
+
+</entity>
 
 </entities>

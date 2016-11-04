@@ -63,7 +63,7 @@ ms3_onTablon1()
 end
 
 function OnLeave___ttablon1( )
-ms3_outTablon()
+ms3_outTablon1()
 end
 
 function OnEnter___ttablon002( )
@@ -71,7 +71,7 @@ ms3_onTablon2()
 end
 
 function OnLeave___ttablon002( )
-ms3_outTablon()
+ms3_outTablon2()
 end
 
 function OnEnter___ttablon003( )
@@ -79,7 +79,7 @@ ms3_onTablon3()
 end
 
 function OnLeave___ttablon003( )
-ms3_outTablon()
+ms3_outTablon3()
 end
 
 function OnEnter___ttablon004( )
@@ -87,7 +87,7 @@ ms3_onTablon4()
 end
 
 function OnLeave___ttablon004( )
-ms3_outTablon()
+ms3_outTablon4()
 end
 
 function OnEnter___ttablon005( )
@@ -95,7 +95,7 @@ ms3_onTablon5()
 end
 
 function OnLeave___ttablon005( )
-ms3_outTablon()
+ms3_outTablon5()
 end
 
 function OnEnter___ttablon006( )
@@ -103,7 +103,7 @@ ms3_onTablon6()
 end
 
 function OnLeave___ttablon006( )
-ms3_outTablon()
+ms3_outTablon6()
 end
 
 function OnEnter__tFogOut1( )

@@ -92,10 +92,12 @@ void TCompBox::UnGrab()
 {
 	GET_MY(box_p, TCompPhysics);
 	GET_MY(box_t, TCompTransform);
-	box_p->setBehaviour(PHYS_BEHAVIOUR::eUSER_CALLBACK, false);
-	box_p->setBehaviour(PHYS_BEHAVIOUR::eIGNORE_PLAYER, false);
-	box_p->setGravity(true);
-	box_p->setKinematic(false);
+	if (box_p) {
+		box_p->setBehaviour(PHYS_BEHAVIOUR::eUSER_CALLBACK, false);
+		box_p->setBehaviour(PHYS_BEHAVIOUR::eIGNORE_PLAYER, false);
+		box_p->setGravity(true);
+		box_p->setKinematic(false);
+	}
 }
 void TCompBox::onUnLeaveBox(const TMsgLeaveBox& msg) {
 	added = !added;
