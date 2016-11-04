@@ -620,13 +620,13 @@ end
 function ms3_outTablon1()
 	p:print("Out Tablon")
 	ontablon1 = false
-	p:exec_command("noTablon();", 0.2)
+	p:exec_command("noTablon();", 0.3)
 end
 
 function ms3_outTablon2()
 	p:print("Out Tablon")
 	ontablon2 = false
-	p:exec_command("noTablon();", 0.2)
+	p:exec_command("noTablon();", 0.3)
 end
 
 function ms3_outTablon3()
@@ -638,7 +638,7 @@ end
 function ms3_outTablon4()
 	p:print("Out Tablon")
 	ontablon4 = false
-	p:exec_command("noTablon();", 0.2)
+	p:exec_command("noTablon();", 0.3)
 end
 
 function ms3_outTablon5()
