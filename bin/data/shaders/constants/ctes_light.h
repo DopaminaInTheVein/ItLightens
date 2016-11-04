@@ -16,7 +16,7 @@ ShaderBuffer(TCteLight, CTE_SHADER_LIGHT)
   float  LightCosFov;
 
   float generate_shadows;
-  float light_dummy1;
+  float LightShadowStrength;
   float light_dummy2;
   float light_dummy3;
 };

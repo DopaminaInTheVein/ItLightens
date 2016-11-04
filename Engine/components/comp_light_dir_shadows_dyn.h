@@ -9,12 +9,16 @@ class CRenderToTexture;
 // ------------------------------------
 struct TCompLightDirShadowsDynamic : public TCompLightDirShadows {
 	VEC3 last_position_target = VEC3(0, 0, 0);
+	CHandle h_main_camera;
+
+	float offset = 7.0f;
 
 	bool is_inRoom = true;
 
 	bool save(std::ofstream & os, MKeyValue & atts);
 	bool load(MKeyValue & atts);
 	void init();
+	bool setCameraHandle();
 	void update(float dt);
 
 	void generateShadowMap();

@@ -266,7 +266,7 @@ void PSLightPoint(
   }
   
   //spec_amount *= specular_force;
-  o_specular = spec_amount*specular_force;
+  o_specular = spec_amount*specular_force*specular_color;
   o_specular.a = 1;
   //o_specular += spec_reflec*specular_color/5.0f;
   //spec_amount *= 0;
@@ -284,7 +284,7 @@ void PSLightPoint(
   o_inv_shadows = float4(inv_shadows, inv_shadows, inv_shadows, 1);
   
   // Aportacion final de la luz es NL x color_luz x atenuacion
-  o_color.xyz = lightCol * NL * distance_att * albedo + o_specular.xyz*specular_color;
+  o_color.xyz = lightCol * NL * distance_att * albedo + o_specular.xyz;
  
   //o_color.xyz += env * glossiness * 0.02;
   //o_color.xyz = env.xyz;
@@ -504,7 +504,8 @@ void PSLightDirShadows(
 			//inv_shadows = 0;
 		  o_inv_shadows = float4(inv_shadows, inv_shadows, inv_shadows, inv_shadows);
 		  //o_color = float4(att_factor, att_factor, att_factor, att_factor);
-
+			
+		  o_inv_shadows.xyz *= pow(50/d2L,2)*LightShadowStrength;
   
 	}else{
 		o_inv_shadows = float4(0,0,0,0);

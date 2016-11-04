@@ -6,6 +6,7 @@
 #include "resources/resources_manager.h"
 #include "comp_room.h"
 #include "player_controllers\player_controller_base.h"
+#include "comp_camera_main.h"
 
 
 bool TCompLightDirShadowsDynamic::load(MKeyValue& atts) {
@@ -20,15 +21,29 @@ void TCompLightDirShadowsDynamic::init() {
 	debug_render = true;
 	CHandle owner = CHandle(this).getOwner();
 	updateFromEntityTransform(owner);
+	setCameraHandle();
 	is_inRoom = true;
+}
+
+bool TCompLightDirShadowsDynamic::setCameraHandle() {
+	h_main_camera = tags_manager.getFirstHavingTag("camera_main");
+	if (h_main_camera.isValid())
+		return true;
+
+	return false;
 }
 
 void TCompLightDirShadowsDynamic::update(float dt) {
 	PROFILE_FUNCTION("shadows: update");
+
+	if (!h_main_camera.isValid()) {
+		if(!setCameraHandle())
+			return;
+	}
+
 	CHandle owner = CHandle(this).getOwner();
-	CHandle player = CPlayerBase::handle_player;
-	GET_COMP(t_player, player, TCompTransform);
-	updateFromEntityTransform(owner);
+	GET_COMP(t_camera, h_main_camera, TCompCameraMain);
+	
 	//check if component same room as player
 	CEntity *e = owner;
 	if (!e) return;
@@ -38,10 +53,14 @@ void TCompLightDirShadowsDynamic::update(float dt) {
 
 	if (!is_inRoom) return;
 
-	if (t_player) {
-		VEC3 target = t_player->getPosition();
-		if (last_position_target != target)
+	if (t_camera) {
+		VEC3 target = t_camera->getPosition();
+		target += t_camera->getFront()*offset;
+		if (last_position_target != target) {		//check if there are changes between frames
+			updateFromEntityTransform(owner);
 			this->lookAt(getPosition(), target);
+			last_position_target = target;
+		}
 	}
 	//updateFromEntityTransform(owner);
 }

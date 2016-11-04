@@ -58,6 +58,8 @@ void TCompLightDirShadows::uploadShaderCtes(CEntity* e) {
 	shader_ctes_lights.LightAspectRatio = this->getAspectRatio();
 	shader_ctes_lights.LightCosFov = cosf(this->getFov());
 
+	shader_ctes_lights.LightShadowStrength = shadow_intensity;
+
 	shader_ctes_lights.generate_shadows = generate_shadow;
 	shader_ctes_lights.uploadToGPU();
 
