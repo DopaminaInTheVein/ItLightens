@@ -505,7 +505,7 @@ void PSLightDirShadows(
 		  o_inv_shadows = float4(inv_shadows, inv_shadows, inv_shadows, inv_shadows);
 		  //o_color = float4(att_factor, att_factor, att_factor, att_factor);
 			
-		  o_inv_shadows.xyz *= pow(30/d2L,2)*LightShadowStrength;
+		  o_inv_shadows.xyz *= LightShadowStrength;
   
 	}else{
 		o_inv_shadows = float4(0,0,0,0);
