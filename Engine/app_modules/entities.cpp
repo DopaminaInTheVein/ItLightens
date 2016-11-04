@@ -796,6 +796,7 @@ void CEntitiesModule::render() {
 		getHandleManager<TCompLightPoint>()->onAll(&TCompLightPoint::render);
 		getHandleManager<TCompLightDir>()->onAll(&TCompLightDir::render);
 		getHandleManager<TCompLightDirShadows>()->onAll(&TCompLightDirShadows::render);
+		getHandleManager<TCompLightDirShadowsDynamic>()->onAll(&TCompLightDirShadowsDynamic::render);
 #ifndef NDEBUG
 		getHandleManager<TCompBox>()->onAll(&TCompBox::render);
 #endif

@@ -160,7 +160,7 @@ bool CRenderDeferredModule::start() {
 	shader_ctes_globals.xres = xres;
 	shader_ctes_globals.yres = yres;
 	shader_ctes_globals.env_factor = 0.170f;
-	shader_ctes_globals.shadow_intensity = 0.43f;
+	shader_ctes_globals.shadow_intensity = 0.5f;
 
 	return true;
 }

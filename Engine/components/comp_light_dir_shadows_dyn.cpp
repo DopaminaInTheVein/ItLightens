@@ -36,6 +36,14 @@ bool TCompLightDirShadowsDynamic::setCameraHandle() {
 void TCompLightDirShadowsDynamic::update(float dt) {
 	PROFILE_FUNCTION("shadows: update");
 
+	if (io->keys['0'].becomesPressed()) {
+		offset++;
+	}
+
+	if (io->keys['9'].becomesPressed()) {
+		offset--;
+	}
+
 	if (!h_main_camera.isValid()) {
 		if(!setCameraHandle())
 			return;

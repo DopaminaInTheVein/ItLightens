@@ -995,7 +995,7 @@
 	/>
 <light_dir_shadows_dynamic
 	color="1.000000 1.000000 1.000000 0.000000"
-	fov="60"
+	fov="70"
 	resolution="512"
 	shadow_intensity="0.3"
 	zfar="100"
