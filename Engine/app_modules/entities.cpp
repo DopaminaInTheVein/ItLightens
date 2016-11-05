@@ -535,6 +535,9 @@ void CEntitiesModule::initEntities() {
 	//fx
 	getHandleManager<TCompFadeScreen>()->onAll(&TCompFadeScreen::init);
 
+	//init
+	getHandleManager<TCompLightPoint>()->onAll(&TCompLightPoint::init);
+
 	//sound
 	getHandleManager<TCompSound>()->onAll(&TCompSound::init);
 

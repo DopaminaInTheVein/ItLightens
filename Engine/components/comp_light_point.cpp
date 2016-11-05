@@ -23,6 +23,15 @@ bool TCompLightPoint::save(std::ofstream& os, MKeyValue& atts) {
 	return true;
 }
 
+void TCompLightPoint::init() {
+	CHandle owner = CHandle(this).getOwner();
+	GET_COMP(t_light, owner, TCompTransform);
+
+	float scale = t_light->getScale().x;
+	in_radius *= scale;
+	out_radius *= scale;
+}
+
 void TCompLightPoint::render() const
 {
 	if (debug_render) {

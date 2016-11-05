@@ -18,6 +18,7 @@ struct TCompLightPoint : public TCompBase {
 	VEC4 color;
 	bool load(MKeyValue& atts);
 	bool save(std::ofstream& os, MKeyValue& atts);
+	void init();
 	void render() const;
 	void renderInMenu();
 	void uploadShaderCtes();
