@@ -30,6 +30,8 @@ void TCompLightPoint::init() {
 	float scale = t_light->getScale().x;
 	in_radius *= scale;
 	out_radius *= scale;
+
+	t_light->setScaleBase(VEC3(1));
 }
 
 void TCompLightPoint::render() const
