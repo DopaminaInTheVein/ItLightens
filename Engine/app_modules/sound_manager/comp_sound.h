@@ -33,6 +33,7 @@ public:
 	void update(float elapsed);
 	bool load(MKeyValue& atts);
 	bool save(std::ofstream& os, MKeyValue& atts);
+	~TCompSound();
 };
 
 #endif

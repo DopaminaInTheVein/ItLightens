@@ -92,6 +92,17 @@ void CSoundManagerModule::stop() {
 	for (std::map<std::string, Studio::EventDescription*>::iterator sound_it = sounds_descriptions.begin(); sound_it != sounds_descriptions.end(); sound_it++) {
 		sound_it->second->unloadSampleData();
 	}
+	sounds_descriptions.clear();
+
+	// release sounds fixed instances and music
+	for (std::map<std::string, Studio::EventInstance*>::iterator sound_it = fixed_instances.begin(); sound_it != fixed_instances.end(); sound_it++) {
+		sound_it->second->stop(FMOD_STUDIO_STOP_IMMEDIATE);
+		sound_it->second->release();
+	}
+	fixed_instances.clear();
+
+	music_instance->stop(FMOD_STUDIO_STOP_IMMEDIATE);
+	music_instance->release();
 
 	stringsBank->unload();
 	masterBank->unload();
@@ -318,6 +329,16 @@ bool CSoundManagerModule::stopSound(std::string route) {
 bool CSoundManagerModule::stopFixedSound(std::string name) {
 	PROFILE_FUNCTION("stopFixedSound");
 	result = fixed_instances[name]->setPaused(true);
+	return result == FMOD_OK;
+}
+
+bool CSoundManagerModule::destroyFixed3dSound(std::string name) {
+	PROFILE_FUNCTION("destroyFixed3dSound");
+	result = fixed_instances[name]->setPaused(true);
+	if (result != FMOD_OK) return false;
+	result = fixed_instances[name]->stop(FMOD_STUDIO_STOP_IMMEDIATE);
+	if (result != FMOD_OK) return false;
+	result = fixed_instances[name]->release();
 	return result == FMOD_OK;
 }
 

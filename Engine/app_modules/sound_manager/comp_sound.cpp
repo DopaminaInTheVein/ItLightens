@@ -59,3 +59,8 @@ void TCompSound::updateHierarchy()
 		if (hierarchy_transform) entity_position = hierarchy_transform->getPosition();
 	}
 }
+
+TCompSound::~TCompSound()
+{
+	sound_manager->destroyFixed3dSound(entity_name);
+}

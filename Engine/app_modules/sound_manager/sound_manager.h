@@ -64,6 +64,7 @@ public:
 
 	bool stopSound(std::string route);
 	bool stopFixedSound(std::string name);
+	bool destroyFixed3dSound(std::string name);
 	bool stopMusic();
 	bool stopAllSounds();
 
