@@ -16,8 +16,8 @@
 	tags=""
 	/>
 <light_point
-	color="1.000000 0.862745 0.717647 0.435000"
-	in_radius="20.9071"
+	color="1.000000 0.862745 0.717647 0.405000"
+	in_radius="1"
 	out_radius="31.0896"
 	/>
 </entity>
@@ -37,8 +37,8 @@
 	tags=""
 	/>
 <light_point
-	color="1.000000 0.862745 0.717647 0.305000"
-	in_radius="8.02324"
+	color="1.000000 0.862745 0.717647 0.275000"
+	in_radius="1"
 	out_radius="23.5648"
 	/>
 </entity>
@@ -58,8 +58,8 @@
 	tags=""
 	/>
 <light_point
-	color="1.000000 0.862745 0.717647 0.305000"
-	in_radius="8.02324"
+	color="1.000000 0.862745 0.717647 0.275000"
+	in_radius="1"
 	out_radius="23.5648"
 	/>
 </entity>
@@ -79,8 +79,8 @@
 	tags=""
 	/>
 <light_point
-	color="1.000000 0.862745 0.717647 0.455000"
-	in_radius="8.57845"
+	color="1.000000 0.862745 0.717647 0.425000"
+	in_radius="1"
 	out_radius="21.7013"
 	/>
 </entity>
@@ -100,8 +100,8 @@
 	tags=""
 	/>
 <light_point
-	color="1.000000 0.862745 0.717647 0.545000"
-	in_radius="3.85428"
+	color="1.000000 0.862745 0.717647 0.515000"
+	in_radius="1"
 	out_radius="18.6631"
 	/>
 </entity>
@@ -121,8 +121,8 @@
 	tags=""
 	/>
 <light_point
-	color="1.000000 0.862745 0.717647 0.545000"
-	in_radius="3.85428"
+	color="1.000000 0.862745 0.717647 0.515000"
+	in_radius="1"
 	out_radius="18.6631"
 	/>
 </entity>
@@ -142,8 +142,8 @@
 	tags=""
 	/>
 <light_point
-	color="1.000000 0.862745 0.717647 0.475000"
-	in_radius="2.88956"
+	color="1.000000 0.862745 0.717647 0.445000"
+	in_radius="1"
 	out_radius="8.53738"
 	/>
 </entity>
@@ -163,8 +163,8 @@
 	tags=""
 	/>
 <light_point
-	color="1.000000 0.862745 0.717647 0.435000"
-	in_radius="3.25981"
+	color="1.000000 0.862745 0.717647 0.405000"
+	in_radius="1"
 	out_radius="17.22"
 	/>
 </entity>
@@ -184,8 +184,8 @@
 	tags=""
 	/>
 <light_point
-	color="1.000000 0.862745 0.717647 0.475000"
-	in_radius="2.88956"
+	color="1.000000 0.862745 0.717647 0.445000"
+	in_radius="1"
 	out_radius="8.53738"
 	/>
 </entity>
@@ -205,8 +205,8 @@
 	tags=""
 	/>
 <light_point
-	color="1.000000 0.862745 0.717647 0.605000"
-	in_radius="2.92131"
+	color="1.000000 0.862745 0.717647 0.575000"
+	in_radius="1"
 	out_radius="12.9445"
 	/>
 </entity>
@@ -226,8 +226,8 @@
 	tags=""
 	/>
 <light_point
-	color="1.000000 0.862745 0.717647 0.605000"
-	in_radius="2.92131"
+	color="1.000000 0.862745 0.717647 0.575000"
+	in_radius="1"
 	out_radius="12.9445"
 	/>
 </entity>
@@ -247,8 +247,8 @@
 	tags=""
 	/>
 <light_point
-	color="1.000000 0.862745 0.717647 0.455000"
-	in_radius="8.57845"
+	color="1.000000 0.862745 0.717647 0.425000"
+	in_radius="1"
 	out_radius="21.7013"
 	/>
 </entity>
@@ -268,8 +268,8 @@
 	tags=""
 	/>
 <light_point
-	color="1.000000 0.858824 0.709804 0.375000"
-	in_radius="4.04217"
+	color="1.000000 0.858824 0.709804 0.345000"
+	in_radius="1"
 	out_radius="10.7316"
 	/>
 </entity>
@@ -289,8 +289,8 @@
 	tags=""
 	/>
 <light_point
-	color="1.000000 0.827451 0.639216 0.259000"
-	in_radius="0.520364"
+	color="1.000000 0.827451 0.639216 0.229000"
+	in_radius="1"
 	out_radius="25.6331"
 	/>
 </entity>
@@ -310,8 +310,8 @@
 	tags=""
 	/>
 <light_point
-	color="1.000000 0.827451 0.639216 0.259000"
-	in_radius="0.520364"
+	color="1.000000 0.827451 0.639216 0.229000"
+	in_radius="1"
 	out_radius="25.6331"
 	/>
 </entity>
@@ -331,8 +331,8 @@
 	tags=""
 	/>
 <light_point
-	color="1.000000 0.827451 0.639216 0.259000"
-	in_radius="0.520364"
+	color="1.000000 0.827451 0.639216 0.229000"
+	in_radius="1"
 	out_radius="25.6331"
 	/>
 </entity>
@@ -352,8 +352,8 @@
 	tags=""
 	/>
 <light_point
-	color="1.000000 0.858824 0.709804 0.489000"
-	in_radius="1.95849"
+	color="1.000000 0.858824 0.709804 0.459000"
+	in_radius="1"
 	out_radius="8.66388"
 	/>
 </entity>
@@ -373,8 +373,8 @@
 	tags=""
 	/>
 <light_point
-	color="0.690196 1.000000 0.972549 0.569000"
-	in_radius="0.820699"
+	color="0.690196 1.000000 0.972549 0.539000"
+	in_radius="1"
 	out_radius="2.75908"
 	/>
 </entity>
@@ -394,8 +394,8 @@
 	tags=""
 	/>
 <light_point
-	color="1.000000 0.827451 0.639216 0.259000"
-	in_radius="0.520364"
+	color="1.000000 0.827451 0.639216 0.229000"
+	in_radius="1"
 	out_radius="25.6331"
 	/>
 </entity>
@@ -415,8 +415,8 @@
 	tags=""
 	/>
 <light_point
-	color="1.000000 0.862745 0.717647 0.379000"
-	in_radius="0.807792"
+	color="1.000000 0.862745 0.717647 0.349000"
+	in_radius="1"
 	out_radius="2.97239"
 	/>
 </entity>
@@ -436,8 +436,8 @@
 	tags=""
 	/>
 <light_point
-	color="1.000000 0.725490 0.717647 0.369000"
-	in_radius="0.760364"
+	color="1.000000 0.725490 0.717647 0.339000"
+	in_radius="1"
 	out_radius="11.2453"
 	/>
 </entity>
@@ -457,8 +457,8 @@
 	tags=""
 	/>
 <light_point
-	color="1.000000 0.827451 0.639216 0.259000"
-	in_radius="0.520364"
+	color="1.000000 0.827451 0.639216 0.229000"
+	in_radius="1"
 	out_radius="25.6331"
 	/>
 </entity>
@@ -478,8 +478,8 @@
 	tags=""
 	/>
 <light_point
-	color="1.000000 0.823530 0.631373 0.479000"
-	in_radius="1.12436"
+	color="1.000000 0.823530 0.631373 0.449000"
+	in_radius="1"
 	out_radius="5.86371"
 	/>
 </entity>
@@ -499,8 +499,8 @@
 	tags=""
 	/>
 <light_point
-	color="1.000000 0.862745 0.717647 0.379000"
-	in_radius="0.807792"
+	color="1.000000 0.862745 0.717647 0.349000"
+	in_radius="1"
 	out_radius="2.97239"
 	/>
 </entity>
@@ -520,8 +520,8 @@
 	tags=""
 	/>
 <light_point
-	color="1.000000 0.862745 0.717647 0.339000"
-	in_radius="0.680364"
+	color="1.000000 0.862745 0.717647 0.309000"
+	in_radius="1"
 	out_radius="6.62993"
 	/>
 </entity>
@@ -541,8 +541,8 @@
 	tags=""
 	/>
 <light_point
-	color="1.000000 0.858824 0.709804 0.469000"
-	in_radius="0.917792"
+	color="1.000000 0.858824 0.709804 0.439000"
+	in_radius="1"
 	out_radius="2.43433"
 	/>
 </entity>
@@ -562,8 +562,8 @@
 	tags=""
 	/>
 <light_point
-	color="0.690196 1.000000 0.972549 0.419000"
-	in_radius="0.820699"
+	color="0.690196 1.000000 0.972549 0.389000"
+	in_radius="1"
 	out_radius="2.75908"
 	/>
 </entity>
@@ -583,8 +583,8 @@
 	tags=""
 	/>
 <light_point
-	color="1.000000 1.000000 1.000000 1.079000"
-	in_radius="3.59036"
+	color="1.000000 1.000000 1.000000 1.049000"
+	in_radius="1"
 	out_radius="8.3974"
 	/>
 </entity>
@@ -596,7 +596,7 @@
 	name="Omni036"
 	/>
 <transform
-	pos="-55.607800 0.706535 -3.437400"
+	pos="-55.515900 0.706535 -3.437400"
 	quat="0.707102 0.000000 0.000000 0.707112"
 	scale="1.000000 1.000000 1.000000"
 	/>
@@ -604,8 +604,8 @@
 	tags=""
 	/>
 <light_point
-	color="0.690196 1.000000 0.972549 0.471575"
-	in_radius="1.05656"
+	color="0.690196 1.000000 0.972549 0.441575"
+	in_radius="1"
 	out_radius="3.23296"
 	/>
 </entity>
@@ -625,8 +625,8 @@
 	tags=""
 	/>
 <light_point
-	color="1.000000 0.862745 0.717647 0.295000"
-	in_radius="8.14953"
+	color="1.000000 0.862745 0.717647 0.265000"
+	in_radius="1"
 	out_radius="21.7013"
 	/>
 </entity>
@@ -646,9 +646,30 @@
 	tags=""
 	/>
 <light_point
-	color="1.000000 0.862745 0.717647 0.295000"
-	in_radius="8.14953"
+	color="1.000000 0.862745 0.717647 0.265000"
+	in_radius="1"
 	out_radius="21.7013"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="0"
+>
+<name
+	name="ambiente_centro_prensa"
+	/>
+<transform
+	pos="-32.543999 -24.422001 1.080000"
+	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<tags
+	tags="gui globe_0.865679_-11.813946"
+	/>
+<light_point
+	color="0.700000 0.700000 0.500000 0.480000"
+	in_radius="0.01"
+	out_radius="11"
 	/>
 </entity>
 <entity
@@ -658,14 +679,14 @@
 <culling
 	/>
 <light_dir_shadows
-	color="0.913726 0.996079 0.823530 0.351000"
+	color="0.913726 0.996079 0.823530 0.281000"
 	fov="77.5"
 	gen_shadow="1"
 	light_mask="textures/dir_shader_circular.dds"
 	resolution="256"
 	shadow_intensity="1"
 	zfar="8.978"
-	znear="6.18135"
+	znear="1"
 	/>
 <name
 	name="Fspot001"
@@ -686,14 +707,14 @@
 <culling
 	/>
 <light_dir_shadows
-	color="0.913726 0.996079 0.823530 0.351000"
+	color="0.913726 0.996079 0.823530 0.281000"
 	fov="77.5"
 	gen_shadow="1"
 	light_mask="textures/dir_shader_circular.dds"
 	resolution="256"
 	shadow_intensity="1"
 	zfar="8.978"
-	znear="6.18135"
+	znear="1"
 	/>
 <name
 	name="Fspot002"
@@ -714,14 +735,14 @@
 <culling
 	/>
 <light_dir_shadows
-	color="0.913726 0.996079 0.823530 0.351000"
+	color="0.913726 0.996079 0.823530 0.281000"
 	fov="77.5"
 	gen_shadow="1"
 	light_mask="textures/dir_shader_circular.dds"
 	resolution="256"
 	shadow_intensity="1"
 	zfar="8.978"
-	znear="6.18135"
+	znear="1"
 	/>
 <name
 	name="Fspot003"
@@ -742,14 +763,14 @@
 <culling
 	/>
 <light_dir_shadows
-	color="0.913726 0.996079 0.823530 0.351000"
+	color="0.913726 0.996079 0.823530 0.281000"
 	fov="77.5"
 	gen_shadow="1"
 	light_mask="textures/dir_shader_circular.dds"
 	resolution="256"
 	shadow_intensity="1"
 	zfar="8.978"
-	znear="6.18135"
+	znear="1"
 	/>
 <name
 	name="Fspot005"
@@ -770,14 +791,14 @@
 <culling
 	/>
 <light_dir_shadows
-	color="0.913726 0.996079 0.823530 0.351000"
+	color="0.913726 0.996079 0.823530 0.281000"
 	fov="77.5"
 	gen_shadow="1"
 	light_mask="textures/dir_shader_circular.dds"
 	resolution="256"
 	shadow_intensity="1"
 	zfar="8.978"
-	znear="6.18135"
+	znear="1"
 	/>
 <name
 	name="Fspot006"
@@ -798,14 +819,14 @@
 <culling
 	/>
 <light_dir_shadows
-	color="0.913726 0.996079 0.823530 0.351000"
+	color="0.913726 0.996079 0.823530 0.321000"
 	fov="77.5"
 	gen_shadow="1"
 	light_mask="textures/dir_shader_circular.dds"
 	resolution="256"
 	shadow_intensity="1"
 	zfar="7.09262"
-	znear="3.62536"
+	znear="1"
 	/>
 <name
 	name="Fspot007"
@@ -826,14 +847,14 @@
 <culling
 	/>
 <light_dir_shadows
-	color="0.913726 0.996079 0.823530 0.321000"
+	color="0.913726 0.996079 0.823530 0.251000"
 	fov="77.5"
 	gen_shadow="1"
 	light_mask="textures/dir_shader_circular.dds"
 	resolution="256"
 	shadow_intensity="1"
 	zfar="8.978"
-	znear="6.18135"
+	znear="1"
 	/>
 <name
 	name="Fspot009"
@@ -854,14 +875,14 @@
 <culling
 	/>
 <light_dir_shadows
-	color="0.913726 0.996079 0.823530 0.351000"
+	color="0.913726 0.996079 0.823530 0.281000"
 	fov="77.5"
 	gen_shadow="1"
 	light_mask="textures/dir_shader_circular.dds"
 	resolution="256"
 	shadow_intensity="1"
 	zfar="8.978"
-	znear="6.18135"
+	znear="1"
 	/>
 <name
 	name="Fspot010"
@@ -882,14 +903,14 @@
 <culling
 	/>
 <light_dir_shadows
-	color="0.913726 0.996079 0.823530 0.211000"
+	color="0.913726 0.996079 0.823530 0.181000"
 	fov="77.5"
 	gen_shadow="1"
 	light_mask="textures/dir_shader_circular.dds"
 	resolution="256"
 	shadow_intensity="1"
 	zfar="8.978"
-	znear="6.18135"
+	znear="1"
 	/>
 <name
 	name="Fspot011"
@@ -910,14 +931,14 @@
 <culling
 	/>
 <light_dir_shadows
-	color="0.913726 0.996079 0.823530 0.581000"
+	color="0.913726 0.996079 0.823530 0.551000"
 	fov="80.9"
 	gen_shadow="1"
 	light_mask="textures/dir_shader_circular.dds"
 	resolution="256"
 	shadow_intensity="1"
 	zfar="2.96274"
-	znear="1.91931"
+	znear="1"
 	/>
 <name
 	name="Fspot012"
@@ -938,14 +959,14 @@
 <culling
 	/>
 <light_dir_shadows
-	color="0.913726 0.996079 0.823530 0.581000"
+	color="0.913726 0.996079 0.823530 0.551000"
 	fov="80.9"
 	gen_shadow="1"
 	light_mask="textures/dir_shader_circular.dds"
 	resolution="256"
 	shadow_intensity="1"
 	zfar="2.96274"
-	znear="1.91931"
+	znear="1"
 	/>
 <name
 	name="Fspot013"
@@ -966,14 +987,14 @@
 <culling
 	/>
 <light_dir_shadows
-	color="0.913726 0.996079 0.823530 0.351000"
+	color="0.913726 0.996079 0.823530 0.281000"
 	fov="77.5"
 	gen_shadow="1"
 	light_mask="textures/dir_shader_circular.dds"
 	resolution="256"
 	shadow_intensity="1"
 	zfar="8.978"
-	znear="6.18135"
+	znear="1"
 	/>
 <name
 	name="Fspot014"
@@ -995,9 +1016,10 @@
 	/>
 <light_dir_shadows_dynamic
 	color="1.000000 1.000000 1.000000 0.000000"
-	fov="70"
+	fov="45"
+	light_mask="textures/dir_shader_circular.dds"
 	resolution="512"
-	shadow_intensity="0.3"
+	shadow_intensity="0.4"
 	zfar="100"
 	znear="5"
 	/>
@@ -1008,7 +1030,7 @@
 	name="1"
 	/>
 <transform
-	pos="-9.345230 -15.089067 -0.711398"
+	pos="-8.284556 -14.583923 -0.582518"
 	quat="0.706490 0.000000 0.000000 0.707723"
 	scale="1.000000 1.000000 1.000000"
 	/>

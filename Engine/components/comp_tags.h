@@ -26,10 +26,14 @@ struct TCompTags : public TCompBase {
 	int nextTag = 0;
 
 	TCompTags() {
+		initTags();
+	}
+	void initTags()
+	{
 		for (uint32_t i = 0; i < max_tags; ++i) {
 			tags[i] = 0x00;
-			auto word_i = tags_str[i];
-			word_i = "";
+			//auto word_i = tags_str[i];
+			sprintf(tags_str[i], "");
 		}
 	}
 
@@ -122,6 +126,11 @@ struct TCompTags : public TCompBase {
 				}
 			}
 		}
+	}
+
+	~TCompTags()
+	{
+		initTags();
 	}
 };
 

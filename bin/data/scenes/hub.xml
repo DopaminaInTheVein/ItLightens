@@ -70,18 +70,18 @@
 <entity>
 <tags/>
 <name
-   name="arc_door"/>
+   name="arc_door_1"/>
 <transform
    pos="11.53 50.6611 -25.4918"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/hub/arc_door.static_mesh"
+   name="static_meshes/hub/arc_door_1.static_mesh"
    static="true"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="hub/arc_door"/>
+   mesh_name="hub/arc_door_1"/>
 
 </entity>
 <entity>
@@ -123,7 +123,7 @@
 <name
    name="door"/>
 <transform
-   pos="30.2741 50.6749 -25.4918"
+   pos="30.2527 50.6749 -25.4918"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
