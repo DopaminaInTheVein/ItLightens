@@ -156,6 +156,9 @@ void CEditorLights::RenderMultiEdit()
 			if (ImGui::Button("Unhide Selected")) {
 				UnhideSelected();
 			}
+			if (ImGui::Button("Delete Tags")) {
+				DeleteTagsSelected();
+			}
 		}
 		else if (multi_editing == EDITING) {
 			if (ImGui::Button("Apply")) {
@@ -194,6 +197,17 @@ void CEditorLights::HideSelected()
 		}
 	}
 }
+void CEditorLights::DeleteTagsSelected()
+{
+	for (auto hlight : m_Lights) {
+		if (IsSelected(hlight)) {
+			if (hlight.isValid()) {
+				tags_manager.removeAllTags(hlight.getOwner());
+			}
+		}
+	}
+}
+
 void CEditorLights::UnhideSelected()
 {
 	for (auto hlight : m_Lights) {

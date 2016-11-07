@@ -13,7 +13,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
-	tags="gui Text_Message_Letter_action_text"
+	tags=""
 	/>
 <light_point
 	color="1.000000 0.862745 0.717647 0.221575"
@@ -34,7 +34,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
-	tags="gui Text_Message_Letter_action_text"
+	tags=""
 	/>
 <light_point
 	color="1.000000 0.862745 0.717647 0.221575"
@@ -55,7 +55,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
-	tags="gui Text_Message_Letter_action_text"
+	tags=""
 	/>
 <light_point
 	color="1.000000 0.862745 0.717647 0.221575"
@@ -76,7 +76,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
-	tags="gui Text_Message_Letter_action_text"
+	tags=""
 	/>
 <light_point
 	color="1.000000 0.862745 0.717647 0.221575"
@@ -97,7 +97,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
-	tags="gui Text_Message_Letter_action_text gui"
+	tags=""
 	/>
 <light_point
 	color="1.000000 0.862745 0.717647 0.221575"
@@ -118,7 +118,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
-	tags="ui_pol_q hiddeable_hud gui"
+	tags=""
 	/>
 <light_point
 	color="1.000000 0.862745 0.717647 0.221575"
@@ -139,7 +139,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
-	tags="hiddeable_hud"
+	tags=""
 	/>
 <light_point
 	color="1.000000 0.862745 0.717647 0.221575"
@@ -160,7 +160,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
-	tags="hiddeable_hud"
+	tags=""
 	/>
 <light_point
 	color="1.000000 0.862745 0.717647 0.221575"
@@ -181,7 +181,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
-	tags="hiddeable_hud gui"
+	tags=""
 	/>
 <light_point
 	color="1.000000 0.862745 0.717647 0.221575"
@@ -202,7 +202,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
-	tags="hiddeable_hud gui"
+	tags=""
 	/>
 <light_point
 	color="1.000000 0.862745 0.717647 0.221575"
@@ -244,7 +244,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
-	tags="bomb_counter gui"
+	tags=""
 	/>
 <light_point
 	color="1.000000 0.862745 0.717647 0.221575"
@@ -265,7 +265,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
-	tags="bomb_icon gui"
+	tags=""
 	/>
 <light_point
 	color="1.000000 0.862745 0.717647 0.221575"
@@ -349,7 +349,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
-	tags="gui Text_Message_Letter_loading_skip"
+	tags=""
 	/>
 <light_point
 	color="0.913726 0.996079 0.823530 0.007280"
@@ -370,7 +370,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
-	tags="gui Text_Message_Letter_loading_skip"
+	tags=""
 	/>
 <light_point
 	color="0.913726 0.996079 0.823530 0.007280"
@@ -391,7 +391,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
-	tags="gui Text_Message_Letter_loading_skip"
+	tags=""
 	/>
 <light_point
 	color="0.913726 0.996079 0.823530 0.007280"
@@ -412,7 +412,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
-	tags="gui Text_Message_Letter_loading_skip"
+	tags=""
 	/>
 <light_point
 	color="0.913726 0.996079 0.823530 0.007280"
@@ -433,7 +433,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
-	tags="gui Text_Message_Letter_loading_skip"
+	tags=""
 	/>
 <light_point
 	color="1.000000 0.823530 0.631373 0.498914"
@@ -454,7 +454,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
-	tags="gui Text_Message_Letter_loading_skip"
+	tags=""
 	/>
 <light_point
 	color="0.690196 1.000000 0.972549 0.241575"
@@ -475,7 +475,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
-	tags="ui_pol_e hiddeable_hud gui"
+	tags=""
 	/>
 <light_point
 	color="0.690196 1.000000 0.972549 0.241575"
@@ -496,7 +496,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
-	tags="ui_pol_q hiddeable_hud gui"
+	tags=""
 	/>
 <light_point
 	color="0.690196 1.000000 0.972549 0.241575"
@@ -517,7 +517,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
-	tags="hiddeable_hud"
+	tags=""
 	/>
 <light_point
 	color="0.690196 1.000000 0.972549 0.241575"
@@ -538,7 +538,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
-	tags="hiddeable_hud"
+	tags=""
 	/>
 <light_point
 	color="1.000000 0.858824 0.709804 0.391575"
@@ -559,7 +559,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
-	tags="hiddeable_hud gui"
+	tags=""
 	/>
 <light_point
 	color="1.000000 0.858824 0.709804 0.391575"
@@ -580,7 +580,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
-	tags="hiddeable_hud gui"
+	tags=""
 	/>
 <light_point
 	color="1.000000 0.858824 0.709804 0.391575"
@@ -622,7 +622,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
-	tags="bomb_counter gui"
+	tags=""
 	/>
 <light_point
 	color="1.000000 0.858824 0.709804 0.391575"
@@ -643,7 +643,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
-	tags="bomb_icon gui"
+	tags=""
 	/>
 <light_point
 	color="1.000000 0.858824 0.709804 0.391575"
@@ -718,7 +718,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
-	tags="tasklistend"
+	tags=""
 	/>
 </entity>
 <entity
@@ -746,7 +746,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
-	tags="gui Text_Message_Letter_loading_skip"
+	tags=""
 	/>
 </entity>
 <entity
@@ -774,7 +774,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
-	tags="gui Text_Message_Letter_loading_skip"
+	tags=""
 	/>
 </entity>
 <entity
@@ -802,7 +802,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
-	tags="gui Text_Message_Letter_loading_skip"
+	tags=""
 	/>
 </entity>
 </entities>

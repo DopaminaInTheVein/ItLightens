@@ -1,12 +1,16 @@
 <entities
 >
-<entity>
+<entity
+	permanent="0"
+	reload="0"
+>
 <name
 	name="Omni069"
 	/>
 <transform
 	pos="2.470460 8.046340 -9.211720"
 	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
 	tags=""
@@ -17,13 +21,17 @@
 	out_radius="5.81244"
 	/>
 </entity>
-<entity>
+<entity
+	permanent="0"
+	reload="0"
+>
 <name
 	name="Omni068"
 	/>
 <transform
 	pos="-9.402590 8.046310 -4.355720"
 	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
 	tags=""
@@ -34,13 +42,17 @@
 	out_radius="5.81244"
 	/>
 </entity>
-<entity>
+<entity
+	permanent="0"
+	reload="0"
+>
 <name
 	name="Omni067"
 	/>
 <transform
 	pos="-9.402590 8.046310 3.650550"
 	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
 	tags=""
@@ -51,13 +63,17 @@
 	out_radius="5.81244"
 	/>
 </entity>
-<entity>
+<entity
+	permanent="0"
+	reload="0"
+>
 <name
 	name="Omni066"
 	/>
 <transform
 	pos="17.323700 0.518249 -1.984160"
 	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
 	tags=""
@@ -68,13 +84,17 @@
 	out_radius="6.22828"
 	/>
 </entity>
-<entity>
+<entity
+	permanent="0"
+	reload="0"
+>
 <name
 	name="Omni065"
 	/>
 <transform
 	pos="17.323700 0.518250 -0.443794"
 	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
 	tags=""
@@ -85,13 +105,17 @@
 	out_radius="6.22828"
 	/>
 </entity>
-<entity>
+<entity
+	permanent="0"
+	reload="0"
+>
 <name
 	name="Omni062"
 	/>
 <transform
 	pos="17.323700 0.518250 1.193580"
 	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
 	tags=""
@@ -102,13 +126,17 @@
 	out_radius="6.22828"
 	/>
 </entity>
-<entity>
+<entity
+	permanent="0"
+	reload="0"
+>
 <name
 	name="Omni061"
 	/>
 <transform
 	pos="17.323700 0.518249 -3.233620"
 	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
 	tags=""
@@ -119,7 +147,10 @@
 	out_radius="6.22828"
 	/>
 </entity>
-<entity>
+<entity
+	permanent="0"
+	reload="0"
+>
 <name
 	name="Omni060"
 	/>
@@ -137,13 +168,17 @@
 	out_radius="11.2498"
 	/>
 </entity>
-<entity>
+<entity
+	permanent="0"
+	reload="0"
+>
 <name
 	name="Omni051"
 	/>
 <transform
 	pos="-2.328130 8.046340 9.401940"
 	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
 	tags=""
@@ -154,13 +189,17 @@
 	out_radius="5.81244"
 	/>
 </entity>
-<entity>
+<entity
+	permanent="0"
+	reload="0"
+>
 <name
 	name="Omni050"
 	/>
 <transform
 	pos="2.499020 8.046340 9.401940"
 	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
 	tags=""
@@ -171,13 +210,17 @@
 	out_radius="5.81244"
 	/>
 </entity>
-<entity>
+<entity
+	permanent="0"
+	reload="0"
+>
 <name
 	name="Omni049"
 	/>
 <transform
 	pos="9.382570 8.046310 3.606080"
 	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
 	tags=""
@@ -188,13 +231,17 @@
 	out_radius="5.81244"
 	/>
 </entity>
-<entity>
+<entity
+	permanent="0"
+	reload="0"
+>
 <name
 	name="Omni048"
 	/>
 <transform
 	pos="9.382570 8.046310 -4.333270"
 	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
 	tags=""
@@ -205,13 +252,17 @@
 	out_radius="5.81244"
 	/>
 </entity>
-<entity>
+<entity
+	permanent="0"
+	reload="0"
+>
 <name
 	name="Omni047"
 	/>
 <transform
 	pos="-2.187870 8.046340 -9.211720"
 	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
 	tags=""
@@ -222,13 +273,17 @@
 	out_radius="5.81244"
 	/>
 </entity>
-<entity>
+<entity
+	permanent="0"
+	reload="0"
+>
 <name
 	name="Omni046"
 	/>
 <transform
 	pos="-2.445920 1.483140 9.526160"
 	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
 	tags=""
@@ -239,13 +294,17 @@
 	out_radius="3.55905"
 	/>
 </entity>
-<entity>
+<entity
+	permanent="0"
+	reload="0"
+>
 <name
 	name="Omni045"
 	/>
 <transform
 	pos="2.394530 1.483140 9.526160"
 	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
 	tags=""
@@ -256,13 +315,17 @@
 	out_radius="3.55905"
 	/>
 </entity>
-<entity>
+<entity
+	permanent="0"
+	reload="0"
+>
 <name
 	name="Omni044"
 	/>
 <transform
 	pos="2.394530 1.483140 -9.262470"
 	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
 	tags=""
@@ -273,13 +336,17 @@
 	out_radius="3.55905"
 	/>
 </entity>
-<entity>
+<entity
+	permanent="0"
+	reload="0"
+>
 <name
 	name="Omni043"
 	/>
 <transform
 	pos="-2.377930 1.483140 -9.262470"
 	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
 	tags=""
@@ -290,13 +357,17 @@
 	out_radius="3.55905"
 	/>
 </entity>
-<entity>
+<entity
+	permanent="0"
+	reload="0"
+>
 <name
 	name="Omni042"
 	/>
 <transform
 	pos="-9.531860 1.483140 -4.360850"
 	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
 	tags=""
@@ -307,13 +378,17 @@
 	out_radius="3.55905"
 	/>
 </entity>
-<entity>
+<entity
+	permanent="0"
+	reload="0"
+>
 <name
 	name="Omni041"
 	/>
 <transform
 	pos="-9.531860 1.483140 3.300320"
 	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
 	tags=""
@@ -324,13 +399,17 @@
 	out_radius="3.55905"
 	/>
 </entity>
-<entity>
+<entity
+	permanent="0"
+	reload="0"
+>
 <name
 	name="Omni040"
 	/>
 <transform
 	pos="9.328610 1.483140 3.635480"
 	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
 	tags=""
@@ -341,13 +420,17 @@
 	out_radius="3.55905"
 	/>
 </entity>
-<entity>
+<entity
+	permanent="0"
+	reload="0"
+>
 <name
 	name="Omni039"
 	/>
 <transform
 	pos="9.328610 1.483140 -4.355660"
 	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
 	tags=""

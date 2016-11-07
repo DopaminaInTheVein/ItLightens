@@ -2,6 +2,7 @@
 #include "entity_tags.h"
 #include "entity.h"
 #include "comp_msgs.h"
+#include "comp_tags.h"
 
 TTagsManager tags_manager;
 using namespace std;
@@ -35,6 +36,8 @@ void TTagsManager::removeAllTags(CHandle h)
 {
 	for (auto& it_m : tags_manager) {
 		it_m.second.erase(std::remove(it_m.second.begin(), it_m.second.end(), h), it_m.second.end());
+		GET_COMP(comp_tag, h, TCompTags);
+		if (comp_tag) comp_tag->initTags();
 	}
 }
 

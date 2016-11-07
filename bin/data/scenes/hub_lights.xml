@@ -13,7 +13,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
-	tags="gui"
+	tags=""
 	/>
 <light_point
 	color="0.560784 0.862745 0.960784 1.610000"
@@ -34,7 +34,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
-	tags="gui"
+	tags=""
 	/>
 <light_point
 	color="0.713726 0.988235 1.000000 0.120000"
@@ -55,7 +55,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
-	tags="gui"
+	tags=""
 	/>
 <light_point
 	color="0.847059 0.639216 0.831373 0.880000"
@@ -76,7 +76,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
-	tags="gui"
+	tags=""
 	/>
 <light_point
 	color="1.000000 0.968628 0.635294 2.860000"
@@ -97,7 +97,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
-	tags="gui"
+	tags=""
 	/>
 <light_point
 	color="0.560784 0.862745 0.960784 1.610000"
@@ -118,7 +118,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
-	tags="gui"
+	tags=""
 	/>
 <light_point
 	color="0.560784 0.862745 0.960784 3.510000"
@@ -139,7 +139,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
-	tags="gui"
+	tags=""
 	/>
 <light_point
 	color="0.560784 0.862745 0.960784 1.610000"
@@ -160,7 +160,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
-	tags="gui"
+	tags=""
 	/>
 <light_point
 	color="0.560784 0.862745 0.960784 1.610000"
@@ -181,7 +181,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
-	tags="gui"
+	tags=""
 	/>
 <light_point
 	color="0.560784 0.862745 0.960784 3.510000"
@@ -202,7 +202,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
-	tags="gui"
+	tags=""
 	/>
 <light_point
 	color="0.560784 0.862745 0.960784 1.610000"
@@ -223,7 +223,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
-	tags="gui Text_Message_Letter_action_text"
+	tags=""
 	/>
 <light_point
 	color="0.560784 0.862745 0.960784 1.610000"
@@ -244,7 +244,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
-	tags="gui Text_Message_Letter_action_text"
+	tags=""
 	/>
 <light_point
 	color="0.560784 0.862745 0.960784 3.510000"
@@ -265,7 +265,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
-	tags="gui Text_Message_Letter_action_text"
+	tags=""
 	/>
 <light_point
 	color="0.560784 0.862745 0.960784 1.610000"
@@ -286,7 +286,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
-	tags="gui Text_Message_Letter_action_text"
+	tags=""
 	/>
 <light_point
 	color="0.560784 0.862745 0.960784 1.610000"
@@ -307,7 +307,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
-	tags="gui Text_Message_Letter_action_text"
+	tags=""
 	/>
 <light_point
 	color="0.560784 0.862745 0.960784 3.510000"
@@ -328,7 +328,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
-	tags="gui Text_Message_Letter_action_text"
+	tags=""
 	/>
 <light_point
 	color="1.000000 0.968628 0.635294 2.860000"
@@ -349,7 +349,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
-	tags="gui Text_Message_Letter_action_text"
+	tags=""
 	/>
 <light_point
 	color="1.000000 0.968628 0.635294 2.860000"
@@ -370,7 +370,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
-	tags="gui Text_Message_Letter_action_text"
+	tags=""
 	/>
 <light_point
 	color="1.000000 0.968628 0.635294 2.860000"
@@ -391,7 +391,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
-	tags="gui Text_Message_Letter_action_text"
+	tags=""
 	/>
 <light_point
 	color="1.000000 0.968628 0.635294 2.860000"
@@ -412,7 +412,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
-	tags="gui Text_Message_Letter_action_text"
+	tags=""
 	/>
 <light_point
 	color="1.000000 0.968628 0.635294 2.860000"
@@ -433,7 +433,7 @@
 	scale="1.000000 1.000000 1.000000"
 	/>
 <tags
-	tags="gui Text_Message_Letter_action_text"
+	tags=""
 	/>
 <light_point
 	color="1.000000 0.968628 0.635294 2.860000"
@@ -655,6 +655,27 @@
 	permanent="0"
 	reload="0"
 >
+<name
+	name="ambiente_centro_sala"
+	/>
+<transform
+	pos="12.007220 55.820904 -25.010130"
+	quat="0.000000 0.000000 0.000000 1.000000"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<tags
+	tags=""
+	/>
+<light_point
+	color="0.700000 0.700000 0.500000 0.230000"
+	in_radius="0.01"
+	out_radius="70"
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="0"
+>
 <culling
 	/>
 <light_dir_shadows
@@ -677,27 +698,6 @@
 	/>
 <tags
 	tags=""
-	/>
-</entity>
-<entity
-	permanent="0"
-	reload="0"
->
-<name
-	name="ambiente_centro_sala"
-	/>
-<transform
-	pos="12.007220 55.820904 -25.010130"
-	quat="0.000000 0.000000 0.000000 1.000000"
-	scale="1.000000 1.000000 1.000000"
-	/>
-<tags
-	tags="tasklistend"
-	/>
-<light_point
-	color="0.700000 0.700000 0.500000 0.230000"
-	in_radius="0.01"
-	out_radius="70"
 	/>
 </entity>
 </entities>

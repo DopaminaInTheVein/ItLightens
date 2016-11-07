@@ -146,6 +146,7 @@ public:
 	void RenderMultiEdit();
 	void DestroySelected();
 	void HideSelected();
+	void DeleteTagsSelected();
 	void UnhideSelected();
 
 	void RenderLightList(VHandles& lights, VTypeLights& types, bool temporal, LightList& list);
