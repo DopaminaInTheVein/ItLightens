@@ -441,4 +441,200 @@
 	out_radius="3.55905"
 	/>
 </entity>
+<entity
+	permanent="0"
+	reload="0"
+>
+<culling
+	/>
+<light_dir_shadows
+	color="1.000000 1.000000 1.000000 0.000000"
+	fov="109.7"
+	gen_shadow="1"
+	light_mask="textures/dir_shader_circular.dds"
+	resolution="256"
+	shadow_intensity="1.3"
+	zfar="50"
+	znear="2.1"
+	/>
+<name
+	name="Fspot001"
+	/>
+<transform
+	pos="-0.016234 7.031910 -0.136147"
+	quat="0.707102 0.000000 0.000000 0.707112"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<tags
+	tags=""
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="0"
+>
+<culling
+	/>
+<light_dir_shadows
+	color="1.000000 1.000000 1.000000 0.000000"
+	fov="109.7"
+	gen_shadow="1"
+	light_mask="textures/dir_shader_circular.dds"
+	resolution="256"
+	shadow_intensity="1"
+	zfar="50"
+	znear="2.1"
+	/>
+<name
+	name="Fspot002"
+	/>
+<transform
+	pos="-0.016234 7.031910 -0.136147"
+	quat="0.500000 0.500000 0.500000 0.500000"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<tags
+	tags=""
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="0"
+>
+<culling
+	/>
+<light_dir_shadows
+	color="1.000000 1.000000 1.000000 0.000000"
+	fov="109.7"
+	gen_shadow="1"
+	light_mask="textures/dir_shader_circular.dds"
+	resolution="256"
+	shadow_intensity="1"
+	zfar="50"
+	znear="2.1"
+	/>
+<name
+	name="Fspot003"
+	/>
+<transform
+	pos="-0.016234 7.031910 -0.136147"
+	quat="0.000000 0.707107 0.707107 0.000000"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<tags
+	tags=""
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="0"
+>
+<culling
+	/>
+<light_dir_shadows
+	color="1.000000 1.000000 1.000000 0.000000"
+	fov="109.7"
+	gen_shadow="1"
+	light_mask="textures/dir_shader_circular.dds"
+	resolution="256"
+	shadow_intensity="1"
+	zfar="50"
+	znear="2.1"
+	/>
+<name
+	name="Fspot004"
+	/>
+<transform
+	pos="-0.016234 7.031910 -0.136147"
+	quat="-0.500000 0.500000 0.500000 -0.500000"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<tags
+	tags=""
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="0"
+>
+<culling
+	/>
+<light_dir_shadows
+	color="1.000000 1.000000 1.000000 0.000000"
+	fov="109.7"
+	gen_shadow="1"
+	light_mask="textures/dir_shader_circular.dds"
+	resolution="256"
+	shadow_intensity="1"
+	zfar="50"
+	znear="2.1"
+	/>
+<name
+	name="Fspot005"
+	/>
+<transform
+	pos="-0.016234 7.031910 -0.136147"
+	quat="0.000000 0.000000 -0.707107 0.707107"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<tags
+	tags=""
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="0"
+>
+<culling
+	/>
+<light_dir_shadows
+	color="1.000000 1.000000 1.000000 0.000000"
+	fov="109.7"
+	gen_shadow="1"
+	light_mask="textures/dir_shader_circular.dds"
+	resolution="256"
+	shadow_intensity="0.46"
+	zfar="50"
+	znear="2.1"
+	/>
+<name
+	name="Fspot006"
+	/>
+<transform
+	pos="-0.016234 7.031910 -0.136147"
+	quat="0.707107 -0.707107 0.000000 0.000000"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<tags
+	tags=""
+	/>
+</entity>
+<entity
+	permanent="0"
+	reload="0"
+>
+<culling
+	/>
+<light_dir_shadows
+	color="1.000000 1.000000 1.000000 0.000000"
+	fov="109.7"
+	gen_shadow="1"
+	light_mask="textures/dir_shader_circular.dds"
+	resolution="256"
+	shadow_intensity="0"
+	zfar="18.4"
+	znear="2.24"
+	/>
+<name
+	name="Omni066shadow"
+	/>
+<transform
+	pos="19.824001 0.398000 -1.215510"
+	quat="0.500009 -0.499999 -0.500001 0.499991"
+	scale="1.000000 1.000000 1.000000"
+	/>
+<tags
+	tags=""
+	/>
+</entity>
 </entities>
