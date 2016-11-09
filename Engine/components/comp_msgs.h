@@ -204,8 +204,7 @@ struct TMsgControllerSetEnable {
 };
 
 struct TMsgPossessionLeave {
-	VEC3 npcPos;
-	VEC3 npcFront;
+	CHandle npc;
 	DECLARE_MSG_ID();
 };
 

@@ -868,17 +868,23 @@ bool player_controller::nearStunable() {
 void player_controller::onLeaveFromPossession(const TMsgPossessionLeave& msg) {
 	PROFILE_FUNCTION("on leave poss");
 	getUpdateInfo();
+	if (!cc) return;
 	// Handles y entities necesarias
 	CHandle  hMe = CHandle(this).getOwner();
+	if (!hMe.isValid()) return;
 	CEntity* eMe = hMe;
+	if (!eMe) return;
 	CHandle hCamera = tags_manager.getFirstHavingTag(getID("camera_main"));
+	if (!hCamera.isValid()) return;
 	CEntity* eCamera = hCamera;
+	if (!eCamera) return;
 
 	//Colocamos el player
-	VEC3 pos = msg.npcPos + VEC3(0.0f, cc->GetHeight(), 0.0f);	//to be sure the collider will be above the ground, add height from collider, origin on center shape
 	TCompTransform* tMe = eMe->get<TCompTransform>();
-	cc->GetController()->setPosition(PhysxConversion::Vec3ToPxExVec3(pos + msg.npcFront * DIST_LEAVING_POSSESSION));	//set collider position
-	tMe->setPosition(msg.npcPos + msg.npcFront * DIST_LEAVING_POSSESSION);												//set render position
+	if (!tMe) return;
+	VEC3 pos = getSpawnFreePos(msg.npc, VEC3_UP* cc->GetHeight(), DIST_LEAVING_POSSESSION);
+	cc->GetController()->setPosition(PhysxConversion::Vec3ToPxExVec3(pos));	//set collider position
+	tMe->setPosition(pos); //set render position
 	cc->SetActive(true);
 
 	//Set 3rd Person Controller
@@ -894,6 +900,52 @@ void player_controller::onLeaveFromPossession(const TMsgPossessionLeave& msg) {
 
 	//Notificamos presencia de Player
 	SBB::postBool("possMode", false);
+}
+
+VEC3 player_controller::getSpawnFreePos(CHandle origin, VEC3 offset, float dist)
+{
+	VEC3 pos;
+	GET_COMP(tmx_orig, origin, TCompTransform);
+	if (tmx_orig && cc) {
+		VEC3 pos_orig = pos = tmx_orig->getPosition() + offset;
+		float yaw_orig = tmx_orig->getYaw();
+		float delta_yaw = 0;
+		bool ray_hit = true;
+		while (delta_yaw <= deg2rad(180) && ray_hit) {
+			//Sentido positivo
+			tmx_orig->setYaw(yaw_orig + delta_yaw);
+			VEC3 direction = tmx_orig->getFront();
+			pos = pos_orig + direction * DIST_LEAVING_POSSESSION;
+			PxRaycastBuffer hit;
+			ray_hit = g_PhysxManager->raycast(pos_orig + direction*(cc->GetRadius() + 0.0001f), direction, dist, hit);
+			if (ray_hit) {
+				//Sentido negativo
+				tmx_orig->setYaw(yaw_orig - delta_yaw);
+				VEC3 direction = tmx_orig->getFront();
+				PxRaycastBuffer hit;
+				ray_hit = g_PhysxManager->raycast(pos_orig + direction*(cc->GetRadius() + 0.0001f), direction, dist, hit);
+			}
+			dbg("Unpossession ray_hit: %d\n", ray_hit);
+			VEC3 pos_candidate = pos_orig + direction * DIST_LEAVING_POSSESSION;
+			if (!ray_hit) {
+				ray_hit = !checkPlayerFits(pos_candidate);
+			}
+			if (ray_hit) {
+				delta_yaw += deg2rad(10.f);
+			}
+			else {
+				pos = pos_candidate;
+			}
+		}
+	}
+	return pos;
+}
+
+bool player_controller::checkPlayerFits(VEC3 pos)
+{
+	PxRaycastBuffer hit;
+	bool ray_hit = g_PhysxManager->raycast(pos + VEC3_UP * (cc->GetHeight() / 2.f), VEC3_DOWN, cc->GetHeight(), hit); //direction*(cc->GetRadius() + 0.0001f), direction, dist, hit);
+	return !ray_hit;
 }
 
 void player_controller::UpdateOverCharge() {

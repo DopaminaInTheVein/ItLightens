@@ -140,6 +140,9 @@ class player_controller : public CPlayerBase {
 	void Evolve(eEvol);
 	void UpdateActionsTrigger();
 
+	VEC3 getSpawnFreePos(CHandle origin, VEC3 offset, float distance);
+	bool checkPlayerFits(VEC3 pos);
+
 	void RecalcAttractions();
 	bool affectedByPolarity();
 	VEC3 calcForceEffect(const PolarityForce& force);//VEC3 point_pos, bool atraction);

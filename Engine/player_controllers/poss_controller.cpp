@@ -131,8 +131,8 @@ void PossController::onSetEnable(bool enabled) {
 
 		//Volver control al player
 		TMsgPossessionLeave msg;
-		msg.npcFront = transform->getFront();
-		msg.npcPos = transform->getPosition();
+		myEntity = getMyEntity();
+		if (myEntity) msg.npc = CHandle(myEntity);
 		hTarget.sendMsg(msg);
 
 		//Recover Tag Player
