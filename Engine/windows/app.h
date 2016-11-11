@@ -23,6 +23,8 @@ public:
 	std::string file_options_json;
 	std::string file_initAttr_json;
 
+	float wait_end_frame = 0;
+	float* GetWaitEnd() { return &wait_end_frame; }
 	bool max_screen;
 	bool long_frame = false;
 	// ask_window, pixels of the application, render otherwise

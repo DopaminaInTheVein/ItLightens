@@ -1029,8 +1029,6 @@
 <rigidbody
    type_collision="static"
    mesh_name="ms3/elevator_door_frame002"/>
-<room
-   name="2"/>
 
 </entity>
 <entity>

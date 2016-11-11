@@ -120,6 +120,7 @@ void CThrowBomb::Throwed() {
 	float dist = simpleDist(initial_pos, transform->getPosition());
 	if (dist > 0.5f && checkNextState("impacted")) {
 		rd->setActorFlag(PxActorFlag::eDISABLE_GRAVITY, false);
+		rd->setRigidBodyFlag(PxRigidBodyFlag::eENABLE_CCD, true);
 	}
 	else {
 		throwMovement();

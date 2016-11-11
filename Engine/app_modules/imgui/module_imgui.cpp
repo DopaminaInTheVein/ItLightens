@@ -98,6 +98,21 @@ void CImGuiModule::update(float dt) {
 	//Difficulty
 	IMGUI_SHOW_INT(GameController->GetDifficulty());
 
+	//Extra wait end frame
+	if (ImGui::TreeNode("Physx Timing")) {
+		float tmax_update = g_PhysxManager->GetTMaxUpdate();
+		ImGui::PushItemWidth(100);
+		if (ImGui::DragFloat("tmax_update", &tmax_update, 0.01f)) {
+			g_PhysxManager->SetTMaxUpdate(tmax_update);
+		}
+		ImGui::DragFloat("Wait end frame", CApp::get().GetWaitEnd());
+		if (ImGui::Checkbox("Multi simulate", g_PhysxManager->GetMultiSimulatePointer())) {
+			dbg("Changed Multisimulate\n");
+		}
+		ImGui::PopItemWidth();
+		ImGui::TreePop();
+	}
+
 	//Last Input
 	ImGui::Checkbox("Gamepad Mode", io->IsGamePadModePointer());
 

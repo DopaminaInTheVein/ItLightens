@@ -146,14 +146,14 @@ void CApp::generateFrame() {
 	static int frame = 0;
 	float delta_time = timer_app.deltaAndReset();
 	delta_time = getDeltaTime();
-	const float max_delta_time = 5.f / 60.f;      // 5 frames
-	if (delta_time > max_delta_time)
-		delta_time = max_delta_time;
 	update(delta_time);
 	if (GameController->GetGameState() != CGameController::PLAY_VIDEO) {
 		render();
 		Render.swapChain();
 	}
+
+	CTimer timer_end;
+	while (timer_end.elapsed() < wait_end_frame);
 }
 
 // -------------------------------------------------

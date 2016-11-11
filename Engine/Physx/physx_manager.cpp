@@ -10,6 +10,8 @@
 #include "components\entity_tags.h"
 #include "app_modules\entities.h"
 
+#include "components\comp_drone.h"
+
 void CPhysxManager::setFtDynamic()
 {
 	m_ft_dynamic.word0 = 0;
@@ -118,7 +120,7 @@ bool CPhysxManager::start()
 	if (m_pPhysics->getPvdConnectionManager() == NULL)
 		return true;	// no Pvd support for debugging physx
 
-	// setup connection parameters
+						// setup connection parameters
 	const char*     pvd_host_ip = "127.0.0.1";  // IP of the PC which is running PVD
 	int             port = 5425;         // TCP port to connect to, where PVD is listening
 	unsigned int    timeout = 100;          // timeout in milliseconds to wait for PVD to respond,
@@ -154,7 +156,7 @@ void CPhysxManager::stop()
 		PX_SAFE_RELEASE(m_pConnection);
 
 	// auto pvdconnection = m_pPhysics->getPvdConnectionManager();
-	 //PX_SAFE_RELEASE(pvdconnection);
+	//PX_SAFE_RELEASE(pvdconnection);
 #endif
 
 	PX_SAFE_RELEASE(m_pCooking);
@@ -175,23 +177,26 @@ void CPhysxManager::stop()
 void CPhysxManager::update(float dt)
 {
 	//calculate fixed update
-	t_to_update += getDeltaTime();
-	if (t_to_update >= t_max_update) {
-		CEntitiesModule::fixedUpdate(t_to_update);
+	t_to_update += dt;
 
+	CEntitiesModule::fixedUpdate(dt); // Revisar Pedro
+	while (t_to_update >= t_max_update) {
+		float t_to_simulate = multi_simulate && t_max_update > 0 ? t_max_update : t_to_update;
 		//m_pScene->simulate(t_to_update);
 		{
 			PROFILE_FUNCTION("Simulate");
-			m_pScene->simulate(t_max_update);
+			m_pScene->simulate(t_to_simulate);
 		}
-		{
-			PROFILE_FUNCTION("Fetch Results");
-			m_pScene->fetchResults(true);
-		}
-		//getHandleManager<TCompPhysics>()->updateAll(t_max_update);
-		//getHandleManager<TCompCharacterController>()->updateAll(t_max_update);
 
-		t_to_update = 0;
+		t_to_update -= t_to_simulate;
+		if (t_max_update <= 0) break;
+		//getHandleManager<TCompDrone>()->each([](TCompDrone * drone) {
+		//	drone->updateTransfrom();
+		//});
+	}
+	{
+		PROFILE_FUNCTION("Fetch Results");
+		m_pScene->fetchResults(true);
 	}
 }
 

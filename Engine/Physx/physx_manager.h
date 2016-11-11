@@ -51,7 +51,7 @@ class CPhysxManager : public IAppModule,
 	public PxControllerBehaviorCallback,
 	public PxUserControllerHitReport,
 	public PxQueryFilterCallback,
-	public CMeshPhysxManager{
+	public CMeshPhysxManager {
 	PxFoundation			*m_pFoundation = nullptr;
 	PxProfileZoneManager	*m_pProfileZoneManager = nullptr;
 	PxPhysics				*m_pPhysics = nullptr;
@@ -89,7 +89,7 @@ class CPhysxManager : public IAppModule,
 	void setFtCC();
 
 	int m_NbThreads = 1;
-
+	bool multi_simulate = true;
 	//-----------------------------------------------------------------------------------------------------
 	//							Customize functions
 	//-----------------------------------------------------------------------------------------------------
@@ -98,7 +98,9 @@ class CPhysxManager : public IAppModule,
 	void customizeSceneDesc(PxSceneDesc & sceneDesc);
 
 public:
-
+	bool* GetMultiSimulatePointer() { return &multi_simulate; }
+	float GetTMaxUpdate() { return t_max_update; }
+	void SetTMaxUpdate(float time) { t_max_update = time; }
 	CPhysxManager() : m_pCooking(nullptr),
 		m_pCpuDispatcher(nullptr),
 		m_pCudaContextManager(nullptr),
@@ -109,7 +111,6 @@ public:
 		m_pScene(nullptr),
 		m_pGeomQuerys(nullptr)
 	{}
-
 	~CPhysxManager() { stop(); }
 
 	//Test CCD
