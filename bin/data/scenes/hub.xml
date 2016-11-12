@@ -726,9 +726,11 @@
 <name
    name="end_hub"/>
 <transform
-   pos="0 0 0"
-   quat="0 0 0 1.0"
+   pos="-1.48692 52.4885 -25.5985"
+   quat="0 0 -0.646333 0.763055"
    scale="1.0"/>
+<tmx_animator
+   yaw_speed="30"/>
 <render_static_mesh
    name="static_meshes/hub/end_hub.static_mesh"
    static="true"/>

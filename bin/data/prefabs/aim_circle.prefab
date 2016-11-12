@@ -5,7 +5,8 @@
 <gui
    menu_name="components_ui"
    width="1.0"
-   height="1.0"/>
+   height="1.0"
+   size_world="1.0"/>
 <name
    name="aim_circle"/>
 <transform
