@@ -190,8 +190,8 @@
    points_size="1"
    skippable="no"
    stop_final="yes"
-   wpt1="-0.817787 53.3546 -25.649"
-   lpt1="-1.60307 51.8462 -25.6497"/>
+   wpt1="-0.562462 52.4043 -25.649"
+   lpt1="-1.49438 52.5242 -25.6055"/>
 <name
    name="CineEndHub"/>
 <transform
