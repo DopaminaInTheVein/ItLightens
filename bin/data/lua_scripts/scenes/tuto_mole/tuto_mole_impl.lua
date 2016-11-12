@@ -208,7 +208,7 @@ function IntroTutoMole3( )
 end
 
 function IntroTutoMole4( )
-	cam:skip_cinematic()
+	--cam:skip_cinematic()
 	--p:hide_message()
 	p:setControlEnabled(1)
 	p:exec_command("tutomole_help_possess();", 0.5)
@@ -289,6 +289,7 @@ function tutomole_help_place_box( )
 	p:player_talks(TXT_PLACE_BOX)
 end
 function tutomole_help_wall( )
+	cam:run_cinematic("CinePreWall", 6.0)
 	p:show_message(TXT_HELP_WALL, "raijin")
 end
 function tutomole_help_box( )

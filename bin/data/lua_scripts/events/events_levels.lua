@@ -48,7 +48,7 @@ end
 
 function PrepareScene(real_level)
 	p:removeText("loading_skip")
-	p:exec_command("ui_cam:fade_in(1);", 0.5)
+	p:exec_command("ui_cam:fade_in(1);", 1)
 	p:unforce_sense_vision()
 	if real_level ~= "hub" then
 		p:exec_command("p:setControlEnabled(1);", 1.5)
