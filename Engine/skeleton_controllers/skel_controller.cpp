@@ -54,6 +54,7 @@ void TCompSkelController::setAnim(string anim, bool loop, string nextLoop)
 
 void TCompSkelController::setLoop(string anim)
 {
+	Debug->LogRaw("Set anim loop: %s\n", anim.c_str());
 	std::vector<std::string> anims;
 	anims.push_back(anim);
 
@@ -194,10 +195,10 @@ void TCompSkelController::updateSteps(float dist_ground, bool& on_ground)
 		}
 	}
 	//dbg("-->new_on_ground: %d\n", on_ground);
-	if (send_msg && 
+	if (send_msg &&
 		(currentState == AST_MOVE || currentState == AST_RUN ||
-		 currentState == AST_PILA_WALK || currentState == AST_GRAB_WALK ||
-		 currentState == AST_GRAB_WALK_SMALL)) {
+			currentState == AST_PILA_WALK || currentState == AST_GRAB_WALK ||
+			currentState == AST_GRAB_WALK_SMALL)) {
 		TMsgGetWhoAmI msg;
 		if (on_ground) {
 			msg.action_flag = true;

@@ -109,8 +109,17 @@ void SkelControllerMole::myUpdate()
 	updateGrab();
 	updatePila();
 	updateGrabPoints();
+	if (prevState == "idle") {
+		int a = 0;
+	}
+	if (currentState == "idle") {
+		int a = 0;
+	}
 	if (currentState == "walk" || currentState == "run") {
 		SetPlayerController();
+		if (!pc->isMoving()) {
+			currentState = "idle";
+		}
 		////TODO: read moving param!
 		//VEC3 speed = cc->GetSpeed();
 		//VEC3 lastSpeed = cc->GetLastSpeed();
@@ -158,7 +167,7 @@ void SkelControllerMole::myUpdate()
 		}
 		else if (currentState == AST_PUT_PILA) {
 			//setAction("grab_pila_2", "idle");
-			currentState = AST_IDLE;
+			//currentState = AST_IDLE;
 		}
 		else if (currentState == AST_FALL) {
 			setAction("jumpland", "idle");
@@ -186,7 +195,7 @@ void SkelControllerMole::updateGrab()
 	}
 	else {
 		if (currentState == AST_GRAB_IDLE) currentState = AST_IDLE;
-		else if (currentState == AST_GRAB_WALK) currentState = AST_MOVE;
+		else if (currentState == AST_GRAB_WALK) currentState = AST_IDLE;//AST_MOVE;
 	}
 
 	if (isMovingBox()) {

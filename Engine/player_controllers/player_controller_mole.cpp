@@ -232,7 +232,7 @@ void player_controller_mole::UpdateInputActions() {
 		else {
 			bool nearToPila = this->nearToPila();
 			//GET_COMP(pilaComp, pilaNear, TCompPila);
-			if (nearToPila && !this->nearToPilaContainerWithPilaCharged()){//!pilaComp->isCharged()) {
+			if (nearToPila && !this->nearToPilaContainerWithPilaCharged()) {//!pilaComp->isCharged()) {
 				float pitch_dummy;
 				getYawPitchFromVector(grabInfo.dir_to_grab, &grabInfo.yaw, &pitch_dummy);
 				inputEnabled = false;
@@ -461,13 +461,11 @@ void player_controller_mole::PuttingPila()
 		ChangeState("idle");
 		inputEnabled = true;
 
-		GET_COMP(pila_p, pilaGrabbed, TCompPhysics);
-		GET_COMP(pila_t, pilaGrabbed, TCompTransform);
-		GET_COMP(pila, pilaGrabbed, TCompPila);
+		//GET_COMP(pila_p, pilaGrabbed, TCompPhysics);
+		//GET_COMP(pila_t, pilaGrabbed, TCompTransform);
 
 		//pila_p->setBehaviour(PHYS_BEHAVIOUR::eIGNORE_PLAYER, false);
-		pila->PutIn(pilaContainer);
-		CEntity * pilaEntity = pilaContainer;
+		//CEntity * pilaEntity = pilaContainer;
 		/*
 #ifdef TASK_LIST_ENABLED
 		if (pilaEntity->getId() == 303) {
@@ -478,9 +476,12 @@ void player_controller_mole::PuttingPila()
 		}
 #endif
 		*/
+		GET_COMP(pila, pilaGrabbed, TCompPila);
 		pilaGrabbed = CHandle();
 		player_max_speed *= 2;
+		if (pila) pila->PutIn(pilaContainer);
 		animController->setState(AST_IDLE);
+		stopMovement();
 	}
 }
 
