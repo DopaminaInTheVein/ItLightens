@@ -117,7 +117,7 @@ void SkelControllerMole::myUpdate()
 	}
 	if (currentState == "walk" || currentState == "run") {
 		SetPlayerController();
-		if (!pc->isMoving()) {
+		if (pc->getEnabled() && !pc->isMoving()) {
 			currentState = "idle";
 		}
 		////TODO: read moving param!
