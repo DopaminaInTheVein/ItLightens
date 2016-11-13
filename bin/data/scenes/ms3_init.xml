@@ -517,7 +517,8 @@
 <abs_aabb/>
 <rigidbody
    type_collision="dynamic"
-   type_shape="convex"
+   type_shape="box"
+   size="3.0 1.5 3.0"
    mass="5"/>
 <local_aabb/>
 <polarized
@@ -1131,6 +1132,7 @@
    velocity="2.0"
    default_dirs="0"
    points_size="9"
+   stop_final="yes"
    wpt1="-23.5586 -18.138 4.83162"
    wpt2="-1.37153 -18.1442 -12.672"
    wpt3="21.7366 -15.7475 -0.261352"

@@ -19,6 +19,7 @@ function OnStart_ms3()
   p:play_music("event:/OnGameMusic", 0.2)
   p:setControlEnabled(0)
   cam:run_cinematic("CinematicIntro", 10)
+  p:wait_button("cam:skip_cinematic()")
   p:ai_start()
 end
 
