@@ -492,7 +492,7 @@ void PSLightDirShadows(
 		 // inv_shadows = 1-att_factor*NLWarped;
 		  inv_shadows *= (light_mask);
 		  //inv_shadows *= (light_mask*light_mask);
-		  
+		  inv_shadows *= NL;
 		  
 		  //we reduce the shadow intesity, as the hatching will add more shadows effect
 		  if(inv_shadows > shadow_intensity)
@@ -536,6 +536,7 @@ void PSLightDirShadows(
 	
 	float4 albedo = txDiffuse.Load(ss_load_coords);
 	o_color = (NLWarped * final_color * albedo + o_specular);
+	o_color.a = 0;
   
 }
 

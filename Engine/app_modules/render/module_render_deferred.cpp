@@ -482,7 +482,7 @@ void CRenderDeferredModule::renderAccLight() {
 	//activateRS(RSCFG_INVERT_CULLING);
 	addPointLights();
 
-	activateZ(ZCFG_LIGHTS_CONFIG);
+	activateZ(ZCFG_LIGHTS_DIR_CONFIG);
 	//activateRS(RSCFG_INVERT_CULLING);
 	addDirectionalLights();
 
