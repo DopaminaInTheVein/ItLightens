@@ -114,17 +114,19 @@
 <guided_camera
    velocity="2.0"
    default_dirs="0"
-   points_size="4"
+   points_size="5"
    skippable="no"
    stop_final="yes"
    wpt1="4.59094 13.4323 -7.27333"
    wpt2="4.59094 3.52165 -2.93202"
    wpt3="6.43884 1.50041 -1.29036"
-   wpt4="16.931 1.89252 1.28713"
+   wpt4="12.7628 0.927803 1.28713"
+   wpt5="14.5795 0.67292 3.04348"
    lpt1="-1.36078 7.82704 0.177347"
    lpt2="-6.68647 2.31953 -0.184956"
    lpt3="-6.73947 1.7505 -6.89095"
-   lpt4="5.59511 2.05684 -2.62893"/>
+   lpt4="5.59511 2.05684 -2.62893"
+   lpt5="14.2696 1.79652 -4.22219"/>
 <name
    name="CineIntro"/>
 <transform
@@ -255,11 +257,12 @@
 <tags
    tags="box_placer"/>
 <box_placer
-   event_in="tutomole_box_placed"/>
+   event_in="tutomole_box_placed"
+   radius="5"/>
 <name
    name="_box_target"/>
 <transform
-   pos="-1.39832 0.0260162 -0.404682"
+   pos="2.79132 0.0260162 -0.404682"
    quat="0 0 0 1.0"
    scale="1.0"/>
 
@@ -296,7 +299,7 @@
 <name
    name="_wall_left"/>
 <transform
-   pos="10.4644 1.34412 -0.504993"
+   pos="9.88562 1.34412 -0.504993"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -318,7 +321,7 @@
 <name
    name="_wall_right"/>
 <transform
-   pos="10.406 1.6333 -1.84191"
+   pos="9.82727 1.6333 -1.84191"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -340,7 +343,7 @@
 <name
    name="_wall_up"/>
 <transform
-   pos="10.4148 2.05969 -1.14104"
+   pos="9.83606 2.05969 -1.14104"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -362,7 +365,7 @@
 <name
    name="_wall_down"/>
 <transform
-   pos="10.4136 0.831909 -1.14104"
+   pos="9.83484 0.831909 -1.14104"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -455,6 +458,26 @@
 <character_controller
    radius="0.3"
    height="0.7"/>
+
+</entity>
+<entity
+   reload="yes">
+<tags
+   tags="guided_camera"/>
+<guided_camera
+   velocity="2.0"
+   default_dirs="0"
+   points_size="1"
+   skippable="no"
+   stop_final="yes"
+   wpt1="18.4537 2.38886 -1.30833"
+   lpt1="10.1966 1.79652 -1.0608"/>
+<name
+   name="CinePreWall"/>
+<transform
+   pos="21.6182 2.28844 17.2026"
+   quat="0 0 0 1.0"
+   scale="0.703206"/>
 
 </entity>
 
