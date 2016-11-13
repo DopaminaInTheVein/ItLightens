@@ -143,7 +143,10 @@ void CImGuiModule::update(float dt) {
 		if (ImGui::Button("RESUME BUTTON"))
 			GameController->SetGameState(CGameController::RUNNING);
 	}
-
+	ImGui::SameLine();
+	if (ImGui::Button("SKIP Cine.")) {
+		logic_manager->throwUserEvent("cam:skip_cinematic();");
+	}
 	//Select Level
 	{
 		ImGui::PushItemWidth(80);
@@ -232,7 +235,7 @@ void CImGuiModule::update(float dt) {
 			IMGUI_DRAG_FLOAT(CThrowBomb::radius_st, 0.01f, 0.1f, 10.f);
 			ImGui::DragFloat3("offset start throw", &CThrowBomb::offset_init_throw.x, 0.01f, -1.f, 1.f);
 			ImGui::TreePop();
-		}
+}
 		ImGui::TreePop();
 }
 #endif
