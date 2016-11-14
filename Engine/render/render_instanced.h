@@ -10,6 +10,9 @@ struct TParticle {
 	//POSITION1
 	VEC3  center;
 
+	//speed frames
+	float speed_frame;
+
 	//TEXCOORD1
 	float nframe;
 	float size;
