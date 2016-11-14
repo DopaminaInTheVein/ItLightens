@@ -59,9 +59,11 @@ float4 PSCrossHatching(float4 Pos : SV_POSITION
 	
 	float4 val = inv;
 	//val*= rim;
-	if(val.x > 0.1)
-		val = float4(0.4,0.4,0.4,0.4)*(1/(1+depth));
-	//val = val*2 -1.6;
+	/*if(val.x > 0.1)
+		val = float4(0.4,0.4,0.4,0.4)*(1/(1+depth));*/
+	if(val.x > 1)
+		val = float4(1,1,1,1);
+	val = val*2;
 	
 	//return float4(val.xxx,1);
 
