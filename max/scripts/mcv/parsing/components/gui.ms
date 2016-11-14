@@ -16,6 +16,9 @@ fn _parse_gui = (
 	parseMenuName xml
 	parsePropAttribute xml "row" "row"
 	parsePropAttribute xml "col" "col"
+	parsePropAttribute xml "res_x" "res_x"
+	parsePropAttribute xml "res_y" "res_y"
+	parsePropAttribute xml "res_scale" "res_scale"
 	
 	local size = _parsingObject.max - _parsingObject.min
 	local gui_helper = findHelper "gui_helper"

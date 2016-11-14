@@ -43,6 +43,10 @@ class TCompGui : public TCompBase {
 	float width, height;
 	float size_world = -1.f;
 
+	//Ressolution designed
+	float ar = 0.f;
+	bool ar_scale = false;
+
 	// Render state float for render manager
 	float render_state;
 	float render_target;
