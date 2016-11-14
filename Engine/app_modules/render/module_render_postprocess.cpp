@@ -68,7 +68,7 @@ bool CRenderPostProcessModule::start()
 	ActivateFXBeforeUI(FX_HATCHING, 100);	//default priority is 0, but hatching should go the last one
 	ActivateFXBeforeUI(FX_ANTI_ALIASING, 300);
 
-	//ActivateFXBeforeUI("dream_border", 150); //--> only when needed, need to go after hatching so hatching wont be rendered on dream borders
+	ActivateFXBeforeUI("dream_border", 150); 
 
 	//test fade
 	//WARNING: component fade is the same always, there will be only one!!
