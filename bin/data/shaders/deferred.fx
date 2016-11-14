@@ -536,7 +536,6 @@ void PSLightDirShadows(
 	
 	float4 albedo = txDiffuse.Load(ss_load_coords);
 	o_color = (NLWarped * final_color * albedo + o_specular);
-	o_color.a = 0;
   
 }
 
