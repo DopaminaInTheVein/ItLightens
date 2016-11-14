@@ -55,7 +55,7 @@ function SaveLevel( )
 end
 
 function SaveCheckPoint( )
-	h:get_handle_caller()
+	h:getHandleCaller()
 	h:destroy()
 	p:save_level()
 end

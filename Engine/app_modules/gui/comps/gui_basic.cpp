@@ -11,6 +11,7 @@
 
 #include "app_modules/lang_manager/lang_manager.h"
 #include "app_modules/logic_manager/logic_manager.h"
+#include "app_modules/gui/gui.h"
 #include "app_modules/gui/comps/gui_selector.h"
 
 using namespace std;
@@ -27,6 +28,22 @@ void TCompGui::onCreate(const TMsgEntityCreated&)
 	GET_MY(loading, TCompLoadingScreen);
 	if (loading) loading->onCreate();
 	logic_manager->throwEvent(CLogicManagerModule::EVENT::OnCreateGui, MY_NAME, MY_OWNER);
+
+	if (ar > 0.f) {
+		GET_MY(tmx, TCompTransform);
+		if (tmx) {
+			VEC3 ui_size = Gui->getUiSize();
+			float ui_ar = ui_size.x / ui_size.y;
+			if (ar_scale) {
+				tmx->setScale(VEC3(1.f, ar / ui_ar, 1.f));
+			}
+			VEC3 new_pos_screen = Gui->getScreenPos(tmx->getPosition());
+			new_pos_screen.y = 0.5f + (new_pos_screen.y - 0.5f) * (ar / ui_ar);
+			VEC3 new_pos_world = Gui->getWorldPos(new_pos_screen);
+			tmx->setPosition(new_pos_world);
+		}
+	}
+
 	RenderManager.ModifyUI();
 }
 
@@ -75,6 +92,10 @@ bool TCompGui::load(MKeyValue& atts)
 	color = VEC4(1, 1, 1, 1);
 	language = atts.getBool("lang", false);
 	size_world = atts.getFloat("size_world", -1.f);
+	float res_x = atts.getFloat("res_x", 0.f);
+	float res_y = atts.getFloat("res_y", 0.f);
+	if (res_x > 0.f && res_y > 0.f) ar = res_x / res_y;
+	ar_scale = atts.getBool("res_scale", false);
 	return true;
 }
 

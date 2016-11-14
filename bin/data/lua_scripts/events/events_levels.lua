@@ -59,9 +59,12 @@ function PrepareScene(real_level)
 	loading_handles:get_handles_by_tag("loading")
 	loading_handles:destroy()
 	p:resume_game()
+	--p:breakpoint(4)
 	if g_new_level then
+		--p:breakpoint(5)
 		p:exec_command("CallFunction(\"OnStart_"..real_level.."\");", 1.1)
 	else
+		--p:breakpoint(6)
 		p:exec_command("CallFunction(\"OnLoad_"..real_level.."\");", 1.1)
 	end
 end

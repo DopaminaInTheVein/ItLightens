@@ -36,14 +36,14 @@ end
 
 function OnLoad_ms3()
   p:print("OnLoaded Scene MS3")
+  p:ai_start()
   d = Data()
-  LoadFogMs3()
+  LoadFogMs3(d)
   isDoorOpen = d:get_bool("door_open")
   alert = d:get_bool("alert")
   stateElevator = d:get_float("elevator_state")
   cp_elevator = d:get_bool("cp_elevator")
   cp_door_opened = d:get_bool("cp_door_opened")
   p:play_music("event:/OnGameMusic", 0.2)
-  p:ai_start()
 end
 ---------------------------------------------------------------------------------------------

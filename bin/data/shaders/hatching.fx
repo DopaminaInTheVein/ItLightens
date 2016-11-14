@@ -51,6 +51,7 @@ float4 PSCrossHatching(float4 Pos : SV_POSITION
 	//float inv_shadows = txShadows.Sample(samLinear, iTex0).r;
 	float base = step(0.1f, specular);
 	float4 inv = txShadows.Sample(samLinear, iTex0);
+	float depth = txDepths.Sample(samLinear, iTex0).r;
 	//return float4(specular.xxx,1);
 	//return float4(diffuse.xyz,1);
 	//return float4(N.xyz,1);
@@ -58,8 +59,8 @@ float4 PSCrossHatching(float4 Pos : SV_POSITION
 	
 	float4 val = inv;
 	//val*= rim;
-	if(val.x > 1)
-		val = float4(1,1,1,1);
+	if(val.x > 0.1)
+		val = float4(0.4,0.4,0.4,0.4)*(1/(1+depth));
 	//val = val*2 -1.6;
 	
 	//return float4(val.xxx,1);

@@ -5,12 +5,14 @@
    tags="ui_pol_e hiddeable_hud gui"/>
 <gui
    menu_name="player_hud"
+   res_x="16"
+   res_y="9"
    width="1.37079"
    height="1.37079"/>
 <name
    name="polq"/>
 <transform
-   pos="9.27498 -97.2334 6.91231"
+   pos="9.27498 -97.2334 6.91234"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -25,12 +27,14 @@
    tags="ui_pol_q hiddeable_hud gui"/>
 <gui
    menu_name="player_hud"
+   res_x="16"
+   res_y="9"
    width="1.29558"
    height="1.29558"/>
 <name
    name="pole"/>
 <transform
-   pos="0.69838 -97.2334 6.91231"
+   pos="0.69838 -97.2334 6.91234"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -42,32 +46,22 @@
 <entity
    temp="yes">
 <tags
-   tags="hiddeable_hud"/>
+   tags="hiddeable_hud gui"/>
+<gui
+   menu_name="player_hud"
+   res_x="16"
+   res_y="9"
+   width="1.84311"
+   height="1.84311"/>
 <name
    name="lifebar_out"/>
 <transform
-   pos="1.30764 -92.9796 6.71921"
+   pos="1.30764 -92.9796 6.71925"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/ui/player_hud/lifebar_out.static_mesh"
-   static="true"/>
-<abs_aabb/>
-
-</entity>
-<entity
-   temp="yes">
-<tags
-   tags="hiddeable_hud"/>
-<name
-   name="lifebar_back"/>
-<transform
-   pos="1.30764 -92.9796 6.69591"
-   quat="0 0 0 1.0"
-   scale="1.0"/>
-<render_static_mesh
-   name="static_meshes/ui/player_hud/lifebar_back.static_mesh"
-   static="true"/>
+   static="false"/>
 <abs_aabb/>
 
 </entity>
@@ -77,6 +71,30 @@
    tags="hiddeable_hud gui"/>
 <gui
    menu_name="player_hud"
+   res_x="16"
+   res_y="9"
+   width="1.84311"
+   height="1.84311"/>
+<name
+   name="lifebar_back"/>
+<transform
+   pos="1.30764 -92.9796 6.69596"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/ui/player_hud/lifebar_back.static_mesh"
+   static="false"/>
+<abs_aabb/>
+
+</entity>
+<entity
+   temp="yes">
+<tags
+   tags="hiddeable_hud gui"/>
+<gui
+   menu_name="player_hud"
+   res_x="16"
+   res_y="9"
    width="1.84311"
    height="1.84311"/>
 <name
@@ -97,13 +115,15 @@
    tags="hiddeable_hud gui"/>
 <gui
    menu_name="player_hud"
+   res_x="16"
+   res_y="9"
    width="1.11558"
    height="1.11559"
    lang="yes"/>
 <name
    name="lifebar_charge_name"/>
 <transform
-   pos="0.838822 -93.4933 6.76128"
+   pos="0.838822 -93.4933 6.76131"
    quat="0 0 0 1.0"
    scale="1.0"/>
 <render_static_mesh
@@ -114,7 +134,15 @@
 </entity>
 <entity
    temp="yes">
-<tags/>
+<tags
+   tags="gui"/>
+<gui
+   menu_name="player_hud"
+   res_x="16"
+   res_y="9"
+   res_scale="yes"
+   width="10.0"
+   height="10.0"/>
 <name
    name="marco3"/>
 <transform
@@ -123,7 +151,7 @@
    scale="1.0"/>
 <render_static_mesh
    name="static_meshes/ui/player_hud/marco3.static_mesh"
-   static="true"/>
+   static="false"/>
 <abs_aabb/>
 
 </entity>
@@ -133,6 +161,8 @@
    tags="bomb_counter gui"/>
 <gui
    menu_name="player_hud"
+   res_x="16"
+   res_y="9"
    width="1.29558"
    height="1.29558"/>
 <name
@@ -154,6 +184,8 @@
    tags="bomb_icon gui"/>
 <gui
    menu_name="player_hud"
+   res_x="16"
+   res_y="9"
    width="1.37079"
    height="1.37079"/>
 <name

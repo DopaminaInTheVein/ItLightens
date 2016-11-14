@@ -33,12 +33,20 @@ void CGuiMunition::update(float dt)
 		if (player_type == PLAYER_TYPE::SCIENTIST) {
 			icon = tags_manager.getFirstHavingTag("bomb_icon");//Gui->addGuiElement("ui/icons/bomb", posIcon, "", scaleIcon);
 			number_back = tags_manager.getFirstHavingTag("bomb_counter");//Gui->addGuiElement("ui/letter", posTxt, "", scaleText);
+			if (!number.isValid()) {
+				number = Gui->addGuiElement("ui/letter", posTxt, "", scaleText);
+				GET_COMP(tmx_number_back, number_back, TCompTransform);
+				VEC3 pos_number_back = tmx_number_back->getPosition();
+				VEC3 posTxtFixed = pos_number_back - VEC3(scaleText / 2.f, scaleText / 2.f, 0.f);
+				GET_COMP(tmx_number, number, TCompTransform);
+				tmx_number->setPosition(posTxtFixed);
+			}
 			setVisible(icon, true);
 			setVisible(number_back, true);
 			setVisible(number, true);
+
 			setVisible(polq, false);
 			setVisible(pole, false);
-			if (!number.isValid()) number = Gui->addGuiElement("ui/letter", posTxt, "", scaleText);
 		}
 		else {
 			setVisible(polq, true);
