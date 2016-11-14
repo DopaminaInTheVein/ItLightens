@@ -722,11 +722,12 @@ void SLBCamera::fx(const char* name, int enabled) {
 		if (!render_fx->isActive(name)) {
 			render_fx->ActivateFXBeforeUI(name);
 		}
+		auto fx = render_fx->GetBasicFX(name);
+		if (fx) fx->enableFX();
 	}
 	else {
-		if (render_fx->isActive(name)) {
-			render_fx->RemoveActiveFX(name);
-		}
+		auto fx = render_fx->GetBasicFX(name);
+		if (fx) fx->disabledFX();
 	}
 }
 
