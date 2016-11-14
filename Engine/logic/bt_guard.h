@@ -173,6 +173,9 @@ class bt_guard : public npc, public TCompBase
 	bool shooting_backwards = false;
 	bool forced_move = false;
 
+	// PANIC mode
+	bool force_patrol = false;
+
 	// the nodes
 	static map<string, btnode *>tree;
 	// the C++ functions that implement node actions, hence, the behaviours
@@ -296,6 +299,21 @@ public:
 		updateLookAt();
 		//animController.update();
 		updateTalk("Guard", CHandle(this).getOwner());
+
+		// PANIC MODE
+		if (io->keys['M'].becomesPressed()) {
+			setCurrent(NULL);
+			decreaseChaseCounter();
+			force_patrol = !force_patrol;
+			//If was shooting...
+			if (shooting) {
+				TMsgDamageSpecific dmg;
+				dmg.source = MY_NAME;
+				dmg.type = Damage::ABSORB;
+				dmg.actived = false;
+				thePlayer.sendMsg(dmg);
+			}
+		}
 	}
 
 	void updateLookAt();

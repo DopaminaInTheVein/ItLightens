@@ -159,6 +159,11 @@ bool bt_guard::playerStunned() {
 
 bool bt_guard::playerNear() {
 	PROFILE_FUNCTION("guard: player near");
+
+	// PANIC mode
+	if (force_patrol)
+		return false;
+
 	VEC3 posPlayer = player_tmx->getPosition();
 	VEC3 myPos = my_tmx->getPosition();
 
@@ -173,6 +178,11 @@ bool bt_guard::playerNear() {
 
 bool bt_guard::playerDetected() {
 	PROFILE_FUNCTION("guard: player detected");
+
+	// PANIC mode
+	if (force_patrol)
+		return false;
+
 	// if the player is visible
 	if (playerVisible() || boxMovingDetected()) {
 		VEC3 posPlayer = player_tmx->getPosition();
@@ -201,6 +211,11 @@ bool bt_guard::playerDetected() {
 
 bool bt_guard::playerOutOfReach() {
 	PROFILE_FUNCTION("guard: player out of reach");
+
+	// PANIC mode
+	if (force_patrol)
+		return false;
+
 	if (!playerVisible()) {
 		decreaseChaseCounter();
 		return true;
@@ -223,6 +238,10 @@ bool bt_guard::playerOutOfReach() {
 
 bool bt_guard::guardAlerted() {
 	PROFILE_FUNCTION("guard: guardalert");
+
+	// PANIC mode
+	if (force_patrol)
+		return false;
 
 	VEC3 myPos = my_tmx->getPosition();
 
@@ -275,6 +294,11 @@ bool bt_guard::guardAlerted() {
 
 //toggle conditions
 bool bt_guard::checkFormation() {
+
+	// PANIC mode
+	if (force_patrol)
+		return false;
+
 	return formation_toggle;
 }
 
