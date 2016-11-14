@@ -694,12 +694,12 @@
    quat="-0.0336897 0 0 0.999401"
    scale="1.0"/>
 <render_static_mesh
-   name="static_meshes/tuto_sci/generator.static_mesh"
+   name="static_meshes/obj/generator.static_mesh"
    static="true"/>
 <abs_aabb/>
 <rigidbody
    type_collision="static"
-   mesh_name="tuto_sci/generator"/>
+   mesh_name="obj/generator"/>
 
 </entity>
 <entity>
