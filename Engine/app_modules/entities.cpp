@@ -662,13 +662,16 @@ void CEntitiesModule::update(float dt) {
 		//	//getHandleManager<Tasklist>()->updateAll(dt);
 		//}
 
-		//physx objects
-		getHandleManager<TCompCharacterController>()->updateAll(dt);
-		getHandleManager<TCompPhysics>()->updateAll(dt);
 
 		getHandleManager<player_controller>()->updateAll(dt);
 		getHandleManager<player_controller_mole>()->updateAll(dt);
 		getHandleManager<player_controller_cientifico>()->updateAll(dt);
+
+		//physx objects
+		getHandleManager<TCompCharacterController>()->updateAll(dt);
+		getHandleManager<TCompPhysics>()->updateAll(dt);
+
+		
 		if (!GameController->IsCinematic() && !GameController->IsCamManual()) {
 			getHandleManager<TCompController3rdPerson>()->updateAll(dt);
 		}
@@ -746,6 +749,8 @@ void CEntitiesModule::update(float dt) {
 
 		//Tmx animator
 		getHandleManager<TCompTransformAnimator>()->updateAll(dt);
+
+		getHandleManager<player_controller_mole>()->onAll(&player_controller_mole::MoveBox);
 
 		SBB::update(dt);
 	}
