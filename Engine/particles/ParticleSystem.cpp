@@ -86,6 +86,8 @@ void CParticleSystem::onStartElement(const std::string &element, MKeyValue& atts
 	if (element == "nframes") {
 		m_Emitter.SetNumberFrames(atts.getInt("value", 1));
 		m_particles.max_frames = *m_Emitter.GetNumberFrames();
+		frames_speed = atts.getFloat("speed", 1.0f);
+		m_particles.speed_frame = frames_speed;
 	}
 
 	if (element == "collisions")
@@ -218,6 +220,8 @@ void CParticleSystem::SetBufferData() {
 		m_particles.colorBuffer[i] = PhysxConversion::PxVec4ToVec4(*m_Emitter.GetColor());
 		m_particles.colorOriginBuffer[i] = m_particles.colorBuffer[i];
 	}
+
+	m_particles.speed_frame = frames_speed;
 
 	m_particles.numParticles = m_numParticles;
 
