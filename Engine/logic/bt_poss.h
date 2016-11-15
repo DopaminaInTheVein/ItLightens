@@ -31,7 +31,7 @@ protected:
 	virtual map<string, btevent>* getEvents();
 
 	virtual btnode** getRoot();
-
+	std::string getMyName();
 public:
 	bt_poss();
 	void addBtPossStates();

@@ -336,7 +336,7 @@ void CLogicManagerModule::throwEvent(EVENT evt, std::string params, CHandle hand
 		break;
 	}
 	case (OnStunnedEnd): {
-		sprintf(lua_code, "OnStunnedEnd(%f);", 0.5f);
+		sprintf(lua_code, "OnStunnedEnd(\"%s\");", params.c_str());
 		break;
 	}
 	case (OnLiquid): {
@@ -725,6 +725,9 @@ void CLogicManagerModule::bindHandle(SLB::Manager& m) {
 		.comment("returns the Y coordinate")
 		.set("get_z", &SLBHandle::getZ)
 		.comment("returns the Z coordinate")
+		// get front
+		.set("get_front", &SLBHandle::getFront)
+		.comment("return front in a SLBPosition object normalized")
 		// go to point function
 		.set("go_to_point", &SLBHandle::goToPoint)
 		.comment("The NPC moves to the specified position")

@@ -182,6 +182,7 @@ end
 
 function OnPossess( level, pj )
 	p:print( "OnPossess: "..level..", "..pj.."\n" )
+	OnStunnedEnd(pj)
 	CallFunction("OnPossess_"..level)
 	CallFunction("OnPossess_"..pj)
 end
@@ -265,14 +266,52 @@ function OnStun( param )
 	p:print( "OnStun: "..param.."\n" )
 end
 
+--STUNNED_SIZE = 30
+STUNNED_PART = {}
+--STUNNED_NEXT = 1
 function OnStunned( pj )
 	p:print( "OnStunned: "..pj.."\n" )
 	p:play_sound("event:/OnStunned", 1.0, false)
 	CallFunction( "OnStunned_"..pj)
+	local npc = Handle()
+	npc:getHandleCaller()
+	local x = npc:get_x()
+	local y = npc:get_y()
+	local z = npc:get_z()
+	
+	--Offset depends on npc
+	local offset_y = 0.5
+	local offset_front = 0.1
+	if string.match(pj, "mole") then
+		offset_y = 0
+		offset_front = 0.8
+	else
+		if string.match(pj, "sci") then
+			offset_y = 0.3
+			offset_front = 0.4
+		end
+	end
+	
+	--Apply Offset
+	y = y + offset_y
+	local front = npc:get_front()
+	x = x + (front:x() * offset_front)
+	y = y + (front:y() * offset_front)
+	z = z + (front:z() * offset_front)
+	
+	-- Destroy and create particle
+	if STUNNED_PART[pj] ~= nil then
+		STUNNED_PART[pj]:destroy() -- Por si acaso ya existia
+	end
+	STUNNED_PART[pj] = p:create(STUNT_1, x, y, z)
+	p:exec_command("STUNNED_PART[\""..pj.."\"]:part_on()", 1)
 end
 
-function OnStunnedEnd( param )
-	p:print( "OnStunnedEnd: "..param.."\n" )
+function OnStunnedEnd( pj )
+	p:print( "OnStunnedEnd: "..pj.."\n" )
+	if STUNNED_PART[pj] ~= nil then
+		STUNNED_PART[pj]:destroy()
+	end
 end
 
 function OnLiquid( param )
@@ -293,6 +332,7 @@ function OnOvercharge( param )
 	local y = raijin:get_y() - 0.5
 	local z = raijin:get_z()
 	oc_part = p:create(OVERCHARGE_1, x, y, z)
+	--oc_part = p:create(STUNT_1, x, y, z)
 	oc_part:part_on()
 	p:exec_command("oc_part:destroy()", 5)
 end
@@ -403,20 +443,28 @@ function OnExplode( param )
 	CallFunction("OnExplode_"..param)
 end
 
+BOMB_PART = {}
+BOMB_PART_NEXT = 1
+BOMB_PART_MAX = 5
 function OnExplode_throw_bomb()
 	p:print( "OnExplode_throw_bomb\n")
-	h:getHandleCaller()
-	local x = h:get_x()
-	local y = h:get_y()
-	local z = h:get_z()
-	explosion_particle = p:create(SMOKE_1, h:get_x(), h:get_y(), h:get_z())--0,0,0)--h:get_x(), h:get_y()+0.5, h:get_z())
-	explosion_particle:part_on()
-	p:exec_command("explosion_particle:destroy()", 2)
+	local bomb = Handle()
+	bomb:getHandleCaller()
+	local x = bomb:get_x()
+	local y = bomb:get_y()
+	local z = bomb:get_z()
+	BOMB_PART[BOMB_PART_NEXT] = p:create(SMOKE_1, x, y, z)
+	BOMB_PART[BOMB_PART_NEXT]:part_on()
+	p:exec_command("BOMB_PART["..BOMB_PART_NEXT.."]:destroy()", 2)
 	boom_effect = p:character_globe(BOOM, "1.0", x, y, z, 0.5, 20.0)
 	boom_effect:set_size(3.0)
 	--p:exec_command("explosion_particle:part_on()", 1)
 	--explosion_particle:part_on()
-	
+	if BOMB_PART_NEXT > BOMB_PART_MAX - 1 then
+		BOMB_PART_NEXT = 1
+	else
+		BOMB_PART_NEXT = BOMB_PART_NEXT + 1
+	end
 	p:play_3d_sound("event:/OnBombExplodes", h:get_x(), h:get_y(), h:get_z(), 1.0, false, 32)
 	cam:start_vibration(0.5, 2.0, 20)
 	p:exec_command("cam:stop_vibration(10)", 1.0)

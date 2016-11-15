@@ -3,7 +3,7 @@
 	loop="1"
 	num_particles="1"
 	target_pos="mine"
-	texture_particles="textures/particles/particula_zzz.dds"
+	texture_particles="textures/particles/particulastun.dds"
 >
 <nframes
 	value="2"
