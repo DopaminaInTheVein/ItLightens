@@ -92,7 +92,8 @@ void TCompCameraMain::update(float dt) {
 		}
 	}
 	if (!cameraIsGuided) {
-		if (GameController->GetGameState() == CGameController::RUNNING && !GameController->GetFreeCamera()) {
+		int gs = GameController->GetGameState();
+		if ((gs == CGameController::RUNNING || gs == CGameController::SPECIAL_ACTION) && !GameController->GetFreeCamera()) {
 			//if (owner.hasTag("camera_main")) {
 			VEC3 pos = transform->getPosition();
 			//pos.y += 2;

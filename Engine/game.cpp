@@ -283,7 +283,7 @@ void CApp::update(float elapsed) {
 			auto name = it->getName();
 			it->update(elapsed);
 		}
-		else if (it->forcedUpdate()) {
+		else if (it->forcedUpdate() || GameController->GetGameState() == CGameController::SPECIAL_ACTION) {
 			PROFILE_FUNCTION(it->getName());
 			it->update(getDeltaTime(1.0f));
 		}
@@ -317,6 +317,7 @@ void CApp::initNextLevel()
 	std::string level_name = getRealLevel(next_level);
 	bool reload = next_level == current_level;
 	if (!reload) CEntityParser::clearCollisionables();
+	SBB::init();
 	bool is_ok;
 	//SetLoadingState(5);
 

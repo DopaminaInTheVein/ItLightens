@@ -3,7 +3,7 @@
 	loop="1"
 	num_particles="1"
 	target_pos="mine"
-	texture_particles="textures/particles/particulahumo1.dds"
+	texture_particles="textures/particles/particula_zzz.dds"
 >
 <nframes
 	value="2"
@@ -37,7 +37,7 @@
 	/>
 <size
 	modifier="-1"
-	value="2"
+	value="0.5"
 	/>
 <lifetime
 	max_rand="0.2"

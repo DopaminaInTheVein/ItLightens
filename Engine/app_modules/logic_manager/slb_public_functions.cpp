@@ -581,6 +581,25 @@ void SLBCamera::setDistanceToTarget(float distance) {
 	camara3rd->setDistanceToTarget(distance);
 }
 
+void SLBCamera::saveCamera()
+{
+	if (!checkCamera()) return;
+	CEntity * camera_e = camera_h;
+	if (!camera_e) return;
+
+	TCompController3rdPerson * camara3rd = camera_e->get<TCompController3rdPerson>();
+	if (camara3rd) camara3rd->saveParams();
+}
+void SLBCamera::loadCamera()
+{
+	if (!checkCamera()) return;
+	CEntity * camera_e = camera_h;
+	if (!camera_e) return;
+
+	TCompController3rdPerson * camara3rd = camera_e->get<TCompController3rdPerson>();
+	if (camara3rd) camara3rd->loadParams();
+}
+
 void SLBCamera::setSpeed(float speed) {
 	if (!checkCamera()) return;
 	CEntity * camera_e = camera_h;

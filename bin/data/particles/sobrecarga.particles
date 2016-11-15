@@ -6,7 +6,7 @@
 	texture_particles="textures/particles/particula_sobrecarga.dds"
 >
 <nframes
-	value="1"
+	value="3"
 	/>
 <collisions
 	value="1"
@@ -37,7 +37,7 @@
 	/>
 <size
 	modifier="-1"
-	value="2"
+	value="5"
 	/>
 <lifetime
 	max_rand="0.2"
