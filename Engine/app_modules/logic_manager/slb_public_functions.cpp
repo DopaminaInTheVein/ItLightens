@@ -239,6 +239,14 @@ void SLBHandle::setPosition(float x, float y, float z) {
 	entity_controller->teleport(new_position);
 }
 
+SLBPosition SLBHandle::getFront() {
+	SLBPosition pos;
+	CEntity* entity = real_handle;
+	TCompTransform* entity_transform = entity->get<TCompTransform>();
+	if (entity_transform) pos.set(entity_transform->getFront());
+	return pos;
+}
+
 float SLBHandle::getX() {
 	CEntity* entity = real_handle;
 	// if it has entity_controller, we get the coord from there

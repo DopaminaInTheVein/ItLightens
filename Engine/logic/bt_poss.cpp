@@ -112,6 +112,9 @@ int bt_poss::actionPossessing() {
 
 int bt_poss::actionPossessed() {
 	// Nothing to do
+	if (stunned) {
+		logic_manager->throwEvent(logic_manager->OnStunnedEnd, getMyName(), CHandle(getMyEntity()));
+	}
 	return OK;
 }
 int bt_poss::actionUnpossessing() {
@@ -119,7 +122,7 @@ int bt_poss::actionUnpossessing() {
 	stunning = false;
 	stunned = true;
 	____TIMER_RESET_(timeStunt);
-	logic_manager->throwEvent(logic_manager->OnStunned, "");
+	logic_manager->throwEvent(logic_manager->OnStunned, getMyName(), CHandle(getMyEntity()));
 	return OK;
 }
 int bt_poss::actionStunt() {
@@ -136,6 +139,7 @@ int bt_poss::actionStunt() {
 }
 int bt_poss::actionStuntEnd() {
 	stunned = false;
+	logic_manager->throwEvent(logic_manager->OnStunnedEnd, getMyName(), CHandle(getMyEntity()));
 	return OK;
 }
 
@@ -188,4 +192,10 @@ bool bt_poss::save_bt(std::ofstream& os, MKeyValue& atts)
 	if (possessing) atts.put("possessing", possessing);
 	bt::save_bt(os, atts);
 	return true;
+}
+
+std::string bt_poss::getMyName()
+{
+	CEntity * e = getMyEntity();
+	if (e) return e->getName();
 }

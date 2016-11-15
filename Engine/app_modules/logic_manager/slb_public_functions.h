@@ -74,6 +74,7 @@ public:
 	void setSize(float size);
 	void setVisible(int visible);
 	void setPosition(float x, float y, float z);
+	SLBPosition getFront();
 	float getX();
 	float getY();
 	float getZ();

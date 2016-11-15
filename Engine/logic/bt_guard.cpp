@@ -149,7 +149,7 @@ void bt_guard::Init()
 bool bt_guard::playerStunned() {
 	PROFILE_FUNCTION("guard: player stunned");
 	if (stunned == true) {
-		logic_manager->throwEvent(logic_manager->OnStunned, MY_NAME);
+		logic_manager->throwEvent(logic_manager->OnStunned, MY_NAME, MY_OWNER);
 		logic_manager->throwEvent(logic_manager->OnGuardAttackEnd, "");
 		decreaseChaseCounter();
 		return true;
@@ -311,7 +311,7 @@ int bt_guard::actionStunned() {
 	if (!stunt_recover) return STAY;
 	if (timerStunt < 0) {
 		stunned = false;
-		logic_manager->throwEvent(logic_manager->OnStunnedEnd, "");
+		logic_manager->throwEvent(logic_manager->OnStunnedEnd, MY_NAME, MY_OWNER);
 		return OK;
 	}
 	else {
@@ -831,7 +831,7 @@ void bt_guard::onStaticBomb(const TMsgStaticBomb& msg) {
 	if (squaredDist(msg.pos, myPos) < msg.r * msg.r) {
 		resetTimers();
 		stunned = true;
-		logic_manager->throwEvent(CLogicManagerModule::EVENT::OnStunned, MY_NAME);
+		logic_manager->throwEvent(CLogicManagerModule::EVENT::OnStunned, MY_NAME, MY_OWNER);
 		SET_ANIM_GUARD(AST_STUNNED);
 		checkStopDamage();
 		setCurrent(NULL);
