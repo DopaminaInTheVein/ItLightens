@@ -58,6 +58,7 @@ end
 function OnGameStart( param )
 	p:print( "OnGameStart: "..param.."\n" )
 	cam:fx(FX_FOG, 0)
+	cam:fx(FX_DREAM_BORDER, 0)
 	p:load_entities("init")
 	ui_cam:fade_out(0)
 	p:exec_command("LoadLevel(\"level_0\")", 2)
