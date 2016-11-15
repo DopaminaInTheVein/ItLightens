@@ -123,6 +123,7 @@ public:
 	int step_counter = 0;
 
 	void UpdateInputActions();
+	void MoveBox();
 	void UpdateMovingWithOther();
 	void UpdateUnpossess();
 	void UpdateJumpState();
@@ -133,6 +134,8 @@ public:
 	// JUMP
 	bool canJump() override;
 	void Falling() override;
+
+	VEC3 last_position;
 
 	TCompTransform * getEntityTransform() {
 		return transform;

@@ -160,6 +160,8 @@ void player_controller_mole::myUpdate()
 	}
 	//Debug->DrawLine(transform->getPosition(), transform->getFront(), 1.f);
 
+	last_position = transform->getPosition();
+
 	if (cc->OnGround() && state == "moving" && !pushing_box) {
 		if (player_curr_speed >= player_max_speed - 0.1f)
 		{
@@ -286,7 +288,7 @@ void player_controller_mole::UpdateInputActions() {
 			player_curr_speed = player_max_speed / 2.f;
 			pulling_box = false;
 			animController->setState(AST_PUSH_WALK);
-			box_p->AddMovement(push_pull_direction*push_box_force*player_curr_speed*getDeltaTime());
+			//box_p->AddMovement(push_pull_direction*push_box_force*player_curr_speed*getDeltaTime());
 			logic_manager->throwEvent(logic_manager->OnPushBox, "", boxGrabbed);
 		}
 		// pulling box
@@ -294,7 +296,7 @@ void player_controller_mole::UpdateInputActions() {
 			player_curr_speed = player_max_speed / 2.f;
 			pulling_box = true;
 			animController->setState(AST_PULL_WALK);
-			box_p->AddMovement(-push_pull_direction*push_box_force*player_curr_speed*getDeltaTime());
+			//box_p->AddMovement(-push_pull_direction*push_box_force*player_curr_speed*getDeltaTime());
 			logic_manager->throwEvent(logic_manager->OnPushBox, "", boxGrabbed);
 		}
 		else if (controller->IsMoveLeft() || controller->IsMoveRight()) {
@@ -307,6 +309,27 @@ void player_controller_mole::UpdateInputActions() {
 			animController->setState(AST_PUSH_IDLE);
 			logic_manager->throwEvent(logic_manager->OnPushBoxIdle, "");
 		}
+	}
+}
+
+void player_controller_mole::MoveBox() {
+	if (!pushing_box) return;
+	GET_COMP(box_t, boxPushed, TCompTransform);
+	GET_COMP(box_p, boxPushed, TCompPhysics);
+
+	CEntity* e = CHandle(this).getOwner();
+	if (!e) return;
+
+	TCompTransform* p_transform = e->get<TCompTransform>();
+	if (!p_transform) return;
+
+	VEC3 curr_pos = p_transform->getPosition();
+
+	VEC3 diff = curr_pos - last_position;
+	diff.y = 0;
+
+	if (diff != VEC3(0, 0, 0)) {
+		box_p->AddMovement(diff);
 	}
 }
 
