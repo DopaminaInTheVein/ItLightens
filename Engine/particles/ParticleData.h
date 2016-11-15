@@ -34,6 +34,8 @@ struct TParticleData {
 	PxU32	maxParticles;
 	PxU32	numParticles;
 
+	float speed_frame;
+
 	int max_frames;
 	//#ifndef FINAL_BUILD
 	//	int id_owner = 0;
@@ -49,6 +51,8 @@ struct TParticleData {
 	{
 		maxParticles = _maxParticles;
 		numParticles = 0;
+
+		speed_frame = 1;
 
 		//index
 		indexBuffer.resize(maxParticles);

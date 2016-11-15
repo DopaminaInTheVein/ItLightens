@@ -12,7 +12,10 @@ bool TCompLightDir::load(MKeyValue& atts) {
 	TCompCamera::load(atts);
 	color = atts.getQuat("color");
 	shadow_intensity = atts.getFloat("shadow_intensity", 1.0f);
-	light_mask_path = atts.getString("light_mask", "textures/dir_shader_circular.dds");
+	if(color.w > 0) light_mask_path = atts.getString("light_mask", "textures/dir_shader_circular.dds");
+	else {
+		light_mask_path = atts.getString("light_mask", "textures/dir_textura_1p_negro_margen.dds");
+	}
 	light_mask = Resources.get(light_mask_path.c_str())->as<CTexture>();
 	return true;
 }

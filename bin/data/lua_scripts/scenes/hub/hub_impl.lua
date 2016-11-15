@@ -31,6 +31,7 @@ function OnStart_hub( )
 	p:play_music("event:/OnGameMusic", 0.2)
 	
 	p:setOnlySense(1)
+	InitDreamingPeople()
 end
 -------------------------------
 function OnSave_hub()
@@ -39,6 +40,8 @@ end
 -------------------------------
 idMoleSlept = 5
 idSciSlept = 6
+idMoleZzz = 7
+idSciZzz = 8
 function OnLoad_hub()
 	cam:fx(FX_DREAM_BORDER, 0)
 	p:play_music("event:/OnGameMusic", 0.2)
@@ -83,6 +86,23 @@ function OnLoad_hub()
 		
 	end
 	dead_on_dream = false
+	InitDreamingPeople()
+end
+
+function InitDreamingPeople()
+	h:get_handle_by_id(idSciZzz)
+	local x = h:get_x()
+	local y = h:get_y()
+	local z = h:get_z()
+	zzz_sci = p:create(SLEEP_1, x, y + 0.5, z)
+	zzz_sci:part_loop()
+	
+	h:get_handle_by_id(idMoleZzz)
+	local x = h:get_x()
+	local y = h:get_y()
+	local z = h:get_z()
+	zzz_mole = p:create(SLEEP_1, x, y + 0.75, z)
+	zzz_mole:part_loop()
 end
 -------------------------------
 

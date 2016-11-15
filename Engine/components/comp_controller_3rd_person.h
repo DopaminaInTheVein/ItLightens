@@ -25,7 +25,6 @@
 class TCompController3rdPerson : public TCompBase {
 	float		yaw;
 	float		pitch;
-	float		distance_to_target;
 	float		speed_camera;
 	float		speed_camera_unlocked;
 	float		m_yaw;
@@ -38,7 +37,8 @@ class TCompController3rdPerson : public TCompBase {
 	bool		input_enabled = true;
 	bool		pitch_disabled = false;
 	bool		orbit_mode = false;
-	VEC3		position_diff;
+	float		distance_to_target, distance_to_target_prev;
+	VEC3		position_diff, position_diff_prev;
 	VEC3		offset;
 	// camera vibration
 	bool		vibrating = false;
@@ -71,7 +71,17 @@ public:
 	void setDistanceToTarget(float distance) {
 		distance_to_target = distance;
 	}
-
+	void setPositionOffset(VEC3 offset) {
+		position_diff = offset;
+	}
+	void saveParams() {
+		distance_to_target_prev = distance_to_target;
+		position_diff_prev = position_diff;
+	}
+	void loadParams() {
+		distance_to_target = distance_to_target_prev;
+		position_diff = position_diff_prev;
+	}
 	void setSpeed(float speed) {
 		speed_camera = speed;
 	}
@@ -84,13 +94,8 @@ public:
 		rotation_sensibility = deg2rad(sensibility) / 250.0f;
 	}
 
-	void setPositionOffset(VEC3 offset) {
-		position_diff = offset;
-	}
-
 	// camera vibration
 	void startVibration(float x_max, float y_max, float speed) {
-
 		// set the new parameters
 		vibrating = true;
 		vibration_t = 0.f;

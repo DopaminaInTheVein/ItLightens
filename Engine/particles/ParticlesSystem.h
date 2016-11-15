@@ -46,6 +46,8 @@ class CParticleSystem : public TCompBase, public CXMLParser {
 	bool active;
 	bool loop;
 
+	float frames_speed;
+
 	//debug ui values
 	//------------------------------------------------------------------
 	bool random_value_velocity = false;

@@ -70,9 +70,11 @@ function launchVictoryState( )
 end
 
 function specialActionSettings( action_time )
-	setCameraDistanteToTarget(1.0);
-	setCameraPositionOffset(0.0, -1.5, 0.0);
+	c:get_camera()
+	c:save_params()
+	--setCameraDistanteToTarget(1.0);
+	--setCameraPositionOffset(0.0, -1.5, 0.0);
 	p:exec_command("toggleIntroState();", 0.2)
 	p:exec_command("toggleIntroState();", action_time + 0.2)
-	p:exec_command("setCameraDistanteToTarget(2.0); setCameraPositionOffset(0.0, -0.5, 0.0);", action_time + 0.4)
+	p:exec_command("c:load_params()", action_time + 0.4)
 end

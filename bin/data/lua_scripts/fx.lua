@@ -6,3 +6,5 @@ BOOM = "ui/effects/boom"
 
 --Particles
 SMOKE_1 = "particles/smoke_bomb"
+OVERCHARGE_1 = "particles/sobrecarga"
+SLEEP_1 = "particles/zzz"

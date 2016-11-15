@@ -33,6 +33,7 @@ bool CRenderParticlesInstanced::create(size_t n, const CMesh* instanced) {
 		p.size = 1.0f;
 		p.rotation = VEC3(random(-50, 50), 0, random(-50, 50));
 		p.max_frames = 1.f;
+		p.speed_frame = 1.0f;
 		p.nframe = random(0, 15);
 		p.color = VEC4(1.0f, 1.0f, 1.0f, 1.0f);
 		//#ifndef FINAL_BUILD
@@ -103,6 +104,8 @@ void CRenderParticlesInstanced::update(float elapsed, const TParticleData& parti
 		p->max_frames = particle_data.max_frames;
 		p->center = PhysxConversion::PxVec3ToVec3(particle_data.positionBuffer[idx]);
 		float modifier_over_lifetime;
+
+		p->speed_frame = particle_data.speed_frame;
 
 		//if lifetime expired, alpha = 0 to not render this particle
 		if (particle_data.lifeTimeBuffer[idx] <= 0.f)

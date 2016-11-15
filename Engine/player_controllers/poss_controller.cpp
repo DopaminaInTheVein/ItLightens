@@ -157,5 +157,6 @@ void PossController::init_poss()
 {
 	if (npcIsPossessed) {
 		onSetEnable(true);
+		SBB::postBool("possMode", true);
 	}
 }

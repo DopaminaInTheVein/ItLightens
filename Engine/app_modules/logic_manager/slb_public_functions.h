@@ -146,6 +146,8 @@ public:
 	void fx(const char * name, int enabled);
 	void startVibration(float x_max, float y_max, float speed);
 	void stopVibration(float speed);
+	void saveCamera();
+	void loadCamera();
 };
 
 // camera control in LUA

@@ -874,6 +874,12 @@ void CLogicManagerModule::bindCamera(SLB::Manager& m) {
 		.param("float: x coord offset")
 		.param("float: y coord offset")
 		.param("float: z coord offset")
+		// Save camera config
+		.set("save_params", &SLBCamera::saveCamera)
+		.comment("Save current camera params")
+		// Load camera config
+		.set("load_params", &SLBCamera::loadCamera)
+		.comment("Load saved camera params")
 		// run cinematic
 		.set("run_cinematic", &SLBCamera::runCinematic)
 		.comment("Run cinematic defined in the specified guided camera")
@@ -1278,7 +1284,7 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		.param("float: x")
 		.param("float: y")
 		.param("float: z")
-		.param("int: 0,1,2 --> paused, active, loop");
+		;
 }
 
 command::command(const char* c) {

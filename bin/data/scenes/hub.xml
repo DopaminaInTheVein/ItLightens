@@ -740,5 +740,27 @@
    mesh_name="hub/end_hub"/>
 
 </entity>
+<entity
+   id="8">
+<tags/>
+<name
+   name="zzz_sci"/>
+<transform
+   pos="-2.162 51.3698 -30.2844"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
+<entity
+   id="7">
+<tags/>
+<name
+   name="zzz_mole"/>
+<transform
+   pos="-1.00093 51.3698 -19.7202"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+
+</entity>
 
 </entities>
