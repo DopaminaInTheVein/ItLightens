@@ -13,6 +13,7 @@
 #include "logic/bt_scientist.h"
 #include "logic/pila_container.h"
 
+#include "app_modules/render/module_render_deferred.h"
 #include "app_modules/render/module_render_postprocess.h"
 #include "app_modules/entities.h"
 #include "render/fx/fx_fade_screen.h"
@@ -1317,6 +1318,10 @@ SLBHandle SLBPublicFunctions::create(const char* name, float x, float y, float z
 	GET_COMP(part, h, CParticleSystem);
 	if (part) part->init();
 	return SLBHandle(h, e_name);
+}
+void SLBPublicFunctions::initRenderScene()
+{
+	CApp::get().init_render_scene();
 }
 
 //test

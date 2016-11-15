@@ -65,6 +65,8 @@ public:
 
 	CTimer timer_app;
 	int GetLevelNumber() { return current_level_number; }
+	// Render
+	void init_render_scene();
 private:
 
 	// Windows stuff

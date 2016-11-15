@@ -59,6 +59,8 @@ function PrepareScene(real_level)
 	loading_handles:get_handles_by_tag("loading")
 	loading_handles:destroy()
 	p:resume_game()
+	GENERATE_SHADOW_MAP_TIME = 1
+	GenerateShadowMap()
 	--p:breakpoint(4)
 	if g_new_level then
 		--p:breakpoint(5)
@@ -66,6 +68,14 @@ function PrepareScene(real_level)
 	else
 		--p:breakpoint(6)
 		p:exec_command("CallFunction(\"OnLoad_"..real_level.."\");", 1.1)
+	end
+end
+function GenerateShadowMap()
+	local time_gsm = 0.01
+	GENERATE_SHADOW_MAP_TIME = GENERATE_SHADOW_MAP_TIME - time_gsm
+	p:init_render_scene()
+	if GENERATE_SHADOW_MAP_TIME > 0 then
+		p:exec_command("GenerateShadowMap()", time_gsm)
 	end
 end
 

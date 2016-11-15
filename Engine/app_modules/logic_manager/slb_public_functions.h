@@ -240,6 +240,7 @@ public:
 	void forceSenseVision();
 	void unforceSenseVision();
 	SLBHandle SLBPublicFunctions::create(const char* name, float x, float y, float z);
+	void initRenderScene();
 	void loadLevel(const char* level_name);
 	void clearLevel();
 	void saveLevel();

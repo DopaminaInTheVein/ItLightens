@@ -420,3 +420,8 @@ void CApp::ReloadNameScenes()
 {
 	name_scenes = readIniAtrDataStr(file_options_json, "scenes");
 }
+
+void CApp::init_render_scene()
+{
+	render_deferred->UpdateStaticShadowMaps();
+}

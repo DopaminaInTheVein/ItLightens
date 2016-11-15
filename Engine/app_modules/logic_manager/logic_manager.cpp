@@ -1287,6 +1287,8 @@ void CLogicManagerModule::bindPublicFunctions(SLB::Manager& m) {
 		.param("float: x")
 		.param("float: y")
 		.param("float: z")
+		//Init render scene
+		.set("init_render_scene", &SLBPublicFunctions::initRenderScene)
 		;
 }
 
