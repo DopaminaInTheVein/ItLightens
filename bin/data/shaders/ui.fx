@@ -41,12 +41,13 @@ float4 PSQPolarity(
   else if(polarity == 2.0f){
 	result *= txDiffuse.Sample(samLinear, iTex0);
 	//result *= float4(1,1,1,0.5);
-	result *= float4(0.3,0.3,0.3,0.5);
+	result *= float4(0.3,0.3,0.3,1);
 	//result += float4(-0.7,0.1,0,-0.5)*result.a*length(result.rgb);
   }
   else{
 	result *= txDiffuse.Sample(samLinear, iTex0);
-	result += float4(-0.5,0.1,0,1)*result.a*result.r;
+	result *= float4(0.5,0.5,0.5,1);
+	//result += float4(-0.5,0.1,0,1)*result.a*result.r;
   }
   
   return result;
@@ -65,15 +66,19 @@ float4 PSEPolarity(
   
   if(polarity == 2.0f){
 	result.rgba *= txDiffuse.Sample(samLinear, iTex0*0.9 + 0.04);
-	result.rgb *= float4(0.3,0.4,1,1)*result.a*result.b;
+	result.rgb *= float4(0.5,0.5,1,1)*result.a*result.b;
   }
   else if(polarity == 1.0f){
 	result *= txDiffuse.Sample(samLinear, iTex0);
-	result *= float4(0.5,0.5,0.5,0.5);
+	
+	result.rgb *= float4(0.5,0.5,1,1)*result.a*result.b;
+	result *= float4(0.4,0.4,0.4,1);
   }
   else{
 	result *= txDiffuse.Sample(samLinear, iTex0);
+	result.rgb *= float4(0.5,0.5,1,1)*result.a*result.b;
 	//result.rgb *= float4(0.3,0.4,1,1)*result.a*result.b;
+	result *= float4(0.6,0.6,0.6,1);
   }
   return result;
   
