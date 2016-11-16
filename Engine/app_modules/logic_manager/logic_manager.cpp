@@ -728,6 +728,10 @@ void CLogicManagerModule::bindHandle(SLB::Manager& m) {
 		// get front
 		.set("get_front", &SLBHandle::getFront)
 		.comment("return front in a SLBPosition object normalized")
+		// Tmx animator (roll)
+		.set("set_roll_target", &SLBHandle::setRollTarget)
+		.param("float: new_roll")
+		.param("float: time to reach")
 		// go to point function
 		.set("go_to_point", &SLBHandle::goToPoint)
 		.comment("The NPC moves to the specified position")

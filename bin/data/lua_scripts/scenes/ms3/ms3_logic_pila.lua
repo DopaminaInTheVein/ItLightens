@@ -1,3 +1,9 @@
+function InitPilaMs3()
+	local flecha = Handle()
+	flecha:get_handle_by_name_tag("flecha_carga", "flecha_carga")
+	flecha:set_roll_target(1.25, 1.0)
+end
+
 -- Pila --
 --------------------------------------------------------------------------------------------
 pila = Handle()
@@ -52,8 +58,6 @@ function activateCargadorSci()
 	    sci = Handle()
 		sci:get_player()
 		sci:go_and_look_as(hCargadorTarget, "rechargeCell();")
-		p:complete_tasklist(9)
-		p:play_sound("event:/OnChargePila", 0.5, false)
 	end
   else
 	p:player_talks("::cargador_sci_3")
@@ -64,7 +68,15 @@ function activateCargadorSci()
 end
 
 function rechargeCell()
-  p:player_talks("::recharge_cell")
+  local player = Handle()
+  player:get_player()
+  player:set_anim("work")
+  local flecha = Handle()
+  flecha:get_handle_by_name_tag("flecha_carga", "flecha_carga")
+  flecha:set_roll_target(-0.5, 2.7)
+  p:complete_tasklist(9)
+  p:play_sound("event:/OnChargePila", 0.5, false)
+  p:exec_command("p:player_talks(\"::recharge_cell\")", 2)
   hCargador:set_charged(1)
 end
 
@@ -177,4 +189,9 @@ function OnRemovePila_enchufe()
 		closeDoorPila()
 	end
   end
+end
+
+function OnRemovePila_cargador_bateria()
+	flecha:get_handle_by_name_tag("flecha_carga", "flecha_carga")
+	flecha:set_roll_target(1.25, 1.0)
 end
