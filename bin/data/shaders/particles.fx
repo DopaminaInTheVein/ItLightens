@@ -16,7 +16,7 @@ struct VS_TEXTURED_OUTPUT
 VS_TEXTURED_OUTPUT VS(
   float4 Pos : POSITION0              // Stream 0
   , float2 UV : TEXCOORD0
-  , float3 InstancePos : POSITION1    // Stream 1
+  , float4 InstancePos : POSITION1    // Stream 1
   , float3  InstanceData : TEXCOORD1    // Stream 1
   , float3  InstanceRot : ROTATION1    // Stream 1
   , float4  InstanceColor : COLOR1
@@ -27,7 +27,7 @@ VS_TEXTURED_OUTPUT VS(
   //instanceData.b = quantity of animation frames
 
   float size = InstanceData.g;
-  float nframe = InstanceData.r;
+  float nframe = InstanceData.r*InstancePos.w;
   float q_frames = InstanceData.b;	
 
   //float q_frames = 4;
@@ -40,7 +40,7 @@ VS_TEXTURED_OUTPUT VS(
   rotPos.x = Pos.x*cs - Pos.y*sn;
   rotPos.y = Pos.x*sn + Pos.y*cs;
 
-  float3 wpos = InstancePos
+  float3 wpos = InstancePos.xyz
     + (CameraUp.xyz * rotPos.y
       + CameraLeft.xyz * rotPos.x
       )*size;

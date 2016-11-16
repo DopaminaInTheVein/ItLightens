@@ -7,7 +7,7 @@
 >
 <nframes
 	value="2"
-	speed="100"
+	speed="0.04"
 	/>
 <collisions
 	value="1"
