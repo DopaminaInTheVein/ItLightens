@@ -1,0 +1,3 @@
+<static_mesh>
+  <slot mesh="meshes/hub/cenefa_3_d.mesh" material="materials/hub/cenefa_3.material"/>
+</static_mesh>
