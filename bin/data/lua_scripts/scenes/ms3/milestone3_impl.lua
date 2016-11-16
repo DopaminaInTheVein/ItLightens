@@ -23,13 +23,14 @@ function OnCreateBomb_ms3( )
 end
 
 function Ms3Victory()
-	ui_cam:fade_out(0.2)
-	p:exec_command("Credits()", 0.2)
+	ui_cam:fade_out(1)
+	p:exec_command("Credits()", 1)
 end
 
 function Credits()
 	p:clear_level()
 	p:pause_game()
+	p:stop_music()
 	p:stop_sound("event:/OnFinalAlarm")
 	p:play_video_and_do("data\\videos\\end.avi", "LoadLevel(\"level_0\");")
 end

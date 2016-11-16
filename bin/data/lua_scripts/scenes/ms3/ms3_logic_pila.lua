@@ -143,6 +143,12 @@ end
 
 function OnPutPila_cargador_bateria()
   p:complete_tasklist(6)
+  pila:getHandleCaller()
+  if pila:is_charged() then
+	local flecha = Handle()
+    flecha:get_handle_by_name_tag("flecha_carga", "flecha_carga")
+    flecha:set_roll_target(-0.5, 2.7)
+  end
 end
 
 function cineDoor( )
@@ -192,6 +198,5 @@ function OnRemovePila_enchufe()
 end
 
 function OnRemovePila_cargador_bateria()
-	flecha:get_handle_by_name_tag("flecha_carga", "flecha_carga")
-	flecha:set_roll_target(1.25, 1.0)
+	p:exec_command("InitPilaMs3()", 0.8)
 end

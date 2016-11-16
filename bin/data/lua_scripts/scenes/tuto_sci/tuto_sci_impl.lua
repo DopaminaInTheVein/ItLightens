@@ -101,8 +101,11 @@ end
 
 function OnRepairDrone_tuto_sci( )
 	if not repaired_done then
+		local player = Handle()
+		player:get_player()
+		player:set_anim("work")
 		repaired_done = true
-		tutosci_help_unpossess()
+		p:exec_command("tutosci_help_unpossess()", 2.0)
 	end
 end
 

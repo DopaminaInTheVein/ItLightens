@@ -280,7 +280,7 @@ function OnStunned( pj )
 	local z = npc:get_z()
 	
 	--Offset depends on npc
-	local offset_y = 0.5
+	local offset_y = 0.6
 	local offset_front = 0.1
 	if string.match(pj, "mole") then
 		offset_y = 0

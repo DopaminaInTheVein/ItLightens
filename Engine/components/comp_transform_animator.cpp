@@ -43,8 +43,8 @@ void TCompTransformAnimator::update(float dt)
 				roll_target = TMX_ANIMATOR_NULL_VAL;
 			}
 		}
-		tmx->setAngles(yaw, pitch, roll);
 	}
+	tmx->setAngles(yaw, pitch, roll);
 }
 
 void TCompTransformAnimator::SetRollTarget(float new_roll, float time)
