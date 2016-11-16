@@ -113,6 +113,7 @@ void CParticleSystem::onStartElement(const std::string &element, MKeyValue& atts
 		m_Emitter.SetPosition(PhysxConversion::Vec3ToPxVec3(atts.getPoint("value")));
 		m_Emitter.SetPositionRandomMin(PhysxConversion::Vec3ToPxVec3(atts.getPoint("randmin")));
 		m_Emitter.SetPositionRandomMax(PhysxConversion::Vec3ToPxVec3(atts.getPoint("randmax")));
+		m_particles.rotation_particles = atts.getPoint("rot");
 	}
 
 	if (element == "velocity")
@@ -936,6 +937,8 @@ void CParticleSystem::renderInMenu()
 {
 	//ImGui::Text("ID: %d\n", id_particle_system);
 	ImGui::Text("num particles: %d\n", m_numParticles);
+
+	ImGui::DragFloat3("rotation", &m_particles.rotation_particles.x, 0.1);
 
 	ImGui::Separator();
 

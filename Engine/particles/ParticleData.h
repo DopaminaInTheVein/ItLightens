@@ -35,6 +35,7 @@ struct TParticleData {
 	PxU32	numParticles;
 
 	float speed_frame;
+	VEC3 rotation_particles;
 
 	int max_frames;
 	//#ifndef FINAL_BUILD

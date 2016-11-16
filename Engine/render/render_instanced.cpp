@@ -112,7 +112,7 @@ void CRenderParticlesInstanced::update(float elapsed, const TParticleData& parti
 			p->color.w = 0.f;
 
 		//p.rotation += VEC3(1, 0, 0)*elapsed;
-		p->rotation = VEC3(1, 0, 0);
+		p->rotation = particle_data.rotation_particles;
 		p->size = particle_data.sizeBuffer[idx];
 		//++idx;
 		//++p;
