@@ -55,6 +55,7 @@ void TCompRoomSwitch::onTriggerExit(const TMsgTriggerOut & msg)
 			tasklist_comp->completeTask(i);
 		}
 	}
+	CApp::get().init_render_scene();
 }
 
 void TCompRoomSwitch::onCreate(const TMsgEntityCreated & msg)
