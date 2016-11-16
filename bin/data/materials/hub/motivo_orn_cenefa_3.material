@@ -1,0 +1,2 @@
+<material tech="deferred.tech">
+<texture slot="diffuse" name="textures/cenefa_3_difuso.dds"/>
