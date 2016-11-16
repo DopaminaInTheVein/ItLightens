@@ -77,7 +77,7 @@ void TCompTransform::renderInMenu() {
 
 	bool yaw_changed = ImGui::DragFloat("Yaw", &yaw, -0.1f, 0.1f);
 	bool pitch_changed = ImGui::DragFloat("Pitch", &pitch, -0.1f, 0.1f);
-	bool roll_changed = ImGui::SliderFloat("Roll", &roll, -180.f, 180.f);
+	bool roll_changed = ImGui::DragFloat("Roll", &roll, -180.f, 180.f);
 	if (yaw_changed || pitch_changed || roll_changed)
 		setAngles(yaw, pitch, roll);
 

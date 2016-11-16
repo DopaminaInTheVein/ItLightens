@@ -247,6 +247,11 @@ SLBPosition SLBHandle::getFront() {
 	if (entity_transform) pos.set(entity_transform->getFront());
 	return pos;
 }
+void SLBHandle::setRollTarget(float new_roll, float time) {
+	SLBPosition pos;
+	GET_COMP(tmx_anim, real_handle, TCompTransformAnimator);
+	if (tmx_anim) tmx_anim->SetRollTarget(new_roll, time);
+}
 
 float SLBHandle::getX() {
 	CEntity* entity = real_handle;

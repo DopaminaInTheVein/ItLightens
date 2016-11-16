@@ -10,6 +10,7 @@ end
 function OnStart_ms3()
   p:print("OnStarted Scene MS3")
   InitFogMs3()
+  InitPilaMs3()
   
   isDoorOpen = false
   alert = false

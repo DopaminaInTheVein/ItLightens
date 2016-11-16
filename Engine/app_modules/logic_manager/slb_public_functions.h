@@ -75,6 +75,7 @@ public:
 	void setVisible(int visible);
 	void setPosition(float x, float y, float z);
 	SLBPosition getFront();
+	void setRollTarget(float new_roll, float time);
 	float getX();
 	float getY();
 	float getZ();
