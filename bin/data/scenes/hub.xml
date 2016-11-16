@@ -762,5 +762,39 @@
    scale="1.0"/>
 
 </entity>
+<entity>
+<tags/>
+<name
+   name="cenefa_3_"/>
+<transform
+   pos="11.53 50.6611 -25.4918"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/hub/cenefa_3_.static_mesh"
+   static="true"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"
+   mesh_name="hub/cenefa_3_"/>
+
+</entity>
+<entity>
+<tags/>
+<name
+   name="cenefa_3_d"/>
+<transform
+   pos="11.53 50.6611 -25.4918"
+   quat="0 0 0 1.0"
+   scale="1.0"/>
+<render_static_mesh
+   name="static_meshes/hub/cenefa_3_d.static_mesh"
+   static="true"/>
+<abs_aabb/>
+<rigidbody
+   type_collision="static"
+   mesh_name="hub/cenefa_3_d"/>
+
+</entity>
 
 </entities>
